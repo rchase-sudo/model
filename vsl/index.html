@@ -22,6 +22,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0;background:var(--ink);color:var(--paper)}
 body{font-family:var(--f-sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
   background:radial-gradient(900px 600px at 15% -5%,rgba(201,162,98,.14),rgba(201,162,98,0) 70%),var(--ink)}
@@ -117,10 +118,11 @@ h1 em{font-style:normal;color:var(--gold)}
 </div>
 <script>
 const v=document.getElementById('v'),cover=document.getElementById('cover'),btns=[...document.querySelectorAll('#chapters button')];
-function start(t){cover.hidden=true;if(typeof t==='number'){try{v.currentTime=t;}catch(e){}}const p=v.play();if(p&&p.catch)p.catch(()=>{});}
+function hideCover(){cover.hidden=true;cover.style.display='none';}
+function start(t){hideCover();if(typeof t==='number'){try{v.currentTime=t;}catch(e){}}const p=v.play();if(p&&p.catch)p.catch(()=>{});}
 cover.addEventListener('click',()=>start());
 btns.forEach(b=>b.addEventListener('click',()=>{start(+b.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});}));
-v.addEventListener('play',()=>{cover.hidden=true;});
+v.addEventListener('play',hideCover);
 /* tell an embedding page (Framer) how tall this page is */
 function postH(){try{parent.postMessage({type:'forma-vsl-height',height:document.documentElement.scrollHeight},'*');}catch(e){}}
 addEventListener('load',postH);addEventListener('resize',postH);if(window.ResizeObserver)new ResizeObserver(postH).observe(document.body);
