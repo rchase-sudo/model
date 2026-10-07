@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>html,body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Forma Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Bodoni+Moda:opsz,wght@6..96,400&display=swap">
+<style>
+/* Layout: a fixed WebGL site model behind scrolling sheets, styled after the Forma package — black ground, gold rules, tracked caps, serif monogram */
+:root{
+  --ink:#0E0E0E;
+  --ink-2:#171716;
+  --panel:rgba(14,14,14,.8);
+  --paper:#F2EFE8;
+  --paper-dim:#9C988F;
+  --gold:#B8924F;
+  --gold-soft:rgba(184,146,79,.34);
+  --f-sans:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  color-scheme:dark;
+}
+html,body{background:var(--ink);color:var(--paper)}
+body{font-family:var(--f-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;background:radial-gradient(120% 90% at 60% 30%,var(--ink-2),var(--ink))}
+.still{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;will-change:opacity}
+.still img{width:100%;height:100%;object-fit:cover;display:block;max-width:none;transform-origin:50% 55%;will-change:transform}
+#render img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:fill;transform-origin:57% 55%}
+#render.fit img{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent)}
+.still .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,14,14,.55),rgba(14,14,14,0) 60%);opacity:0}
+#planimg{display:none}
+.no-gl #planimg{display:block}
+.no-gl #planimg img{object-fit:contain}
+#labels{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.tag{position:absolute;left:0;top:0;transform:translate(-50%,-50%);white-space:nowrap;
+  font:600 10.5px/1 var(--f-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+  background:var(--panel);border:1px solid var(--gold-soft);padding:7px 9px;opacity:0;will-change:transform,opacity;font-variant-numeric:tabular-nums}
+.tag b{color:var(--paper);font-weight:600}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:calc(14px + env(safe-area-inset-top,0px)) clamp(16px,4vw,44px) 14px;background:linear-gradient(var(--ink),rgba(14,14,14,0))}
+.mark{display:flex;align-items:center;gap:14px;color:var(--paper);text-decoration:none}
+.mono{display:grid;place-items:center;width:38px;height:38px;background:#000;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);
+  font:400 26px/1 var(--f-serif);color:var(--paper)}
+.word{display:grid;gap:5px}
+.word strong{font:600 13px/1 var(--f-sans);letter-spacing:.5em;margin-right:-.5em}
+.word span{font:500 8px/1 var(--f-sans);letter-spacing:.42em;color:var(--paper-dim);text-transform:uppercase}
+.links{display:flex;align-items:center;gap:26px}
+.links a.l{font:500 12px/1 var(--f-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--paper-dim);text-decoration:none}
+.links a.l:hover{color:var(--paper)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 12.5px/1 var(--f-sans);letter-spacing:.14em;text-transform:uppercase;
+  color:#0E0E0E;background:var(--gold);padding:14px 20px;text-decoration:none;border:1px solid var(--gold);transition:background .2s,color .2s}
+.btn:hover{background:transparent;color:var(--gold)}
+.btn.ghost{background:transparent;color:var(--paper);border-color:var(--gold-soft)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* sheets */
+main{position:relative;z-index:3}
+.sheet{min-height:125vh;display:flex;align-items:center;padding-inline:clamp(16px,5vw,72px);padding-block:12vh}
+.sheet.r{justify-content:flex-end}
+.sheet.hero{align-items:flex-start;padding-top:calc(24vh + env(safe-area-inset-top,0px));min-height:135vh}
+.panel{position:relative;max-width:31rem;min-width:0;background:var(--panel);border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);
+  padding:clamp(22px,3vw,34px);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hero .panel{background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;max-width:46rem}
+.kicker{font:500 11px/1.4 var(--f-sans);letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin:0 0 22px}
+.bar{display:flex;align-items:center;gap:12px;background:#000;margin:0 0 22px;padding:10px 14px;font:700 11.5px/1.2 var(--f-sans);letter-spacing:.24em;text-transform:uppercase;color:var(--paper)}
+.bar b{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+h1,h2{font-family:var(--f-sans);font-weight:800;text-transform:uppercase;line-height:.98;letter-spacing:.01em;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.7rem,6.8vw,5.6rem)}
+h2{font-size:clamp(1.9rem,3.6vw,2.6rem);line-height:1.02}
+h1 em,h2 em{font-style:normal;color:var(--gold)}
+p{margin:16px 0 0;max-width:65ch}
+.lede{font-size:clamp(1.05rem,1.5vw,1.18rem);max-width:34rem;color:var(--paper)}
+.note{font-size:13px;line-height:1.6;color:var(--paper-dim)}
+.cue{margin-top:36px;display:flex;align-items:center;gap:12px;font:500 10.5px/1 var(--f-sans);letter-spacing:.32em;text-transform:uppercase;color:var(--paper-dim)}
+.cue i{display:block;width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:drip 2.2s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:22px 0 0;border:1px solid var(--gold-soft)}
+.stats div{padding:14px 14px 12px;border-right:1px solid var(--gold-soft);border-bottom:1px solid var(--gold-soft);min-width:0}
+.stats div:nth-child(2n){border-right:0}
+.stats div:nth-last-child(-n+2){border-bottom:0}
+.stats b{display:block;font:700 22px/1.1 var(--f-sans);font-variant-numeric:tabular-nums}
+.stats span{display:block;margin-top:5px;font:500 9.5px/1.4 var(--f-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--paper-dim)}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:22px 0 0;padding:16px 0 0;border-top:1px solid var(--gold-soft)}
+.facts dt{font:600 10.5px/1.8 var(--f-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.facts dd{margin:0;font-size:15px;min-width:0}
+.deliver{list-style:none;margin:6px 0 0;padding:0;display:grid}
+.deliver li{display:grid;grid-template-columns:3rem 1fr;gap:14px;padding:15px 0;border-top:1px solid var(--gold-soft)}
+.deliver li:last-child{border-bottom:1px solid var(--gold-soft)}
+.deliver .code{font:700 12px/1.5 var(--f-sans);color:var(--gold);letter-spacing:.12em}
+.deliver strong{display:block;font-weight:600}
+.deliver span{display:block;color:var(--paper-dim);font-size:14.5px;line-height:1.55}
+.price{display:flex;align-items:baseline;gap:14px;margin-top:20px}
+.price b{font:800 clamp(4rem,9vw,6rem)/.9 var(--f-sans);color:var(--gold);font-variant-numeric:tabular-nums}
+.price span{font:600 11px/1.4 var(--f-sans);letter-spacing:.3em;text-transform:uppercase;color:var(--paper-dim)}
+.terms{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+.terms li{position:relative;padding-left:22px;font-size:15px}
+.terms li::before{content:"";position:absolute;left:0;top:.66em;width:10px;height:1px;background:var(--gold)}
+.cta-row{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
+.fine{margin-top:26px;padding-top:14px;border-top:1px solid var(--gold-soft);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase}
+
+/* rail */
+.rail{position:fixed;right:clamp(14px,2.4vw,30px);top:50%;transform:translateY(-50%);z-index:5;display:grid;gap:2px}
+.rail button{appearance:none;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:flex-end;gap:10px;
+  padding:6px 0;font:600 9.5px/1 var(--f-sans);letter-spacing:.24em;text-transform:uppercase;color:var(--paper-dim)}
+.rail button span{opacity:0;transform:translateX(6px);transition:.25s;text-shadow:0 1px 6px #000}
+.rail button i{display:block;width:18px;height:1px;background:var(--paper-dim);transition:.25s}
+.rail button:hover span,.rail button.on span{opacity:1;transform:none}
+.rail button.on{color:var(--gold)}
+.rail button.on i{width:34px;background:var(--gold)}
+
+/* drawing furniture */
+.tblock{position:fixed;right:clamp(14px,2.4vw,30px);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:4;
+  display:grid;grid-template-columns:auto auto;border:1px solid var(--gold-soft);background:var(--panel);
+  font:500 9.5px/1.3 var(--f-sans);letter-spacing:.2em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.tblock div{padding:8px 11px;border-bottom:1px solid var(--gold-soft)}
+.tblock div:nth-child(odd){color:var(--paper-dim);border-right:1px solid var(--gold-soft)}
+.tblock div:nth-last-child(-n+2){border-bottom:0}
+.tblock .hi{color:var(--gold)}
+.tblock .nfc{color:#D2564A}
+.compass{position:fixed;left:clamp(14px,2.4vw,30px);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:4;display:flex;align-items:center;gap:14px;
+  font:500 9.5px/1 var(--f-sans);letter-spacing:.2em;color:var(--paper-dim);text-transform:uppercase}
+.compass svg{width:44px;height:44px;overflow:visible}
+.badge{position:fixed;left:clamp(16px,4vw,44px);top:calc(78px + env(safe-area-inset-top,0px));z-index:4;font:600 9.5px/1 var(--f-sans);letter-spacing:.3em;text-transform:uppercase;color:var(--paper-dim)}
+.badge b{color:var(--gold);font-weight:600}
+
+/* due diligence deck */
+main{pointer-events:none}
+main .panel,main a,main button{pointer-events:auto}
+#dim{position:fixed;inset:0;z-index:1;background:#0E0E0E;opacity:0;pointer-events:none}
+#deck{position:fixed;left:30%;top:52%;width:0;height:0;z-index:2;perspective:1800px;pointer-events:none;--cw:clamp(150px,15.5vw,250px)}
+.card{position:absolute;left:calc(var(--cw)/-2);top:calc(var(--cw)*-.647);width:var(--cw);height:calc(var(--cw)*1.294);
+  background:#fff;border:0;padding:0;cursor:zoom-in;transform-origin:50% 120%;opacity:0;pointer-events:none;
+  box-shadow:0 18px 40px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.4);will-change:transform,opacity;overflow:hidden}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;max-width:none;transition:filter .2s}
+.card img.land{width:129.4%;height:77.3%;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg)}
+.card:hover img{filter:brightness(1.06)}
+.card:hover{box-shadow:0 0 0 2px var(--gold),0 22px 46px rgba(0,0,0,.6)}
+.card .peek{position:absolute;right:8px;bottom:8px;width:26px;height:26px;border-radius:50%;background:var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.35);opacity:var(--peek,0);transition:opacity .2s}
+.card .peek::before,.card .peek::after{content:"";position:absolute;left:50%;top:50%;background:#0E0E0E;transform:translate(-50%,-50%)}
+.card .peek::before{width:11px;height:2px}.card .peek::after{width:2px;height:11px}
+#deckHint{position:absolute;left:0;top:calc(var(--cw)*.86);transform:translateX(-50%);margin:0;white-space:nowrap;display:flex;align-items:center;gap:10px;
+  padding:10px 16px;background:var(--panel);border:1px solid var(--gold-soft);font:600 11px/1 var(--f-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--paper);opacity:0;pointer-events:none}
+#deckHint .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(184,146,79,.6);animation:ping 1.8s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(184,146,79,.6)}100%{box-shadow:0 0 0 12px rgba(184,146,79,0)}}
+.coarse-pt{display:none}
+@media (pointer:coarse){.coarse-pt{display:inline}.fine-pt{display:none}}
+@media (prefers-reduced-motion:reduce){#deckHint .dot{animation:none}}
+.card:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.toc{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}
+.toc li{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid var(--gold-soft);font-size:14px;min-width:0}
+.toc li b{font:700 11px/1 var(--f-sans);letter-spacing:.12em;color:var(--gold);min-width:1.9rem;font-variant-numeric:tabular-nums}
+.toc button{all:unset;cursor:pointer;color:var(--paper)}
+.toc button:hover{color:var(--gold)}
+.toc button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#viewer[hidden]{display:none}
+#viewer{position:fixed;inset:0;z-index:20;background:rgba(8,8,8,.94);display:grid;grid-template-rows:auto 1fr auto;padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(14px + env(safe-area-inset-bottom,0px))}
+#viewer .vt{display:flex;justify-content:space-between;align-items:center;gap:16px;font:600 11px/1.3 var(--f-sans);letter-spacing:.24em;text-transform:uppercase;color:var(--paper-dim)}
+#viewer .vt b{color:var(--gold);font-weight:700}
+#viewer .stage{min-height:0;display:grid;place-items:center;padding-block:14px}
+#viewer .stage img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.6);background:#fff}
+#viewer .vb{display:flex;justify-content:center;gap:12px}
+.vbtn{appearance:none;font:600 12px/1 var(--f-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--paper);background:transparent;border:1px solid var(--gold-soft);padding:12px 18px;cursor:pointer}
+.vbtn:hover{border-color:var(--gold);color:var(--gold)}
+@media (max-width:860px){ .links a.l{display:none} }
+@media (max-width:760px){
+  .sheet,.sheet.r{justify-content:stretch;align-items:flex-end;min-height:140vh;padding-block:10vh}
+  .sheet.hero{align-items:flex-start;min-height:150vh}
+  .panel{max-width:none;width:100%}
+  .rail,.tblock,.badge{display:none}
+  .word span{display:none}
+  .nav .btn{padding:12px 14px;font-size:11px;letter-spacing:.1em}
+  #deck{left:50%;top:30%;--cw:clamp(110px,30vw,170px)}
+  .toc{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .cue i{animation:none}
+  .rail button span,.rail button i,.btn{transition:none}
+}
+</style>
+
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="still" id="planimg" aria-hidden="true"><img alt="" src="assets/plan.jpg"></div>
+<div class="still" id="render"><img alt="Rendering of a single-tenant bank with drive-thru on Route 73 in Voorhees, NJ, built from the Forma site plan" src="assets/render.jpg"><div class="scrim"></div></div>
+<div id="dim"></div>
+<div id="deck">
+  <button class="card" data-label="Cover" aria-label="Open page: Cover"><img alt="" src="assets/pages/p01.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="01 Opportunity summary" aria-label="Open page: 01 Opportunity summary"><img alt="" src="assets/pages/p02.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="02 Location &amp; zoning" aria-label="Open page: 02 Location &amp; zoning"><img alt="" src="assets/pages/p03.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="03 Development program" aria-label="Open page: 03 Development program"><img alt="" src="assets/pages/p04.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="Exhibit A · Site plan" aria-label="Open page: Exhibit A · Site plan"><img class="land" alt="" src="assets/pages/p05.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="Exhibit B1 · Rendering" aria-label="Open page: Exhibit B1 · Rendering"><img class="land" alt="" src="assets/pages/p06.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="04 Permitting roadmap" aria-label="Open page: 04 Permitting roadmap"><img alt="" src="assets/pages/p07.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="05 Pro forma · build-to-suit" aria-label="Open page: 05 Pro forma · build-to-suit"><img alt="" src="assets/pages/p08.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="05 Pro forma · continued" aria-label="Open page: 05 Pro forma · continued"><img alt="" src="assets/pages/p09.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="06 Returns by scenario" aria-label="Open page: 06 Returns by scenario"><img alt="" src="assets/pages/p10.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <button class="card" data-label="07 Ground lease &amp; pad sale" aria-label="Open page: 07 Ground lease &amp; pad sale"><img alt="" src="assets/pages/p11.jpg" decoding="async"><span class="peek" aria-hidden="true"></span></button>
+  <p id="deckHint" aria-hidden="true"><span class="dot"></span><span class="fine-pt">Click any page to read it</span><span class="coarse-pt">Tap any page to read it</span></p>
+</div>
+<div id="labels" aria-hidden="true">
+  <div class="tag" id="t-area"></div><div class="tag" id="t-front"></div><div class="tag" id="t-setback"></div><div class="tag" id="t-env"></div>
+  <div class="tag" id="t-a"></div><div class="tag" id="t-park"></div><div class="tag" id="t-drive"></div>
+</div>
+
+<header class="nav">
+  <a class="mark" href="#top" aria-label="Forma home"><span class="mono">F</span><span class="word"><strong>FORMA</strong><span>Preliminary Design</span></span></a>
+  <div class="links">
+    <a class="l" href="#how">Process</a>
+    <a class="l" href="#case">Case Study</a>
+    <a class="l" href="#order">Pricing</a>
+    <a class="btn" href="https://formadesigns.framer.ai" target="_top">Order your package</a>
+  </div>
+</header>
+
+<div class="badge" id="badge">Case study · <b>336 Route 73, Voorhees NJ</b></div>
+
+<nav class="rail" aria-label="Sections">
+  <button data-i="0"><span>Overview</span><i></i></button>
+  <button data-i="1"><span>Ground</span><i></i></button>
+  <button data-i="2"><span>Lines</span><i></i></button>
+  <button data-i="3"><span>Program</span><i></i></button>
+  <button data-i="4"><span>Plan</span><i></i></button>
+  <button data-i="5"><span>Rendering</span><i></i></button>
+  <button data-i="6"><span>Package</span><i></i></button>
+  <button data-i="7"><span>Inside</span><i></i></button>
+  <button data-i="8"><span>Order</span><i></i></button>
+</nav>
+
+<main id="top">
+  <section class="sheet hero">
+    <div class="panel">
+      <p class="kicker">Preliminary Site Design</p>
+      <h1>Sell the land <em>by showing what it can become.</em></h1>
+      <p class="lede">Forma turns a vacant land listing into a preliminary site plan, a 3D rendering and a due diligence package. Agents use it to market the parcel and answer a buyer's first questions.</p>
+      <div class="hero-actions">
+        <a class="btn" href="https://formadesigns.framer.ai" target="_top">Order your package</a>
+      </div>
+      <div class="cue"><i></i>Scroll to build the site</div>
+    </div>
+  </section>
+
+  <section class="sheet" id="how">
+    <div class="panel">
+      <p class="bar"><b>01</b> Read the ground</p>
+      <h2>Topography from <em>LiDAR.</em></h2>
+      <p>This is a real Forma job: 1.32 acres on NJ Route 73 in Voorhees Township. Every package starts from public LiDAR elevation data and the county parcel record. The point cloud becomes contours, so slope, high ground and low spots show up before anyone walks the site.</p>
+      <dl class="facts">
+        <dt>Source</dt><dd>Public LiDAR and parcel data</dd>
+        <dt>Survey</dt><dd>Not required. If the seller has one, we use it.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sheet r">
+    <div class="panel">
+      <p class="bar"><b>02</b> Draw the lines</p>
+      <h2>Boundary, setbacks, <em>envelope.</em></h2>
+      <p>Property lines come from the parcel record. Setbacks come from the local zoning code. What's left between them is the buildable envelope, and the concept has to fit inside it.</p>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <div class="panel">
+      <p class="bar"><b>03</b> Fit the program</p>
+      <h2>A layout a buyer <em>can believe.</em></h2>
+      <p>Buildings, parking, access and landscaping go in at real dimensions, using the uses the zoning allows. On this parcel that's a 5,900 SF bank with drive-thru, a loop drive off one curb cut and 25 spaces.</p>
+    </div>
+  </section>
+
+  <section class="sheet r" id="case">
+    <div class="panel">
+      <p class="bar"><b>04</b> Case study · 336 Route 73</p>
+      <h2>The plan <em>you actually get.</em></h2>
+      <p>Everything you just watched is traced from this sheet. F1 puts the property line, setbacks and full program on the real aerial, to scale.</p>
+      <div class="stats">
+        <div><b>1.32 AC</b><span>Gross site area</span></div>
+        <div><b>5,900 SF</b><span>Bank with drive-thru</span></div>
+        <div><b>25</b><span>Parking spaces</span></div>
+        <div><b>MB</b><span>Major Business zoning</span></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn ghost" href="https://formadesigns.framer.ai/study" target="_top">Read the full case study</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <div class="panel">
+      <p class="bar"><b>05</b> Same layout, in 3D</p>
+      <h2>Then we <em>render it.</em></h2>
+      <p>The rendering is built from the plan, so the building, the drive loop and every parking stall sit where the plan puts them. Buyers see a finished project in its real setting, from the road to the tree line.</p>
+    </div>
+  </section>
+
+  <section class="sheet r">
+    <div class="panel">
+      <p class="bar"><b>06</b> The package</p>
+      <h2>Three parts, <em>one listing.</em></h2>
+      <ul class="deliver">
+        <li><span class="code">F1</span><div><strong>Preliminary development plan</strong><span>The site layout on the aerial with property line, setbacks and program.</span></div></li>
+        <li><span class="code">3D</span><div><strong>Rendering</strong><span>The plan built out in its real surroundings, ready for the listing.</span></div></li>
+        <li><span class="code">DD</span><div><strong>Due diligence package</strong><span>Opportunity summary, zoning, development program, permitting roadmap, pro forma and disposition scenarios. The Route 73 package runs 11 pages.</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sheet r">
+    <div class="panel">
+      <p class="bar"><b>07</b> Inside the package</p>
+      <h2>Eleven pages a buyer's <em>analyst can use.</em></h2>
+      <p>The Route 73 package answers the first questions a developer asks. What can go here, what it takes to permit, what it costs to build, and what the land is worth under each way to sell it. At the $600K asking price, all three exits modeled show positive value.</p>
+      <ul class="toc">
+        <li><b>01</b><button data-page="1">Opportunity summary</button></li>
+        <li><b>02</b><button data-page="2">Location &amp; zoning</button></li>
+        <li><b>03</b><button data-page="3">Development program</button></li>
+        <li><b>A</b><button data-page="4">Exhibit: site plan</button></li>
+        <li><b>B1</b><button data-page="5">Exhibit: rendering</button></li>
+        <li><b>04</b><button data-page="6">Permitting · 9–14 months</button></li>
+        <li><b>05</b><button data-page="7">Pro forma · build-to-suit</button></li>
+        <li><b>06</b><button data-page="9">Returns by scenario</button></li>
+        <li><b>07</b><button data-page="10">Ground lease &amp; pad sale</button></li>
+      </ul>
+      <p class="note">Every page in the fan opens full size. Click one to read it.</p>
+    </div>
+  </section>
+
+  <section class="sheet" id="order">
+    <div class="panel">
+      <p class="bar"><b>08</b> Order</p>
+      <h2>Put a project on <em>your listing.</em></h2>
+      <div class="price"><b>$500</b><span>Flat, per listing</span></div>
+      <ul class="terms">
+        <li>No deposit. Save a card when you order.</li>
+        <li>Your card is charged when the package is delivered.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn" href="https://formadesigns.framer.ai" target="_top">Order your package</a>
+      </div>
+      <p class="note fine">Forma · Preliminary design — not for construction</p>
+    </div>
+  </section>
+</main>
+
+<div id="viewer" role="dialog" aria-modal="true" aria-label="Due diligence package page" hidden>
+  <div class="vt"><span>Due diligence package · <b id="vlabel"></b></span><button class="vbtn" id="vclose">Close</button></div>
+  <div class="stage"><img id="vimg" alt=""></div>
+  <div class="vb"><button class="vbtn" id="vprev">Previous</button><span class="vt" id="vcount" style="align-self:center"></span><button class="vbtn" id="vnext">Next</button></div>
+</div>
+
+<div class="compass" aria-hidden="true">
+  <svg viewBox="-22 -22 44 44"><g id="north">
+    <circle r="18" fill="none" stroke="#6f6c65" stroke-width="1"/>
+    <path d="M0,-15 L5,6 L0,2 L-5,6 Z" fill="#B8924F"/>
+    <text x="0" y="-20" fill="#F2EFE8" font-size="7" text-anchor="middle" font-family="Archivo, Arial, sans-serif">N</text>
+  </g></svg>
+</div>
+
+<div class="tblock" aria-hidden="true">
+  <div>Project</div><div id="tb-proj">336 Route 73, Voorhees NJ</div>
+  <div>Sheet</div><div class="hi" id="tb-sheet">C-0 LiDAR point cloud</div>
+  <div>Status</div><div class="nfc">Not for construction</div>
+</div>
+
+<script src="assets/three.min.js"></script>
+<script>
+(function(){
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ss=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t);};
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const ease=t=>{t=clamp(t,0,1);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
+
+/* ---------- scroll mapping + DOM layers (work without WebGL) ---------- */
+const sheets=[...document.querySelectorAll('.sheet')];
+const railBtns=[...document.querySelectorAll('.rail button')];
+const NAMES=['C-0 LiDAR point cloud','C-1 Existing topography','C-2 Boundary & setbacks','C-3 Site program','F1 Preliminary development plan','3D Rendering','Forma package','DD Due diligence package','Order'];
+const LAST=sheets.length-1;
+let anchors=[];
+function measure(){
+  const vh=innerHeight,max=document.documentElement.scrollHeight-vh;
+  anchors=sheets.map((s,i)=>i===0?0:Math.min(max,Math.max(0,s.offsetTop+s.offsetHeight/2-vh/2)));
+  for(let i=1;i<anchors.length;i++) if(anchors[i]<=anchors[i-1]) anchors[i]=anchors[i-1]+1;
+}
+function scrollS(){const y=scrollY;for(let i=0;i<anchors.length-1;i++){if(y<anchors[i+1])return i+clamp((y-anchors[i])/(anchors[i+1]-anchors[i]),0,1);}return LAST;}
+railBtns.forEach(b=>b.addEventListener('click',()=>scrollTo({top:anchors[+b.dataset.i],behavior:reduce?'auto':'smooth'})));
+addEventListener('resize',measure);measure();
+
+const tbSheet=document.getElementById('tb-sheet'),tbProj=document.getElementById('tb-proj'),badge=document.getElementById('badge');
+const renderEl=document.getElementById('render'),renderImg=renderEl.querySelector('img'),scrim=renderEl.querySelector('.scrim');
+const planEl=document.getElementById('planimg');
+let activeIdx=-1;
+/* due diligence deck: stack slides in (5.3→6), fans out (6.1→7), clears for the order section */
+const cards=[...document.querySelectorAll('#deck .card')],dim=document.getElementById('dim');
+const NC=cards.length,MID=(NC-1)/2,deck=document.getElementById('deck'),deckHint=document.getElementById('deckHint');
+function updateDeck(S){
+  const vh=innerHeight,cw=cards.length?cards[0].offsetWidth:0;
+  const fan=ease(ss(6.15,6.95,S)),out=ss(7.4,7.85,S);
+  dim.style.opacity=.55*ss(5.35,5.9,S);
+  const hint=ss(6.55,6.95,S)*(1-out);deckHint.style.opacity=hint;deck.style.setProperty('--peek',hint.toFixed(3));
+  cards.forEach((c,i)=>{
+    const a=ease(ss(5.3+i*.03,5.8+i*.03,S));
+    if(a<=0.001){c.style.opacity=0;c.style.pointerEvents='none';return;}
+    const k=i-MID,jit=((i*37)%7-3)*.7*(1-fan);
+    const tx=k*cw*.17*fan, ty=(1-a)*vh*1.1 + k*k*cw*.012*fan - out*vh*.25 + (1-fan)*i*-2;
+    const rz=k*4.2*fan+jit, rx=(1-a)*38+(1-fan)*10;
+    c.style.transform=`translate3d(${tx}px,${ty}px,${-i*2*(1-fan)}px) rotateX(${rx}deg) rotateZ(${rz}deg)`;
+    c.style.opacity=Math.min(1,a*1.4)*(1-out);
+    c.style.pointerEvents=a>.9&&out<.5?'auto':'none';
+  });
+}
+/* where the rendering sits on screen: cover on wide screens, a framed band on portrait screens */
+const RIMG=1527/704,FOCUS=.57;
+function finalRect(){const a=innerWidth/innerHeight,R=RIMG;
+  if(a>=1.15) return a<R?{sx:R/a,sy:1,cx:0,cy:0,fit:false}:{sx:1,sy:a/R,cx:0,cy:0,fit:false};
+  const sx=a<.8?1.5:1.2,sy=sx*a/R;return {sx,sy,cx:-(2*FOCUS-1)*sx,cy:a<.8?.36:.22,fit:true};}
+let rectKey='';
+function placeRender(){const vw=innerWidth,vh=innerHeight,key=vw+'x'+vh;if(key===rectKey)return;rectKey=key;const r=finalRect();
+  Object.assign(renderImg.style,{left:((r.cx-r.sx+1)/2*vw)+'px',top:((1-(r.cy+r.sy))/2*vh)+'px',width:(r.sx*vw)+'px',height:(r.sy*vh)+'px'});
+  renderEl.classList.toggle('fit',r.fit);}
+function updateDom(S,gl){
+  placeRender();
+  const i=clamp(Math.round(S),0,LAST);
+  if(i!==activeIdx){activeIdx=i;railBtns.forEach((b,k)=>b.classList.toggle('on',k===i));tbSheet.textContent=NAMES[i];}
+  const rA=gl?ss(4.9,5.02,S):ss(4.72,5.02,S);
+  renderEl.style.opacity=rA;
+  renderImg.style.transform=`scale(${1+.06*ss(5,LAST,S)})`;
+  scrim.style.opacity=ss(5.3,5.9,S);
+  if(!gl) planEl.style.opacity=ss(3.5,4,S)*(1-rA);
+  updateDeck(S);
+}
+/* page viewer */
+const viewer=document.getElementById('viewer'),vimg=document.getElementById('vimg'),vlabel=document.getElementById('vlabel'),vcount=document.getElementById('vcount');
+let vi=0,lastFocus=null;
+function openPage(i){vi=(i+NC)%NC;const c=cards[vi];vimg.src=c.querySelector('img').src;vimg.alt=c.dataset.label+' page';vlabel.textContent=c.dataset.label;vcount.textContent=`${vi+1} / ${NC}`;
+  if(viewer.hidden){lastFocus=document.activeElement;viewer.hidden=false;document.getElementById('vclose').focus();}}
+function closeViewer(){viewer.hidden=true;if(lastFocus)lastFocus.focus();}
+cards.forEach((c,i)=>c.addEventListener('click',()=>openPage(i)));
+document.querySelectorAll('.toc button').forEach(b=>b.addEventListener('click',()=>openPage(+b.dataset.page)));
+document.getElementById('vclose').addEventListener('click',closeViewer);
+document.getElementById('vprev').addEventListener('click',()=>openPage(vi-1));
+document.getElementById('vnext').addEventListener('click',()=>openPage(vi+1));
+viewer.addEventListener('click',e=>{if(e.target===viewer||e.target.classList.contains('stage'))closeViewer();});
+addEventListener('keydown',e=>{if(viewer.hidden)return;if(e.key==='Escape')closeViewer();if(e.key==='ArrowRight')openPage(vi+1);if(e.key==='ArrowLeft')openPage(vi-1);});
+if(!window.THREE){document.documentElement.classList.add('no-gl');const f=()=>updateDom(scrollS(),false);addEventListener('scroll',f,{passive:true});f();return;}
+
+/* ---------- site data traced from sheet F1, 336 Route 73 (world units; plan px -> (px-1582)/31.64) ---------- */
+const SITE={"ftPerUnit":5.502795833582524,"parcel":[[-25.442,-20.575],[32.933,3.161],[28.793,27.086],[-31.068,16.941]],"setback":[[-22.425,-15.501],[28.861,5.672],[25.75,22.921],[-26.938,13.867]],"paving":[{"outer":[[-32.332,-5.025],[-32.712,-2.718],[-32.332,-2.465],[-32.775,0.158],[-32.775,3.698],[-32.617,3.856],[-31.985,3.698],[-31.669,1.201],[-31.448,0.917],[-30.278,0.379],[-28.951,0.411],[-28.856,1.422],[-29.298,1.643],[-29.393,1.96],[-29.077,2.212],[-29.014,2.623],[-28.761,2.686],[-28.571,1.201],[-28.129,0.948],[-27.971,0.506],[-27.528,0.442],[-26.264,0.853],[-25.316,0.853],[-25.032,1.454],[-24.431,1.359],[-23.957,1.549],[-22.946,2.845],[-22.661,4.33],[-22.408,4.488],[-22.124,2.339],[-21.587,1.612],[-20.828,-1.454],[-18.142,-1.58],[-16.909,-5.721],[-15.202,-7.332],[-13.622,-7.838],[-11.662,-7.585],[-5.436,-5.405],[-3.698,-4.583],[-2.718,-4.678],[-2.528,-4.52],[-2.655,-3.951],[-2.054,-3.603],[-1.454,-4.551],[0.126,-4.298],[0.853,-3.887],[0.98,-2.908],[1.485,-2.528],[11.41,0.98],[12.358,1.643],[13.338,2.876],[13.812,4.614],[13.274,8.186],[12.769,9.576],[12.484,11.252],[11.757,12.263],[10.714,12.547],[10.272,12.516],[10.051,12.263],[10.019,11.599],[10.556,9.387],[10.367,8.913],[8.344,8.502],[7.016,8.47],[6.669,8.154],[5.341,7.933],[5.31,7.775],[4.077,7.585],[3.508,7.743],[3.477,7.364],[3.287,8.059],[2.908,8.186],[3.161,8.723],[2.813,10.556],[2.623,10.872],[2.307,10.872],[2.086,10.43],[1.833,10.398],[2.465,7.238],[1.738,7.016],[0.632,7.143],[0.601,6.922],[-6.258,5.278],[-6.574,5.531],[-6.606,6.542],[-7.206,8.281],[-7.775,8.565],[-8.502,8.565],[-8.944,9.861],[-9.166,11.568],[-8.786,12.073],[-8.755,12.611],[-9.292,15.36],[-8.597,15.645],[-5.973,15.992],[-5.531,16.34],[-3.887,16.688],[-2.528,16.751],[-2.181,17.067],[2.276,18.142],[2.971,17.92],[3.666,18.363],[5.215,18.742],[6.542,18.71],[7.269,19.121],[8.091,19.185],[8.944,19.564],[9.292,20.164],[11.947,20.607],[12.579,20.291],[13.306,20.291],[14.001,20.544],[14.412,21.081],[16.972,21.492],[18.268,21.46],[19.659,14.855],[19.374,14.602],[17.952,14.349],[16.593,13.812],[15.708,12.769],[15.55,11.599],[16.909,5.31],[16.814,3.445],[16.34,1.675],[15.929,1.106],[15.929,0.727],[16.466,0.537],[14.349,-0.284],[13.748,-1.359],[12.8,-1.707],[12.421,-1.327],[12.01,-1.359],[11.884,-2.054],[11.41,-2.402],[9.893,-2.781],[8.502,-3.445],[8.123,-2.908],[7.807,-2.908],[7.364,-3.887],[6.922,-3.603],[6.479,-3.635],[4.678,-4.33],[4.109,-5.12],[2.781,-5.183],[0.569,-6.068],[-0.158,-6.1],[-0.632,-6.858],[-1.928,-7.048],[-4.393,-8.091],[-5.088,-7.996],[-5.563,-8.66],[-6.606,-8.786],[-6.953,-9.134],[-8.881,-9.987],[-11.22,-10.588],[-11.504,-11.062],[-13.053,-11.599],[-13.18,-10.967],[-14.033,-11.03],[-16.087,-10.367],[-18.047,-9.166],[-19.627,-7.238],[-20.86,-3.698],[-22.061,-2.497],[-22.724,-2.181],[-24.652,-1.896],[-25.348,-2.212],[-27.276,-2.497],[-27.497,-3.034],[-28.097,-3.508],[-28.445,-3.066],[-29.772,-3.413],[-30.468,-4.204],[-30.341,-5.278],[-31.1,-5.12],[-31.542,-5.31]],"holes":[]}],"stripes":[[[-32.191,-3.448],[-31.911,-5.04]],[[-5.59,8.921],[-4.89,5.702]],[[-3.764,9.348],[-3.076,6.15]],[[-1.947,9.769],[-1.245,6.526]],[[-0.122,10.178],[0.561,7.06]],[[4.566,11.255],[5.277,7.978]],[[6.391,11.689],[7.06,8.554]],[[8.225,12.068],[8.935,8.802]],[[-7.745,15.564],[-7.059,12.412]],[[-5.99,15.915],[-5.292,12.734]],[[-4.261,16.411],[-3.548,13.115]],[[-2.48,16.673],[-1.809,13.519]],[[-0.773,17.204],[-0.052,13.902]],[[0.962,17.652],[1.696,14.277]],[[2.756,17.84],[3.427,14.7]],[[4.477,18.342],[5.166,15.104]],[[6.25,18.634],[6.918,15.461]],[[7.976,19.067],[8.661,15.841]],[[9.664,19.765],[10.409,16.272]],[[11.426,20.073],[12.156,16.628]],[[13.219,20.211],[13.903,17.041]],[[14.933,20.698],[15.652,17.423]],[[16.704,21.014],[17.389,17.827]]],"bld":[[[4.109,-1.517],[0.853,-2.75],[0.79,-3.856],[-1.422,-4.488],[-1.865,-3.761],[-3.192,-3.761],[-3.635,-4.52],[-5.499,-4.393],[-9.861,-5.942],[-11.599,-1.138],[-17.889,-1.327],[-19.753,4.046],[-19.532,5.815],[-20.48,5.879],[-20.891,8.123],[-16.751,8.692],[-16.34,9.766],[-11.346,9.861],[-11.346,7.775],[-10.145,7.743],[-9.102,5.468],[-9.26,1.58],[2.023,3.729]]],"walks":[[[-12.705,5.626],[-12.705,7.206],[-12.358,7.206],[-12.263,7.396],[-11.125,7.396],[-11.125,6.163],[-11.315,6.131],[-11.41,5.626]],[[12.863,8.407],[5.025,6.606],[5.436,4.393],[5.31,3.603],[4.551,2.718],[2.971,2.244],[3.034,1.549],[2.845,1.549],[2.655,2.37],[2.813,3.066],[4.204,3.571],[4.551,4.014],[4.046,6.321],[-6.384,4.014],[-6.163,2.465],[-7.617,2.307],[-8.123,4.362],[-8.786,4.488],[-10.651,12.453],[-14.855,11.536],[-14.633,10.24],[-14.823,9.861],[-16.498,9.924],[-16.814,11.062],[-20.259,10.303],[-20.417,9.829],[-20.133,8.534],[-20.828,8.344],[-21.049,8.407],[-21.555,10.872],[-9.893,13.59],[-8.723,8.249],[-7.585,8.312],[-7.364,8.154],[-6.669,4.93],[-3.887,5.373],[-3.066,5.752],[-0.885,6.068],[0.601,6.574],[12.579,9.26],[12.769,9.197]]],"trees":[[-22.632,-12.499,2.62],[-17.878,-13.949,1.48],[-14.391,-5.293,1.33],[-11.885,-3.783,1.64],[-16.314,-3.419,0.58],[25.701,6.824,3.14],[-21.79,6.818,1.12],[-26.561,12.795,2.81],[24.934,21.575,1.9],[21.276,23.598,1.56]]};
+const FTU=SITE.ftPerUnit, SC=[1.3,6.65];
+function noise(x,z){
+  return Math.sin(x*0.031+1.3)*3.2+Math.cos(z*0.037-0.4)*2.6+Math.sin((x*0.6+z)*0.071)*1.2
+    +Math.sin(x*0.153+z*0.117)*0.45+Math.cos(x*0.21-z*0.19)*0.3
+    +9*Math.exp(-((x-85)**2+(z+65)**2)/1700)+6*Math.exp(-((x-95)**2+(z-60)**2)/1300);
+}
+function H(x,z){const d=Math.hypot(x-SC[0],z-SC[1]);return noise(x,z)*(0.1+0.9*ss(48,100,d));}
+const P=SITE.parcel;
+let a2=0;P.forEach((p,i)=>{const q=P[(i+1)%P.length];a2+=p[0]*q[1]-q[0]*p[1];});
+const sgn=Math.sign(a2);
+function edges(poly){return poly.map((p,i)=>{const q=poly[(i+1)%poly.length];const dx=q[0]-p[0],dz=q[1]-p[1],L=Math.hypot(dx,dz);return {p,q,dx:dx/L,dz:dz/L,nx:-sgn*dz/L,nz:sgn*dx/L,L};});}
+const E=edges(P);
+function sd(x,z){let m=Infinity;for(const e of E)m=Math.min(m,(x-e.p[0])*e.nx+(z-e.p[1])*e.nz);return m;}
+function mask(x,z){return ss(-7,3,sd(x,z));}
+const SET=SITE.setback;
+const polyArea=poly=>{let s=0;poly.forEach((p,i)=>{const q=poly[(i+1)%poly.length];s+=p[0]*q[1]-q[0]*p[1];});return Math.abs(s)/2;};
+const centroid=poly=>{let x=0,z=0;poly.forEach(p=>{x+=p[0];z+=p[1];});return [x/poly.length,z/poly.length];};
+const acres=u=>u*FTU*FTU/43560;
+function bearing(dx,dz){const n=-dz,e=dx;const ns=n>=0?'N':'S',ew=e>=0?'E':'W';const ang=Math.atan2(Math.abs(e),Math.abs(n))*180/Math.PI;
+  const d=Math.floor(ang),mF=(ang-d)*60,m=Math.floor(mF),s=Math.round((mF-m)*60);return `${ns} ${d}°${String(m).padStart(2,'0')}'${String(s).padStart(2,'0')}" ${ew}`;}
+const PAD=0;
+// Route 73 (traced from the aerial): east pavement edge + offsets to the west
+const RA=[-27.72,-24.59],RD=[-0.1628,0.9867],RN=[-0.9867,-0.1628];
+const rp=(s,o)=>[RA[0]+RD[0]*s+RN[0]*o,RA[1]+RD[1]*s+RN[1]*o];
+const roadLine=o=>[rp(-120,o),rp(150,o)];
+const roadOff=(x,z)=>(x-RA[0])*RN[0]+(z-RA[1])*RN[1];
+
+/* ---------- renderer ---------- */
+const canvas=document.getElementById('scene');let renderer;
+try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});}
+catch(err){document.documentElement.classList.add('no-gl');const f=()=>updateDom(scrollS(),false);addEventListener('scroll',f,{passive:true});f();return;}
+const DPR=Math.min(devicePixelRatio||1,2);renderer.setPixelRatio(DPR);renderer.setClearColor(0x0E0E0E,1);
+const scene=new THREE.Scene();scene.fog=new THREE.Fog(0x0E0E0E,150,340);
+const camera=new THREE.PerspectiveCamera(40,1,0.5,1200);
+const BG=new THREE.Color(0x0E0E0E);
+const fogU={uFogNear:{value:150},uFogFar:{value:340},uBg:{value:BG}};
+const GOLD=0xB8924F;
+
+const SIZE=280,SEG=210;
+const tg=new THREE.PlaneGeometry(SIZE,SIZE,SEG,SEG);tg.rotateX(-Math.PI/2);tg.translate(SC[0],0,SC[1]);
+const pos=tg.attributes.position,mk=new Float32Array(pos.count);
+for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getZ(i);pos.setY(i,H(x,z));mk[i]=mask(x,z);}
+tg.setAttribute('aMask',new THREE.BufferAttribute(mk,1));
+const terrainMat=new THREE.ShaderMaterial({transparent:true,extensions:{derivatives:true},
+  uniforms:Object.assign({uGrade:{value:0},uPad:{value:PAD},uSurface:{value:0},uContour:{value:0},uParcel:{value:0},
+    uFill:{value:new THREE.Color(0x1D1D1B)},uLine:{value:new THREE.Color(GOLD)},uTint:{value:new THREE.Color(GOLD)},uPadCol:{value:new THREE.Color(0x2A2A27)}},fogU),
+  vertexShader:`attribute float aMask;uniform float uGrade,uPad;varying vec3 vPos;varying float vMask,vDist;
+    void main(){vec3 p=position;p.y=mix(p.y,uPad,uGrade*aMask);vPos=p;vMask=aMask;vec4 mv=modelViewMatrix*vec4(p,1.);vDist=-mv.z;gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`uniform vec3 uBg,uFill,uLine,uTint,uPadCol;uniform float uSurface,uContour,uParcel,uGrade,uFogNear,uFogFar;varying vec3 vPos;varying float vMask,vDist;
+    void main(){vec3 n=normalize(cross(dFdx(vPos),dFdy(vPos)));if(n.y<0.)n=-n;float diff=clamp(dot(n,normalize(vec3(-.5,.8,.35))),0.,1.);
+      vec3 col=uFill*(.5+.75*diff);float inside=smoothstep(.55,.95,vMask);col=mix(col,uPadCol*(.8+.3*diff),inside*uGrade);
+      float h=vPos.y/.6;float g=abs(fract(h-.5)-.5)/fwidth(h);float ln=1.-min(g,1.);
+      float hm=vPos.y/3.;float gm=abs(fract(hm-.5)-.5)/fwidth(hm);float lm=1.-min(gm,1.);
+      col=mix(col,uLine,max(ln*.38,lm*.85)*uContour*(1.-uGrade*inside));
+      vec2 gp=vPos.xz/10.;vec2 gg=abs(fract(gp-.5)-.5)/fwidth(gp);float gr=1.-min(min(gg.x,gg.y),1.);
+      col=mix(col,uLine,gr*.07*uContour);col=mix(col,uTint,inside*uParcel*.12*(1.-uGrade));
+      col=mix(col,uBg,smoothstep(uFogNear,uFogFar,vDist));gl_FragColor=vec4(col,uSurface);}`});
+const terrain=new THREE.Mesh(tg,terrainMat);scene.add(terrain);
+
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',pos);
+const pointMat=new THREE.ShaderMaterial({transparent:true,depthTest:false,depthWrite:false,
+  uniforms:Object.assign({uSize:{value:2.6*DPR},uScan:{value:0},uAlpha:{value:1},uLow:{value:new THREE.Color(0x4A4844)},uHigh:{value:new THREE.Color(GOLD)}},fogU),
+  vertexShader:`uniform float uSize,uScan,uFogNear,uFogFar;varying float vH,vScan,vFog;
+    void main(){vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=uSize*(70./-mv.z);vH=position.y;float d=(position.x+position.z*.45)-uScan;vScan=exp(-d*d/40.);vFog=smoothstep(uFogNear,uFogFar,-mv.z);gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`uniform vec3 uLow,uHigh,uBg;uniform float uAlpha;varying float vH,vScan,vFog;
+    void main(){vec2 c=gl_PointCoord-.5;if(dot(c,c)>.25)discard;float t=clamp((vH+3.)/14.,0.,1.);vec3 col=mix(uLow,uHigh,t);col=mix(col,vec3(1.,.96,.88),vScan*.8);col=mix(col,uBg,vFog);gl_FragColor=vec4(col,uAlpha*(.5+.5*vScan));}`});
+const points=new THREE.Points(pg,pointMat);points.renderOrder=3;scene.add(points);
+
+function ribbon(pts,closed,w,step){
+  step=step||0.6;const S=[];let dist=0;const n=pts.length,segs=closed?n:n-1;
+  for(let i=0;i<segs;i++){const a=pts[i],b=pts[(i+1)%n];const L=Math.hypot(b[0]-a[0],b[1]-a[1]);const k=Math.max(1,Math.ceil(L/step));
+    for(let j=0;j<k;j++){const t=j/k;S.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,dist+L*t]);}dist+=L;}
+  const last=closed?pts[0]:pts[n-1];S.push([last[0],last[1],dist]);
+  const P3=[],M=[],T=[],D=[],I=[];
+  for(let i=0;i<S.length;i++){const pr=S[Math.max(0,i-1)],nx=S[Math.min(S.length-1,i+1)];let tx=nx[0]-pr[0],tz=nx[1]-pr[1];const l=Math.hypot(tx,tz)||1;tx/=l;tz/=l;
+    const ox=-tz*w/2,oz=tx*w/2;for(const s of [1,-1]){const x=S[i][0]+ox*s,z=S[i][1]+oz*s;P3.push(x,H(x,z),z);M.push(mask(x,z));T.push(S[i][2]/dist);D.push(S[i][2]);}
+    if(i<S.length-1){const a=2*i;I.push(a,a+2,a+1,a+1,a+2,a+3);}}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));g.setAttribute('aMask',new THREE.Float32BufferAttribute(M,1));
+  g.setAttribute('aT',new THREE.Float32BufferAttribute(T,1));g.setAttribute('aDist',new THREE.Float32BufferAttribute(D,1));g.setIndex(I);return g;}
+function ribbonMat(color,dash,lift){return new THREE.ShaderMaterial({transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2,side:THREE.DoubleSide,
+  uniforms:Object.assign({uColor:{value:new THREE.Color(color)},uOpacity:{value:1},uDraw:{value:1},uDash:{value:dash||0},uLift:{value:lift||.35},uGrade:terrainMat.uniforms.uGrade,uPad:{value:PAD}},fogU),
+  vertexShader:`attribute float aMask,aT,aDist;uniform float uGrade,uPad,uLift,uFogNear,uFogFar;varying float vT,vD,vFog;
+    void main(){vec3 p=position;p.y=mix(p.y,uPad,uGrade*aMask)+uLift;vT=aT;vD=aDist;vec4 mv=modelViewMatrix*vec4(p,1.);vFog=smoothstep(uFogNear,uFogFar,-mv.z);gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`uniform vec3 uColor,uBg;uniform float uOpacity,uDraw,uDash;varying float vT,vD,vFog;
+    void main(){if(vT>uDraw)discard;if(uDash>0.&&fract(vD/uDash)>.55)discard;float head=smoothstep(uDraw-.025,uDraw,vT)*step(uDraw,.998);
+      vec3 col=mix(uColor,vec3(1.,.97,.9),head);col=mix(col,uBg,vFog);gl_FragColor=vec4(col,uOpacity);}`});}
+function addRibbon(geo,mat,order){const m=new THREE.Mesh(geo,mat);m.renderOrder=order;scene.add(m);return m;}
+
+// Route 73: two carriageways with lane lines
+const roadMat=ribbonMat(0x2A2A28,0,.06),laneMat=ribbonMat(0x8A8678,3.2,.12);
+const roads=[addRibbon(ribbon(roadLine(2.65),false,5.3,1.2),roadMat,1),addRibbon(ribbon(roadLine(9.45),false,5.9,1.2),roadMat,1),
+  addRibbon(ribbon(roadLine(2.65),false,.22,1.2),laneMat,2),addRibbon(ribbon(roadLine(9.45),false,.22,1.2),laneMat,2)];
+
+// parcel line + setback line (stay on top of the plan when it fades in, to show the match)
+const boundaryMat=ribbonMat(GOLD,0,.3);const boundary=addRibbon(ribbon([P[3],P[0],P[1],P[2]],true,.5),boundaryMat,11);
+const setbackMat=ribbonMat(0xF2EFE8,1.8,.3);const setback=addRibbon(ribbon(SET,true,.26),setbackMat,11);
+
+// paving, walks, stalls, building — all traced from F1
+function shapeOf(pts){const s=new THREE.Shape();pts.forEach((p,i)=>i?s.lineTo(p[0],-p[1]):s.moveTo(p[0],-p[1]));return s;}
+function flat(pts,mat,y){const g=new THREE.ShapeGeometry(shapeOf(pts));g.rotateX(-Math.PI/2);const m=new THREE.Mesh(g,mat);m.position.y=y;m.renderOrder=1;scene.add(m);return m;}
+const paveMat=new THREE.MeshBasicMaterial({color:0x3D3D38,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const walkMat=new THREE.MeshBasicMaterial({color:0xBDB4A2,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const paveOuter=SITE.paving[0].outer;
+const pave=flat(paveOuter,paveMat,.04);
+const walks=SITE.walks.map(w=>flat(w,walkMat,.06));
+const outlineMat=ribbonMat(GOLD,0,.14);
+const paveLine=addRibbon(ribbon(paveOuter,true,.16,.5),outlineMat,11);
+const stripeMat=new THREE.MeshBasicMaterial({color:0xF2EFE8,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+(function(){const P3=[],I=[];SITE.stripes.forEach(([a,b])=>{const dx=b[0]-a[0],dz=b[1]-a[1],L=Math.hypot(dx,dz),w=.13,nx=-dz/L*w/2,nz=dx/L*w/2,o=P3.length/3;
+  P3.push(a[0]+nx,.09,a[1]+nz,a[0]-nx,.09,a[1]-nz,b[0]+nx,.09,b[1]+nz,b[0]-nx,.09,b[1]-nz);I.push(o,o+2,o+1,o+1,o+2,o+3);});
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));g.setIndex(I);const m=new THREE.Mesh(g,stripeMat);m.renderOrder=2;scene.add(m);})();
+const BH=22/FTU; // one-story bank, ~22 ft to the parapet
+const wallMat=new THREE.MeshStandardMaterial({color:0xE2DED5,roughness:.88,transparent:true,side:THREE.DoubleSide});
+const roofMat=new THREE.MeshStandardMaterial({color:0x8E8A82,roughness:.9,transparent:true,side:THREE.DoubleSide});
+const edgeMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:0});
+const bGeo=new THREE.ExtrudeGeometry(shapeOf(SITE.bld[0]),{depth:BH,bevelEnabled:false});bGeo.rotateX(-Math.PI/2);
+const bldg=new THREE.Group();bldg.add(new THREE.Mesh(bGeo,[roofMat,wallMat]));bldg.add(new THREE.LineSegments(new THREE.EdgesGeometry(bGeo,25),edgeMat));
+bldg.scale.y=.001;bldg.visible=false;scene.add(bldg);
+const bldLine=addRibbon(ribbon(SITE.bld[0],true,.2,.5),outlineMat,11);
+
+// trees: existing woods (cleared inside the parcel) + the landscaping drawn on F1
+let seed=7;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+const coneGeo=new THREE.ConeGeometry(1.5,5,6);coneGeo.translate(0,2.5,0);
+const woods=[];
+for(let i=0;i<320;i++){const r=Math.sqrt(rnd())*125,th=rnd()*Math.PI*2;const x=SC[0]+Math.cos(th)*r,z=SC[1]+Math.sin(th)*r;
+  const o=roadOff(x,z);if(o>-4&&o<17)continue;
+  const thr=(o>-8&&o<=-4&&sd(x,z)<0&&Math.abs(z+1)<8);
+  woods.push({x,z,y:H(x,z),s:.55+rnd()*.55,rot:rnd()*6.3,clear:thr?1:ss(.05,.35,mask(x,z))});}
+const woodsMesh=new THREE.InstancedMesh(coneGeo,new THREE.MeshStandardMaterial({color:0x414B42,roughness:1,flatShading:true}),woods.length);scene.add(woodsMesh);
+const icoGeo=new THREE.IcosahedronGeometry(1,0);icoGeo.translate(0,1.8,0);
+const land=SITE.trees.map(t=>({x:t[0],z:t[1],s:Math.max(.7,t[2]),rot:rnd()*6.3}));
+const landMesh=new THREE.InstancedMesh(icoGeo,new THREE.MeshStandardMaterial({color:0x5F6B54,roughness:1,flatShading:true,transparent:true}),land.length);scene.add(landMesh);
+const dummy=new THREE.Object3D();let lastTree='';
+function updateTrees(surf,grade,lands){const key=surf.toFixed(3)+'|'+grade.toFixed(3)+'|'+lands.toFixed(3);if(key===lastTree)return;lastTree=key;
+  woods.forEach((t,i)=>{const sc=Math.max(.001,t.s*surf*(1-grade*t.clear));dummy.position.set(t.x,t.y,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc,sc);dummy.updateMatrix();woodsMesh.setMatrixAt(i,dummy.matrix);});
+  woodsMesh.instanceMatrix.needsUpdate=true;
+  land.forEach((t,i)=>{const o=i/land.length*.6;const sc=Math.max(.001,t.s*ss(o,o+.4,lands));dummy.position.set(t.x,0,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc*.9,sc);dummy.updateMatrix();landMesh.setMatrixAt(i,dummy.matrix);});
+  landMesh.instanceMatrix.needsUpdate=true;}
+scene.add(new THREE.HemisphereLight(0xF2EFE8,0x111111,.75));
+const sun=new THREE.DirectionalLight(0xFFE3BC,.95);sun.position.set(-60,90,50);scene.add(sun);
+
+
+/* ---------- the real plan (F1, 336 Route 73) ----------
+   Plane is 100 units wide; image px -> world: (px-1582)/31.64. Final camera solved from plan/rendering correspondences (avg reprojection error ~1.7 px). */
+const PW=100,PH=100*2256/3164,PXU=31.64;
+const FIN={pos:new THREE.Vector3(21.25,87.213,84.57),tgt:new THREE.Vector3(-3.094,0,2.809),up:new THREE.Vector3(-0.0071,0.685,-0.7285),vfov:22.25,aspect:1527/704};
+/* F1 as a 3D model: canopy heights from the aerial, landscape mounds, extruded bank. The rendering is projected onto it
+   from its own solved camera, so as the view tilts the plan's surfaces turn into the rendered surfaces in place. */
+const texL=new THREE.TextureLoader();
+const planTex=texL.load(document.querySelector('#planimg img').src);planTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+const rendTex=texL.load(document.querySelector('#render img').src);rendTex.minFilter=THREE.LinearFilter;rendTex.generateMipmaps=false;
+const HF=(()=>{const b=atob('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkjIyMjIyMjIyMiFwYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEJGyIjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMdCwEAAAAAChwjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIxkAABkzR0dHR0dHR0dAJgkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMZOkZHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0Y6FwIAAAABEzZFR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHMxkAABkzTGZqampqamhTJQYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcuXWpqampqampqampqampqampqampqampqampqampqampqampqampqamlYIgMAAAABFERjampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqamZMMxkAABkzTGZ/jo6OjoRUFwIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5IgY6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo11LgQAAAAACzVqh46Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Of2ZMMxkAABkyTGV/mLKysaBWEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARtrqLKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysq+PNgUAAAAAAhVLj66ysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKZf2ZMMxkAABkyS2N7lK/L1cJuGAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyySztXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1c6YMwQAAAAAAAQpicvV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXVzLKZf2ZMMxkAABkwP0lWa5DA4+2nOwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkO79Pn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn59dR5HQEAAAAAAAEgkOn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fnlzLKZf2ZMMxkAABkqJBkZI0ye3vvXbhUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFnQ+/7///////////////////////////////////////////////796ZczBwAAAAAAAAEkmfD+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABgjEQMBBCB+2P3pix8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEW3e/f7//////////////////////////////////////////////v75xlUNAAAAAAAAAAU5svX+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABggDAAAABZ11v3phhwBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGoLn/v7//////////////////////////////////////////////v7umSkCAAAAAAAAABFj0vv+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABghDQEAAh+B2f3idBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACJ5nv/v7//////////////////////////////////////////////v3cbREAAAAAAAAABTOe7P7+///////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABgmFwYEEEKf3/zWYQ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAENK32/v7////////////////////////////////////////////+/vvLUAgAAAAAAAAAEGPP+v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABktLiQnQ36+5PrFTAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRL75/v/////////////////////////////////////////////+/ve6PQQAAAAAAAAAFXHW+v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkyRVFjgajK5fe0OgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMWdD7/v/////////////////////////////////////////////+/vWvNQQAAAAAAAAACkSk6P3+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkyTGR9l7LL5fKiLAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASbt79/v/////////////////////////////////////////////+/ve/VR4UEQsEAQAAARNWv/f+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkyTGV/mLLL5OuLHwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEagef+/v/////////////////////////////////////////////+/vzlrYJ0a1YzFQYBAAMpm/D+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLL5OJ1FAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAImmO/+/v///////////////////////////////////////////////v778ebi3MujazgTAwEgku7+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLL49diDgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ0rfX+/v////////////////////////////////////////////////7+/v79/frw1aNZHQ40pPH+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLL4cZMCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZDvvn+///////////////////////////////////////////////////+/v7+/v7+++y5clR9z/n+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLL37U6BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApTyvr+/v7///////////////////////////////////////////////////////7+/v3y1sfZ9P7+///////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLL2qIsAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApRwvT7/f7+//7+/v7+/v///////////////////////////////////////////////v7++/r8/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLL1IwfAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUvg7vU6/v+/v7+/f3+/v7///////////////////////////////////////////////7+/v7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLLzHUUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALJ0Vmpuj9/vzw3+L0/f7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLKwWIOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwcYX8z6/vC3fYbI9/7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mbLIs00IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIHCwwbYMv6/d57KDOU7P7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mLLGozkEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhdBWWByquj9/eB/Lz2d7v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mLLCkiwDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkaj0Nng7/z+/vLBj53W+f7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkzTGZ/mLK8fh8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1/N+P39/v7+/v316u76/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkyTGV/mLG1aRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACUas5/n9/v7+/v7+/v7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABgyTGV/mLCoVA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhdPkMLj9fz+/v7+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABMsSWV/l6eINQYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIMJUx9sdrx+v7+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAYXNVd2iX5KEwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgkaPG6hzOj3/P7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAFEixPYEMWAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBhQvWIm43PH6/v7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAgsmQCwJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEDCBCcKLM6Pf8/v7+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAICAAMcSEQXAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIHFTBYirnc8fr9/v7+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAsQCQgmYWgrBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQNIUNxoszo9/z+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABYlJCJEeXgxBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgcVMVmLud3z+/7+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkwQExqi3cqAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBA0iRXar1Oz4/f7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkyS2J8j20hAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCBk5ZpfD4vT7/v7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkySmB4hFkWAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGEipQf6/V7Pj9/v7+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkxP0VUXDYKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMLHDxnmMPi9Pv+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkuLBsdIhECAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQYSKlGAr9Xt+f3+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABksHwcDBAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwsdPGiax+f2/P7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkrGwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBhMsV4u63PH6/f7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkqGgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADDSNHdaXN6Pf8/v7+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABkpGAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIFzRdjrvd8fr9/v7+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABciEQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQOJEd2ps7p9/z+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAABATBwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAggXNF6Pvd7z+/7+/v7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAQEAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBA4jSHmt1u75/f7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCBg6apzH5fX8/v7+/v7////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEFEitThLPY7vn9/v7+/v/////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMKHT1rncjl9fz+/v7+/v/////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQUSK1OEtNnv+f3+/v7+///////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwodPWydyOb2/P7+/v7////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBRIrU4W23PL7/v7+/v7////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCh0/cqjS7Pj9/v7+/v/////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGFDNfksHi9Pz+/v7+/v/////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQOI0h5q9Ps+f3+/v7+///////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAggXNWCSweL0/P7+/v7////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBA4kSXmr0+35/f7+/v7////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCRg2YZXG5/b8/v7+/v/////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEFDydShrbb8Pr9/v7+/v/////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMLH0BuoMrn9vz+/v7+///////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgcULlaHttrw+v3+/v7+///////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAwgQW+gyuf2/P7+/v7////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBxUvV4i32/L7/v7+/v7////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEDSFDdKjS6/j9/v7+/v/////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIGDdklcHh8/v+/v7+/v/////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQURKE59rNPr+P3+/v7+/v7+/v7+/v/////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwobOmWVwuHz+/7+/v37+vz+/v7////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBhEpT36t0+v19OXPydz0/f7+///////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADChw6ZZKwrYddU3rC8/7+/v/////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGESU5NyEOCyFrzPj+/v/////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIEBAIAAAQmgdn6/v7////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHM5Hh+/7+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACj2h6/3+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ9Xyfr+/v/////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMvq/X+/v/////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEopfT+/v/////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMzsvf+/v/////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZGxvr+/v/////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlZ1fz+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBv4f3+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARuL7P7+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAimk9P7+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDy7+P7+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACFDO+/7+///////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADGPb/f7////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFXvm/v7////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABH5Pw/v7////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACK6f1/v7////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPbz5/v7////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJVNH8/v7////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQbOD9/v/////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEahuv+/v/////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIlnfP+/v/////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMzsPf+/v/////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdIxvr+/v/////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxg2P3+///////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABV55f7+///////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASCS7/7+///////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAium9f7+///////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTy5+f7////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACVDN+/7////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWPb/f7////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFXrl/v7////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCBIUDwsGAwIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIpXw/v7////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKN2p1aVdCMSUZEAsGAwIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADMa32/v7////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEihNLi3dC+q5iAalZCMCQYDwoGAwIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHRcL6/v/////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU9tvX9/fz59vDn3dC+q5eAaVZBMCQYDwoGAwEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALWtT8/v/////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhRzfv+/v7+/v7+/fz59vDn3dC+q5eAaVVBLyMYDgkGAwEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARbuD9/v/////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1m2vz+/////v7+/v7+/v7+/fz59vHo3dG+q5eAaFVBLiIXDgkFAgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEbhur+/v/////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABZ/5v3+/////////////v7+/v7+/v7+/fz59vHo3dG/q5eAaFRALB4SCwcEAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIpofP+/v/////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASCU7/7+/////////////////////v7+/v7+/v7+/fz59vHo3dG/qI90XUo2JhsRCgYDAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU7t/j+///////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAi2o9P7+///////////////////////////+/v7+/v7+/v7+/fz59e7j18i0oItzXEo2JhsRCgYDAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlQy/v+///////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUC9+P7+///////////////////////////////////+/v7+/v7+/v79/Pr38+zi1si0oItzXEo2JhsSCgYDAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5k2v3+///////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACFLO+/7+//////////////////////////////////////////7+/v7+/v7+/v79/Pr38+zh1se0n4tzXEo3JhsSCgYEAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABV45P7+///////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWba/P7///////////////////////////////////////////////////7+/v7+/v7+/v79/Pr28uzh1ceznotzXEo3JhsSCgYEAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASGR7v7+///////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFn7m/f7///////////////////////////////////////////////////////////7+/v7+/v7+/v79/Pr28uvh1MaznopzXEk3JhsSCwYEAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyym9f7+///////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIJTv/v7///7+/v7+/v7///////////////////////////////////////////////////////7+/v7+/v7+/v79/Pr28evg08aznYlzXEk3JhkPCAUDAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTy4+P7////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACLKj0/v7+/v7+/v7+/v7+/v7+/v7///////////////////////////////////////////////////////7+/v7+/v7+/v79/Pr28erg08Wym4JoUkAvIBcPCAUDAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAClLM+/7////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFP734/v7+/vvz6OTq9fz+/v7+/v7+/v7///////////////////////////////////////////////////////////7+/v7+/v7+/v79/Pr28OfZy7ynkn5nUUAvIBcPCAUDAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGrd/f7////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHUM37/v7+99qrhXmLsdbl5eTn7/f8/v7+//////////////////////////////////////////////////////////////////7+/v7+/v7+/v38+/jz7eXZy7unkX5nUUAvIBcPCAUDAQAAAAAAAAAAAAAAAAAAAAABGoPo/v7////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALXtX7/fz0z4I9HBUgPmZ9fHiCmrre9/7+//////////////////////////////////////////////////////////////////////////7+/v7+/v7+/v38+/jz7eXYyrumkX1nUUAvIBcPCAUDAQAAAAAAAAAAAAACJ5zx/v7////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOYcTi4de5diwJAQACBxAXFhUaKUiH1fr+/v///////////////////////////////////////////////////////////////////////////////v7+/v7+/v7+/v38+vjz7eXYyrqmkHxmUD8vIBcPCQUDAQAAAAAFOLH3/v7////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUYaDc2RHIAYAAAAAAAAAAAABAws6pPH+/v////////////////////////////////////////////////////////////////////////////////////////7+/v7+/v7+/v38+vjz7OTYybqmkHxmUD8vIBcPCQgXX837/v/////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQkYkFA8IAgAAAAAAAAAAAAAAAAImlO3+/v////////////////////////////////////////////////////////////////////////////////////////////////7+/v7+/v7+/v38+vjz7OTYybmmj3tmUktjquz9/v/////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIdTjcKAQAAAAAAAAAAAAAAAAAAAAQ1qvT+/v////////////////////////////////////////////////////////////////////////////////////////////////////////7+/v7+/v7+/v38+vjz7OTYysTQ6/z+/v/////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQxcVcaBQIAAAAAAAAAAAAAAAAAAAtUyvr+/v////////////////////////////////////////////////////////////////////////////////////////////////////////////////7+/v7+/v7+/v38+vr7/f7+///////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAlJJYNCENAgAAAAAAAAAAAAAAABFt3f3+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7+/v7+/v7+/v7////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU2i6qekXxIFAIAAAAAAAAAAAAAABV45P7+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEUQ2qHqbiPPAkAAAAAAAAAAAAAABJw3v3+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACChgvW4uSVxQBAAEIDw0GAgAAAAtUyvr+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEjViYCwMCRpBYVtAKBMEAAU6tPf+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhRShXRPTHOv0s+4mGMkBAMrofL+/v/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIHDA0OFDSDx9DAv9bt9vby6MBjEwIfiuf5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fnlzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhY4TFJVYIGyztPR0dPV1dXV1ceFKAUWbMHV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXVzLKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0B7k5ianaausbKysrKysrKysq6NRRkmaKSxsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKZf2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFFWDjY2Njo6Ojo6Ojo6Ojo6Ojo2EZUtSc4qOjo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Of2ZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGE1oampqampqampqampqampqampqZWBiZ2pqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqamZMMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACFThGR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHMxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCx0jIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a;})();
+const NXH=201,NZH=144,CANOPY=9.5;
+const hfG=new THREE.PlaneGeometry(PW,PH,NXH-1,NZH-1);hfG.rotateX(-Math.PI/2);
+{const p=hfG.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i);let h=HF[i]/255*CANOPY;
+  for(const tr of SITE.trees){const r=Math.max(1,tr[2]),d2=(x-tr[0])**2+(z-tr[1])**2;h+=r*1.25*Math.exp(-d2/(r*r));}
+  p.setY(i,h);} p.needsUpdate=true;}
+const PB=30/FTU;const pbG=new THREE.ExtrudeGeometry(shapeOf(SITE.bld[0]),{depth:PB,bevelEnabled:false});pbG.rotateX(-Math.PI/2);
+const rCam=new THREE.PerspectiveCamera(FIN.vfov,FIN.aspect,40,320);rCam.position.copy(FIN.pos);
+rCam.up.copy(FIN.up);rCam.lookAt(FIN.tgt);rCam.updateMatrixWorld();rCam.updateProjectionMatrix();
+const RVP=new THREE.Matrix4().multiplyMatrices(rCam.projectionMatrix,rCam.matrixWorldInverse);
+let depthTex=null;
+try{const rt=new THREE.WebGLRenderTarget(1527,704);rt.depthTexture=new THREE.DepthTexture(1527,704);rt.depthTexture.type=THREE.UnsignedIntType;
+  const ds=new THREE.Scene(),dm=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});ds.add(new THREE.Mesh(hfG,dm));ds.add(new THREE.Mesh(pbG,dm));
+  renderer.setRenderTarget(rt);renderer.clear();renderer.render(ds,rCam);renderer.setRenderTarget(null);depthTex=rt.depthTexture;}catch(e){depthTex=null;}
+const modelMat=new THREE.ShaderMaterial({transparent:true,depthTest:false,depthWrite:true,
+  uniforms:{uPlan:{value:planTex},uRend:{value:rendTex},uDepth:{value:depthTex},uUseDepth:{value:depthTex?1:0},uRVP:{value:RVP},
+    uH:{value:0},uMix:{value:0},uOpacity:{value:0},uFx:{value:.004},uFy:{value:.004},uPH:{value:PH},uBg:{value:BG},uWall:{value:new THREE.Color(0xCFC8BA)},uN:{value:40},uF:{value:320}},
+  vertexShader:`uniform float uH,uPH;varying vec3 vFull;varying float vWall;varying vec2 vPUv;
+    void main(){vec3 p=position;vFull=p;p.y*=uH;vWall=1.-abs(normal.y);vPUv=vec2((p.x+50.)/100.,1.-(p.z+uPH*.5)/uPH);gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`,
+  fragmentShader:`uniform sampler2D uPlan,uRend,uDepth;uniform mat4 uRVP;uniform float uMix,uOpacity,uFx,uFy,uUseDepth,uN,uF;uniform vec3 uBg,uWall;
+    varying vec3 vFull;varying float vWall;varying vec2 vPUv;
+    float lin(float d){float z=d*2.-1.;return 2.*uN*uF/((uF+uN)-z*(uF-uN));}
+    void main(){
+      vec3 pc=texture2D(uPlan,vPUv).rgb;pc=mix(pc,uWall*.85,vWall*.8);
+      vec4 rc=uRVP*vec4(vFull,1.);vec3 nd=rc.xyz/rc.w;vec2 ruv=nd.xy*.5+.5;
+      float inF=step(0.,rc.w)*smoothstep(0.,uFx,ruv.x)*smoothstep(0.,uFx,1.-ruv.x)*smoothstep(0.,uFy,ruv.y)*smoothstep(0.,uFy,1.-ruv.y);
+      float vis=1.;
+      if(uUseDepth>.5){float sd=texture2D(uDepth,clamp(ruv,0.,1.)).r;vis=1.-smoothstep(.5,1.5,lin(nd.z*.5+.5)-lin(sd));}
+      vec3 rcol=texture2D(uRend,clamp(ruv,0.,1.)).rgb;
+      vec3 col=mix(pc,rcol,uMix*inF*vis);
+      col=mix(col,uBg,smoothstep(.4,1.,uMix)*(1.-inF));
+      float e=smoothstep(0.,.05,vPUv.x)*smoothstep(0.,.05,1.-vPUv.x)*smoothstep(0.,.07,vPUv.y)*smoothstep(0.,.07,1.-vPUv.y);
+      gl_FragColor=vec4(col,uOpacity*e);}`});
+const model=new THREE.Group();
+const hfMesh=new THREE.Mesh(hfG,modelMat);hfMesh.renderOrder=10;const pbMesh=new THREE.Mesh(pbG,modelMat);pbMesh.renderOrder=10.5;
+model.add(hfMesh,pbMesh);model.visible=false;scene.add(model);
+const PX=(px,py)=>new THREE.Vector3((px-1582)/PXU,0,(py-1128)/PXU);
+
+const tmpCam=new THREE.PerspectiveCamera();
+function quatLook(p,t,up){tmpCam.position.copy(p);tmpCam.up.copy(up||new THREE.Vector3(0,1,0));tmpCam.lookAt(t);return tmpCam.quaternion.clone();}
+const Qfin=quatLook(FIN.pos,FIN.tgt,FIN.up);
+
+/* ---------- labels ---------- */
+const lab=id=>document.getElementById(id);
+const pc=centroid(P),sc=centroid(SET),fe=edges([P[3],P[0]])[0];
+lab('t-area').innerHTML=`Parcel · <b>${acres(polyArea(P)).toFixed(2)} ac ±</b>`;
+lab('t-front').innerHTML=`Route 73 frontage · <b>${bearing(P[0][0]-P[3][0],P[0][1]-P[3][1])}</b>`;
+lab('t-setback').innerHTML=`Setback line`;
+lab('t-env').innerHTML=`Buildable envelope · <b>${acres(polyArea(SET)).toFixed(2)} ac</b>`;
+lab('t-a').innerHTML=`Bank with drive-thru · <b>5,900 SF</b>`;
+lab('t-park').innerHTML=`Parking · <b>25 spaces</b>`;
+lab('t-drive').innerHTML=`Single curb cut · <b>loop drive</b>`;
+const bc=centroid(SITE.bld[0]);
+const stc=SITE.stripes.reduce((a,s)=>[a[0]+(s[0][0]+s[1][0])/2/SITE.stripes.length,a[1]+(s[0][1]+s[1][1])/2/SITE.stripes.length],[0,0]);
+const W3=(x,z,y)=>new THREE.Vector3(x,y==null?H(x,z)+.6:y,z);
+const labelDefs=[
+  {el:lab('t-area'),p:W3(pc[0]+8,pc[1]-2),g:0},
+  {el:lab('t-front'),p:W3((P[3][0]+P[0][0])/2-7,(P[3][1]+P[0][1])/2),g:0},
+  {el:lab('t-setback'),p:W3((SET[2][0]+SET[3][0])/2,(SET[2][1]+SET[3][1])/2+2.2),g:0},
+  {el:lab('t-env'),p:W3(sc[0]+2,sc[1]+6),g:0},
+  {el:lab('t-a'),p:new THREE.Vector3(bc[0],BH+3,bc[1]),g:1},
+  {el:lab('t-park'),p:new THREE.Vector3(stc[0],1.2,stc[1]),g:1},
+  {el:lab('t-drive'),p:new THREE.Vector3(-30,1.2,-6),g:1}
+];
+const v=new THREE.Vector3();
+
+/* ---------- camera ---------- */
+const KP=[[112,92,150],[-95,40,100],[4,125,44],[-52,42,80]].map(a=>new THREE.Vector3(...a));
+const KT=[[0,0,5],[-5,2,0],[2,0,6],[-30,2,3]].map(a=>new THREE.Vector3(...a));
+const pathP=new THREE.CatmullRomCurve3(KP,false,'centripetal'),pathT=new THREE.CatmullRomCurve3(KT,false,'centripetal');
+const cp=new THREE.Vector3(),ct=new THREE.Vector3(),qA=new THREE.Quaternion();
+function genericPose(S,t){
+  pathP.getPoint(clamp(S/3,0,1),cp);pathT.getPoint(clamp(S/3,0,1),ct);
+  const sw=reduce?0:Math.sin(t*.12)*.06*(1-ss(2.8,3,S)),ox=cp.x-ct.x,oz=cp.z-ct.z,c=Math.cos(sw),s=Math.sin(sw);
+  cp.x=ct.x+ox*c-oz*s;cp.z=ct.z+ox*s+oz*c;
+  if(camera.aspect<1){const k=1+(1-camera.aspect)*.9;cp.sub(ct).multiplyScalar(k).add(ct);}
+  return {p:cp.clone(),q:quatLook(cp,ct)};
+}
+function topPose(){const a=camera.aspect,tn=Math.tan(20*Math.PI/180);const h=a>1?Math.max(108,40/(tn*a)):56/(tn*a);
+  const vis=2*h*tn,dx=a>1?vis*a*.23:0,dz=a>1?0:vis*.17;
+  const c=new THREE.Vector3(FIN.tgt.x+dx,0,FIN.tgt.z+dz),p=new THREE.Vector3(c.x,h,c.z+.01);return {p,q:quatLook(p,c)};}
+// projection eases from a normal 40° lens to the rendering's own lens, placed where the rendering sits on screen
+const Pm=new THREE.Matrix4(),Am=new THREE.Matrix4();
+function applyProj(e){const a=camera.aspect,r=finalRect(),n=camera.near,f=camera.far;
+  const fov=40+(FIN.vfov-40)*e,asp=a+(FIN.aspect-a)*e,top=n*Math.tan(fov*Math.PI/360),right=top*asp;
+  Pm.makePerspective(-right,right,top,-top,n,f);
+  Am.set(1+(r.sx-1)*e,0,0,r.cx*e, 0,1+(r.sy-1)*e,0,r.cy*e, 0,0,1,0, 0,0,0,1);
+  camera.projectionMatrix.multiplyMatrices(Am,Pm);camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
+  const fit=r.fit;modelMat.uniforms.uFx.value=fit?.02:.004;modelMat.uniforms.uFy.value=fit?.14:.004;}
+
+function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();measure();}
+addEventListener('resize',resize);resize();
+
+const northG=document.getElementById('north');
+let S=scrollS(),last=performance.now();
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;const t=now/1000;
+  const target=scrollS();S=reduce?target:S+(target-S)*Math.min(1,dt*4.5);
+  updateDom(S,true);
+  if(ss(4.95,5.05,S)>=1&&target>5.1){renderer.domElement.style.visibility='hidden';requestAnimationFrame(frame);return;}
+  renderer.domElement.style.visibility='visible';
+
+  const world=1-ss(3.5,3.95,S);            // sketch fill fades as the plan comes in
+  const lineOut=1-ss(3.7,3.98,S);           // sketch linework hands off to the plan, which settles clean
+  const lidar=1-ss(.35,.95,S),surfIn=ss(.3,.95,S),surf=surfIn*world;
+  const contour=ss(.5,1.05,S)*(1-.55*ss(2.6,3.3,S));
+  const bDraw=ss(1.35,2,S),sDraw=ss(1.65,2.2,S),grade=ss(2.3,2.75,S);
+  const pk=ss(2.4,2.75,S),st=ss(2.6,2.95,S),build=1-Math.pow(1-ss(2.6,3.05,S),3),lands=ss(2.7,3.1,S);
+  const labA=ss(1.85,2.1,S)*(1-ss(2.45,2.75,S)),labB=ss(2.85,3.02,S)*(1-ss(3.35,3.55,S));
+
+  pointMat.uniforms.uAlpha.value=lidar;points.visible=lidar>.005;pointMat.uniforms.uScan.value=reduce?999:((t*28)%320)-160;
+  terrainMat.uniforms.uSurface.value=surf;terrain.visible=surf>.005;terrainMat.uniforms.uContour.value=contour;
+  terrainMat.uniforms.uParcel.value=bDraw;terrainMat.uniforms.uGrade.value=grade;
+  roadMat.uniforms.uOpacity.value=(.25+.75*surfIn)*world;laneMat.uniforms.uOpacity.value=surf;
+  boundaryMat.uniforms.uDraw.value=bDraw;boundaryMat.uniforms.uOpacity.value=lineOut;boundary.visible=bDraw>.001&&lineOut>.01;
+  setbackMat.uniforms.uDraw.value=sDraw;setbackMat.uniforms.uOpacity.value=.9*lineOut;setback.visible=sDraw>.001&&lineOut>.01;
+  paveMat.opacity=pk*world;pave.visible=pk*world>.002;walkMat.opacity=pk*world;walks.forEach(m=>m.visible=pave.visible);
+  stripeMat.opacity=st*world;
+  outlineMat.uniforms.uDraw.value=pk;outlineMat.uniforms.uOpacity.value=.9*lineOut;paveLine.visible=bldLine.visible=pk>.002&&lineOut>.01;
+  wallMat.opacity=roofMat.opacity=world;edgeMat.opacity=build*world;
+  bldg.scale.y=Math.max(.001,build);bldg.visible=build>.002&&world>.01;
+  landMesh.material.opacity=world;landMesh.visible=world>.01&&lands>.001;woodsMesh.visible=surf>.002;
+  updateTrees(surf,grade,lands);
+
+  const planA=ss(3.55,4,S),rise=ease(ss(4.05,4.6,S)),mix=ss(4.3,4.88,S);
+  modelMat.uniforms.uOpacity.value=planA;modelMat.uniforms.uH.value=Math.max(.0001,rise);modelMat.uniforms.uMix.value=mix;
+  modelMat.depthTest=rise>.002;model.visible=planA>.002;
+
+  // camera: build-out path (0–3) → top-down over the real plan (4) → solved rendering viewpoint (5)
+  let pose,pe=0;
+  if(S<=3){pose=genericPose(S,t);}
+  else if(S<=4){const a=genericPose(3,t),b=topPose(),e=ease(S-3);pose={p:a.p.lerp(b.p,e),q:qA.copy(a.q).slerp(b.q,e)};}
+  else{const a=topPose(),e=ease(Math.min(1,S-4));pose={p:a.p.lerp(FIN.pos,e),q:qA.copy(a.q).slerp(Qfin,e)};pe=e;}
+  camera.position.copy(pose.p);camera.quaternion.copy(pose.q);
+  applyProj(pe);
+  camera.updateMatrixWorld();
+
+  const w=innerWidth,h=innerHeight;
+  labelDefs.forEach(L=>{const o=[labA,labB][L.g];if(o<.01){L.el.style.opacity=0;return;}
+    v.copy(L.p).project(camera);if(v.z>1){L.el.style.opacity=0;return;}
+    L.el.style.opacity=o;L.el.style.transform=`translate(${(v.x*.5+.5)*w}px,${(-v.y*.5+.5)*h}px) translate(-50%,-50%)`;});
+
+  camera.getWorldDirection(v);const look=v.clone().multiplyScalar(30).add(camera.position);
+  v.copy(look).project(camera);const ax=v.x,ay=v.y;v.set(look.x,look.y,look.z-20).project(camera);
+  northG.setAttribute('transform',`rotate(${(Math.atan2((v.x-ax)*w,(v.y-ay)*h)*180/Math.PI).toFixed(1)})`);
+
+  renderer.render(scene,camera);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
