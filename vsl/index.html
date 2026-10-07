@@ -121,6 +121,9 @@ function start(t){cover.hidden=true;if(typeof t==='number'){try{v.currentTime=t;
 cover.addEventListener('click',()=>start());
 btns.forEach(b=>b.addEventListener('click',()=>{start(+b.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});}));
 v.addEventListener('play',()=>{cover.hidden=true;});
+/* tell an embedding page (Framer) how tall this page is */
+function postH(){try{parent.postMessage({type:'forma-vsl-height',height:document.documentElement.scrollHeight},'*');}catch(e){}}
+addEventListener('load',postH);addEventListener('resize',postH);if(window.ResizeObserver)new ResizeObserver(postH).observe(document.body);
 v.addEventListener('timeupdate',()=>{const t=v.currentTime;let k=0;btns.forEach((b,i)=>{if(t>=+b.dataset.t-.5)k=i;});btns.forEach((b,i)=>b.classList.toggle('on',i===k));});
 </script>
 </body>
