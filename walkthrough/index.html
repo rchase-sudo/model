@@ -118,6 +118,12 @@
   #legend div:first-child{margin-top:0;color:var(--faint);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
   #legend i{width:16px;height:3px;border-radius:2px;background:var(--c)}
 
+  /* finished rendering, faded in over the 3D at the end */
+  #render{position:fixed;inset:0;z-index:1;opacity:0;pointer-events:none;background:var(--bg)}
+  #render img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block}
+  #render .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,14,17,.82),rgba(10,14,17,.25) 55%,rgba(10,14,17,0));opacity:0}
+  #render .credit{position:absolute;right:22px;bottom:100px;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(237,242,241,.7);
+    background:rgba(10,14,17,.55);border-radius:4px;padding:4px 8px}
   footer.end{position:relative;z-index:2;text-align:center;padding:0 24px 150px;font:500 11px var(--mono);letter-spacing:.06em;color:var(--faint)}
 
   @media (max-width:760px){
@@ -134,6 +140,9 @@
     #hud .now span:last-child{display:none}
     #compare{right:12px;bottom:auto;top:62px;padding:9px 13px;font-size:10.5px}
     #legend{left:12px;bottom:auto;top:108px}
+    #render img{top:56px;height:44vh;inset:auto 0 auto 0}
+    #render .scrim{background:linear-gradient(rgba(10,14,17,0) 40%,rgba(10,14,17,.85) 70%)}
+    #render .credit{bottom:auto;top:calc(56px + 44vh - 30px);right:10px}
     #phase{font-size:9.5px;padding:6px 10px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -284,6 +293,15 @@
     </div>
   </section>
 
+  <section class="sheet" data-name="Finished project">
+    <div class="panel">
+      <div class="kick">11 · The finished project</div>
+      <h2>As it will look.</h2>
+      <p>The completed bank, drive-thru, parking, and landscaping, rendered from the same plan you just watched get built — seen from above Route 73.</p>
+      <p class="note">Rendering is illustrative; final materials and landscaping are set by the approved plans.</p>
+    </div>
+  </section>
+
   <section class="sheet" data-name="Summary">
     <div class="panel">
       <div class="kick">Summary</div>
@@ -302,6 +320,8 @@
 </main>
 
 <footer class="end">Walkthrough by Apollo Development · apollodevelopment.io · Illustrative — not for construction</footer>
+
+<div id="render" aria-hidden="true"><img src="../assets/render.jpg" alt="" decoding="async"><div class="scrim"></div><div class="credit">Rendering · finished project</div></div>
 
 <div id="legend" aria-hidden="true">
   <div>Utilities · APWA colors</div>
@@ -354,14 +374,15 @@ function scrollS(){const y=scrollY;for(let i=0;i<anchors.length-1;i++){if(y<anch
 addEventListener('resize',measure);measure();
 
 /* ---------- HUD ---------- */
-const PH=['Existing conditions','Existing conditions','Site & zoning','The proposal','Approvals','Construction · Clear & protect','Construction · Grade & connect','Construction · Build & pave','Construction · Finish','Operation',"Neighbor's view",'Summary'];
+const PH=['Existing conditions','Existing conditions','Site & zoning','The proposal','Approvals','Construction · Clear & protect','Construction · Grade & connect','Construction · Build & pave','Construction · Finish','Operation',"Neighbor's view",'Finished project','Summary'];
 const NOW=[['Today','Existing conditions'],['Today','Existing conditions'],['Today','Site & zoning'],['Today','Proposed plan'],['Approvals','≈ 9–14 months of review'],
   ['Construction','Phase 1 of 4 · clear & protect'],['Construction','Phase 2 of 4 · grade & connect'],['Construction','Phase 3 of 4 · build & pave'],['Construction','Phase 4 of 4 · finish'],
-  ['Open','Operation'],['Open','Eye level from Route 73'],['Open','Summary']];
+  ['Open','Operation'],['Open','Eye level from Route 73'],['Open','Finished project · rendering'],['Open','Summary']];
 const phaseEl=document.getElementById('phase'),hudNow=document.getElementById('hud-now'),hudSub=document.getElementById('hud-sub'),marker=document.getElementById('marker');
 const segFills=[...document.querySelectorAll('.track .seg i')],segLabels=[...document.querySelectorAll('.seglabels span')];
 const compareBtn=document.getElementById('compare'),legend=document.getElementById('legend');
-const STOPS=[[0,0],[1,6],[3.4,19],[4,26],[4.6,45],[8.5,85],[9,90],[11,100]];
+const renderEl=document.getElementById('render'),renderScrim=renderEl.querySelector('.scrim');
+const STOPS=[[0,0],[1,6],[3.4,19],[4,26],[4.6,45],[8.5,85],[9,89],[12,100]];
 function tlPos(S){for(let i=0;i<STOPS.length-1;i++){const a=STOPS[i],b=STOPS[i+1];if(S<=b[0])return lerp(a[1],b[1],clamp((S-a[0])/(b[0]-a[0]),0,1));}return 100;}
 const SEG=[[0,20],[20,46],[46,86],[86,100]];
 let activeIdx=-1;
@@ -385,7 +406,7 @@ compareBtn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.pre
 compareBtn.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter')hold(0);});
 compareBtn.addEventListener('contextmenu',e=>e.preventDefault());
 
-function noGL(){document.documentElement.classList.add('no-gl');const f=()=>updateHud(scrollS(),false);addEventListener('scroll',f,{passive:true});f();}
+function noGL(){document.documentElement.classList.add('no-gl');const f=()=>{const S=scrollS();updateHud(S,false);renderEl.style.opacity=ss(10.3,10.9,S);renderScrim.style.opacity=ss(11.3,11.8,S);};addEventListener('scroll',f,{passive:true});f();}
 if(!window.THREE){noGL();return;}
 
 /* ---------- site data: 336 Route 73, traced from the preliminary development plan (world units) ---------- */
@@ -419,7 +440,7 @@ try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'hig
 const DPR=Math.min(devicePixelRatio||1,2);renderer.setPixelRatio(DPR);renderer.setClearColor(0x0A0E11,1);
 const scene=new THREE.Scene();scene.fog=new THREE.Fog(0x0A0E11,150,340);
 const camera=new THREE.PerspectiveCamera(40,1,0.3,1200);
-const BG=new THREE.Color(0x0A0E11);
+const BG=new THREE.Color(0x0A0E11),BGD=BG.clone(),SKY=new THREE.Color(0xBCC8CD);
 const fogU={uFogNear:{value:150},uFogFar:{value:340},uBg:{value:BG}};
 const MINT=0x29E8A6,VIOLET=0xE24FD0,AMBER=0xFFA53D;
 
@@ -431,13 +452,13 @@ for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getZ(i);pos.setY(i,H(x,z)
 tg.setAttribute('aMask',new THREE.BufferAttribute(mk,1));
 const terrainMat=new THREE.ShaderMaterial({transparent:true,extensions:{derivatives:true},
   uniforms:Object.assign({uGrade:{value:0},uPad:{value:PAD},uSurface:{value:0},uContour:{value:0},uParcel:{value:0},uDirt:{value:0},uLawn:{value:0},
-    uFill:{value:new THREE.Color(0x172024)},uLine:{value:new THREE.Color(MINT)},uTint:{value:new THREE.Color(MINT)},
-    uPadCol:{value:new THREE.Color(0x3A342C)},uDirtCol:{value:new THREE.Color(0x6B5440)},uLawnCol:{value:new THREE.Color(0x3F5A3A)}},fogU),
+    uFill:{value:new THREE.Color(0x172024)},uNat:{value:new THREE.Color(0x2E3B26)},uReal:{value:0},uLine:{value:new THREE.Color(MINT)},uTint:{value:new THREE.Color(MINT)},
+    uPadCol:{value:new THREE.Color(0x3A342C)},uDirtCol:{value:new THREE.Color(0x6B5440)},uLawnCol:{value:new THREE.Color(0x5E7B39)}},fogU),
   vertexShader:`attribute float aMask;uniform float uGrade,uPad;varying vec3 vPos;varying float vMask,vDist;
     void main(){vec3 p=position;p.y=mix(p.y,uPad,uGrade*aMask);vPos=p;vMask=aMask;vec4 mv=modelViewMatrix*vec4(p,1.);vDist=-mv.z;gl_Position=projectionMatrix*mv;}`,
-  fragmentShader:`uniform vec3 uBg,uFill,uLine,uTint,uPadCol,uDirtCol,uLawnCol;uniform float uSurface,uContour,uParcel,uGrade,uDirt,uLawn,uFogNear,uFogFar;varying vec3 vPos;varying float vMask,vDist;
+  fragmentShader:`uniform vec3 uBg,uFill,uNat,uLine,uTint,uPadCol,uDirtCol,uLawnCol;uniform float uReal,uSurface,uContour,uParcel,uGrade,uDirt,uLawn,uFogNear,uFogFar;varying vec3 vPos;varying float vMask,vDist;
     void main(){vec3 n=normalize(cross(dFdx(vPos),dFdy(vPos)));if(n.y<0.)n=-n;float diff=clamp(dot(n,normalize(vec3(-.5,.8,.35))),0.,1.);
-      vec3 col=uFill*(.55+.8*diff);float inside=smoothstep(.55,.95,vMask);
+      vec3 col=mix(uFill,uNat,uReal)*(.55+.8*diff);float inside=smoothstep(.55,.95,vMask);
       col=mix(col,uPadCol*(.8+.3*diff),inside*uGrade);
       col=mix(col,uDirtCol*(.7+.4*diff),inside*uDirt);
       col=mix(col,uLawnCol*(.75+.35*diff),inside*uLawn);
@@ -526,60 +547,114 @@ const utils=UT.map((u,k)=>{const m=ribbonMat(u.c,0,.36+k*.02);m.uniforms.uDraw.v
 /* paving, walks, stripes, building — traced from the plan */
 function shapeOf(pts){const s=new THREE.Shape();pts.forEach((p,i)=>i?s.lineTo(p[0],-p[1]):s.moveTo(p[0],-p[1]));return s;}
 function flat(pts,mat,y,order){const g=new THREE.ShapeGeometry(shapeOf(pts));g.rotateX(-Math.PI/2);const m=new THREE.Mesh(g,mat);m.position.y=y;m.renderOrder=order||1;scene.add(m);return m;}
-const paveMat=new THREE.MeshBasicMaterial({color:0x30363A,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
-const walkMat=new THREE.MeshBasicMaterial({color:0xBDB8AC,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const paveMat=new THREE.MeshStandardMaterial({color:0x3A3E41,roughness:.95,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const walkMat=new THREE.MeshStandardMaterial({color:0xCAC6BC,roughness:.9,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
 const pave=flat(paveOuter,paveMat,.05,2);
 const walks=SITE.walks.map(w=>flat(w,walkMat,.07,3));
+const curbMat=ribbonMat(0xB9B6AE,0,.1);curbMat.uniforms.uOpacity.value=0;
+const curb=addRibbon(ribbon(paveOuter,true,.2,.4),curbMat,4);curb.visible=false;
 const stripeMat=new THREE.MeshBasicMaterial({color:0xF2F2EE,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
 (function(){const P3=[],I=[];SITE.stripes.forEach(([a,b])=>{const dx=b[0]-a[0],dz=b[1]-a[1],L=Math.hypot(dx,dz),w=.13,nx=-dz/L*w/2,nz=dx/L*w/2,o=P3.length/3;
   P3.push(a[0]+nx,.1,a[1]+nz,a[0]-nx,.1,a[1]-nz,b[0]+nx,.1,b[1]+nz,b[0]-nx,.1,b[1]-nz);I.push(o,o+2,o+1,o+1,o+2,o+3);});
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));g.setIndex(I);const m=new THREE.Mesh(g,stripeMat);m.renderOrder=4;scene.add(m);})();
+
+/* building: facade materials matched to the rendering — stone base, storefront glass and wood panels, metal fascia, standing-seam roof */
 const BH=22/FTU;
-const wallMat=new THREE.MeshStandardMaterial({color:0xE4E1DA,roughness:.85,transparent:true,opacity:0,side:THREE.DoubleSide});
-const roofMat=new THREE.MeshStandardMaterial({color:0x5E6366,roughness:.9,transparent:true,opacity:0,side:THREE.DoubleSide});
+const SUN=new THREE.Vector3(-60,90,50).normalize();
+let AX=[1,0],best=0;SITE.bld[0].forEach((p,i)=>{const q=SITE.bld[0][(i+1)%SITE.bld[0].length],dx=q[0]-p[0],dz=q[1]-p[1],L=Math.hypot(dx,dz);if(L>best){best=L;AX=[dx/L,dz/L];}});
+const bldU=Object.assign({uOpacity:{value:0},uBH:{value:BH},uSun:{value:SUN},uAx:{value:new THREE.Vector2(AX[0],AX[1])}},fogU);
+const BV=`varying vec3 vLocal,vWorld,vWN;varying float vDist;
+  void main(){vLocal=position;vec4 wp=modelMatrix*vec4(position,1.);vWorld=wp.xyz;vWN=normalize(mat3(modelMatrix)*normal);vec4 mv=viewMatrix*wp;vDist=-mv.z;gl_Position=projectionMatrix*mv;}`;
+const wallMat=new THREE.ShaderMaterial({transparent:true,uniforms:bldU,vertexShader:BV,
+  fragmentShader:`uniform float uOpacity,uBH,uFogNear,uFogFar;uniform vec3 uBg,uSun;varying vec3 vLocal,vWorld,vWN;varying float vDist;
+    float hs(float n){return fract(sin(n*12.9898)*43758.5453);}
+    void main(){vec3 n=normalize(vWN);float yf=clamp(vLocal.y/uBH,0.,1.);
+      vec2 t=normalize(vec2(-n.z,n.x)+vec2(1e-4));float u=dot(vWorld.xz,t);
+      vec3 stone=vec3(.66,.63,.58),glass=vec3(.12,.16,.2),wood=vec3(.46,.3,.18),metal=vec3(.2,.21,.22),cap=vec3(.74,.73,.7);
+      vec3 col;
+      if(yf<.08){col=stone*(.92+.08*hs(floor(u*1.5)+floor(yf*40.)));}
+      else if(yf<.66){float bay=floor(u/2.3),fu=fract(u/2.3);float g=step(.38,hs(bay+7.));
+        vec3 gl=glass+vec3(.11,.14,.17)*smoothstep(.1,.66,yf)+vec3(.04)*hs(bay);
+        vec3 wd=wood*(.8+.25*hs(floor(u*5.)+bay));
+        col=mix(wd,gl,g);
+        float mull=1.-step(.045,fu)*step(fu,.955);float tr=1.-step(.012,abs(yf-.5));
+        col=mix(col,vec3(.1,.11,.12),max(mull,tr*g));}
+      else if(yf<.93){col=metal*(.95+.05*hs(floor(u*2.)));}
+      else col=cap;
+      float d=max(dot(n,uSun),0.);col*=.52+.62*d+.1*max(n.y,0.);
+      col=mix(col,uBg,smoothstep(uFogNear,uFogFar,vDist));gl_FragColor=vec4(col,uOpacity);}`});
+const roofMat=new THREE.ShaderMaterial({transparent:true,uniforms:bldU,vertexShader:BV,
+  fragmentShader:`uniform float uOpacity,uFogNear,uFogFar;uniform vec3 uBg,uSun;uniform vec2 uAx;varying vec3 vLocal,vWorld,vWN;varying float vDist;
+    void main(){vec3 n=normalize(vWN);float s=dot(vWorld.xz,vec2(-uAx.y,uAx.x));float f=fract(s/.38);
+      float seam=smoothstep(0.,.07,f)*smoothstep(1.,.93,f);
+      vec3 col=vec3(.47,.49,.5)*(.8+.2*seam);col*=.62+.48*max(dot(n,uSun),0.);
+      col=mix(col,uBg,smoothstep(uFogNear,uFogFar,vDist));gl_FragColor=vec4(col,uOpacity);}`});
 const edgeMat=new THREE.LineBasicMaterial({color:AMBER,transparent:true,opacity:0});
 const bGeo=new THREE.ExtrudeGeometry(shapeOf(SITE.bld[0]),{depth:BH,bevelEnabled:false});bGeo.rotateX(-Math.PI/2);
 const bldg=new THREE.Group();const bMesh=new THREE.Mesh(bGeo,[roofMat,wallMat]);bldg.add(bMesh);
 const bEdges=new THREE.LineSegments(new THREE.EdgesGeometry(bGeo,25),edgeMat);bldg.add(bEdges);
 bldg.scale.y=.001;bldg.visible=false;scene.add(bldg);
+/* ground shadow cast by the building toward the sun's far side */
+function hull(pts){pts=pts.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);const lo=[],up=[];
+  for(const p of pts){while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p);}
+  for(const p of pts.slice().reverse()){while(up.length>=2&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p);}up.pop();lo.pop();return lo.concat(up);}
+const SHOFF=[-SUN.x/SUN.y*BH,-SUN.z/SUN.y*BH];
+const shadowMat=new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const bShadow=flat(hull(SITE.bld[0].concat(SITE.bld[0].map(p=>[p[0]+SHOFF[0],p[1]+SHOFF[1]]))),shadowMat,.13,5);bShadow.visible=false;
 
-/* trees: existing woods + landscape trees from the plan */
+/* trees: deciduous canopies on trunks, like the rendering — existing woods + landscape trees from the plan */
 let seed=7;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
-const coneGeo=new THREE.ConeGeometry(1.5,5,6);coneGeo.translate(0,2.5,0);
+function blobGeo(detail,amt,sd){const g=new THREE.IcosahedronGeometry(1,detail);const p=g.attributes.position;
+  for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i),z=p.getZ(i);const k=1+amt*(Math.sin(x*3.1+sd)*Math.cos(z*2.7-sd)+.6*Math.sin(y*4.3+sd*2));p.setXYZ(i,x*k,y*k,z*k);}
+  // smooth, sphere-like normals so canopies shade softly instead of as facets
+  const nrm=new Float32Array(p.count*3);for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i),z=p.getZ(i),l=Math.hypot(x,y,z)||1;nrm[i*3]=x/l;nrm[i*3+1]=y/l;nrm[i*3+2]=z/l;}
+  g.setAttribute('normal',new THREE.BufferAttribute(nrm,3));return g;}
+function canopy(detail){const g=blobGeo(detail,.13,1.7);g.scale(2.7,1.75,2.7);g.translate(0,3.7,0);return g;}
+const canopyGeo=canopy(1),canopyGeoHi=canopy(2);
+const trunkGeo=new THREE.CylinderGeometry(.16,.24,3,5);trunkGeo.translate(0,1.5,0);
+const trunkMat=new THREE.MeshStandardMaterial({color:0x4A3B2E,roughness:1});
 const woods=[];
-for(let i=0;i<340;i++){const r=Math.sqrt(rnd())*125,th=rnd()*Math.PI*2;const x=SC[0]+Math.cos(th)*r,z=SC[1]+Math.sin(th)*r;
+for(let i=0;i<1300;i++){const r=Math.sqrt(rnd())*125,th=rnd()*Math.PI*2;const x=SC[0]+Math.cos(th)*r,z=SC[1]+Math.sin(th)*r;
   const o=roadOff(x,z);if(o>-4&&o<(Math.abs(z-6)<40?24:17))continue;
-  woods.push({x,z,y:H(x,z),s:.55+rnd()*.55,rot:rnd()*6.3,clear:ss(.05,.35,mask(x,z)),ph:rnd()});}
-const woodsMesh=new THREE.InstancedMesh(coneGeo,new THREE.MeshStandardMaterial({color:0x34463C,roughness:1,flatShading:true}),woods.length);scene.add(woodsMesh);
-const icoGeo=new THREE.IcosahedronGeometry(1,0);icoGeo.translate(0,1.8,0);
-const land=SITE.trees.map(t=>({x:t[0],z:t[1],s:Math.max(.7,t[2]),rot:rnd()*6.3,m:mask(t[0],t[1])}));
-const landMesh=new THREE.InstancedMesh(icoGeo,new THREE.MeshStandardMaterial({color:0x5C7A52,roughness:1,flatShading:true}),land.length);scene.add(landMesh);
+  woods.push({x,z,y:H(x,z),s:.62+rnd()*.38,rot:rnd()*6.3,clear:ss(.05,.35,mask(x,z)),ph:rnd()});}
+const GW=[0x24351E,0x2C4024,0x334A28,0x283C22,0x38502B,0x2F4527],GL=[0x46622D,0x3D5A2A,0x527034];
+function treeMesh(n,greens,geo){const can=new THREE.InstancedMesh(geo,new THREE.MeshStandardMaterial({roughness:1}),n);
+  const trk=new THREE.InstancedMesh(trunkGeo,trunkMat,n);const c=new THREE.Color();
+  for(let i=0;i<n;i++){c.setHex(greens[Math.floor(rnd()*greens.length)]).multiplyScalar(.85+rnd()*.25);can.setColorAt(i,c);}
+  scene.add(can,trk);return [can,trk];}
+const woodsMesh=treeMesh(woods.length,GW,canopyGeo);
+const land=SITE.trees.map(t=>({x:t[0],z:t[1],s:Math.max(.45,t[2]*.42),rot:rnd()*6.3,m:mask(t[0],t[1])}));
+const landMesh=treeMesh(land.length,GL,canopyGeoHi);
 const dummy=new THREE.Object3D();let lastTree='';
+function setTree(pair,i){dummy.updateMatrix();pair[0].setMatrixAt(i,dummy.matrix);pair[1].setMatrixAt(i,dummy.matrix);}
 function updateTrees(surf,clear,grade,lands){const key=[surf,clear,grade,lands].map(v=>v.toFixed(3)).join('|');if(key===lastTree)return;lastTree=key;
-  woods.forEach((t,i)=>{const c=ss(t.ph*.6,t.ph*.6+.4,clear)*t.clear;const sc=Math.max(.001,t.s*surf*(1-c));dummy.position.set(t.x,t.y,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc,sc);dummy.updateMatrix();woodsMesh.setMatrixAt(i,dummy.matrix);});
-  woodsMesh.instanceMatrix.needsUpdate=true;
+  woods.forEach((t,i)=>{const c=ss(t.ph*.6,t.ph*.6+.4,clear)*t.clear;const sc=Math.max(.001,t.s*surf*(1-c));dummy.position.set(t.x,t.y,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc,sc);setTree(woodsMesh,i);});
+  woodsMesh.forEach(m=>m.instanceMatrix.needsUpdate=true);
   land.forEach((t,i)=>{const o=i/land.length*.6;const sc=Math.max(.001,t.s*ss(o,o+.4,lands));const y=lerp(H(t.x,t.z),PAD,grade*t.m);
-    dummy.position.set(t.x,y,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc*.9,sc);dummy.updateMatrix();landMesh.setMatrixAt(i,dummy.matrix);});
-  landMesh.instanceMatrix.needsUpdate=true;}
+    dummy.position.set(t.x,y,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc,sc);setTree(landMesh,i);});
+  landMesh.forEach(m=>m.instanceMatrix.needsUpdate=true);}
 
-/* cars: parked in the striped stalls + through traffic on Route 73 */
+/* cars: parked in the striped stalls + through traffic on Route 73, with soft ground shadows */
 const carGeo=new THREE.BoxGeometry(1.1,.62,2.65);carGeo.translate(0,.42,0);
 const cabGeo=new THREE.BoxGeometry(.98,.42,1.35);cabGeo.translate(0,.93,-.1);
-const CARC=[0xD9DCDD,0x23282B,0x8A9399,0x6B1E22,0x2D4A6B,0xC9C2B4,0x3A3F42];
+const carShGeo=new THREE.PlaneGeometry(1.45,2.95);carShGeo.rotateX(-Math.PI/2);carShGeo.translate(.18,.03,-.15);
+const carShMat=new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.34,depthWrite:false});
+const CARC=[0xD9DCDD,0x23282B,0x8A9399,0x5E2226,0x2D4A6B,0xC9C2B4,0x3A3F42,0xEDEDED];
 const stalls=[];
 for(let i=0;i<SITE.stripes.length-1;i++){const a=SITE.stripes[i],b=SITE.stripes[i+1];
   const ma=[(a[0][0]+a[1][0])/2,(a[0][1]+a[1][1])/2],mb=[(b[0][0]+b[1][0])/2,(b[0][1]+b[1][1])/2];
   if(Math.hypot(ma[0]-mb[0],ma[1]-mb[1])>2.4)continue;
   stalls.push({x:(ma[0]+mb[0])/2,z:(ma[1]+mb[1])/2,rot:Math.atan2(a[1][0]-a[0][0],a[1][1]-a[0][1]),on:rnd()<.62,o:rnd()});}
-function carMesh(n){const body=new THREE.InstancedMesh(carGeo,new THREE.MeshStandardMaterial({roughness:.45,metalness:.2}),n);
-  const cab=new THREE.InstancedMesh(cabGeo,new THREE.MeshStandardMaterial({color:0x14191C,roughness:.3,metalness:.3}),n);
-  for(let i=0;i<n;i++)body.setColorAt(i,new THREE.Color(CARC[i%CARC.length]));scene.add(body,cab);return [body,cab];}
+function carMesh(n){const body=new THREE.InstancedMesh(carGeo,new THREE.MeshStandardMaterial({roughness:.4,metalness:.25}),n);
+  const cab=new THREE.InstancedMesh(cabGeo,new THREE.MeshStandardMaterial({color:0x14191C,roughness:.25,metalness:.35}),n);
+  const sh=new THREE.InstancedMesh(carShGeo,carShMat,n);sh.renderOrder=5;
+  for(let i=0;i<n;i++)body.setColorAt(i,new THREE.Color(CARC[i%CARC.length]));scene.add(sh,body,cab);return [body,cab,sh];}
 const parked=carMesh(stalls.length);
 const LANES=[{o:2.65-1.3,dir:1},{o:2.65+1.3,dir:1},{o:9.45-1.4,dir:-1},{o:9.45+1.4,dir:-1}];
 const traffic=[];LANES.forEach((L,li)=>{for(let k=0;k<5;k++)traffic.push({L,s0:rnd()*290,v:7+rnd()*3.5});});
 const moving=carMesh(traffic.length);
 function setCar(pair,i,x,y,z,rot,sc){dummy.position.set(x,y,z);dummy.rotation.set(0,rot,0);dummy.scale.set(sc,sc,sc);dummy.updateMatrix();
-  pair[0].setMatrixAt(i,dummy.matrix);pair[1].setMatrixAt(i,dummy.matrix);}
+  pair.forEach(m=>m.setMatrixAt(i,dummy.matrix));}
 let lastPark='';
 function updateCars(cars,t){
   const key=cars.toFixed(3);if(key!==lastPark){lastPark=key;
@@ -591,8 +666,8 @@ function updateCars(cars,t){
   moving.forEach(m=>m.instanceMatrix.needsUpdate=true);
 }
 
-scene.add(new THREE.HemisphereLight(0xEDF2F1,0x0A0E11,.8));
-const sun=new THREE.DirectionalLight(0xFFE7C7,.95);sun.position.set(-60,90,50);scene.add(sun);
+scene.add(new THREE.HemisphereLight(0xDCE6EA,0x2B3024,.72));
+const sun=new THREE.DirectionalLight(0xFFEBD0,.95);sun.position.set(-60,90,50);scene.add(sun);
 
 /* ---------- labels ---------- */
 const lab=id=>document.getElementById(id);
@@ -639,24 +714,32 @@ const POSES=[
   [[58,36,-46],[-3,0,6]],        // finish
   [[-62,24,44],[-4,1,8]],        // operation
   [EYE,[-7,2.4,4]],              // neighbor's view (eye level)
-  [[100,80,130],[0,0,5]]];       // summary
+  [[21.25,87.213,84.57],[-3.094,0,2.809]],   // finished rendering viewpoint
+  [[21.25,87.213,84.57],[-3.094,0,2.809]]];  // summary (rendering stays up)
+const UPFIN=new THREE.Vector3(-0.0071,0.685,-0.7285);let OFF=[0,0];
 const cp=new THREE.Vector3(),ct=new THREE.Vector3(),ca=new THREE.Vector3(),cb=new THREE.Vector3(),ta=new THREE.Vector3(),tb=new THREE.Vector3();
 function pose(S,t){
   const i=clamp(Math.floor(S),0,LAST),j=Math.min(LAST,i+1),f=ease(S-i);
   ca.fromArray(POSES[i][0]);cb.fromArray(POSES[j][0]);ta.fromArray(POSES[i][1]);tb.fromArray(POSES[j][1]);
   cp.copy(ca).lerp(cb,f);ct.copy(ta).lerp(tb,f);
+  if(i===10)cp.y+=Math.sin(Math.PI*f)*38;   // arc up and over the building on the way to the rendering view
   const eye=1-Math.min(1,Math.abs(S-10));
   // gentle drift on aerial stages, none at eye level
-  const sw=reduce?0:Math.sin(t*.12)*.05*(1-eye),ox=cp.x-ct.x,oz=cp.z-ct.z,c=Math.cos(sw),s=Math.sin(sw);
+  const sw=reduce?0:Math.sin(t*.12)*.05*(1-eye)*(1-ss(10,11,S)),ox=cp.x-ct.x,oz=cp.z-ct.z,c=Math.cos(sw),s=Math.sin(sw);
   cp.x=ct.x+ox*c-oz*s;cp.z=ct.z+ox*s+oz*c;
   if(camera.aspect<1){const k=1+(1-camera.aspect)*.9*(1-eye);cp.sub(ct).multiplyScalar(k).add(ct);}
+  const fin=ss(10,11,S);
+  camera.up.set(0,1,0).lerp(UPFIN,fin).normalize();
   camera.position.copy(cp);camera.lookAt(ct);
-  const fov=lerp(40,camera.aspect<1?68:50,eye);if(Math.abs(camera.fov-fov)>.01){camera.fov=fov;camera.updateProjectionMatrix();}
+  // blend out the panel-clearance shift so the 3D lines up with the rendering
+  const vx=Math.round(OFF[0]*(1-fin)),vy=Math.round(OFF[1]*(1-fin));
+  if(vx!==camera.view.offsetX||vy!==camera.view.offsetY){camera.setViewOffset(innerWidth,innerHeight,vx,vy,innerWidth,innerHeight);camera.updateProjectionMatrix();}
+  const fov=lerp(lerp(40,camera.aspect<1?68:50,eye),22.25,fin);if(Math.abs(camera.fov-fov)>.01){camera.fov=fov;camera.updateProjectionMatrix();}
 }
 
 function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;
   // shift the picture away from the text panels: right on desktop, up on portrait phones
-  if(w<=760)camera.setViewOffset(w,h,0,Math.round(h*.2),w,h);else camera.setViewOffset(w,h,-Math.round(w*.13),0,w,h);
+  OFF=w<=760?[0,Math.round(h*.2)]:[-Math.round(w*.13),0];camera.setViewOffset(w,h,OFF[0],OFF[1],w,h);
   camera.updateProjectionMatrix();measure();}
 addEventListener('resize',resize);resize();
 
@@ -666,6 +749,8 @@ function frame(now){
   const target=scrollS();S=reduce?target:S+(target-S)*Math.min(1,dt*4.5);
   cmp+=(cmpT-cmp)*Math.min(1,dt*(reduce?60:7));
   updateHud(S,true);
+  const sky=ss(9.4,10,S)*(1-ss(10.25,10.6,S));BG.copy(BGD).lerp(SKY,sky);scene.fog.color.copy(BG);renderer.setClearColor(BG,1);
+  const rA=ss(10.55,10.95,S);renderEl.style.opacity=rA;renderScrim.style.opacity=ss(11.3,11.8,S);
   const x=lerp(S,1,cmp);   // scene state; "compare to today" shows stage 1 from the current camera
 
   const lidar=1-ss(.4,1,x),surf=ss(.35,1,x);
@@ -682,7 +767,7 @@ function frame(now){
 
   pointMat.uniforms.uAlpha.value=lidar;points.visible=lidar>.005;pointMat.uniforms.uScan.value=reduce?999:((t*28)%320)-160;
   const tu=terrainMat.uniforms;tu.uSurface.value=surf;terrain.visible=surf>.005;tu.uContour.value=contour;
-  tu.uParcel.value=bDraw;tu.uGrade.value=grade;tu.uDirt.value=dirt;tu.uLawn.value=lawn;
+  tu.uReal.value=ss(4.3,5.3,S);tu.uParcel.value=bDraw;tu.uGrade.value=grade;tu.uDirt.value=dirt;tu.uLawn.value=lawn;
   roadMat.uniforms.uOpacity.value=.3+.7*surf;laneMat.uniforms.uOpacity.value=surf;
   boundaryMat.uniforms.uDraw.value=bDraw;boundaryMat.uniforms.uOpacity.value=1-.55*ss(4.5,5,x);boundary.visible=bDraw>.001;
   setbackMat.uniforms.uDraw.value=sDraw;setbackMat.uniforms.uOpacity.value=.9*(1-ss(4.4,4.9,x));setback.visible=sDraw>.001&&x<4.9;
@@ -691,8 +776,9 @@ function frame(now){
   entMat.uniforms.uOpacity.value=entA;entMat.uniforms.uDraw.value=ss(4.75,5.05,x);ent.visible=entA>.003;
   utils.forEach((u,k)=>{u.m.uniforms.uDraw.value=ss(5.55+k*.08,5.95+k*.08,x);u.m.uniforms.uOpacity.value=utilOut;u.mesh.visible=util>.002&&utilOut>.01;});
   paveMat.opacity=pk;pave.visible=pk>.002;walkMat.opacity=st;walks.forEach(m=>m.visible=st>.002);stripeMat.opacity=st;
-  bldg.visible=frameUp>.002;bldg.scale.y=Math.max(.001,frameUp);edgeMat.opacity=frameUp*(1-.75*walls);wallMat.opacity=roofMat.opacity=walls;bMesh.visible=walls>.002;
-  landMesh.visible=lands>.001;woodsMesh.visible=surf>.002;
+  bldg.visible=frameUp>.002;bldg.scale.y=Math.max(.001,frameUp);edgeMat.opacity=frameUp*(1-walls);bldU.uOpacity.value=walls;bMesh.visible=walls>.002;
+  shadowMat.opacity=.3*walls;bShadow.visible=walls>.002;curbMat.uniforms.uOpacity.value=pk;curb.visible=pk>.002;
+  landMesh.forEach(m=>m.visible=lands>.001);woodsMesh.forEach(m=>m.visible=surf>.002);
   updateTrees(surf,clear,grade,lands);
   parked.forEach(m=>m.visible=cars>.002);moving.forEach(m=>m.visible=surf>.5);
   updateCars(cars,t);
@@ -705,7 +791,7 @@ function frame(now){
     const ew=L.el.offsetWidth,lx=clamp((v.x*.5+.5)*w,ew/2+8,w-ew/2-8);
     L.el.style.opacity=o;L.el.style.transform=`translate(${lx}px,${(-v.y*.5+.5)*h}px) translate(-50%,-50%)`;});
 
-  renderer.render(scene,camera);
+  if(rA<.999)renderer.render(scene,camera);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
