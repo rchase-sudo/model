@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>336 Route 73 · Project Walkthrough</title>
+<meta name="description" content="A scroll-through walkthrough of the proposed bank with drive-thru at 336 Route 73, Voorhees NJ — from existing conditions through approvals and construction to operation.">
+<meta name="theme-color" content="#0A0E11">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E11; --panel:rgba(10,14,17,.8); --line:#26333A; --text:#EDF2F1; --soft:#A9B8B6; --faint:#62736F;
+    --mint:#29E8A6; --violet:#E24FD0; --amber:#FFA53D;
+    --water:#4AA3FF; --sewer:#3DDC84; --storm:#2FC4B2; --elec:#FF5A5A;
+    --sans:'Figtree',system-ui,-apple-system,sans-serif; --display:'Sora',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--bg)}
+  body{margin:0;color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  button{font:inherit}
+  :focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+
+  #scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;touch-action:pan-y}
+  .no-gl #scene,.no-gl #labels,.no-gl #compare,.no-gl #legend{display:none}
+  .no-gl body{background:radial-gradient(70% 50% at 80% 10%,rgba(41,232,166,.12),transparent),var(--bg)}
+
+  /* top bar */
+  header.top{position:fixed;inset:0 0 auto 0;z-index:6;display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:16px 24px 28px;pointer-events:none;background:linear-gradient(var(--bg) 20%,rgba(10,14,17,0))}
+  .brand{display:flex;align-items:center;gap:12px}
+  .mark{width:30px;height:30px;border-radius:50%;padding:2px;position:relative;flex-shrink:0;
+    background:conic-gradient(from 200deg,var(--mint),var(--violet) 45%,var(--amber) 75%,var(--mint))}
+  .mark::after{content:"A";position:absolute;inset:2px;border-radius:50%;background:var(--bg);display:grid;place-items:center;
+    font:800 12px/1 var(--display);color:var(--text)}
+  .brand b{font:700 15px var(--display);display:block;white-space:nowrap}
+  .brand span{font:500 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  #phase{overflow:hidden;text-overflow:ellipsis;max-width:62vw;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mint);
+    border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:7px 13px;white-space:nowrap;backdrop-filter:blur(8px)}
+
+  /* stage rail */
+  .rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:11px}
+  .rail button{all:unset;cursor:pointer;width:9px;height:9px;border-radius:50%;border:1px solid var(--faint);position:relative;transition:background .3s,border-color .3s}
+  .rail button.on{background:var(--mint);border-color:var(--mint)}
+  .rail button span{position:absolute;right:18px;top:50%;transform:translateY(-50%);white-space:nowrap;pointer-events:none;
+    font:500 10.5px var(--mono);letter-spacing:.06em;color:var(--soft);background:var(--panel);border:1px solid var(--line);
+    border-radius:4px;padding:3px 8px;opacity:0;transition:opacity .2s}
+  .rail button:hover span,.rail button:focus-visible span{opacity:1}
+
+  /* sections */
+  main{position:relative;z-index:2}
+  .sheet{min-height:100vh;display:flex;align-items:center;padding:110px 24px 150px}
+  .panel{width:100%;max-width:440px;margin-left:clamp(0px,4vw,64px);background:var(--panel);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border:1px solid var(--line);border-radius:10px;padding:28px 28px 24px}
+  .kick{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
+  .kick.amber{color:var(--amber)}
+  h1{font:800 clamp(46px,7.4vw,92px)/.98 var(--display);letter-spacing:-.025em;margin:14px 0 18px}
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--mint),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font:700 clamp(24px,2.8vw,32px)/1.15 var(--display);letter-spacing:-.01em;margin:10px 0 12px;text-wrap:balance}
+  p{margin:0 0 12px;color:var(--soft);font-size:15.5px;line-height:1.6}
+  .note{font-size:12.5px;color:var(--faint);line-height:1.5;margin-top:10px}
+  .hero .panel{background:none;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;max-width:660px;padding:0}
+  .hero p.lede{font-size:18.5px;max-width:46ch;color:var(--soft)}
+  .cue{display:flex;align-items:center;gap:12px;margin-top:30px;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .cue::before{content:"";width:1px;height:38px;background:linear-gradient(var(--mint),transparent);animation:drip 2.2s ease-in-out infinite}
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  dl.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:16px 0 4px}
+  dl.facts div{background:rgba(10,14,17,.9);padding:11px 13px}
+  dl.facts dt{font:600 9.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  dl.facts dd{margin:4px 0 0;font:700 15.5px var(--display)}
+  ul.steps{list-style:none;margin:14px 0 4px;padding:0;display:flex;flex-direction:column;gap:8px}
+  ul.steps li{font-size:14px;color:var(--soft);padding-left:18px;position:relative;line-height:1.5}
+  ul.steps li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:2px;background:var(--c,var(--mint))}
+
+  .gantt{margin:16px 0 4px;border-bottom:1px solid var(--line)}
+  .g-row{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:12.5px;color:var(--soft);line-height:1.3}
+  .g-row i{display:block;height:8px;border-radius:4px;margin-left:var(--a);width:calc(var(--b) - var(--a));
+    background:linear-gradient(90deg,var(--mint),var(--violet))}
+  .g-axis{display:flex;justify-content:space-between;font:500 10px var(--mono);color:var(--faint);letter-spacing:.06em;padding:6px 0 0 162px}
+
+  /* labels projected from the 3D scene */
+  #labels .tag{position:fixed;left:0;top:0;z-index:1;opacity:0;pointer-events:none;white-space:nowrap;
+    font:500 11px var(--mono);letter-spacing:.03em;color:var(--text);background:rgba(10,14,17,.86);border:1px solid var(--line);border-radius:5px;padding:5px 9px}
+  #labels .tag b{color:var(--mint);font-weight:600}
+  #labels .tag.amber b{color:var(--amber)}
+
+  /* timeline HUD */
+  #hud{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:6;width:min(700px,calc(100vw - 28px));
+    background:var(--panel);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:10px;padding:11px 16px 12px}
+  #hud .now{display:flex;justify-content:space-between;gap:12px;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  #hud .now span:first-child{color:var(--text)}
+  #hud .now span:last-child{color:var(--faint);text-align:right}
+  .track{position:relative;display:flex;gap:4px;height:6px;margin-top:10px}
+  .track .seg{height:100%;border-radius:3px;background:var(--line);position:relative;overflow:hidden}
+  .track .seg i{position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:var(--c)}
+  .marker{position:absolute;top:50%;left:0;width:13px;height:13px;border-radius:50%;background:var(--text);transform:translate(-50%,-50%);
+    box-shadow:0 0 0 4px rgba(237,242,241,.16)}
+  .seglabels{display:flex;gap:4px;margin-top:8px}
+  .seglabels span{font:500 9.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);transition:color .3s}
+  .seglabels span.on{color:var(--text)}
+
+  /* hold to compare */
+  #compare{position:fixed;right:22px;bottom:104px;z-index:7;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;-webkit-user-select:none;
+    font:600 11.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--bg);background:var(--amber);border:0;border-radius:99px;padding:11px 16px;
+    opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .35s,transform .35s,box-shadow .2s;touch-action:none}
+  #compare.show{opacity:1;pointer-events:auto;transform:none}
+  #compare.held{box-shadow:0 0 0 6px rgba(255,165,61,.25)}
+  #compare svg{width:14px;height:14px}
+
+  /* utility legend */
+  #legend{position:fixed;left:24px;bottom:104px;z-index:6;opacity:0;pointer-events:none;transition:opacity .4s;
+    background:var(--panel);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font:500 11px var(--mono);color:var(--soft)}
+  #legend div{display:flex;align-items:center;gap:9px;margin-top:5px}
+  #legend div:first-child{margin-top:0;color:var(--faint);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
+  #legend i{width:16px;height:3px;border-radius:2px;background:var(--c)}
+
+  footer.end{position:relative;z-index:2;text-align:center;padding:0 24px 150px;font:500 11px var(--mono);letter-spacing:.06em;color:var(--faint)}
+
+  @media (max-width:760px){
+    header.top{padding:12px 14px 22px}
+    .brand span{display:none}
+    .rail{display:none}
+    .sheet{align-items:flex-end;padding:70px 12px 132px}
+    .sheet.hero{align-items:center}
+    .panel{margin:0;max-width:none;padding:20px 20px 16px}
+    .panel p{font-size:14.5px}
+    .g-row{grid-template-columns:118px 1fr;font-size:11.5px}
+    .g-axis{padding-left:130px}
+    #hud{bottom:10px;padding:9px 12px 10px}
+    #hud .now span:last-child{display:none}
+    #compare{right:12px;bottom:auto;top:62px;padding:9px 13px;font-size:10.5px}
+    #legend{left:12px;bottom:auto;top:108px}
+    #phase{font-size:9.5px;padding:6px 10px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<div id="labels" aria-hidden="true">
+  <div class="tag" id="t-area"></div><div class="tag" id="t-front"></div><div class="tag" id="t-env"></div>
+  <div class="tag" id="t-bank"></div><div class="tag" id="t-park"></div><div class="tag" id="t-drive"></div>
+  <div class="tag amber" id="t-fence"></div><div class="tag amber" id="t-ent"></div>
+  <div class="tag amber" id="t-grade"></div>
+  <div class="tag" id="t-open"></div><div class="tag" id="t-cust"></div>
+</div>
+
+<header class="top">
+  <div class="brand"><div class="mark" aria-hidden="true"></div><div><b>336 Route 73</b><span>Voorhees Township, NJ · Project walkthrough</span></div></div>
+  <div id="phase" aria-live="polite">Existing conditions</div>
+</header>
+
+<nav class="rail" aria-label="Project stages"></nav>
+
+<main>
+  <section class="sheet hero" data-name="Overview">
+    <div class="panel">
+      <div class="kick">Proposed development · Project walkthrough</div>
+      <h1>336 Route 73, <em>start to finish.</em></h1>
+      <p class="lede">A 5,900 SF bank with drive-thru on 1.32 acres in Voorhees Township. Scroll to follow the project from the ground as it is today, through approvals and construction, to opening day.</p>
+      <div class="cue">Scroll to begin</div>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Existing conditions">
+    <div class="panel">
+      <div class="kick">01 · Existing conditions</div>
+      <h2>The site today.</h2>
+      <p>A wooded parcel fronting NJ Route 73, modeled from public LiDAR elevation data and the county parcel record. Every point you just saw is a measured ground elevation.</p>
+      <dl class="facts">
+        <div><dt>Parcel</dt><dd>1.32 ac</dd></div>
+        <div><dt>Zoning</dt><dd>MB · Major Business</dd></div>
+        <div><dt>Frontage</dt><dd>NJ Route 73</dd></div>
+        <div><dt>Today</dt><dd>Vacant, wooded</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Site & zoning">
+    <div class="panel">
+      <div class="kick">02 · Site &amp; zoning</div>
+      <h2>What the rules allow.</h2>
+      <p>The solid line is the property line. The dashed line is the zoning setback. What's left between them — the buildable envelope — is where a building is allowed to go.</p>
+      <dl class="facts">
+        <div><dt>Gross site</dt><dd>1.32 ac</dd></div>
+        <div><dt>Buildable envelope</dt><dd>0.88 ac</dd></div>
+      </dl>
+      <p class="note">The proposed building sits entirely inside the envelope.</p>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="The proposal">
+    <div class="panel">
+      <div class="kick">03 · The proposal</div>
+      <h2>One building, one curb cut.</h2>
+      <p>A one-story bank with a drive-thru, reached by a loop drive from a single Route 73 entrance, with parking alongside and landscaping along the edges.</p>
+      <dl class="facts">
+        <div><dt>Building</dt><dd>5,900 SF</dd></div>
+        <div><dt>Height</dt><dd>1 story</dd></div>
+        <div><dt>Parking</dt><dd>25 spaces</dd></div>
+        <div><dt>Access</dt><dd>1 curb cut</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Approvals">
+    <div class="panel">
+      <div class="kick">04 · Approvals</div>
+      <h2>Review before anything moves.</h2>
+      <p>Nothing is built until the project clears local and state review. Typical approvals for a project like this:</p>
+      <div class="gantt" role="img" aria-label="Approvals timeline, estimated 9 to 14 months">
+        <div class="g-row"><span>Planning Board site plan</span><i style="--a:0%;--b:72%"></i></div>
+        <div class="g-row"><span>NJDOT highway access</span><i style="--a:8%;--b:100%"></i></div>
+        <div class="g-row"><span>Soil erosion &amp; sediment control</span><i style="--a:22%;--b:58%"></i></div>
+        <div class="g-row"><span>Building permits</span><i style="--a:70%;--b:100%"></i></div>
+      </div>
+      <div class="g-axis"><span>Application</span><span>≈ 9–14 months</span></div>
+      <p class="note">Sequence is illustrative; actual durations depend on agency schedules and review comments.</p>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Clear & protect">
+    <div class="panel">
+      <div class="kick amber">05 · Construction · Phase 1</div>
+      <h2>Clear and protect.</h2>
+      <p>Trees inside the work area come down. Silt fence goes up around the disturbance to keep soil on site, and a stone construction entrance keeps mud off Route 73.</p>
+      <ul class="steps">
+        <li style="--c:var(--amber)">Silt fence around the limit of disturbance</li>
+        <li style="--c:var(--amber)">Stone construction entrance at the curb cut</li>
+        <li style="--c:var(--mint)">Woods beyond the property line stay</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Grade & connect">
+    <div class="panel">
+      <div class="kick amber">06 · Construction · Phase 2</div>
+      <h2>Grade and connect.</h2>
+      <p>The site is graded to its design elevations, and utility services are brought in from Route 73 before anything goes on top of them.</p>
+      <ul class="steps">
+        <li style="--c:var(--water)">Water service</li>
+        <li style="--c:var(--sewer)">Sanitary sewer</li>
+        <li style="--c:var(--storm)">Storm drainage</li>
+        <li style="--c:var(--elec)">Electric</li>
+      </ul>
+      <p class="note">Utility routing shown is illustrative.</p>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Build & pave">
+    <div class="panel">
+      <div class="kick amber">07 · Construction · Phase 3</div>
+      <h2>Build and pave.</h2>
+      <p>The building goes up — structure first, then walls and roof. The parking lot and loop drive are paved, replacing the construction entrance.</p>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Finish">
+    <div class="panel">
+      <div class="kick amber">08 · Construction · Phase 4</div>
+      <h2>Finish the ground.</h2>
+      <p>Sidewalks, striping, lawn, and landscape trees go in. Once the ground is stabilized, the silt fence comes down.</p>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Operation">
+    <div class="panel">
+      <div class="kick">09 · Operation</div>
+      <h2>Opening day.</h2>
+      <p>Customers turn in at the single Route 73 entrance, park or follow the loop drive, and exit the same way. Through traffic on Route 73 keeps moving past the site.</p>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Neighbor's view">
+    <div class="panel">
+      <div class="kick">10 · The neighbor's view</div>
+      <h2>What it looks like from Route 73.</h2>
+      <p>This is eye level — about 5½ feet — from across Route 73. Hold <b style="color:var(--amber)">Compare to today</b> to see the same view as the site looks now.</p>
+    </div>
+  </section>
+
+  <section class="sheet" data-name="Summary">
+    <div class="panel">
+      <div class="kick">Summary</div>
+      <h2>336 Route 73 at a glance.</h2>
+      <dl class="facts">
+        <div><dt>Site</dt><dd>1.32 ac · MB zone</dd></div>
+        <div><dt>Use</dt><dd>Bank + drive-thru</dd></div>
+        <div><dt>Building</dt><dd>5,900 SF, 1 story</dd></div>
+        <div><dt>Parking</dt><dd>25 spaces</dd></div>
+        <div><dt>Access</dt><dd>1 curb cut, Route 73</dd></div>
+        <div><dt>Approvals</dt><dd>≈ 9–14 months</dd></div>
+      </dl>
+      <p class="note">This walkthrough is a communication tool for project review, built from public LiDAR, the county parcel record, and the preliminary development plan. It is illustrative and not for construction — the signed and sealed plan set governs.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="end">Walkthrough by Apollo Development · apollodevelopment.io · Illustrative — not for construction</footer>
+
+<div id="legend" aria-hidden="true">
+  <div>Utilities · APWA colors</div>
+  <div><i style="--c:var(--water)"></i>Water</div>
+  <div><i style="--c:var(--sewer)"></i>Sanitary sewer</div>
+  <div><i style="--c:var(--storm)"></i>Storm</div>
+  <div><i style="--c:var(--elec)"></i>Electric</div>
+</div>
+
+<button id="compare" type="button" aria-label="Hold to compare with the site as it is today">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8a6 6 0 1 0 2-4.5M2 2v3.5h3.5"/></svg>
+  Hold · compare to today
+</button>
+
+<div id="hud">
+  <div class="now"><span id="hud-now">Today · existing conditions</span><span id="hud-sub">Scroll to advance</span></div>
+  <div class="track">
+    <div class="seg" style="flex:20"><i style="--c:var(--mint)"></i></div>
+    <div class="seg" style="flex:26"><i style="--c:var(--violet)"></i></div>
+    <div class="seg" style="flex:40"><i style="--c:var(--amber)"></i></div>
+    <div class="seg" style="flex:14"><i style="--c:var(--mint)"></i></div>
+    <div class="marker" id="marker"></div>
+  </div>
+  <div class="seglabels">
+    <span style="flex:20">Today</span><span style="flex:26">Approvals</span><span style="flex:40">Construction</span><span style="flex:14">Open</span>
+  </div>
+</div>
+
+<script src="../assets/three.min.js"></script>
+<script>window.THREE||document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"><\/script>')</script>
+<script>
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ss=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t);};
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const ease=t=>{t=clamp(t,0,1);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
+const lerp=(a,b,t)=>a+(b-a)*t;
+
+/* ---------- scroll → stage (0..LAST), works without WebGL ---------- */
+const sheets=[...document.querySelectorAll('.sheet')],LAST=sheets.length-1;
+const rail=document.querySelector('.rail');
+sheets.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',s.dataset.name);
+  b.innerHTML=`<span>${String(i).padStart(2,'0')} · ${s.dataset.name}</span>`;b.addEventListener('click',()=>scrollTo({top:anchors[i],behavior:reduce?'auto':'smooth'}));rail.appendChild(b);});
+const railBtns=[...rail.children];
+let anchors=[];
+function measure(){const vh=innerHeight,max=document.documentElement.scrollHeight-vh;
+  anchors=sheets.map((s,i)=>i===0?0:Math.min(max,Math.max(0,s.offsetTop+s.offsetHeight/2-vh/2)));
+  for(let i=1;i<anchors.length;i++)if(anchors[i]<=anchors[i-1])anchors[i]=anchors[i-1]+1;}
+function scrollS(){const y=scrollY;for(let i=0;i<anchors.length-1;i++){if(y<anchors[i+1])return i+clamp((y-anchors[i])/(anchors[i+1]-anchors[i]),0,1);}return LAST;}
+addEventListener('resize',measure);measure();
+
+/* ---------- HUD ---------- */
+const PH=['Existing conditions','Existing conditions','Site & zoning','The proposal','Approvals','Construction · Clear & protect','Construction · Grade & connect','Construction · Build & pave','Construction · Finish','Operation',"Neighbor's view",'Summary'];
+const NOW=[['Today','Existing conditions'],['Today','Existing conditions'],['Today','Site & zoning'],['Today','Proposed plan'],['Approvals','≈ 9–14 months of review'],
+  ['Construction','Phase 1 of 4 · clear & protect'],['Construction','Phase 2 of 4 · grade & connect'],['Construction','Phase 3 of 4 · build & pave'],['Construction','Phase 4 of 4 · finish'],
+  ['Open','Operation'],['Open','Eye level from Route 73'],['Open','Summary']];
+const phaseEl=document.getElementById('phase'),hudNow=document.getElementById('hud-now'),hudSub=document.getElementById('hud-sub'),marker=document.getElementById('marker');
+const segFills=[...document.querySelectorAll('.track .seg i')],segLabels=[...document.querySelectorAll('.seglabels span')];
+const compareBtn=document.getElementById('compare'),legend=document.getElementById('legend');
+const STOPS=[[0,0],[1,6],[3.4,19],[4,26],[4.6,45],[8.5,85],[9,90],[11,100]];
+function tlPos(S){for(let i=0;i<STOPS.length-1;i++){const a=STOPS[i],b=STOPS[i+1];if(S<=b[0])return lerp(a[1],b[1],clamp((S-a[0])/(b[0]-a[0]),0,1));}return 100;}
+const SEG=[[0,20],[20,46],[46,86],[86,100]];
+let activeIdx=-1;
+function updateHud(S,gl){
+  const i=clamp(Math.round(S),0,LAST);
+  if(i!==activeIdx){activeIdx=i;phaseEl.textContent=PH[i];hudNow.textContent=NOW[i][0]+' · '+NOW[i][1];
+    railBtns.forEach((b,k)=>b.classList.toggle('on',k===i));
+    const seg=i<=3?0:i===4?1:i<=8?2:3;segLabels.forEach((l,k)=>l.classList.toggle('on',k===seg));
+    hudSub.textContent=i===LAST?'End of walkthrough':'Scroll to advance';}
+  const p=tlPos(S);marker.style.left=p+'%';
+  segFills.forEach((f,k)=>{const [a,b]=SEG[k];f.style.transform=`scaleX(${clamp((p-a)/(b-a),0,1)})`;});
+  if(gl){compareBtn.classList.toggle('show',S>4.55&&S<10.6);legend.style.opacity=(ss(5.55,5.85,S)*(1-ss(6.45,6.7,S))).toFixed(3);}
+}
+
+/* hold to compare with today */
+let cmpT=0,cmp=0;
+const hold=v=>{cmpT=v;compareBtn.classList.toggle('held',!!v);};
+compareBtn.addEventListener('pointerdown',e=>{e.preventDefault();try{compareBtn.setPointerCapture(e.pointerId);}catch(_){}hold(1);});
+['pointerup','pointercancel','lostpointercapture'].forEach(ev=>compareBtn.addEventListener(ev,()=>hold(0)));
+compareBtn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();hold(1);}});
+compareBtn.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter')hold(0);});
+compareBtn.addEventListener('contextmenu',e=>e.preventDefault());
+
+function noGL(){document.documentElement.classList.add('no-gl');const f=()=>updateHud(scrollS(),false);addEventListener('scroll',f,{passive:true});f();}
+if(!window.THREE){noGL();return;}
+
+/* ---------- site data: 336 Route 73, traced from the preliminary development plan (world units) ---------- */
+const SITE={"ftPerUnit":5.502795833582524,"parcel":[[-25.442,-20.575],[32.933,3.161],[28.793,27.086],[-31.068,16.941]],"setback":[[-22.425,-15.501],[28.861,5.672],[25.75,22.921],[-26.938,13.867]],"paving":[{"outer":[[-32.332,-5.025],[-32.712,-2.718],[-32.332,-2.465],[-32.775,0.158],[-32.775,3.698],[-32.617,3.856],[-31.985,3.698],[-31.669,1.201],[-31.448,0.917],[-30.278,0.379],[-28.951,0.411],[-28.856,1.422],[-29.298,1.643],[-29.393,1.96],[-29.077,2.212],[-29.014,2.623],[-28.761,2.686],[-28.571,1.201],[-28.129,0.948],[-27.971,0.506],[-27.528,0.442],[-26.264,0.853],[-25.316,0.853],[-25.032,1.454],[-24.431,1.359],[-23.957,1.549],[-22.946,2.845],[-22.661,4.33],[-22.408,4.488],[-22.124,2.339],[-21.587,1.612],[-20.828,-1.454],[-18.142,-1.58],[-16.909,-5.721],[-15.202,-7.332],[-13.622,-7.838],[-11.662,-7.585],[-5.436,-5.405],[-3.698,-4.583],[-2.718,-4.678],[-2.528,-4.52],[-2.655,-3.951],[-2.054,-3.603],[-1.454,-4.551],[0.126,-4.298],[0.853,-3.887],[0.98,-2.908],[1.485,-2.528],[11.41,0.98],[12.358,1.643],[13.338,2.876],[13.812,4.614],[13.274,8.186],[12.769,9.576],[12.484,11.252],[11.757,12.263],[10.714,12.547],[10.272,12.516],[10.051,12.263],[10.019,11.599],[10.556,9.387],[10.367,8.913],[8.344,8.502],[7.016,8.47],[6.669,8.154],[5.341,7.933],[5.31,7.775],[4.077,7.585],[3.508,7.743],[3.477,7.364],[3.287,8.059],[2.908,8.186],[3.161,8.723],[2.813,10.556],[2.623,10.872],[2.307,10.872],[2.086,10.43],[1.833,10.398],[2.465,7.238],[1.738,7.016],[0.632,7.143],[0.601,6.922],[-6.258,5.278],[-6.574,5.531],[-6.606,6.542],[-7.206,8.281],[-7.775,8.565],[-8.502,8.565],[-8.944,9.861],[-9.166,11.568],[-8.786,12.073],[-8.755,12.611],[-9.292,15.36],[-8.597,15.645],[-5.973,15.992],[-5.531,16.34],[-3.887,16.688],[-2.528,16.751],[-2.181,17.067],[2.276,18.142],[2.971,17.92],[3.666,18.363],[5.215,18.742],[6.542,18.71],[7.269,19.121],[8.091,19.185],[8.944,19.564],[9.292,20.164],[11.947,20.607],[12.579,20.291],[13.306,20.291],[14.001,20.544],[14.412,21.081],[16.972,21.492],[18.268,21.46],[19.659,14.855],[19.374,14.602],[17.952,14.349],[16.593,13.812],[15.708,12.769],[15.55,11.599],[16.909,5.31],[16.814,3.445],[16.34,1.675],[15.929,1.106],[15.929,0.727],[16.466,0.537],[14.349,-0.284],[13.748,-1.359],[12.8,-1.707],[12.421,-1.327],[12.01,-1.359],[11.884,-2.054],[11.41,-2.402],[9.893,-2.781],[8.502,-3.445],[8.123,-2.908],[7.807,-2.908],[7.364,-3.887],[6.922,-3.603],[6.479,-3.635],[4.678,-4.33],[4.109,-5.12],[2.781,-5.183],[0.569,-6.068],[-0.158,-6.1],[-0.632,-6.858],[-1.928,-7.048],[-4.393,-8.091],[-5.088,-7.996],[-5.563,-8.66],[-6.606,-8.786],[-6.953,-9.134],[-8.881,-9.987],[-11.22,-10.588],[-11.504,-11.062],[-13.053,-11.599],[-13.18,-10.967],[-14.033,-11.03],[-16.087,-10.367],[-18.047,-9.166],[-19.627,-7.238],[-20.86,-3.698],[-22.061,-2.497],[-22.724,-2.181],[-24.652,-1.896],[-25.348,-2.212],[-27.276,-2.497],[-27.497,-3.034],[-28.097,-3.508],[-28.445,-3.066],[-29.772,-3.413],[-30.468,-4.204],[-30.341,-5.278],[-31.1,-5.12],[-31.542,-5.31]],"holes":[]}],"stripes":[[[-32.191,-3.448],[-31.911,-5.04]],[[-5.59,8.921],[-4.89,5.702]],[[-3.764,9.348],[-3.076,6.15]],[[-1.947,9.769],[-1.245,6.526]],[[-0.122,10.178],[0.561,7.06]],[[4.566,11.255],[5.277,7.978]],[[6.391,11.689],[7.06,8.554]],[[8.225,12.068],[8.935,8.802]],[[-7.745,15.564],[-7.059,12.412]],[[-5.99,15.915],[-5.292,12.734]],[[-4.261,16.411],[-3.548,13.115]],[[-2.48,16.673],[-1.809,13.519]],[[-0.773,17.204],[-0.052,13.902]],[[0.962,17.652],[1.696,14.277]],[[2.756,17.84],[3.427,14.7]],[[4.477,18.342],[5.166,15.104]],[[6.25,18.634],[6.918,15.461]],[[7.976,19.067],[8.661,15.841]],[[9.664,19.765],[10.409,16.272]],[[11.426,20.073],[12.156,16.628]],[[13.219,20.211],[13.903,17.041]],[[14.933,20.698],[15.652,17.423]],[[16.704,21.014],[17.389,17.827]]],"bld":[[[4.109,-1.517],[0.853,-2.75],[0.79,-3.856],[-1.422,-4.488],[-1.865,-3.761],[-3.192,-3.761],[-3.635,-4.52],[-5.499,-4.393],[-9.861,-5.942],[-11.599,-1.138],[-17.889,-1.327],[-19.753,4.046],[-19.532,5.815],[-20.48,5.879],[-20.891,8.123],[-16.751,8.692],[-16.34,9.766],[-11.346,9.861],[-11.346,7.775],[-10.145,7.743],[-9.102,5.468],[-9.26,1.58],[2.023,3.729]]],"walks":[[[-12.705,5.626],[-12.705,7.206],[-12.358,7.206],[-12.263,7.396],[-11.125,7.396],[-11.125,6.163],[-11.315,6.131],[-11.41,5.626]],[[12.863,8.407],[5.025,6.606],[5.436,4.393],[5.31,3.603],[4.551,2.718],[2.971,2.244],[3.034,1.549],[2.845,1.549],[2.655,2.37],[2.813,3.066],[4.204,3.571],[4.551,4.014],[4.046,6.321],[-6.384,4.014],[-6.163,2.465],[-7.617,2.307],[-8.123,4.362],[-8.786,4.488],[-10.651,12.453],[-14.855,11.536],[-14.633,10.24],[-14.823,9.861],[-16.498,9.924],[-16.814,11.062],[-20.259,10.303],[-20.417,9.829],[-20.133,8.534],[-20.828,8.344],[-21.049,8.407],[-21.555,10.872],[-9.893,13.59],[-8.723,8.249],[-7.585,8.312],[-7.364,8.154],[-6.669,4.93],[-3.887,5.373],[-3.066,5.752],[-0.885,6.068],[0.601,6.574],[12.579,9.26],[12.769,9.197]]],"trees":[[-22.632,-12.499,2.62],[-17.878,-13.949,1.48],[-14.391,-5.293,1.33],[-11.885,-3.783,1.64],[-16.314,-3.419,0.58],[25.701,6.824,3.14],[-21.79,6.818,1.12],[-26.561,12.795,2.81],[24.934,21.575,1.9],[21.276,23.598,1.56]]};
+const FTU=SITE.ftPerUnit,SC=[1.3,6.65];
+function noise(x,z){
+  return Math.sin(x*0.031+1.3)*3.2+Math.cos(z*0.037-0.4)*2.6+Math.sin((x*0.6+z)*0.071)*1.2
+    +Math.sin(x*0.153+z*0.117)*0.45+Math.cos(x*0.21-z*0.19)*0.3
+    +9*Math.exp(-((x-85)**2+(z+65)**2)/1700)+6*Math.exp(-((x-95)**2+(z-60)**2)/1300);}
+function H(x,z){const d=Math.hypot(x-SC[0],z-SC[1]);return noise(x,z)*(0.1+0.9*ss(48,100,d));}
+const P=SITE.parcel,SET=SITE.setback;
+let a2=0;P.forEach((p,i)=>{const q=P[(i+1)%P.length];a2+=p[0]*q[1]-q[0]*p[1];});const sgn=Math.sign(a2);
+function edges(poly){return poly.map((p,i)=>{const q=poly[(i+1)%poly.length];const dx=q[0]-p[0],dz=q[1]-p[1],L=Math.hypot(dx,dz);return {p,q,nx:-sgn*dz/L,nz:sgn*dx/L};});}
+const E=edges(P);
+function sd(x,z){let m=Infinity;for(const e of E)m=Math.min(m,(x-e.p[0])*e.nx+(z-e.p[1])*e.nz);return m;}
+function mask(x,z){return ss(-7,3,sd(x,z));}
+const polyArea=poly=>{let s=0;poly.forEach((p,i)=>{const q=poly[(i+1)%poly.length];s+=p[0]*q[1]-q[0]*p[1];});return Math.abs(s)/2;};
+const centroid=poly=>{let x=0,z=0;poly.forEach(p=>{x+=p[0];z+=p[1];});return [x/poly.length,z/poly.length];};
+const acres=u=>u*FTU*FTU/43560;
+function bearing(dx,dz){const n=-dz,e=dx;const ns=n>=0?'N':'S',ew=e>=0?'E':'W';const ang=Math.atan2(Math.abs(e),Math.abs(n))*180/Math.PI;
+  const d=Math.floor(ang),mF=(ang-d)*60,m=Math.floor(mF),s=Math.round((mF-m)*60);return `${ns} ${d}°${String(m).padStart(2,'0')}'${String(s).padStart(2,'0')}" ${ew}`;}
+const PAD=0;
+const RA=[-27.72,-24.59],RD=[-0.1628,0.9867],RN=[-0.9867,-0.1628];
+const rp=(s,o)=>[RA[0]+RD[0]*s+RN[0]*o,RA[1]+RD[1]*s+RN[1]*o];
+const roadLine=o=>[rp(-130,o),rp(160,o)];
+const roadOff=(x,z)=>(x-RA[0])*RN[0]+(z-RA[1])*RN[1];
+
+/* ---------- renderer ---------- */
+const canvas=document.getElementById('scene');let renderer;
+try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});}catch(err){noGL();return;}
+const DPR=Math.min(devicePixelRatio||1,2);renderer.setPixelRatio(DPR);renderer.setClearColor(0x0A0E11,1);
+const scene=new THREE.Scene();scene.fog=new THREE.Fog(0x0A0E11,150,340);
+const camera=new THREE.PerspectiveCamera(40,1,0.3,1200);
+const BG=new THREE.Color(0x0A0E11);
+const fogU={uFogNear:{value:150},uFogFar:{value:340},uBg:{value:BG}};
+const MINT=0x29E8A6,VIOLET=0xE24FD0,AMBER=0xFFA53D;
+
+/* terrain with grading, construction soil, lawn */
+const SIZE=280,SEGS=210;
+const tg=new THREE.PlaneGeometry(SIZE,SIZE,SEGS,SEGS);tg.rotateX(-Math.PI/2);tg.translate(SC[0],0,SC[1]);
+const pos=tg.attributes.position,mk=new Float32Array(pos.count);
+for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getZ(i);pos.setY(i,H(x,z));mk[i]=mask(x,z);}
+tg.setAttribute('aMask',new THREE.BufferAttribute(mk,1));
+const terrainMat=new THREE.ShaderMaterial({transparent:true,extensions:{derivatives:true},
+  uniforms:Object.assign({uGrade:{value:0},uPad:{value:PAD},uSurface:{value:0},uContour:{value:0},uParcel:{value:0},uDirt:{value:0},uLawn:{value:0},
+    uFill:{value:new THREE.Color(0x172024)},uLine:{value:new THREE.Color(MINT)},uTint:{value:new THREE.Color(MINT)},
+    uPadCol:{value:new THREE.Color(0x3A342C)},uDirtCol:{value:new THREE.Color(0x6B5440)},uLawnCol:{value:new THREE.Color(0x3F5A3A)}},fogU),
+  vertexShader:`attribute float aMask;uniform float uGrade,uPad;varying vec3 vPos;varying float vMask,vDist;
+    void main(){vec3 p=position;p.y=mix(p.y,uPad,uGrade*aMask);vPos=p;vMask=aMask;vec4 mv=modelViewMatrix*vec4(p,1.);vDist=-mv.z;gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`uniform vec3 uBg,uFill,uLine,uTint,uPadCol,uDirtCol,uLawnCol;uniform float uSurface,uContour,uParcel,uGrade,uDirt,uLawn,uFogNear,uFogFar;varying vec3 vPos;varying float vMask,vDist;
+    void main(){vec3 n=normalize(cross(dFdx(vPos),dFdy(vPos)));if(n.y<0.)n=-n;float diff=clamp(dot(n,normalize(vec3(-.5,.8,.35))),0.,1.);
+      vec3 col=uFill*(.55+.8*diff);float inside=smoothstep(.55,.95,vMask);
+      col=mix(col,uPadCol*(.8+.3*diff),inside*uGrade);
+      col=mix(col,uDirtCol*(.7+.4*diff),inside*uDirt);
+      col=mix(col,uLawnCol*(.75+.35*diff),inside*uLawn);
+      float h=vPos.y/.6;float g=abs(fract(h-.5)-.5)/fwidth(h);float ln=1.-min(g,1.);
+      float hm=vPos.y/3.;float gm=abs(fract(hm-.5)-.5)/fwidth(hm);float lm=1.-min(gm,1.);
+      col=mix(col,uLine,max(ln*.32,lm*.75)*uContour*(1.-uGrade*inside));
+      vec2 gp=vPos.xz/10.;vec2 gg=abs(fract(gp-.5)-.5)/fwidth(gp);float gr=1.-min(min(gg.x,gg.y),1.);
+      col=mix(col,uLine,gr*.06*uContour);col=mix(col,uTint,inside*uParcel*.1*(1.-uGrade));
+      col=mix(col,uBg,smoothstep(uFogNear,uFogFar,vDist));gl_FragColor=vec4(col,uSurface);}`});
+const terrain=new THREE.Mesh(tg,terrainMat);scene.add(terrain);
+
+/* LiDAR point cloud */
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',pos);
+const pointMat=new THREE.ShaderMaterial({transparent:true,depthTest:false,depthWrite:false,
+  uniforms:Object.assign({uSize:{value:3.1*DPR},uScan:{value:0},uAlpha:{value:1},uLow:{value:new THREE.Color(0x52666A)},uHigh:{value:new THREE.Color(MINT)}},fogU),
+  vertexShader:`uniform float uSize,uScan,uFogNear,uFogFar;varying float vH,vScan,vFog;
+    void main(){vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=uSize*(70./-mv.z);vH=position.y;float d=(position.x+position.z*.45)-uScan;vScan=exp(-d*d/40.);vFog=smoothstep(uFogNear,uFogFar,-mv.z);gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`uniform vec3 uLow,uHigh,uBg;uniform float uAlpha;varying float vH,vScan,vFog;
+    void main(){vec2 c=gl_PointCoord-.5;if(dot(c,c)>.25)discard;float t=clamp((vH+3.)/14.,0.,1.);vec3 col=mix(uLow,uHigh,t);col=mix(col,vec3(.9,1.,.96),vScan*.8);col=mix(col,uBg,vFog);gl_FragColor=vec4(col,uAlpha*(.5+.5*vScan));}`});
+const points=new THREE.Points(pg,pointMat);points.renderOrder=3;scene.add(points);
+
+/* ribbons draped on the (graded) terrain */
+function sample(pts,closed,step){const S=[];let dist=0;const n=pts.length,segs=closed?n:n-1;
+  for(let i=0;i<segs;i++){const a=pts[i],b=pts[(i+1)%n];const L=Math.hypot(b[0]-a[0],b[1]-a[1]);const k=Math.max(1,Math.ceil(L/step));
+    for(let j=0;j<k;j++){const t=j/k;S.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,dist+L*t]);}dist+=L;}
+  const last=closed?pts[0]:pts[n-1];S.push([last[0],last[1],dist]);return {S,dist};}
+function ribbon(pts,closed,w,step){
+  const {S,dist}=sample(pts,closed,step||0.6);const P3=[],M=[],T=[],D=[],I=[];
+  for(let i=0;i<S.length;i++){const pr=S[Math.max(0,i-1)],nx=S[Math.min(S.length-1,i+1)];let tx=nx[0]-pr[0],tz=nx[1]-pr[1];const l=Math.hypot(tx,tz)||1;tx/=l;tz/=l;
+    const ox=-tz*w/2,oz=tx*w/2;for(const s of [1,-1]){const x=S[i][0]+ox*s,z=S[i][1]+oz*s;P3.push(x,H(x,z),z);M.push(mask(x,z));T.push(S[i][2]/dist);D.push(S[i][2]);}
+    if(i<S.length-1){const a=2*i;I.push(a,a+2,a+1,a+1,a+2,a+3);}}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));g.setAttribute('aMask',new THREE.Float32BufferAttribute(M,1));
+  g.setAttribute('aT',new THREE.Float32BufferAttribute(T,1));g.setAttribute('aDist',new THREE.Float32BufferAttribute(D,1));g.setIndex(I);return g;}
+function ribbonMat(color,dash,lift){return new THREE.ShaderMaterial({transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2,side:THREE.DoubleSide,
+  uniforms:Object.assign({uColor:{value:new THREE.Color(color)},uOpacity:{value:1},uDraw:{value:1},uDash:{value:dash||0},uLift:{value:lift||.35},uGrade:terrainMat.uniforms.uGrade,uPad:{value:PAD}},fogU),
+  vertexShader:`attribute float aMask,aT,aDist;uniform float uGrade,uPad,uLift,uFogNear,uFogFar;varying float vT,vD,vFog;
+    void main(){vec3 p=position;p.y=mix(p.y,uPad,uGrade*aMask)+uLift;vT=aT;vD=aDist;vec4 mv=modelViewMatrix*vec4(p,1.);vFog=smoothstep(uFogNear,uFogFar,-mv.z);gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`uniform vec3 uColor,uBg;uniform float uOpacity,uDraw,uDash;varying float vT,vD,vFog;
+    void main(){if(vT>uDraw)discard;if(uDash>0.&&fract(vD/uDash)>.55)discard;float head=smoothstep(uDraw-.025,uDraw,vT)*step(uDraw,.998);
+      vec3 col=mix(uColor,vec3(1.),head*.7);col=mix(col,uBg,vFog);gl_FragColor=vec4(col,uOpacity);}`});}
+function addRibbon(geo,mat,order){const m=new THREE.Mesh(geo,mat);m.renderOrder=order;scene.add(m);return m;}
+
+/* Route 73 */
+const roadMat=ribbonMat(0x262B2E,0,.06),laneMat=ribbonMat(0x7C8A86,3.2,.12);
+[addRibbon(ribbon(roadLine(2.65),false,5.3,1.2),roadMat,1),addRibbon(ribbon(roadLine(9.45),false,5.9,1.2),roadMat,1),
+ addRibbon(ribbon(roadLine(2.65),false,.22,1.2),laneMat,2),addRibbon(ribbon(roadLine(9.45),false,.22,1.2),laneMat,2)];
+
+/* property line + setback */
+const boundaryMat=ribbonMat(MINT,0,.3);const boundary=addRibbon(ribbon([P[3],P[0],P[1],P[2]],true,.5),boundaryMat,11);
+const setbackMat=ribbonMat(0xEDF2F1,1.8,.3);const setback=addRibbon(ribbon(SET,true,.26),setbackMat,11);
+
+/* proposal linework */
+const planMat=ribbonMat(VIOLET,0,.16);
+const paveOuter=SITE.paving[0].outer;
+const paveLine=addRibbon(ribbon(paveOuter,true,.18,.5),planMat,11);
+const bldLine=addRibbon(ribbon(SITE.bld[0],true,.22,.5),planMat,11);
+
+/* construction: silt fence (vertical strip that follows grading) */
+function fenceGeo(poly,step){const {S}=sample(poly,true,step);const P3=[],M=[],U=[],I=[];
+  S.forEach((s,i)=>{const x=s[0],z=s[1],y=H(x,z),m=mask(x,z);P3.push(x,y,z,x,y,z);M.push(m,m);U.push(0,1);if(i<S.length-1){const a=2*i;I.push(a,a+2,a+1,a+1,a+2,a+3);}});
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));g.setAttribute('aMask',new THREE.Float32BufferAttribute(M,1));
+  g.setAttribute('aUp',new THREE.Float32BufferAttribute(U,1));g.setIndex(I);return g;}
+const fenceMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,
+  uniforms:Object.assign({uColor:{value:new THREE.Color(AMBER)},uOpacity:{value:0},uRise:{value:0},uGrade:terrainMat.uniforms.uGrade,uPad:{value:PAD}},fogU),
+  vertexShader:`attribute float aMask,aUp;uniform float uGrade,uPad,uRise,uFogNear,uFogFar;varying float vUp,vFog;
+    void main(){vec3 p=position;p.y=mix(p.y,uPad,uGrade*aMask)+aUp*.55*uRise+.02;vUp=aUp;vec4 mv=modelViewMatrix*vec4(p,1.);vFog=smoothstep(uFogNear,uFogFar,-mv.z);gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`uniform vec3 uColor,uBg;uniform float uOpacity;varying float vUp,vFog;
+    void main(){vec3 col=mix(uColor*.45,uColor,smoothstep(.75,1.,vUp));col=mix(col,uBg,vFog);gl_FragColor=vec4(col,uOpacity*(.55+.45*smoothstep(.8,1.,vUp)));}`});
+// fence just inside the property line
+const fencePoly=P.map(p=>{const c=centroid(P),dx=c[0]-p[0],dz=c[1]-p[1],l=Math.hypot(dx,dz);return [p[0]+dx/l*1.6,p[1]+dz/l*1.6];});
+const fence=new THREE.Mesh(fenceGeo(fencePoly,.5),fenceMat);fence.renderOrder=6;scene.add(fence);
+
+/* construction entrance: stone pad from the road into the site at the curb cut */
+const CUT=[-31.4,-1.2];
+const entMat=ribbonMat(0x8E8778,0,.14);
+const ent=addRibbon(ribbon([[CUT[0]+RN[0]*1.5,CUT[1]+RN[1]*1.5],[CUT[0]-RN[0]*9,CUT[1]-RN[1]*9]],false,4.2,.5),entMat,4);
+
+/* utilities (illustrative routing, APWA colors) */
+const UT=[
+  {c:0x4AA3FF,pts:[rp(31.4,.6),[-24,6.3],[-20.6,6.3]]},
+  {c:0x3DDC84,pts:[rp(33.6,.6),[-24,8.3],[-20.4,8.1]]},
+  {c:0x2FC4B2,pts:[[12,15],[-4,11.6],[-22,10.6],rp(36.5,.6)]},
+  {c:0xFF5A5A,pts:[rp(28.4,.6),[-24,3.6],[-19.8,4.3]]}];
+const utils=UT.map((u,k)=>{const m=ribbonMat(u.c,0,.36+k*.02);m.uniforms.uDraw.value=0;return {m,mesh:addRibbon(ribbon(u.pts,false,.42,.4),m,12)};});
+
+/* paving, walks, stripes, building — traced from the plan */
+function shapeOf(pts){const s=new THREE.Shape();pts.forEach((p,i)=>i?s.lineTo(p[0],-p[1]):s.moveTo(p[0],-p[1]));return s;}
+function flat(pts,mat,y,order){const g=new THREE.ShapeGeometry(shapeOf(pts));g.rotateX(-Math.PI/2);const m=new THREE.Mesh(g,mat);m.position.y=y;m.renderOrder=order||1;scene.add(m);return m;}
+const paveMat=new THREE.MeshBasicMaterial({color:0x30363A,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const walkMat=new THREE.MeshBasicMaterial({color:0xBDB8AC,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const pave=flat(paveOuter,paveMat,.05,2);
+const walks=SITE.walks.map(w=>flat(w,walkMat,.07,3));
+const stripeMat=new THREE.MeshBasicMaterial({color:0xF2F2EE,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+(function(){const P3=[],I=[];SITE.stripes.forEach(([a,b])=>{const dx=b[0]-a[0],dz=b[1]-a[1],L=Math.hypot(dx,dz),w=.13,nx=-dz/L*w/2,nz=dx/L*w/2,o=P3.length/3;
+  P3.push(a[0]+nx,.1,a[1]+nz,a[0]-nx,.1,a[1]-nz,b[0]+nx,.1,b[1]+nz,b[0]-nx,.1,b[1]-nz);I.push(o,o+2,o+1,o+1,o+2,o+3);});
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));g.setIndex(I);const m=new THREE.Mesh(g,stripeMat);m.renderOrder=4;scene.add(m);})();
+const BH=22/FTU;
+const wallMat=new THREE.MeshStandardMaterial({color:0xE4E1DA,roughness:.85,transparent:true,opacity:0,side:THREE.DoubleSide});
+const roofMat=new THREE.MeshStandardMaterial({color:0x5E6366,roughness:.9,transparent:true,opacity:0,side:THREE.DoubleSide});
+const edgeMat=new THREE.LineBasicMaterial({color:AMBER,transparent:true,opacity:0});
+const bGeo=new THREE.ExtrudeGeometry(shapeOf(SITE.bld[0]),{depth:BH,bevelEnabled:false});bGeo.rotateX(-Math.PI/2);
+const bldg=new THREE.Group();const bMesh=new THREE.Mesh(bGeo,[roofMat,wallMat]);bldg.add(bMesh);
+const bEdges=new THREE.LineSegments(new THREE.EdgesGeometry(bGeo,25),edgeMat);bldg.add(bEdges);
+bldg.scale.y=.001;bldg.visible=false;scene.add(bldg);
+
+/* trees: existing woods + landscape trees from the plan */
+let seed=7;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+const coneGeo=new THREE.ConeGeometry(1.5,5,6);coneGeo.translate(0,2.5,0);
+const woods=[];
+for(let i=0;i<340;i++){const r=Math.sqrt(rnd())*125,th=rnd()*Math.PI*2;const x=SC[0]+Math.cos(th)*r,z=SC[1]+Math.sin(th)*r;
+  const o=roadOff(x,z);if(o>-4&&o<(Math.abs(z-6)<40?24:17))continue;
+  woods.push({x,z,y:H(x,z),s:.55+rnd()*.55,rot:rnd()*6.3,clear:ss(.05,.35,mask(x,z)),ph:rnd()});}
+const woodsMesh=new THREE.InstancedMesh(coneGeo,new THREE.MeshStandardMaterial({color:0x34463C,roughness:1,flatShading:true}),woods.length);scene.add(woodsMesh);
+const icoGeo=new THREE.IcosahedronGeometry(1,0);icoGeo.translate(0,1.8,0);
+const land=SITE.trees.map(t=>({x:t[0],z:t[1],s:Math.max(.7,t[2]),rot:rnd()*6.3,m:mask(t[0],t[1])}));
+const landMesh=new THREE.InstancedMesh(icoGeo,new THREE.MeshStandardMaterial({color:0x5C7A52,roughness:1,flatShading:true}),land.length);scene.add(landMesh);
+const dummy=new THREE.Object3D();let lastTree='';
+function updateTrees(surf,clear,grade,lands){const key=[surf,clear,grade,lands].map(v=>v.toFixed(3)).join('|');if(key===lastTree)return;lastTree=key;
+  woods.forEach((t,i)=>{const c=ss(t.ph*.6,t.ph*.6+.4,clear)*t.clear;const sc=Math.max(.001,t.s*surf*(1-c));dummy.position.set(t.x,t.y,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc,sc);dummy.updateMatrix();woodsMesh.setMatrixAt(i,dummy.matrix);});
+  woodsMesh.instanceMatrix.needsUpdate=true;
+  land.forEach((t,i)=>{const o=i/land.length*.6;const sc=Math.max(.001,t.s*ss(o,o+.4,lands));const y=lerp(H(t.x,t.z),PAD,grade*t.m);
+    dummy.position.set(t.x,y,t.z);dummy.rotation.set(0,t.rot,0);dummy.scale.set(sc,sc*.9,sc);dummy.updateMatrix();landMesh.setMatrixAt(i,dummy.matrix);});
+  landMesh.instanceMatrix.needsUpdate=true;}
+
+/* cars: parked in the striped stalls + through traffic on Route 73 */
+const carGeo=new THREE.BoxGeometry(1.1,.62,2.65);carGeo.translate(0,.42,0);
+const cabGeo=new THREE.BoxGeometry(.98,.42,1.35);cabGeo.translate(0,.93,-.1);
+const CARC=[0xD9DCDD,0x23282B,0x8A9399,0x6B1E22,0x2D4A6B,0xC9C2B4,0x3A3F42];
+const stalls=[];
+for(let i=0;i<SITE.stripes.length-1;i++){const a=SITE.stripes[i],b=SITE.stripes[i+1];
+  const ma=[(a[0][0]+a[1][0])/2,(a[0][1]+a[1][1])/2],mb=[(b[0][0]+b[1][0])/2,(b[0][1]+b[1][1])/2];
+  if(Math.hypot(ma[0]-mb[0],ma[1]-mb[1])>2.4)continue;
+  stalls.push({x:(ma[0]+mb[0])/2,z:(ma[1]+mb[1])/2,rot:Math.atan2(a[1][0]-a[0][0],a[1][1]-a[0][1]),on:rnd()<.62,o:rnd()});}
+function carMesh(n){const body=new THREE.InstancedMesh(carGeo,new THREE.MeshStandardMaterial({roughness:.45,metalness:.2}),n);
+  const cab=new THREE.InstancedMesh(cabGeo,new THREE.MeshStandardMaterial({color:0x14191C,roughness:.3,metalness:.3}),n);
+  for(let i=0;i<n;i++)body.setColorAt(i,new THREE.Color(CARC[i%CARC.length]));scene.add(body,cab);return [body,cab];}
+const parked=carMesh(stalls.length);
+const LANES=[{o:2.65-1.3,dir:1},{o:2.65+1.3,dir:1},{o:9.45-1.4,dir:-1},{o:9.45+1.4,dir:-1}];
+const traffic=[];LANES.forEach((L,li)=>{for(let k=0;k<5;k++)traffic.push({L,s0:rnd()*290,v:7+rnd()*3.5});});
+const moving=carMesh(traffic.length);
+function setCar(pair,i,x,y,z,rot,sc){dummy.position.set(x,y,z);dummy.rotation.set(0,rot,0);dummy.scale.set(sc,sc,sc);dummy.updateMatrix();
+  pair[0].setMatrixAt(i,dummy.matrix);pair[1].setMatrixAt(i,dummy.matrix);}
+let lastPark='';
+function updateCars(cars,t){
+  const key=cars.toFixed(3);if(key!==lastPark){lastPark=key;
+    stalls.forEach((s,i)=>{const sc=s.on?Math.max(.001,ss(s.o*.7,s.o*.7+.3,cars)):.001;setCar(parked,i,s.x,PAD,s.z,s.rot,sc);});
+    parked.forEach(m=>m.instanceMatrix.needsUpdate=true);}
+  const span=290,head=Math.atan2(RD[0],RD[1]);
+  traffic.forEach((c,i)=>{let s=((c.s0+(reduce?0:t*c.v)*c.L.dir)%span+span)%span-130;const [x,z]=rp(s,c.L.o);
+    setCar(moving,i,x,H(x,z)+.08,z,head+(c.L.dir<0?Math.PI:0),1);});
+  moving.forEach(m=>m.instanceMatrix.needsUpdate=true);
+}
+
+scene.add(new THREE.HemisphereLight(0xEDF2F1,0x0A0E11,.8));
+const sun=new THREE.DirectionalLight(0xFFE7C7,.95);sun.position.set(-60,90,50);scene.add(sun);
+
+/* ---------- labels ---------- */
+const lab=id=>document.getElementById(id);
+const pc=centroid(P),sc=centroid(SET),bc=centroid(SITE.bld[0]);
+const stc=stalls.reduce((a,s)=>[a[0]+s.x/stalls.length,a[1]+s.z/stalls.length],[0,0]);
+lab('t-area').innerHTML=`Parcel · <b>${acres(polyArea(P)).toFixed(2)} ac ±</b>`;
+lab('t-front').innerHTML=`Route 73 frontage · <b>${bearing(P[0][0]-P[3][0],P[0][1]-P[3][1])}</b>`;
+lab('t-env').innerHTML=`Buildable envelope · <b>${acres(polyArea(SET)).toFixed(2)} ac</b>`;
+lab('t-bank').innerHTML=`Bank with drive-thru · <b>5,900 SF</b>`;
+lab('t-park').innerHTML=`Parking · <b>25 spaces</b>`;
+lab('t-drive').innerHTML=`Single curb cut · <b>loop drive</b>`;
+lab('t-fence').innerHTML=`<b>Silt fence</b> · limit of disturbance`;
+lab('t-ent').innerHTML=`<b>Stone construction entrance</b>`;
+lab('t-grade').innerHTML=`<b>Graded</b> to design elevation`;
+lab('t-open').innerHTML=`Open · <b>bank + drive-thru</b>`;
+lab('t-cust').innerHTML=`Customer parking · <b>25 spaces</b>`;
+const W3=(x,z,y)=>new THREE.Vector3(x,y==null?H(x,z)+.6:y,z);
+const fe=fencePoly;
+const labelDefs=[
+  {el:lab('t-area'),p:W3(pc[0]+8,pc[1]-2),g:0},
+  {el:lab('t-front'),p:W3((P[3][0]+P[0][0])/2-7,(P[3][1]+P[0][1])/2),g:0},
+  {el:lab('t-env'),p:W3(sc[0]+2,sc[1]+6),g:0},
+  {el:lab('t-bank'),p:new THREE.Vector3(bc[0],BH+3,bc[1]),g:1},
+  {el:lab('t-park'),p:new THREE.Vector3(stc[0],1.2,stc[1]),g:1},
+  {el:lab('t-drive'),p:new THREE.Vector3(-30,1.2,-6),g:1},
+  {el:lab('t-fence'),p:W3((fe[1][0]+fe[2][0])/2,(fe[1][1]+fe[2][1])/2,1.5),g:2},
+  {el:lab('t-ent'),p:new THREE.Vector3(CUT[0]-RN[0]*4,1.4,CUT[1]-RN[1]*4-3),g:2},
+  {el:lab('t-grade'),p:new THREE.Vector3(SC[0]+4,1.2,SC[1]-4),g:3},
+  {el:lab('t-open'),p:new THREE.Vector3(bc[0],BH+3,bc[1]),g:4},
+  {el:lab('t-cust'),p:new THREE.Vector3(stc[0],2,stc[1]),g:4}];
+const v=new THREE.Vector3();
+
+/* ---------- camera: one pose per stage ---------- */
+const EYE=(()=>{const [x,z]=rp(30,19.5);return [x,H(x,z)+1.05,z];})();
+const POSES=[
+  [[112,92,150],[0,0,5]],        // overview
+  [[80,54,106],[0,0,4]],         // existing
+  [[6,128,46],[2,0,6]],          // zoning (near plan view)
+  [[36,90,76],[-3,0,5]],         // proposal
+  [[-84,76,96],[0,0,4]],         // approvals
+  [[-92,40,90],[-5,2,0]],        // clear & protect
+  [[62,44,80],[-6,0,5]],         // grade & connect
+  [[-56,30,62],[-8,3,3]],        // build & pave
+  [[58,36,-46],[-3,0,6]],        // finish
+  [[-62,24,44],[-4,1,8]],        // operation
+  [EYE,[-7,2.4,4]],              // neighbor's view (eye level)
+  [[100,80,130],[0,0,5]]];       // summary
+const cp=new THREE.Vector3(),ct=new THREE.Vector3(),ca=new THREE.Vector3(),cb=new THREE.Vector3(),ta=new THREE.Vector3(),tb=new THREE.Vector3();
+function pose(S,t){
+  const i=clamp(Math.floor(S),0,LAST),j=Math.min(LAST,i+1),f=ease(S-i);
+  ca.fromArray(POSES[i][0]);cb.fromArray(POSES[j][0]);ta.fromArray(POSES[i][1]);tb.fromArray(POSES[j][1]);
+  cp.copy(ca).lerp(cb,f);ct.copy(ta).lerp(tb,f);
+  const eye=1-Math.min(1,Math.abs(S-10));
+  // gentle drift on aerial stages, none at eye level
+  const sw=reduce?0:Math.sin(t*.12)*.05*(1-eye),ox=cp.x-ct.x,oz=cp.z-ct.z,c=Math.cos(sw),s=Math.sin(sw);
+  cp.x=ct.x+ox*c-oz*s;cp.z=ct.z+ox*s+oz*c;
+  if(camera.aspect<1){const k=1+(1-camera.aspect)*.9*(1-eye);cp.sub(ct).multiplyScalar(k).add(ct);}
+  camera.position.copy(cp);camera.lookAt(ct);
+  const fov=lerp(40,camera.aspect<1?68:50,eye);if(Math.abs(camera.fov-fov)>.01){camera.fov=fov;camera.updateProjectionMatrix();}
+}
+
+function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;
+  // shift the picture away from the text panels: right on desktop, up on portrait phones
+  if(w<=760)camera.setViewOffset(w,h,0,Math.round(h*.2),w,h);else camera.setViewOffset(w,h,-Math.round(w*.13),0,w,h);
+  camera.updateProjectionMatrix();measure();}
+addEventListener('resize',resize);resize();
+
+let S=scrollS(),last=performance.now();
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;const t=now/1000;
+  const target=scrollS();S=reduce?target:S+(target-S)*Math.min(1,dt*4.5);
+  cmp+=(cmpT-cmp)*Math.min(1,dt*(reduce?60:7));
+  updateHud(S,true);
+  const x=lerp(S,1,cmp);   // scene state; "compare to today" shows stage 1 from the current camera
+
+  const lidar=1-ss(.4,1,x),surf=ss(.35,1,x);
+  const contour=ss(.5,1.1,x)*(1-.65*ss(5.4,6.2,x));
+  const bDraw=ss(1.4,2,x),sDraw=ss(1.6,2.1,x);
+  const planDraw=ss(2.45,2.95,x),planOut=1-ss(7.2,7.7,x);
+  const clear=ss(4.6,5.05,x),dirt=ss(4.75,5.2,x)*(1-ss(7.5,8,x));
+  const fenceA=ss(4.7,5.0,x)*(1-ss(8.25,8.6,x)),entA=ss(4.75,5.05,x)*(1-ss(6.8,7.15,x));
+  const grade=ss(5.45,5.95,x),util=ss(5.55,6.05,x),utilOut=1-ss(6.6,6.95,x);
+  const frameUp=ss(6.45,6.85,x),walls=ss(6.75,7.05,x),pk=ss(6.8,7.1,x);
+  const st=ss(7.5,7.85,x),lands=ss(7.55,8.05,x),lawn=ss(7.6,8.05,x),cars=ss(8.55,9,x);
+  const live=1-cmp;
+  const gA=[ss(1.85,2.1,S)*(1-ss(2.45,2.7,S)),ss(2.8,3,S)*(1-ss(3.4,3.6,S)),ss(4.85,5,S)*(1-ss(5.35,5.5,S)),ss(5.85,6,S)*(1-ss(6.35,6.5,S)),ss(8.85,9,S)*(1-ss(9.4,9.6,S))].map(a=>a*live);
+
+  pointMat.uniforms.uAlpha.value=lidar;points.visible=lidar>.005;pointMat.uniforms.uScan.value=reduce?999:((t*28)%320)-160;
+  const tu=terrainMat.uniforms;tu.uSurface.value=surf;terrain.visible=surf>.005;tu.uContour.value=contour;
+  tu.uParcel.value=bDraw;tu.uGrade.value=grade;tu.uDirt.value=dirt;tu.uLawn.value=lawn;
+  roadMat.uniforms.uOpacity.value=.3+.7*surf;laneMat.uniforms.uOpacity.value=surf;
+  boundaryMat.uniforms.uDraw.value=bDraw;boundaryMat.uniforms.uOpacity.value=1-.55*ss(4.5,5,x);boundary.visible=bDraw>.001;
+  setbackMat.uniforms.uDraw.value=sDraw;setbackMat.uniforms.uOpacity.value=.9*(1-ss(4.4,4.9,x));setback.visible=sDraw>.001&&x<4.9;
+  planMat.uniforms.uDraw.value=planDraw;planMat.uniforms.uOpacity.value=.95*planOut*(1-.6*ss(5.35,5.75,x));paveLine.visible=bldLine.visible=planDraw>.002&&planOut>.01;
+  fenceMat.uniforms.uOpacity.value=fenceA;fenceMat.uniforms.uRise.value=ss(4.7,5,x);fence.visible=fenceA>.003;
+  entMat.uniforms.uOpacity.value=entA;entMat.uniforms.uDraw.value=ss(4.75,5.05,x);ent.visible=entA>.003;
+  utils.forEach((u,k)=>{u.m.uniforms.uDraw.value=ss(5.55+k*.08,5.95+k*.08,x);u.m.uniforms.uOpacity.value=utilOut;u.mesh.visible=util>.002&&utilOut>.01;});
+  paveMat.opacity=pk;pave.visible=pk>.002;walkMat.opacity=st;walks.forEach(m=>m.visible=st>.002);stripeMat.opacity=st;
+  bldg.visible=frameUp>.002;bldg.scale.y=Math.max(.001,frameUp);edgeMat.opacity=frameUp*(1-.75*walls);wallMat.opacity=roofMat.opacity=walls;bMesh.visible=walls>.002;
+  landMesh.visible=lands>.001;woodsMesh.visible=surf>.002;
+  updateTrees(surf,clear,grade,lands);
+  parked.forEach(m=>m.visible=cars>.002);moving.forEach(m=>m.visible=surf>.5);
+  updateCars(cars,t);
+
+  pose(S,t);camera.updateMatrixWorld();
+
+  const w=innerWidth,h=innerHeight;
+  labelDefs.forEach(L=>{const o=gA[L.g];if(o<.01){L.el.style.opacity=0;return;}
+    v.copy(L.p).project(camera);if(v.z>1||Math.abs(v.x)>1.1||Math.abs(v.y)>1.1){L.el.style.opacity=0;return;}
+    const ew=L.el.offsetWidth,lx=clamp((v.x*.5+.5)*w,ew/2+8,w-ew/2-8);
+    L.el.style.opacity=o;L.el.style.transform=`translate(${lx}px,${(-v.y*.5+.5)*h}px) translate(-50%,-50%)`;});
+
+  renderer.render(scene,camera);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
