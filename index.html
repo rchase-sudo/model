@@ -152,6 +152,7 @@ p{margin:16px 0 0;max-width:65ch}
 .proof-card .stats b{font-size:clamp(1.6rem,2.6vw,2.1rem);color:var(--gold)}
 .pc-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
 .pc-cols .proof{min-width:0}
+.pc-cols:has(>[hidden]){grid-template-columns:1fr}
 .pc-quote{margin-top:16px;padding-top:14px;border-top:1px solid var(--gold-soft);display:grid}
 .pc-quote figure{grid-area:1/1;margin:0;opacity:0;transition:opacity .8s ease}
 .pc-quote figure.on{opacity:1}
@@ -437,7 +438,7 @@ main .panel,main a,main button{pointer-events:auto}
       <div class="stats" data-proof="totals" hidden>
         <div><b data-k="served"></b><span>Listings served</span></div>
         <div><b data-k="sold6"></b><span>Sold within 6 months</span></div>
-        <div><b data-k="week"></b><span>Ordered this week</span></div>
+        <div><b data-k="week"></b><span>Projects, last 30 days</span></div>
       </div>
       <div class="pc-cols">
         <div class="proof" data-proof="leaders" hidden>
@@ -445,7 +446,7 @@ main .panel,main a,main button{pointer-events:auto}
           <ol class="board" id="board"></ol>
         </div>
         <div class="proof" data-proof="recent" hidden>
-          <p class="proof-h"><span class="live">Ordered this week</span></p>
+          <p class="proof-h"><span class="live">Recent clients</span></p>
           <ul class="recent" id="recent"></ul>
         </div>
       </div>
@@ -487,14 +488,14 @@ main .panel,main a,main button{pointer-events:auto}
      Town, ST, YYYY-MM-DD) stays HIDDEN on the live page.
    - Preview with placeholders: add ?preview to the URL
      (https://rchase-sudo.github.io/model/?preview)
-   - "Ordered this week" (card + bottom-right toast) only shows orders
-     dated in the last 7 days, so it can't go stale. Add new orders to
-     the top of the list.
+   - "Recent projects" (card + bottom-right toast) only shows entries
+     dated in the last 90 days, so it can't go stale. Clients first,
+     then prospects. town is optional.
    - ?preview fills any placeholder with clearly-marked sample data so
      you can see the layout. Sample data never shows on the live page.
    ================================================================ */
 const PROOF={
-  served:'XX',          // total listings Forma has served
+  served:'20',          // total listings Forma has served (4 clients + 16 prospect listings, Oct 2026)
   sold6:'XX',           // listings sold (or under contract) within 6 months of delivery
   leaders:[             // top 3 agents by listings served
     {name:'Agent Name', brokerage:'Brokerage', listings:'XX'},
@@ -502,9 +503,27 @@ const PROOF={
     {name:'Agent Name', brokerage:'Brokerage', listings:'XX'}
   ],
   recent:[              // most recent orders, newest first
-    {name:'Agent Name', brokerage:'Brokerage', town:'Town, ST', date:'YYYY-MM-DD'},
-    {name:'Agent Name', brokerage:'Brokerage', town:'Town, ST', date:'YYYY-MM-DD'},
-    {name:'Agent Name', brokerage:'Brokerage', town:'Town, ST', date:'YYYY-MM-DD'}
+    // kind:'order' = paid client (CRM status client); kind:'concept' = project on their listing (CRM prospect)
+    {name:'Patricia W.', brokerage:'BayFox Designs', date:'2026-10-05', kind:'order'},
+    {name:'Jeff L.', brokerage:'Rose Commercial', date:'2026-09-23', kind:'order'},
+    {name:'Joseph K.', brokerage:'Krumpfer Real Estate', date:'2026-09-22', kind:'order'},
+    {name:'Joseph M.', brokerage:'Weichert Realtors', date:'2026-09-22', kind:'order'},
+    {name:'Delana R.', brokerage:'Right Space Commercial', date:'2026-10-15', kind:'concept'},
+    {name:'Daryus B.', brokerage:'Bosshardt Realty Services', date:'2026-10-14', kind:'concept'},
+    {name:'Mike M.', brokerage:'Liz Moore & Associates', date:'2026-10-12', kind:'concept'},
+    {name:'Jason S.', brokerage:'NAI Piedmont Triad', date:'2026-10-10', kind:'concept'},
+    {name:'Samuel H.', brokerage:'The SRH Group', date:'2026-10-09', kind:'concept'},
+    {name:'Scott W.', brokerage:'Rob Phillips Real Estate', date:'2026-10-08', kind:'concept'},
+    {name:'Allison R.', brokerage:'Nantahala', date:'2026-10-08', kind:'concept'},
+    {name:'Clark B.', brokerage:'Harvey Lindsay', date:'2026-10-07', kind:'concept'},
+    {name:'Brian C.', brokerage:'Coldwell Banker', date:'2026-10-05', kind:'concept'},
+    {name:'Yanay S.', brokerage:'Crossroads Realty', date:'2026-09-22', kind:'concept'},
+    {name:'Chris B.', brokerage:'Berkshire Hathaway', date:'2026-09-22', kind:'concept'},
+    {name:'George S.', brokerage:'RE/MAX', date:'2026-09-22', kind:'concept'},
+    {name:'Dennis G.', brokerage:'Newmark Associates', date:'2026-09-22', kind:'concept'},
+    {name:'Michael E.', brokerage:'Resource Realty', date:'2026-09-22', kind:'concept'},
+    {name:'Derek B.', brokerage:'Cushman & Wakefield', date:'2026-09-22', kind:'concept'},
+    {name:'Ali M.', brokerage:'Honest Look Up LLC', date:'2026-09-22', kind:'concept'}
   ],
   reviews:[             // client quotes, shown in the order-section card
     {quote:'Forma delivered our site plan in 5 days. The listing received four offers within a week of going live — two above asking. Our previous record was one offer in three weeks.', name:'Jessica Morales', role:'Senior Agent, Compass Real Estate'},
@@ -534,16 +553,20 @@ const SAMPLE=(()=>{const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);ret
   const DAY=864e5,today=new Date();today.setHours(0,0,0,0);
   const ageOf=r=>{const d=new Date(r.date+'T00:00:00');return isNaN(d)?NaN:Math.round((today-d)/DAY);};
   const recent=PROOF.recent.map((r,i)=>note(pick(r,SAMPLE.recent[i]),r)).filter(r=>{
-    if(!r)return false;const a=ageOf(r);return a>=0&&a<7;
-  }).slice(0,3);
-  const whenOf=r=>{const a=ageOf(r);return a===0?'Today':a===1?'1 day ago':a+' days ago';};
+    if(!r)return false;const a=ageOf(r);return a>=0&&a<90;
+  });
+  const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const whenOf=r=>{const a=ageOf(r);if(a===0)return 'Today';if(a===1)return '1 day ago';if(a<7)return a+' days ago';if(a<14)return 'Last week';
+    return MONTHS[new Date(r.date+'T00:00:00').getMonth()];};
+  const sub=r=>r.brokerage+(r.town?' · '+r.town:'');
+  const cardList=recent.slice(0,3);
 
   const served=note(pick(PROOF.served,SAMPLE.served),PROOF.served);
   const sold6=note(pick(PROOF.sold6,SAMPLE.sold6),PROOF.sold6);
-  if(served&&sold6){
+  if(served){
     document.querySelectorAll('[data-k="served"]').forEach(n=>n.textContent=served);
-    document.querySelectorAll('[data-k="sold6"]').forEach(n=>n.textContent=sold6);
-    document.querySelectorAll('[data-k="week"]').forEach(n=>{n.textContent=recent.length;n.parentElement.hidden=!recent.length;});
+    document.querySelectorAll('[data-k="sold6"]').forEach(n=>{n.textContent=sold6||'';n.parentElement.hidden=!sold6;});
+    document.querySelectorAll('[data-k="week"]').forEach(n=>{const c=recent.filter(r=>ageOf(r)<30).length;n.textContent=c;n.parentElement.hidden=!c||String(c)===String(served);});
     reveal('totals');any=true;
   }
 
@@ -557,10 +580,10 @@ const SAMPLE=(()=>{const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);ret
     reveal('leaders');any=true;
   }
 
-  if(recent.length){
+  if(cardList.length){
     const ul=document.getElementById('recent');
-    recent.forEach(r=>{
-      const li=el('li');li.append(who(r.name,r.brokerage+' · '+r.town),el('span','when',whenOf(r)));ul.append(li);
+    cardList.forEach(r=>{
+      const li=el('li');li.append(who(r.name,sub(r)),el('span','when',whenOf(r)));ul.append(li);
     });
     reveal('recent');any=true;
   }
@@ -598,7 +621,7 @@ const SAMPLE=(()=>{const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);ret
     const r=recent[ti%recent.length];ti++;
     document.getElementById('btName').textContent=r.name;
     document.getElementById('btCo').textContent=r.brokerage;
-    document.getElementById('btMeta').textContent='Ordered a Forma package · '+r.town+' · '+whenOf(r);
+    document.getElementById('btMeta').textContent=(r.kind==='concept'?'Concept plan delivered':'Ordered a Forma package')+(r.town?' · '+r.town:'')+' · '+whenOf(r);
     toast.classList.add('on');
     timer=setTimeout(()=>{hideToast();timer=setTimeout(showNext,6500);},5500);
   };
