@@ -131,6 +131,52 @@ p{margin:16px 0 0;max-width:65ch}
 .proof .stats{margin-top:0}
 @media (prefers-reduced-motion:reduce){.proof-h .live::before{animation:none}}
 
+/* order sheet: price panel + big proof card side by side */
+#order{gap:clamp(20px,3vw,44px);justify-content:space-between;align-items:center}
+#order>.panel:first-child{flex:0 1 31rem}
+.proof-card{flex:0 1 40rem;max-width:40rem;margin-right:clamp(0px,3vw,48px);opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1)}
+.proof-card.in{opacity:1;transform:none}
+.proof-card .bar,.proof-card .pc-h{max-width:none}
+.proof-card .bar{margin-bottom:16px}
+.proof-card .pc-h{font:800 clamp(1.2rem,1.9vw,1.55rem)/1.05 var(--f-sans);text-transform:uppercase;margin:0;text-wrap:balance}
+.proof-card .stats div{padding:11px 14px 10px}
+.proof-card .proof{margin-top:18px;padding-top:12px}
+.proof-card .board li,.proof-card .recent li{padding:7px 0}
+.proof-card .who strong{font-size:14px}
+.proof-card .who span{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proof-card .pc-h em{font-style:normal;color:var(--gold)}
+.proof-card .stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:16px}
+.proof-card .stats div{border-bottom:0}
+.proof-card .stats div:nth-child(2n){border-right:1px solid var(--gold-soft)}
+.proof-card .stats div:last-child{border-right:0}
+.proof-card .stats b{font-size:clamp(1.6rem,2.6vw,2.1rem);color:var(--gold)}
+.pc-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+.pc-cols .proof{min-width:0}
+.pc-quote{margin-top:16px;padding-top:14px;border-top:1px solid var(--gold-soft);display:grid}
+.pc-quote figure{grid-area:1/1;margin:0;opacity:0;transition:opacity .8s ease}
+.pc-quote figure.on{opacity:1}
+.pc-quote blockquote{margin:0;font-size:14px;line-height:1.55;color:var(--paper)}
+.pc-quote blockquote::before{content:"\201C";color:var(--gold)}
+.pc-quote blockquote::after{content:"\201D";color:var(--gold)}
+.pc-quote figcaption{margin-top:9px;font:600 9.5px/1.4 var(--f-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--paper-dim)}
+.pc-quote figcaption b{color:var(--paper);font-weight:600}
+.pv-tag{display:inline-block;margin-left:10px;padding:3px 6px;border:1px dashed var(--paper-dim);font:600 8.5px/1 var(--f-sans);letter-spacing:.2em;color:var(--paper-dim);vertical-align:middle}
+
+/* "just ordered" toast */
+.buy-toast{position:fixed;right:clamp(14px,2.4vw,30px);bottom:calc(112px + env(safe-area-inset-bottom,0px));z-index:7;width:min(320px,calc(100vw - 28px));
+  display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:13px 14px;background:rgba(14,14,14,.92);
+  border:1px solid var(--gold-soft);border-left:2px solid var(--gold);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:0 14px 40px rgba(0,0,0,.5);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .5s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+.buy-toast.on{opacity:1;transform:none;pointer-events:auto}
+.buy-toast .dot{width:8px;height:8px;margin-top:5px;border-radius:50%;background:#5EC978;animation:pingG 1.6s ease-out infinite}
+@keyframes pingG{0%{box-shadow:0 0 0 0 rgba(94,201,120,.55)}100%{box-shadow:0 0 0 9px rgba(94,201,120,0)}}
+.buy-toast strong{display:block;font-weight:600;font-size:14px;line-height:1.3}
+.buy-toast .co{display:block;font-size:13px;line-height:1.35;color:var(--gold)}
+.buy-toast .meta{display:block;margin-top:4px;font:600 9.5px/1.4 var(--f-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--paper-dim)}
+.buy-toast button{all:unset;cursor:pointer;color:var(--paper-dim);font-size:16px;line-height:1;padding:0 2px}
+.buy-toast button:hover{color:var(--paper)}
+@media (prefers-reduced-motion:reduce){.buy-toast{transition:opacity .3s}.buy-toast .dot{animation:none}}
+
 /* rail */
 .rail{position:fixed;right:clamp(14px,2.4vw,30px);top:50%;transform:translateY(-50%);z-index:5;display:grid;gap:2px}
 .rail button{appearance:none;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:flex-end;gap:10px;
@@ -204,6 +250,11 @@ main .panel,main a,main button{pointer-events:auto}
   .nav .btn{padding:12px 14px;font-size:11px;letter-spacing:.1em}
   #deck{left:50%;top:30%;--cw:clamp(110px,30vw,170px)}
   .toc{display:none}
+  #order{flex-direction:column;align-items:stretch;justify-content:flex-end}
+  #order>.panel{flex:none;width:auto}
+  .proof-card{flex:none;max-width:none;margin-right:0}
+  .pc-cols{grid-template-columns:1fr}
+  .buy-toast{right:14px;left:14px;width:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 }
 @media (prefers-reduced-motion:reduce){
   .cue i{animation:none}
@@ -374,25 +425,32 @@ main .panel,main a,main button{pointer-events:auto}
         <li>6-month guarantee: not under contract in 6 months, I&#39;ll do your next property for free.</li>
         <li>Add a property website: +$1,000 with either option ($1,949 upfront, or $326/month on the plan). <a href="https://rchase-sudo.github.io/model/website/" target="_blank" rel="noopener" style="color:var(--gold)">See an example</a></li>
       </ul>
-      <div class="proof" data-proof="totals" hidden>
-        <div class="stats">
-          <div><b data-k="served"></b><span>Listings served</span></div>
-          <div><b data-k="sold6"></b><span>Sold within 6 months</span></div>
-        </div>
-      </div>
-      <div class="proof" data-proof="leaders" hidden>
-        <p class="proof-h">Top Forma agents <small>Listings</small></p>
-        <ol class="board" id="board"></ol>
-      </div>
-      <div class="proof" data-proof="recent" hidden>
-        <p class="proof-h"><span class="live">Ordered this week</span></p>
-        <ul class="recent" id="recent"></ul>
-      </div>
       <div class="cta-row">
         <a class="btn" href="https://formadesigns.framer.ai" target="_top">Order your package</a>
       </div>
       <p class="note fine">Forma · Preliminary design — not for construction</p>
     </div>
+
+    <aside class="panel proof-card" id="proofCard" aria-label="Forma results" hidden>
+      <p class="bar"><b>✓</b> Agents like you<span class="pv-tag" id="pvTag" hidden>Preview · sample data</span></p>
+      <p class="pc-h">Their land went under contract. <em>Yours can too.</em></p>
+      <div class="stats" data-proof="totals" hidden>
+        <div><b data-k="served"></b><span>Listings served</span></div>
+        <div><b data-k="sold6"></b><span>Sold within 6 months</span></div>
+        <div><b data-k="week"></b><span>Ordered this week</span></div>
+      </div>
+      <div class="pc-cols">
+        <div class="proof" data-proof="leaders" hidden>
+          <p class="proof-h">Top Forma agents <small>Listings</small></p>
+          <ol class="board" id="board"></ol>
+        </div>
+        <div class="proof" data-proof="recent" hidden>
+          <p class="proof-h"><span class="live">Ordered this week</span></p>
+          <ul class="recent" id="recent"></ul>
+        </div>
+      </div>
+      <div class="pc-quote" id="pcQuote" data-proof="reviews" hidden></div>
+    </aside>
   </section>
 </main>
 
@@ -410,6 +468,12 @@ main .panel,main a,main button{pointer-events:auto}
   </g></svg>
 </div>
 
+<div class="buy-toast" id="buyToast" role="status" aria-live="polite">
+  <span class="dot" aria-hidden="true"></span>
+  <div><strong id="btName"></strong><span class="co" id="btCo"></span><span class="meta" id="btMeta"></span></div>
+  <button id="btClose" aria-label="Dismiss">×</button>
+</div>
+
 <div class="tblock" aria-hidden="true">
   <div>Project</div><div id="tb-proj">336 Route 73, Voorhees NJ</div>
   <div>Sheet</div><div class="hi" id="tb-sheet">C-0 LiDAR point cloud</div>
@@ -423,8 +487,11 @@ main .panel,main a,main button{pointer-events:auto}
      Town, ST, YYYY-MM-DD) stays HIDDEN on the live page.
    - Preview with placeholders: add ?preview to the URL
      (https://rchase-sudo.github.io/model/?preview)
-   - "Ordered this week" only shows orders dated in the last 7 days,
-     so it can't go stale. Add new orders to the top of the list.
+   - "Ordered this week" (card + bottom-right toast) only shows orders
+     dated in the last 7 days, so it can't go stale. Add new orders to
+     the top of the list.
+   - ?preview fills any placeholder with clearly-marked sample data so
+     you can see the layout. Sample data never shows on the live page.
    ================================================================ */
 const PROOF={
   served:'XX',          // total listings Forma has served
@@ -438,48 +505,120 @@ const PROOF={
     {name:'Agent Name', brokerage:'Brokerage', town:'Town, ST', date:'YYYY-MM-DD'},
     {name:'Agent Name', brokerage:'Brokerage', town:'Town, ST', date:'YYYY-MM-DD'},
     {name:'Agent Name', brokerage:'Brokerage', town:'Town, ST', date:'YYYY-MM-DD'}
+  ],
+  reviews:[             // client quotes, shown in the order-section card
+    {quote:'Forma delivered our site plan in 5 days. The listing received four offers within a week of going live — two above asking. Our previous record was one offer in three weeks.', name:'Jessica Morales', role:'Senior Agent, Compass Real Estate'},
+    {quote:'We used to wait 4–6 weeks for preliminary design before making acquisition decisions. Forma cut that to one week. We\'ve moved on three more properties this quarter because of that speed.', name:'David Richfield', role:'Principal, Vertex Capital Group'},
+    {quote:'Our commercial land listings were sitting. Forma\'s renderings changed the conversation entirely — buyers stopped asking "what can I do with this?" and started asking "how do I make an offer?"', name:'Amanda Torres', role:'Commercial Land Specialist'}
   ]
 };
+/* Preview-only stand-ins (used only with ?preview, never on the live page) */
+const SAMPLE=(()=>{const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10);};return{
+  served:'128',sold6:'94',
+  leaders:[{name:'Dana M.',brokerage:'Sample Realty · NJ',listings:'14'},{name:'Chris T.',brokerage:'Sample Realty · PA',listings:'9'},{name:'Lauren B.',brokerage:'Sample Realty · NH',listings:'6'}],
+  recent:[{name:'Mike R.',brokerage:'Shoreline Realty Group',town:'Toms River, NJ',date:ago(1)},{name:'Erin K.',brokerage:'Hill Country Land Co.',town:'Austin, TX',date:ago(3)},{name:'Sam P.',brokerage:'Granite State Properties',town:'Bedford, NH',date:ago(5)}]
+};})();
 (()=>{
   const preview=/[?&]preview\b/.test(location.search);
   const PH=/\bXX\b|Agent Name|Brokerage|Town, ST|YYYY-MM-DD/;
   const real=v=>!PH.test(JSON.stringify(v));
-  const show=v=>preview||real(v);
+  // live: keep real values only. preview: swap each placeholder for its sample stand-in.
+  const pick=(v,s)=>real(v)?v:(preview?s:null);
+  const pickList=(list,samples)=>list.map((v,i)=>pick(v,samples[i])).filter(Boolean);
   const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
   const who=(name,sub)=>{const w=el('div','who');w.append(el('strong',null,name),el('span',null,sub));return w;};
   const reveal=k=>document.querySelectorAll('[data-proof="'+k+'"]').forEach(n=>n.hidden=false);
+  let any=false,usedSample=false;
+  const note=(v,orig)=>{if(v&&v!==orig)usedSample=true;return v;};
 
-  if(show([PROOF.served,PROOF.sold6])){
-    document.querySelectorAll('[data-k="served"]').forEach(n=>n.textContent=PROOF.served);
-    document.querySelectorAll('[data-k="sold6"]').forEach(n=>n.textContent=PROOF.sold6);
-    reveal('totals');
+  const DAY=864e5,today=new Date();today.setHours(0,0,0,0);
+  const ageOf=r=>{const d=new Date(r.date+'T00:00:00');return isNaN(d)?NaN:Math.round((today-d)/DAY);};
+  const recent=PROOF.recent.map((r,i)=>note(pick(r,SAMPLE.recent[i]),r)).filter(r=>{
+    if(!r)return false;const a=ageOf(r);return a>=0&&a<7;
+  }).slice(0,3);
+  const whenOf=r=>{const a=ageOf(r);return a===0?'Today':a===1?'1 day ago':a+' days ago';};
+
+  const served=note(pick(PROOF.served,SAMPLE.served),PROOF.served);
+  const sold6=note(pick(PROOF.sold6,SAMPLE.sold6),PROOF.sold6);
+  if(served&&sold6){
+    document.querySelectorAll('[data-k="served"]').forEach(n=>n.textContent=served);
+    document.querySelectorAll('[data-k="sold6"]').forEach(n=>n.textContent=sold6);
+    document.querySelectorAll('[data-k="week"]').forEach(n=>{n.textContent=recent.length;n.parentElement.hidden=!recent.length;});
+    reveal('totals');any=true;
   }
 
-  const leaders=PROOF.leaders.filter(show).slice(0,3);
+  const leaders=PROOF.leaders.map((a,i)=>note(pick(a,SAMPLE.leaders[i]),a)).filter(Boolean).slice(0,3);
   if(leaders.length){
     const ol=document.getElementById('board');
     leaders.forEach((a,i)=>{
       const li=el('li');const n=el('div','n',a.listings);
       li.append(el('span','rk',String(i+1).padStart(2,'0')),who(a.name,a.brokerage),n);ol.append(li);
     });
-    reveal('leaders');
+    reveal('leaders');any=true;
   }
 
-  const DAY=864e5,today=new Date();today.setHours(0,0,0,0);
-  const recent=PROOF.recent.filter(r=>{
-    if(!real(r))return preview;
-    const d=new Date(r.date+'T00:00:00');
-    return !isNaN(d)&&today-d<7*DAY&&d<=new Date();
-  }).slice(0,3);
   if(recent.length){
     const ul=document.getElementById('recent');
     recent.forEach(r=>{
-      const d=new Date(r.date+'T00:00:00'),diff=Math.round((today-d)/DAY);
-      const when=isNaN(d)?'Mon':diff===0?'Today':diff===1?'Yesterday':d.toLocaleDateString('en-US',{weekday:'long'});
-      const li=el('li');li.append(who(r.name,r.brokerage+' · '+r.town),el('span','when',when));ul.append(li);
+      const li=el('li');li.append(who(r.name,r.brokerage+' · '+r.town),el('span','when',whenOf(r)));ul.append(li);
     });
-    reveal('recent');
+    reveal('recent');any=true;
   }
+
+  // rotating client quote in the card
+  const reviews=(PROOF.reviews||[]).filter(r=>r&&r.quote);
+  if(reviews.length){
+    const box=document.getElementById('pcQuote');
+    const figs=reviews.map((r,i)=>{
+      const f=el('figure',i?null:'on');const q=el('blockquote',null,r.quote);
+      const c=el('figcaption');const b=el('b',null,r.name);c.append(b,document.createTextNode(r.role?' · '+r.role:''));
+      f.append(q,c);box.append(f);return f;
+    });
+    let qi=0;
+    if(figs.length>1)setInterval(()=>{figs[qi].classList.remove('on');qi=(qi+1)%figs.length;figs[qi].classList.add('on');},7000);
+    reveal('reviews');any=true;
+  }
+
+  const card=document.getElementById('proofCard');
+  const order=document.getElementById('order');
+  if(any){
+    card.hidden=false;
+    document.getElementById('pvTag').hidden=!usedSample;
+  }
+
+  // ---- "just ordered" toast, bottom-right; hands off to the card at #order ----
+  const toast=document.getElementById('buyToast');
+  let atOrder=false,dismissed=false,started=false,ti=0,timer=0;
+  try{dismissed=sessionStorage.getItem('forma-toast-off')==='1';}catch(e){}
+  const hideToast=()=>toast.classList.remove('on');
+  const showNext=()=>{
+    clearTimeout(timer);
+    if(dismissed||!recent.length)return;
+    if(atOrder||document.getElementById('viewer').hidden===false){timer=setTimeout(showNext,1500);return;}
+    const r=recent[ti%recent.length];ti++;
+    document.getElementById('btName').textContent=r.name;
+    document.getElementById('btCo').textContent=r.brokerage;
+    document.getElementById('btMeta').textContent='Ordered a Forma package · '+r.town+' · '+whenOf(r);
+    toast.classList.add('on');
+    timer=setTimeout(()=>{hideToast();timer=setTimeout(showNext,6500);},5500);
+  };
+  const start=()=>{if(started)return;started=true;timer=setTimeout(showNext,2200);};
+  document.getElementById('btClose').addEventListener('click',()=>{
+    dismissed=true;hideToast();clearTimeout(timer);try{sessionStorage.setItem('forma-toast-off','1');}catch(e){}
+  });
+  // inside the Framer splash the page sits behind the curtain: start when the
+  // parent says it lifted (or on first scroll); standalone, start after a beat
+  if(window.self!==window.top){
+    addEventListener('message',e=>{if(e.data&&e.data.type==='forma:revealed')start();});
+    addEventListener('scroll',start,{once:true,passive:true});
+  }else start();
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(([en])=>{
+      atOrder=en.isIntersecting;
+      if(atOrder){hideToast();card.classList.add('in');}
+    },{threshold:.2}).observe(card.hidden?order:card);
+  }else card.classList.add('in');
 })();
 </script>
 <script src="assets/three.min.js"></script>
