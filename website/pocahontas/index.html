@@ -657,7 +657,7 @@ function treeMesh(n,greens,geo){const can=new THREE.InstancedMesh(geo,new THREE.
   for(let i=0;i<n;i++){c.setHex(greens[Math.floor(rnd()*greens.length)]).multiplyScalar(.85+rnd()*.25);can.setColorAt(i,c);}
   scene.add(can,trk);return [can,trk];}
 const woodsMesh=treeMesh(woods.length,GW,canopyGeo);
-const land=SITE.land.map(t=>({x:t[0],z:t[1],s:Math.max(.45,t[2]*.5),rot:rnd()*6.3,m:mask(t[0],t[1])}));
+const land=SITE.land.filter(t=>!inPoly(t[0],t[1],SITE.paving[0].outer)).map(t=>({x:t[0],z:t[1],s:Math.max(.45,t[2]*.5),rot:rnd()*6.3,m:mask(t[0],t[1])}));
 const landMesh=treeMesh(Math.max(1,land.length),GL,canopyGeoHi);
 const dummy=new THREE.Object3D();let lastTree='';
 function setTree(pair,i){dummy.updateMatrix();pair[0].setMatrixAt(i,dummy.matrix);pair[1].setMatrixAt(i,dummy.matrix);}
