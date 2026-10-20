@@ -420,7 +420,7 @@ function clipLineZ(pts,zmin){const runs=[];let cur=[];for(let i=0;i<pts.length;i
   if(ip)cur.push(p);}if(cur.length>1)runs.push(cur);return runs;}
 /* stormwater ponds (illustrative, sized for the ±1 ac of new impervious) */
 // placed to match the rendering: one east of the loop by the frontage, one along the frontage west of the entrance
-const PONDS=[{c:[27,-17],a:4.6,b:2.7,r:-.25,ph:.7,g:1.4},{c:[-9,-22.3],a:7.4,b:1.5,r:0,ph:2.1,g:.45}];
+const PONDS=[{c:[29.5,-20.4],a:5.6,b:2.5,r:-.06,ph:.7,g:1.1},{c:[-9,-22.3],a:7.4,b:1.5,r:0,ph:2.1,g:.45}];
 function pondPoly(p,grow,n){const out=[];n=n||40;for(let i=0;i<n;i++){const t=i/n*Math.PI*2,k=1+.07*Math.sin(3*t+p.ph)+.04*Math.cos(5*t+p.ph*2);
   const x=(p.a*k+grow)*Math.cos(t),z=(p.b*k+grow)*Math.sin(t),c=Math.cos(p.r),s=Math.sin(p.r);out.push([p.c[0]+x*c-z*s,p.c[1]+x*s+z*c]);}return out;}
 const LOD=clipZ(hullPts(SITE.lod.concat(...PONDS.map(p=>pondPoly(p,3,24)))),FRONTZ+.3);
@@ -553,7 +553,7 @@ const UT=[
   {c:0x2FC4B2,pts:[[-9,-18],[-9,-20.5]]},
   {c:0x2FC4B2,pts:[[0,1],[18.5,1],[18.5,-14.5],[19.8,-14.5]]},
   {c:0x2FC4B2,pts:[[10,14],[10,1]]},
-  {c:0x2FC4B2,pts:[[19.8,-14.5],[22.9,-16.1]]},
+  {c:0x2FC4B2,pts:[[19.8,-14.5],[22,-18.5],[24.2,-19.8]]},
   {c:0xFF5A5A,pts:[rp(CUT[0]-RA[0]-6,1.2),[CUT[0]-6,-13.6],[-9.5,-13.6],[-9.5,-3]]}];
 const utils=UT.map((u,k)=>{const m=ribbonMat(u.c,0,.36+k*.02);m.uniforms.uDraw.value=0;return {m,mesh:addRibbon(ribbon(u.pts,false,.42,.4),m,12)};});
 
@@ -572,7 +572,7 @@ const pondBankMat=new THREE.MeshStandardMaterial({color:0x5B7438,roughness:1,tra
 const pondWaterMat=new THREE.MeshStandardMaterial({color:0x26413F,roughness:.12,metalness:.25,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
 const ripMat=new THREE.MeshStandardMaterial({color:0x8C8A82,roughness:1,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
 const pondMeshes=PONDS.flatMap(p=>[flat(pondPoly(p,p.g),pondDigMat,.07,2),flat(pondPoly(p,p.g),pondBankMat,.08,2),flat(pondPoly(p,0),pondWaterMat,.11,3)]);
-const RIP=[[23.2,-16.2],[-9,-21]];
+const RIP=[[24.4,-19.8],[-9,-21]];
 const ripMeshes=RIP.map(c=>flat([[c[0]-.9,c[1]-.8],[c[0]+1.3,c[1]-1],[c[0]+1.4,c[1]+.9],[c[0]-.8,c[1]+.8]],ripMat,.12,4));
 
 /* paving, walks, stripes, curbs */
@@ -756,7 +756,7 @@ const POSES=[
   [[52,78,-74],[4,0,-4]],          // grade & connect (ponds + storm in view)
   [[-58,30,-52],[2,3,0]],           // build & pave
   [[62,38,68],[2,0,0]],             // finish (from the back)
-  [[-62,26,-44],[2,1,2]],           // operation
+  [[-22,58,-96],[8,0,-4]],          // operation (frontage + both ponds in view)
   [EYE,[2,3.2,0]],                  // road view (eye level)
   [[-78,70,-104],[6,0,8]],          // finished rendering viewpoint
   [[-78,70,-104],[6,0,8]]];         // summary
