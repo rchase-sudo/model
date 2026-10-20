@@ -144,7 +144,7 @@
   <div class="tag" id="t-wash"></div><div class="tag" id="t-laund"></div><div class="tag" id="t-park"></div><div class="tag" id="t-drive"></div>
   <div class="tag amber" id="t-fence"></div><div class="tag amber" id="t-ent"></div>
   <div class="tag amber" id="t-grade"></div>
-  <div class="tag" id="t-open"></div><div class="tag" id="t-open2"></div><div class="tag" id="t-cust"></div>
+  <div class="tag" id="t-pond"></div><div class="tag" id="t-cb"></div><div class="tag" id="t-pond2"></div><div class="tag" id="t-open"></div><div class="tag" id="t-open2"></div><div class="tag" id="t-cust"></div>
 </div>
 
 <header class="top">
@@ -241,11 +241,11 @@
     <div class="panel">
       <div class="kick amber">06 · Construction · Phase 2</div>
       <h2>Grade and connect.</h2>
-      <p>The pad is graded, and utilities come in from US 60. A single water and sewer tap serves both buildings.</p>
+      <p>The pad is graded and the stormwater ponds are dug. Catch basins at the low points of the lot pipe runoff to the ponds, and utilities come in from US 60. A single water and sewer tap serves both buildings.</p>
       <ul class="steps">
         <li style="--c:var(--water)">Water service</li>
         <li style="--c:var(--sewer)">Sanitary sewer</li>
-        <li style="--c:var(--storm)">Storm drainage</li>
+        <li style="--c:var(--storm)">Catch basins piped to two stormwater ponds</li>
         <li style="--c:var(--elec)">Electric</li>
       </ul>
       <p class="note">Utility routing shown is illustrative.</p>
@@ -264,7 +264,7 @@
     <div class="panel">
       <div class="kick amber">08 · Construction · Phase 4</div>
       <h2>Finish the ground.</h2>
-      <p>Walks, curbs, striping and landscaped islands go in. Once the ground is stabilized, the silt fence comes down.</p>
+      <p>Walks, curbs, striping and landscaped islands go in, and the ponds are filled and planted. Once the ground is stabilized, the silt fence comes down.</p>
     </div>
   </section>
 
@@ -318,7 +318,8 @@
   <div>Utilities · APWA colors</div>
   <div><i style="--c:var(--water)"></i>Water</div>
   <div><i style="--c:var(--sewer)"></i>Sanitary sewer</div>
-  <div><i style="--c:var(--storm)"></i>Storm</div>
+  <div><i style="--c:var(--storm)"></i>Storm → ponds</div>
+  <div><i style="--c:#9A968C;height:9px;width:9px;border:2px solid #17191B"></i>Catch basin</div>
   <div><i style="--c:var(--elec)"></i>Electric</div>
 </div>
 
@@ -407,7 +408,21 @@ const rp=(s,o)=>[RA[0]+RD[0]*s+RN[0]*o,RA[1]+RD[1]*s+RN[1]*o];
 const roadOff=(x,z)=>(x-RA[0])*RN[0]+(z-RA[1])*RN[1];
 function H(x,z){const d=Math.hypot(x-SC[0],z-SC[1]);const o=roadOff(x,z);const road=1-ss(-6,0,o)*(1-ss(28,36,o));
   return noise(x,z)*.45*(0.12+0.88*ss(45,110,d))*road;}
-const P=SITE.parcel,SET=SITE.setback,LOD=SITE.lod;
+const P=SITE.parcel,SET=SITE.setback;
+const FRONTZ=RA[1],ROADEDGE=FRONTZ-2.2;   // property line / near edge of the US 60 travel lanes
+function hullPts(pts){pts=pts.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);const lo=[],up=[];
+  for(const p of pts){while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p);}
+  for(const p of pts.slice().reverse()){while(up.length>=2&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p);}up.pop();lo.pop();return lo.concat(up);}
+function clipZ(poly,zmin){const out=[];for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],ia=a[1]>=zmin,ib=b[1]>=zmin;
+  if(ia)out.push(a);if(ia!==ib){const t=(zmin-a[1])/(b[1]-a[1]);out.push([a[0]+(b[0]-a[0])*t,zmin]);}}return out;}
+function clipLineZ(pts,zmin){const runs=[];let cur=[];for(let i=0;i<pts.length;i++){const p=pts[i],q=pts[i-1];const ip=p[1]>=zmin;
+  if(i&&(q[1]>=zmin)!==ip){const t=(zmin-q[1])/(p[1]-q[1]);const c=[q[0]+(p[0]-q[0])*t,zmin];if(ip)cur=[c];else{cur.push(c);if(cur.length>1)runs.push(cur);cur=[];}}
+  if(ip)cur.push(p);}if(cur.length>1)runs.push(cur);return runs;}
+/* stormwater ponds (illustrative, sized for the ±1 ac of new impervious) */
+const PONDS=[{c:[35,-11],a:8,b:5.6,r:.35,ph:.7},{c:[24,22],a:6,b:4.4,r:-.25,ph:2.1}];
+function pondPoly(p,grow,n){const out=[];n=n||40;for(let i=0;i<n;i++){const t=i/n*Math.PI*2,k=1+.07*Math.sin(3*t+p.ph)+.04*Math.cos(5*t+p.ph*2);
+  const x=(p.a*k+grow)*Math.cos(t),z=(p.b*k+grow)*Math.sin(t),c=Math.cos(p.r),s=Math.sin(p.r);out.push([p.c[0]+x*c-z*s,p.c[1]+x*s+z*c]);}return out;}
+const LOD=clipZ(hullPts(SITE.lod.concat(...PONDS.map(p=>pondPoly(p,3,24)))),FRONTZ+.3);
 function signOf(poly){let a=0;poly.forEach((p,i)=>{const q=poly[(i+1)%poly.length];a+=p[0]*q[1]-q[0]*p[1];});return Math.sign(a);}
 function edges(poly){const sg=signOf(poly);return poly.map((p,i)=>{const q=poly[(i+1)%poly.length];const dx=q[0]-p[0],dz=q[1]-p[1],L=Math.hypot(dx,dz);return {p,q,nx:-sg*dz/L,nz:sg*dx/L};});}
 const E=edges(LOD);
@@ -502,13 +517,14 @@ const wetFills=SITE.wet.map(w=>flat(w,wetFillMat,2.2,9));
 
 /* proposal linework */
 const planMat=ribbonMat(VIOLET,0,.16);planMat.depthTest=false;
-const paveOuter=SITE.paving[0].outer,paveHoles=SITE.paving[0].holes;
+const paveOuter=clipZ(SITE.paving[0].outer,ROADEDGE),paveHoles=SITE.paving[0].holes;
 const paveLine=addRibbon(ribbon(paveOuter,true,.18,.5),planMat,11);
 const bldLines=SITE.bld.map(b=>addRibbon(ribbon(b,true,.22,.5),planMat,11));
 
 /* silt fence */
 function fenceGeo(poly,step){const {S}=sample(poly,true,step);const P3=[],M=[],U=[],I=[];
-  S.forEach((s,i)=>{const x=s[0],z=s[1],y=H(x,z),m=mask(x,z);P3.push(x,y,z,x,y,z);M.push(m,m);U.push(0,1);if(i<S.length-1){const a=2*i;I.push(a,a+2,a+1,a+1,a+2,a+3);}});
+  const gap=s=>Math.abs(s[0]-CUT[0])<3.6&&s[1]<FRONTZ+4;
+  S.forEach((s,i)=>{const x=s[0],z=s[1],y=H(x,z),m=mask(x,z);P3.push(x,y,z,x,y,z);M.push(m,m);U.push(0,1);if(i<S.length-1&&!gap(s)&&!gap(S[i+1])){const a=2*i;I.push(a,a+2,a+1,a+1,a+2,a+3);}});
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));g.setAttribute('aMask',new THREE.Float32BufferAttribute(M,1));
   g.setAttribute('aUp',new THREE.Float32BufferAttribute(U,1));g.setIndex(I);return g;}
 const fenceMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,
@@ -517,13 +533,13 @@ const fenceMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:
     void main(){vec3 p=position;p.y=mix(p.y,uPad,uGrade*aMask)+aUp*.55*uRise+.02;vUp=aUp;vec4 mv=modelViewMatrix*vec4(p,1.);vFog=smoothstep(uFogNear,uFogFar,-mv.z);gl_Position=projectionMatrix*mv;}`,
   fragmentShader:`uniform vec3 uColor,uBg;uniform float uOpacity;varying float vUp,vFog;
     void main(){vec3 col=mix(uColor*.45,uColor,smoothstep(.75,1.,vUp));col=mix(col,uBg,vFog);gl_FragColor=vec4(col,uOpacity*(.55+.45*smoothstep(.8,1.,vUp)));}`});
-const fencePoly=LOD.map(p=>{const c=centroid(LOD),dx=c[0]-p[0],dz=c[1]-p[1],l=Math.hypot(dx,dz);return [p[0]+dx/l*1.2,p[1]+dz/l*1.2];});
+const CUT=SITE.throat;
+const fencePoly=clipZ(LOD,FRONTZ+1).map(p=>{const c=centroid(LOD),dx=c[0]-p[0],dz=c[1]-p[1],l=Math.hypot(dx,dz);return [p[0]+dx/l*1.2,p[1]+dz/l*1.2];});
 const fence=new THREE.Mesh(fenceGeo(fencePoly,.5),fenceMat);fence.renderOrder=6;scene.add(fence);
 
 /* construction entrance at the curb cut */
-const CUT=SITE.throat;
 const entMat=ribbonMat(0x8E8778,0,.14);
-const ent=addRibbon(ribbon([[CUT[0],RA[1]-2],[CUT[0],RA[1]+8]],false,4.2,.5),entMat,4);
+const ent=addRibbon(ribbon([[CUT[0],ROADEDGE],[CUT[0],FRONTZ+8]],false,4.2,.5),entMat,4);
 
 /* utilities (illustrative, APWA colors): one water/sewer tap serves both buildings */
 const BLD=SITE.bld;
@@ -532,9 +548,33 @@ const UT=[
   {c:0x4AA3FF,pts:[[CUT[0]+6,-15],[CUT[0]+6,-11.2]]},
   {c:0x3DDC84,pts:[rp(CUT[0]-RA[0]+8,1.2),[CUT[0]+8,-16.4],[-12.4,-16.4],[-12.4,12.5],[-7.7,12.5]]},
   {c:0x3DDC84,pts:[[CUT[0]+8,-16.4],[CUT[0]+8,-11.2]]},
-  {c:0x2FC4B2,pts:[[10,2],[-14,2],[-24,20],[-34,34]]},
+  {c:0x2FC4B2,pts:[[-16,-17],[-16,-19],[19.5,-19]]},
+  {c:0x2FC4B2,pts:[[19.5,-2],[19.5,-19]]},
+  {c:0x2FC4B2,pts:[[0,.8],[19.5,.8],[19.5,-2]]},
+  {c:0x2FC4B2,pts:[[19.5,-19],[25,-19],[27.4,-14]]},
+  {c:0x2FC4B2,pts:[[-13.5,12],[-13.5,21],[-10,24.5],[-2,25],[7.5,24.5]]},
+  {c:0x2FC4B2,pts:[[10,12],[10,20],[7.5,24.5]]},
+  {c:0x2FC4B2,pts:[[7.5,24.5],[18.4,23.2]]},
   {c:0xFF5A5A,pts:[rp(CUT[0]-RA[0]-6,1.2),[CUT[0]-6,-13.6],[-9.5,-13.6],[-9.5,-3]]}];
 const utils=UT.map((u,k)=>{const m=ribbonMat(u.c,0,.36+k*.02);m.uniforms.uDraw.value=0;return {m,mesh:addRibbon(ribbon(u.pts,false,.42,.4),m,12)};});
+
+/* catch basins: precast frame and grate, set in the lot at the low points */
+const CB=[[-16,-17],[19.5,-19],[19.5,-2],[0,.8],[-13.5,12],[10,12],[-10,24.5],[-2,25],[7.5,24.5]];
+const cbFrame=new THREE.InstancedMesh(new THREE.BoxGeometry(1.1,.12,1.1),new THREE.MeshStandardMaterial({color:0x9A968C,roughness:.9}),CB.length);
+const cbGrate=new THREE.InstancedMesh(new THREE.BoxGeometry(.72,.14,.72),new THREE.MeshStandardMaterial({color:0x17191B,roughness:.6,metalness:.4}),CB.length);
+cbFrame.renderOrder=cbGrate.renderOrder=6;scene.add(cbFrame,cbGrate);
+function setCB(sc){CB.forEach((p,i)=>{dummyCB.position.set(p[0],.1,p[1]);dummyCB.scale.set(sc,sc,sc);dummyCB.updateMatrix();cbFrame.setMatrixAt(i,dummyCB.matrix);cbGrate.setMatrixAt(i,dummyCB.matrix);});
+  cbFrame.instanceMatrix.needsUpdate=cbGrate.instanceMatrix.needsUpdate=true;}
+const dummyCB=new THREE.Object3D();
+
+/* stormwater ponds: dug at grading, filled and planted at finish */
+const pondDigMat=new THREE.MeshStandardMaterial({color:0x2A1F17,roughness:1,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const pondBankMat=new THREE.MeshStandardMaterial({color:0x5B7438,roughness:1,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const pondWaterMat=new THREE.MeshStandardMaterial({color:0x26413F,roughness:.12,metalness:.25,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const ripMat=new THREE.MeshStandardMaterial({color:0x8C8A82,roughness:1,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
+const pondMeshes=PONDS.flatMap(p=>[flat(pondPoly(p,1.6),pondDigMat,.07,2),flat(pondPoly(p,1.6),pondBankMat,.08,2),flat(pondPoly(p,0),pondWaterMat,.11,3)]);
+const RIP=[[27.6,-13.6],[18.8,23.1]];
+const ripMeshes=RIP.map(c=>flat([[c[0]-.9,c[1]-.8],[c[0]+1.3,c[1]-1],[c[0]+1.4,c[1]+.9],[c[0]-.8,c[1]+.8]],ripMat,.12,4));
 
 /* paving, walks, stripes, curbs */
 const paveMat=new THREE.MeshStandardMaterial({color:0x34383B,roughness:.95,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
@@ -542,7 +582,7 @@ const walkMat=new THREE.MeshStandardMaterial({color:0xCAC6BC,roughness:.9,transp
 const pave=flat(paveOuter,paveMat,.05,2,paveHoles);
 const walks=SITE.walks.map(w=>flat(w,walkMat,.07,3));
 const curbMat=ribbonMat(0xB9B6AE,0,.1);curbMat.uniforms.uOpacity.value=0;
-const curbs=SITE.curbs.map(c=>{const m=addRibbon(ribbon(c,false,.2,.4),curbMat,4);m.visible=false;return m;});
+const curbs=SITE.curbs.flatMap(c=>clipLineZ(c,FRONTZ-.4)).map(c=>{const m=addRibbon(ribbon(c,false,.2,.4),curbMat,4);m.visible=false;return m;});
 const stripeMat=new THREE.MeshBasicMaterial({color:0xF2F2EE,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});
 (function(){const P3=[],I=[];SITE.stripes.forEach(([a,b])=>{const dx=b[0]-a[0],dz=b[1]-a[1],L=Math.hypot(dx,dz),w=.1,nx=-dz/L*w/2,nz=dx/L*w/2,o=P3.length/3;
   P3.push(a[0]+nx,.1,a[1]+nz,a[0]-nx,.1,a[1]-nz,b[0]+nx,.1,b[1]+nz,b[0]-nx,.1,b[1]-nz);I.push(o,o+2,o+1,o+1,o+2,o+3);});
@@ -608,7 +648,7 @@ const trunkGeo=new THREE.CylinderGeometry(.16,.24,3,5);trunkGeo.translate(0,1.5,
 const trunkMat=new THREE.MeshStandardMaterial({color:0x4A3B2E,roughness:1});
 const woods=[];
 const addTree=(x,z,s)=>woods.push({x,z,y:H(x,z),s,rot:rnd()*6.3,clear:ss(.05,.35,mask(x,z)),ph:rnd()});
-SITE.trees.forEach(t=>addTree(t[0],t[1],t[2]));
+SITE.trees.forEach(t=>{const o=roadOff(t[0],t[1]);if(o>-.8&&o<24.5)return;addTree(t[0],t[1],t[2]);});
 const AER=SITE.aerial;
 for(let i=0;i<5200;i++){const x=TC[0]+(rnd()-.5)*SIZE*.98,z=TC[1]+(rnd()-.5)*SIZE*.98;if(inPoly(x,z,AER))continue;
   const o=roadOff(x,z);if(o>-2&&o<27)continue;if(rnd()<.18)continue;addTree(x,z,.62+rnd()*.38);}
@@ -678,6 +718,9 @@ lab('t-fence').innerHTML=`<b>Silt fence</b> · limit of disturbance`;
 lab('t-ent').innerHTML=`<b>Stone construction entrance</b>`;
 lab('t-grade').innerHTML=`<b>Graded</b> to design elevation`;
 lab('t-open').innerHTML=`Open · <b>car wash</b>`;
+lab('t-pond').innerHTML=`Stormwater ponds · <b>dug &amp; piped</b>`;
+lab('t-cb').innerHTML=`Catch basins · <b>${CB.length}</b>`;
+lab('t-pond2').innerHTML=`Stormwater pond · <b>planted</b>`;
 lab('t-open2').innerHTML=`Open · <b>laundromat</b>`;
 lab('t-cust').innerHTML=`Customer parking · <b>28 spaces</b>`;
 const W3=(x,z,y)=>new THREE.Vector3(x,y==null?H(x,z)+.6:y,z);
@@ -693,7 +736,10 @@ const labelDefs=[
   {el:lab('t-drive'),p:new THREE.Vector3(CUT[0],1.2,RA[1]+3),g:1},
   {el:lab('t-fence'),p:W3(fencePoly[0][0],fencePoly[0][1],1.5),g:2},
   {el:lab('t-ent'),p:new THREE.Vector3(CUT[0],1.4,RA[1]+2),g:2},
-  {el:lab('t-grade'),p:new THREE.Vector3(SC[0]+4,1.2,SC[1]-4),g:3},
+  {el:lab('t-grade'),p:new THREE.Vector3(-4,1.2,-21),g:3},
+  {el:lab('t-pond'),p:new THREE.Vector3(PONDS[1].c[0],1.5,PONDS[1].c[1]),g:3},
+  {el:lab('t-cb'),p:new THREE.Vector3(CB[3][0],1.4,CB[3][1]),g:3},
+  {el:lab('t-pond2'),p:new THREE.Vector3(PONDS[0].c[0],1.5,PONDS[0].c[1]),g:4},
   {el:lab('t-open'),p:new THREE.Vector3(B0.c[0],B0.BH+3,B0.c[1]),g:4},
   {el:lab('t-open2'),p:new THREE.Vector3(B1.c[0],B1.BH+3,B1.c[1]),g:4},
   {el:lab('t-cust'),p:new THREE.Vector3(stc[0],2,stc[1]),g:4}];
@@ -708,7 +754,7 @@ const POSES=[
   [[-40,82,-78],[2,0,3]],           // proposal
   [[95,78,-95],[3,0,4]],            // approvals
   [[-95,42,-60],[0,2,2]],           // clear & protect
-  [[66,46,-74],[0,0,2]],            // grade & connect
+  [[58,84,-62],[12,0,4]],          // grade & connect (ponds + storm in view)
   [[-58,30,-52],[2,3,0]],           // build & pave
   [[62,38,68],[2,0,0]],             // finish (from the back)
   [[-62,26,-44],[2,1,2]],           // operation
@@ -770,7 +816,11 @@ function draw(now,instant){
   planMat.uniforms.uDraw.value=planDraw;planMat.uniforms.uOpacity.value=.95*planOut*(1-.6*ss(5.35,5.75,x));paveLine.visible=planDraw>.002&&planOut>.01;bldLines.forEach(m=>m.visible=paveLine.visible);
   fenceMat.uniforms.uOpacity.value=fenceA;fenceMat.uniforms.uRise.value=ss(4.7,5,x);fence.visible=fenceA>.003;
   entMat.uniforms.uOpacity.value=entA;entMat.uniforms.uDraw.value=ss(4.75,5.05,x);ent.visible=entA>.003;
-  utils.forEach((u,k)=>{u.m.uniforms.uDraw.value=ss(5.55+k*.06,5.95+k*.06,x);u.m.uniforms.uOpacity.value=utilOut;u.mesh.visible=util>.002&&utilOut>.01;});
+  utils.forEach((u,k)=>{u.m.uniforms.uDraw.value=ss(5.5+k*.025,5.85+k*.025,x);u.m.uniforms.uOpacity.value=utilOut;u.mesh.visible=util>.002&&utilOut>.01;});
+  setCB(Math.max(.001,ss(5.75,6.05,x)));cbFrame.visible=cbGrate.visible=x>5.75;
+  const dig=ss(5.5,5.95,x),water=ss(7.6,8.05,x);
+  pondDigMat.opacity=dig*(1-water);pondBankMat.opacity=water;pondWaterMat.opacity=water*.96;ripMat.opacity=ss(5.9,6.2,x);
+  pondMeshes.forEach(m=>m.visible=dig>.002);ripMeshes.forEach(m=>m.visible=ripMat.opacity>.002);
   paveMat.opacity=pk;pave.visible=pk>.002;walkMat.opacity=st;walks.forEach(m=>m.visible=st>.002);stripeMat.opacity=st;
   buildings.forEach(b=>{b.grp.visible=frameUp>.002;b.grp.scale.y=Math.max(.001,frameUp);b.U.uOpacity.value=walls;b.mesh.visible=walls>.002;b.sh.visible=walls>.002;});
   edgeMat.opacity=frameUp*(1-walls);shadowMat.opacity=.3*walls;
