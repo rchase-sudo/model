@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Forma Free Plan</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Listing land? Get a free site layout plan, concept plan and 3D rendering of your listing from Forma, the same day. No cost, no card.">
@@ -21,6 +26,8 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
+.form-fields{display:flex; flex-direction:column; gap:14px}
 html{background:var(--ink); scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
 body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--f-display); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
@@ -345,6 +352,9 @@ p{margin:0}
 }
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
 </style>
+</head>
+<body>
+
 
 <header class="topbar">
   <div class="wrap">
@@ -623,7 +633,7 @@ p{margin:0}
       <p class="lede">Layout plan, concept plan and a 3D rendering of your listing, the same day. I'll email it to you. If you want the full package after that, it's one click.</p>
       <div class="assure"><span>No card</span><span>No contract</span><span>No call required</span><span>Yours to keep</span></div>
       <form class="form" id="claim-form" novalidate>
-        <div id="form-fields" style="display:flex; flex-direction:column; gap:14px">
+        <div id="form-fields" class="form-fields">
           <div class="row2">
             <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
             <div class="field"><label for="f-role">I'm the</label>
@@ -649,7 +659,7 @@ p{margin:0}
             <li><span>03</span><div><b>Your plan and rendering arrive</b> by email the same day.</div></li>
           </ol>
           <p class="small">Want the due diligence report and plan set too? The full package is $949, charged only when it's delivered.</p>
-          <a class="btn btn-ghost" id="done-pay" href="https://formadesigns.io/payment" target="_top">See the full package <span>→</span></a>
+          <a class="btn btn-ghost" id="done-pay" href="https://formadesigns.io/model" target="_top">See the full package <span>→</span></a>
         </div>
       </form>
     </div>
@@ -684,7 +694,6 @@ p{margin:0}
 (() => {
 "use strict";
 const INTAKE_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/lander-intake";
-const PAYMENT_URL = "https://formadesigns.io/payment";
 // Paste real reviews here, e.g. { name: "Jane D.", brokerage: "Example Realty", text: "…", stars: 5 }.
 // The quote cards stay hidden while this is empty; the 5-star badges show either way.
 const REVIEWS = [];
@@ -866,7 +875,6 @@ $("#claim-form").addEventListener("submit", async (e) => {
     const first = body.name.trim().split(/\s+/)[0];
     $("#done-h").textContent = "You're in, " + first + ".";
     $("#done-addr").textContent = body.address;
-    $("#done-pay").href = PAYMENT_URL + "?" + new URLSearchParams({ name: body.name, email: body.email, phone: body.phone || "", address: body.address });
     $("#form-fields").hidden = true; $("#form-done").hidden = false;
     try { (window.dataLayer = window.dataLayer || []).push({ event: "free_plan_request" }); } catch (_) {}
     try { window.fbq && window.fbq("track", "Lead"); } catch (_) {}
@@ -1203,3 +1211,6 @@ addEventListener("scroll", updateBar, { passive: true });
 updateBar();
 })();
 </script>
+
+</body>
+</html>
