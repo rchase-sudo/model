@@ -28,7 +28,10 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 .form-fields{display:flex; flex-direction:column; gap:14px}
-html{background:var(--ink); scroll-behavior:smooth}
+html{background:var(--ink)}
+html.lenis, html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
 @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
 body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--f-display); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
 body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:60; background:var(--ink)}
@@ -690,6 +693,7 @@ p{margin:0}
 <div class="mbar" id="mbar"><p>Free plan for your listing<b>$0</b></p><a class="btn" href="#claim" data-cta="mbar">Get my free plan <span>→</span></a></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 (() => {
 "use strict";
@@ -706,6 +710,25 @@ const smooth = (t) => t * t * (3 - 2 * t);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
 const isMobile = () => innerWidth <= 860;
+
+/* smooth, eased page scrolling (wheel + trackpad); touch stays native */
+let lenis = null;
+if (window.Lenis && !reduce) {
+  try {
+    lenis = new Lenis({ lerp: 0.075, wheelMultiplier: 0.9, smoothWheel: true, anchors: { offset: 0 } });
+    const loop = (t) => { lenis.raf(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  } catch (e) { lenis = null; }
+}
+function goTo(target) {
+  if (lenis) lenis.scrollTo(target, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
+  else if (typeof target === "number") scrollTo({ top: target, behavior: reduce ? "auto" : "smooth" });
+  else target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+}
+$$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+  const el = document.querySelector(a.getAttribute("href"));
+  if (el) { e.preventDefault(); goTo(el); }
+}));
 
 /* ---------------------------------------------------------------- UI state */
 const ui = { days: 120, questions: 0, holdBuild: 0, holdBuildT: 0, holdEmpty: 0, holdEmptyT: 0, dragAz: 0, dragEl: 0 };
@@ -848,7 +871,7 @@ $("#hero-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const v = $("#hero-address").value.trim();
   if (v) $("#f-address").value = v;
-  $("#claim").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  goTo($("#claim"));
   setTimeout(() => $("#f-name").focus({ preventScroll: true }), reduce ? 0 : 700);
 });
 
@@ -1104,8 +1127,11 @@ function makeScene(canvas) {
   const sunWarm = new T.Color("#ffc48a"), sunCool = new T.Color("#ffffff"), skyWarm = new T.Color("#ffe2bf"), skyCool = new T.Color("#dfe6ee");
   let last = performance.now(), orbitT = 0, curId = "hero";
 
-  function pose() {
-    const y = scrollY;
+  let smoothY = scrollY;
+  function pose(dt) {
+    smoothY += (scrollY - smoothY) * (reduce ? 1 : 1 - Math.exp(-dt * 3.2));
+    if (Math.abs(scrollY - smoothY) < 0.5) smoothY = scrollY;
+    const y = smoothY;
     let i = 0; while (i < anchors.length - 1 && y >= anchors[i + 1]) i++;
     const a = kf[i], b = kf[Math.min(i + 1, kf.length - 1)];
     const span = (anchors[i + 1] ?? anchors[i] + 1) - anchors[i];
@@ -1119,13 +1145,13 @@ function makeScene(canvas) {
 
   function frame(now) {
     const dt = Math.min(.05, (now - last) / 1000); last = now;
-    const p = pose();
+    const p = pose(dt);
 
     ui.holdBuild += (ui.holdBuildT - ui.holdBuild) * Math.min(1, dt * 2.2);
     ui.holdEmpty += (ui.holdEmptyT - ui.holdEmpty) * Math.min(1, dt * 2.6);
     let build = lerp(p.build, 6, ui.holdBuild);
     build = lerp(build, 0, ui.holdEmpty);
-    st.build += (build - st.build) * Math.min(1, dt * 6);
+    st.build += (build - st.build) * (1 - Math.exp(-dt * 4));
     const B = st.build, stage = (a, w = 1) => clamp((B - a) / w);
     const decay = p.decay * (1 - stage(1.5, 2)), sold = p.sold * stage(5);
 
@@ -1203,7 +1229,7 @@ function updateUI(B) {
 }
 $$("#steps button").forEach((b) => b.addEventListener("click", () => {
   if (!scene) return;
-  scrollTo({ top: scene.stageScrollY(+b.dataset.stage), behavior: reduce ? "auto" : "smooth" });
+  goTo(scene.stageScrollY(+b.dataset.stage));
 }));
 if (!scene) { stepEls.forEach((li) => li.classList.add("done")); }
 
