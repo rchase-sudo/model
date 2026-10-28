@@ -1,0 +1,1205 @@
+<title>Forma Free Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Listing land? Get a free site layout plan, concept plan and 3D rendering of your listing from Forma, the same day. No cost, no card.">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,800;62..125,900&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400;1,6..96,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one fixed 3D parcel behind the story chapters; text rides a left column over it,
+   then solid bands for promise, proof and the claim form. */
+:root{
+  --ink:#0E0E0E; --ink-2:#161614; --ink-3:#1E1D1A; --paper:#F2EFE8; --paper-dim:#A7A296;
+  --gold:#B8924F; --gold-hi:#DCBB7A; --gold-soft:rgba(184,146,79,.34); --gold-fill:rgba(184,146,79,.09);
+  --line:rgba(242,239,232,.1); --rust:#D2774F; --ok:#93B98C; --water:#7FA6B5;
+  --f-display:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  --bar-h:58px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--ink); scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--f-display); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:60; background:var(--ink)}
+a{color:inherit}
+button,input,select,textarea{font:inherit; color:inherit}
+:focus-visible{outline:2px solid var(--gold-hi); outline-offset:3px}
+em{font-style:normal; color:var(--gold)}
+.serif{font-family:var(--f-serif); font-style:italic; font-weight:400; letter-spacing:0}
+.mono{font-family:var(--f-mono)}
+.wrap{max-width:1240px; margin:0 auto; padding-left:var(--gutter-l); padding-right:var(--gutter-r)}
+.kicker{font:500 11px/1.4 var(--f-mono); letter-spacing:.32em; text-transform:uppercase; color:var(--gold); margin:0 0 18px; display:flex; align-items:center; gap:10px}
+.kicker::before{content:""; width:22px; height:1px; background:var(--gold)}
+h1,h2,h3{margin:0; font-family:var(--f-display); font-weight:900; text-transform:uppercase; letter-spacing:-.005em; text-wrap:balance; font-stretch:88%}
+h1{font-size:clamp(2.5rem,5.2vw,4.5rem); line-height:.92}
+h2{font-size:clamp(2rem,4.6vw,3.6rem); line-height:.95}
+h3{font-size:clamp(1.05rem,1.6vw,1.25rem); line-height:1.2; font-weight:800}
+p{margin:0}
+.lede{color:var(--paper-dim); font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.65; max-width:52ch}
+.lede b{color:var(--paper); font-weight:600}
+.small{font-size:13px; line-height:1.55; color:var(--paper-dim)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* buttons */
+.btn{appearance:none; border:1px solid var(--gold); background:var(--gold); color:var(--ink); font:800 12px/1 var(--f-display); letter-spacing:.16em; text-transform:uppercase;
+  min-height:52px; padding:0 22px; display:inline-flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; text-decoration:none; white-space:nowrap;
+  transition:background .2s, color .2s, transform .2s}
+.btn span{transition:transform .2s}
+.btn:hover{background:var(--gold-hi); border-color:var(--gold-hi)}
+.btn:hover span{transform:translateX(4px)}
+.btn:active{transform:translateY(1px)}
+.btn-ghost{background:transparent; color:var(--gold)}
+.btn-ghost:hover{background:var(--gold); color:var(--ink)}
+.btn-lg{min-height:58px; font-size:13px; padding:0 26px}
+
+/* top bar */
+.topbar{position:sticky; top:env(safe-area-inset-top, 0px); z-index:50; background:rgba(14,14,14,.88); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:var(--bar-h)}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0}
+.brand i{width:28px; height:28px; border:1px solid var(--gold); color:var(--gold); display:grid; place-items:center; font:800 13px var(--f-display); font-style:normal}
+.brand b{font-weight:800; letter-spacing:.24em; font-size:13px}
+.freepill{display:flex; align-items:center; gap:10px; font:500 11px/1.3 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--paper); min-width:0}
+.freepill b{background:var(--gold); color:var(--ink); padding:4px 8px; font-weight:500; letter-spacing:.16em; flex-shrink:0}
+.freepill span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.topbar .btn{min-height:40px; padding:0 16px; font-size:11px}
+
+/* 3D stage */
+#stage{position:fixed; inset:0; z-index:0; width:100%; height:100%; display:block; cursor:grab; touch-action:pan-y}
+#stage.dragging{cursor:grabbing}
+.scrim{position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(90deg, rgba(14,14,14,.92) 0%, rgba(14,14,14,.78) 30%, rgba(14,14,14,0) 56%)}
+.stage-fallback{position:fixed; inset:0; z-index:0; background:radial-gradient(80% 60% at 70% 50%, #23211c 0%, var(--ink) 70%)}
+.story{position:relative; z-index:2; pointer-events:none}
+.story .panel, .story a, .story button, .story input, .story select, .story label, .story .chip{pointer-events:auto}
+.chapter{min-height:110vh; display:flex; align-items:center; padding-block:96px}
+.panel{max-width:540px; display:flex; flex-direction:column; gap:22px}
+.hud{position:fixed; z-index:3; right:calc(var(--gutter-r) + 4px); bottom:calc(18px + env(safe-area-inset-bottom, 0px)); display:flex; gap:8px; align-items:center; pointer-events:none;
+  font:500 10px/1.3 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
+.hud b{color:var(--gold); font-weight:500}
+.hud .dot{width:6px; height:6px; background:var(--gold); transform:rotate(45deg)}
+.draghint{display:inline-flex; gap:8px; align-items:center}
+
+/* hero */
+.hero{min-height:calc(100vh - var(--bar-h)); padding-block:40px 64px; align-items:flex-start}
+.hero .panel{gap:18px}
+.hero .panel{max-width:600px}
+.offer{border:1px solid var(--gold-soft); background:rgba(22,22,20,.86); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px)}
+.offer-head{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 18px; border-bottom:1px solid var(--line)}
+.offer-head p{font:500 11px/1.3 var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
+.offer-head strong{font:400 30px/1 var(--f-serif); font-style:italic; color:var(--gold-hi)}
+.offer ul{list-style:none; margin:0; padding:6px 18px}
+.offer li{display:grid; grid-template-columns:22px 1fr auto; gap:12px; align-items:start; padding:8px 0; border-bottom:1px solid var(--line)}
+.offer li:last-child{border-bottom:0}
+.offer li i{width:20px; height:20px; border:1px solid var(--gold); display:grid; place-items:center; color:var(--gold); font-style:normal; font-size:11px; margin-top:2px}
+.offer li b{display:block; font-weight:700; font-size:15px}
+.offer li small{display:block; color:var(--paper-dim); font-size:13px; line-height:1.45; margin-top:2px}
+.offer li s{font:400 12px var(--f-mono); color:var(--paper-dim); text-decoration:none; padding-top:3px}
+.addr{display:flex; gap:0; border:1px solid var(--gold); background:var(--ink)}
+.addr input{flex:1; min-width:0; background:transparent; border:0; padding:0 16px; min-height:58px; font-size:16px; outline:none}
+.addr input::placeholder{color:#77736b}
+.addr .btn{min-height:58px}
+.trust{display:flex; flex-wrap:wrap; gap:8px 18px; font:500 11px/1.4 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--paper-dim)}
+.trust span{display:inline-flex; gap:8px; align-items:center}
+.trust span::before{content:""; width:5px; height:5px; background:var(--gold); transform:rotate(45deg)}
+.hold{display:inline-flex; align-items:center; gap:12px; align-self:flex-start; min-height:48px; padding:0 18px 0 8px; border:1px solid var(--line); background:rgba(22,22,20,.8);
+  cursor:pointer; user-select:none; -webkit-user-select:none; touch-action:none; font:500 11px/1 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper)}
+.hold .ring{position:relative; width:34px; height:34px; border-radius:50%; border:1px solid var(--gold-soft); display:grid; place-items:center}
+.hold .ring::after{content:""; width:10px; height:10px; background:var(--gold); transform:rotate(45deg); transition:transform .3s}
+.hold.on{border-color:var(--gold)}
+.hold.on .ring::after{transform:rotate(225deg) scale(1.3)}
+@media (prefers-reduced-motion: no-preference){ .hold:not(.on) .ring{animation:pulse 2.4s ease-in-out infinite} }
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,146,79,.45)} 50%{box-shadow:0 0 0 9px rgba(184,146,79,0)}}
+
+/* pain: the clock */
+.clock{border:1px solid var(--line); background:rgba(22,22,20,.86); padding:20px; display:flex; flex-direction:column; gap:16px}
+.clock-top{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
+.clock-top p{font:500 11px var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--paper-dim)}
+.clock-top strong{font:900 clamp(2.4rem,5vw,3.4rem)/1 var(--f-display); font-stretch:80%; color:var(--paper); font-variant-numeric:tabular-nums}
+.clock-top strong small{font:500 12px var(--f-mono); letter-spacing:.14em; color:var(--paper-dim); margin-left:6px}
+.range{width:100%; -webkit-appearance:none; appearance:none; height:30px; background:transparent; cursor:pointer}
+.range::-webkit-slider-runnable-track{height:4px; background:linear-gradient(90deg, var(--rust) var(--p,33%), var(--line) var(--p,33%))}
+.range::-moz-range-track{height:4px; background:var(--line)}
+.range::-moz-range-progress{height:4px; background:var(--rust)}
+.range::-webkit-slider-thumb{-webkit-appearance:none; width:22px; height:22px; margin-top:-9px; background:var(--paper); border:3px solid var(--rust); transform:rotate(45deg)}
+.range::-moz-range-thumb{width:16px; height:16px; background:var(--paper); border:3px solid var(--rust); border-radius:0}
+.range.gold::-webkit-slider-runnable-track{background:linear-gradient(90deg, var(--gold) var(--p,33%), var(--line) var(--p,33%))}
+.range.gold::-webkit-slider-thumb{border-color:var(--gold)}
+.range.gold::-moz-range-progress{background:var(--gold)}
+.range.gold::-moz-range-thumb{border-color:var(--gold)}
+.ticks{display:flex; justify-content:space-between; font:500 10px var(--f-mono); letter-spacing:.12em; color:#77736b; text-transform:uppercase; margin-top:-8px}
+.status{border-left:2px solid var(--rust); padding:10px 14px; background:rgba(210,119,79,.07); min-height:78px}
+.status b{display:block; font:500 10px var(--f-mono); letter-spacing:.22em; text-transform:uppercase; color:var(--rust); margin-bottom:4px}
+.status p{font-size:15px; line-height:1.5}
+.calc{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.calc label{min-width:0; display:flex; flex-direction:column; gap:6px; font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--paper-dim)}
+.calc input[type=text]{width:100%; min-width:0; background:var(--ink); border:1px solid var(--line); min-height:46px; padding:0 12px; font-size:16px; color:var(--paper); font-variant-numeric:tabular-nums; outline:none}
+.calc input[type=text]:focus{border-color:var(--gold)}
+.calc .full{grid-column:1 / -1}
+.loss{display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line)}
+.loss div{padding:12px 14px}
+.loss div + div{border-left:1px solid var(--line)}
+.loss span{display:block; font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:4px}
+.loss strong{font:900 clamp(1.4rem,2.6vw,1.9rem)/1 var(--f-display); font-stretch:85%; color:var(--rust); font-variant-numeric:tabular-nums}
+
+/* pain: questions */
+.qs{display:flex; flex-wrap:wrap; gap:8px}
+.chip{appearance:none; border:1px solid var(--line); background:rgba(22,22,20,.86); padding:11px 14px; min-height:44px; cursor:pointer; text-align:left; font-size:14px; line-height:1.3;
+  display:inline-flex; gap:10px; align-items:center; transition:border-color .2s, background .2s, transform .2s}
+.chip small{font:500 9px var(--f-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--paper-dim)}
+.chip:hover{border-color:var(--gold-soft)}
+.chip[aria-pressed="true"]{border-color:var(--rust); background:rgba(210,119,79,.13)}
+.chip[aria-pressed="true"] small{color:var(--rust)}
+.meter{display:flex; align-items:center; gap:14px}
+.meter-bar{flex:1; height:6px; background:var(--line); position:relative; overflow:hidden}
+.meter-bar i{position:absolute; inset:0 auto 0 0; width:0; background:var(--rust); transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.meter b{font:500 12px var(--f-mono); letter-spacing:.1em; color:var(--paper-dim); white-space:nowrap}
+.answer{border:1px solid var(--gold-soft); background:var(--gold-fill); padding:16px 18px; font-size:16px; line-height:1.5}
+.answer b{color:var(--gold-hi)}
+
+/* build */
+.build{min-height:240vh; align-items:stretch}
+.build > .wrap{display:block}
+.build .panel{position:sticky; top:calc(var(--bar-h) + 40px)}
+.steps{list-style:none; margin:0; padding:0; border-top:1px solid var(--line); background:rgba(22,22,20,.82)}
+.steps li{border-bottom:1px solid var(--line)}
+.steps button{all:unset; box-sizing:border-box; width:100%; display:grid; grid-template-columns:34px 1fr; gap:12px; padding:13px 14px; cursor:pointer; align-items:start}
+.steps button:focus-visible{outline:2px solid var(--gold-hi); outline-offset:-2px}
+.steps .n{font:500 11px var(--f-mono); letter-spacing:.12em; color:#77736b; padding-top:3px}
+.steps b{display:block; font-weight:700; font-size:15px; color:var(--paper-dim); transition:color .3s}
+.steps small{display:block; font-size:13px; line-height:1.45; color:#77736b; max-height:0; overflow:hidden; transition:max-height .4s, color .3s}
+.steps li.done .n{color:var(--gold)}
+.steps li.done b{color:var(--paper)}
+.steps li.cur{background:var(--gold-fill)}
+.steps li.cur b{color:var(--gold-hi)}
+.steps li.cur small{max-height:80px; color:var(--paper-dim)}
+.buildbar{height:3px; background:var(--line); position:relative}
+.buildbar i{position:absolute; inset:0 auto 0 0; background:var(--gold); width:0}
+#build-end{position:absolute; bottom:30vh; left:0; width:1px; height:1px}
+
+/* after */
+.phone{width:min(340px,100%); border:1px solid var(--line); border-radius:28px; background:#121211; padding:14px; box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.phone-top{display:flex; justify-content:space-between; align-items:center; padding:4px 8px 12px; border-bottom:1px solid var(--line); font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
+.phone-top b{color:var(--paper); font-weight:500}
+.thread{display:flex; flex-direction:column; gap:8px; padding:14px 4px 6px; min-height:230px}
+.msg{max-width:84%; padding:9px 12px; font-size:14px; line-height:1.4; border-radius:16px; animation:msgin .35s ease both}
+.msg.them{background:#26251f; align-self:flex-start; border-bottom-left-radius:4px}
+.msg.me{background:var(--gold); color:var(--ink); align-self:flex-end; border-bottom-right-radius:4px}
+.msg.img{padding:4px; background:#26251f}
+.msg.img img{display:block; width:220px; max-width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:12px}
+@keyframes msgin{from{opacity:.2; transform:translateY(6px)} to{opacity:1; transform:none}}
+.seg{display:inline-flex; align-self:flex-start; border:1px solid var(--line); background:rgba(22,22,20,.86)}
+.seg button{appearance:none; border:0; background:transparent; padding:0 16px; min-height:44px; cursor:pointer; font:500 11px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
+.seg button[aria-pressed="true"]{background:var(--gold); color:var(--ink)}
+.after-row{display:flex; flex-wrap:wrap; gap:22px; align-items:flex-start}
+.tag-illus{font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:#77736b}
+
+/* solid bands */
+.band{position:relative; z-index:4; background:var(--ink); border-top:1px solid var(--line); padding-block:clamp(72px,10vw,128px)}
+.band.alt{background:var(--ink-2)}
+.band-head{display:flex; flex-direction:column; gap:16px; max-width:780px; margin-bottom:clamp(36px,5vw,56px)}
+
+/* promise */
+.promise{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+.promise article{background:var(--ink); padding:26px 22px 24px; display:flex; flex-direction:column; gap:12px; min-width:0}
+.promise .big{font:400 clamp(2.4rem,4vw,3.2rem)/1 var(--f-serif); font-style:italic; color:var(--gold-hi)}
+.promise p{color:var(--paper-dim); font-size:14px; line-height:1.55}
+.compare-wrap{margin-top:40px; overflow-x:auto; border:1px solid var(--line)}
+.compare{width:100%; border-collapse:collapse; min-width:640px; font-size:14px}
+.compare th,.compare td{padding:14px 16px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+.compare thead th{font:500 10px var(--f-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--paper-dim); background:var(--ink-2)}
+.compare thead th.us{color:var(--ink); background:var(--gold)}
+.compare tbody th{font:500 11px var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--paper-dim); font-weight:500; width:18%}
+.compare td.us{background:var(--gold-fill); color:var(--paper); font-weight:600}
+.compare td{color:var(--paper-dim)}
+.compare tr:last-child th,.compare tr:last-child td{border-bottom:0}
+
+/* proof */
+.stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border:1px solid var(--line); margin-bottom:clamp(48px,7vw,80px)}
+.stats div{padding:22px 20px; border-right:1px solid var(--line); min-width:0}
+.stats div:last-child{border-right:0}
+.stats strong{display:block; font:900 clamp(2.6rem,5.6vw,4.4rem)/1 var(--f-display); font-stretch:78%; color:var(--paper); font-variant-numeric:tabular-nums}
+.stats strong.gold{color:var(--gold-hi)}
+.stats span{display:block; margin-top:10px; font-size:13px; line-height:1.45; color:var(--paper-dim)}
+.case{display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); gap:clamp(20px,3vw,40px); align-items:start}
+.viewer{border:1px solid var(--line); background:var(--ink-3)}
+.viewer-tabs{display:flex; border-bottom:1px solid var(--line); overflow-x:auto}
+.viewer-tabs button{appearance:none; border:0; border-right:1px solid var(--line); background:transparent; padding:0 16px; min-height:46px; cursor:pointer; white-space:nowrap;
+  font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--paper-dim)}
+.viewer-tabs button[aria-selected="true"]{color:var(--ink); background:var(--gold)}
+.frame{position:relative; aspect-ratio:3 / 2; overflow:hidden; background:#1a1917}
+.frame img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .45s ease}
+.frame img.contain{object-fit:contain; background:#f4f3ef}
+.frame img[hidden]{display:block!important; opacity:0}
+.frame .missing{position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:20px; color:var(--paper-dim); font-size:13px}
+.frame .badge{position:absolute; left:12px; top:12px; background:rgba(14,14,14,.82); padding:6px 9px; font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--gold-hi)}
+.viewer-foot{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 12px; flex-wrap:wrap}
+.spec{border:1px solid var(--line)}
+.spec-head{padding:18px 18px 14px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:6px}
+.spec-head h3{font-size:clamp(1.3rem,2vw,1.6rem)}
+.spec dl{margin:0; display:grid; grid-template-columns:auto 1fr}
+.spec dt,.spec dd{margin:0; padding:10px 18px; border-bottom:1px solid var(--line); font-size:14px}
+.spec dt{font:500 10px/1.9 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim); padding-right:8px}
+.spec dd{text-align:right; font-variant-numeric:tabular-nums; color:var(--paper)}
+.spec dd b{color:var(--gold-hi); font-weight:600}
+.spec .speed{padding:16px 18px; display:flex; gap:14px; align-items:center; background:var(--gold-fill)}
+.spec .speed strong{font:400 34px/1 var(--f-serif); font-style:italic; color:var(--gold-hi); white-space:nowrap}
+.spec .speed p{font-size:13px; line-height:1.45; color:var(--paper-dim)}
+.case + .case{margin-top:clamp(48px,6vw,72px)}
+.clients{margin-top:clamp(48px,6vw,72px); display:flex; flex-wrap:wrap; align-items:center; gap:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.clients p{font:500 10px var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--paper-dim); padding:18px 24px 18px 0}
+.clients span{padding:18px 24px; border-left:1px solid var(--line); font-weight:700; font-size:15px}
+.clients span small{display:block; font-weight:400; font-size:12px; color:var(--paper-dim)}
+.reviews{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:40px}
+.review{border:1px solid var(--line); padding:20px; display:flex; flex-direction:column; gap:12px}
+.stars{color:var(--gold-hi); letter-spacing:.2em}
+.rating{display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:15px; color:var(--paper-dim)}
+.rating .stars{font-size:22px}
+.trust .stars-inline{color:var(--gold-hi); letter-spacing:.06em}
+.trust .stars-inline::before{display:none}
+
+/* claim */
+.claim{position:relative; z-index:2}
+.claim .wrap{display:flex; align-items:center; min-height:100vh; padding-block:96px}
+.claim-col{max-width:560px; width:100%}
+.story .form{pointer-events:auto}
+.form{border:1px solid var(--gold-soft); background:rgba(22,22,20,.94); padding:clamp(18px,3vw,28px); display:flex; flex-direction:column; gap:14px}
+.form .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.field{display:flex; flex-direction:column; gap:7px; min-width:0}
+.field label{font:500 10px var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--paper-dim)}
+.field input,.field select{width:100%; min-height:50px; padding:0 14px; background:var(--ink); border:1px solid var(--line); color:var(--paper); font-size:16px; border-radius:0; outline:none; -webkit-appearance:none; appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23B8924F' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center; padding-right:36px}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field input[aria-invalid="true"]{border-color:var(--rust)}
+.hp{position:absolute!important; left:-9999px; width:1px; height:1px; opacity:0}
+.form-err{color:var(--rust); font-size:13px; min-height:1px}
+.assure{display:flex; flex-wrap:wrap; gap:6px 16px; font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
+.assure span::before{content:"✓ "; color:var(--gold)}
+.done{display:flex; flex-direction:column; gap:16px}
+.done ol{margin:0; padding:0; list-style:none; border-top:1px solid var(--line)}
+.done li{display:grid; grid-template-columns:28px 1fr; gap:10px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14px; color:var(--paper-dim)}
+.done li b{color:var(--paper)}
+.done li span{font:500 11px var(--f-mono); color:var(--gold)}
+
+/* faq + foot */
+.faq{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 40px}
+.faq details{border-top:1px solid var(--line); padding:4px 0}
+.faq summary{list-style:none; cursor:pointer; display:flex; justify-content:space-between; gap:16px; padding:16px 0; font-weight:700; font-size:16px; min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+"; color:var(--gold); font:400 22px/1 var(--f-mono); transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 18px; color:var(--paper-dim); font-size:15px; line-height:1.6; max-width:60ch}
+.foot{position:relative; z-index:4; background:var(--ink); border-top:1px solid var(--line); padding-block:28px calc(28px + env(safe-area-inset-bottom, 0px))}
+.foot .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 28px; font-size:12px; color:var(--paper-dim)}
+.foot .links{display:flex; flex-wrap:wrap; gap:6px 22px}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--gold)}
+
+/* mobile sticky CTA */
+.mbar{display:none}
+
+@media (max-width: 980px){
+  .promise{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats div:nth-child(2){border-right:0}
+  .stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .case{grid-template-columns:minmax(0,1fr)}
+  .reviews{grid-template-columns:1fr}
+}
+@media (max-width: 860px){
+  :root{--bar-h:54px}
+  .scrim{background:linear-gradient(180deg, rgba(14,14,14,0) 0%, rgba(14,14,14,0) 34%, rgba(14,14,14,.82) 58%, rgba(14,14,14,.94) 100%)}
+  .chapter{min-height:auto; padding-block:46vh 72px; align-items:flex-start}
+  .hero{min-height:auto; padding-block:40vh 56px}
+  .build{min-height:220vh; padding-top:46vh; align-items:stretch}
+  .build .panel{top:calc(100svh - 236px); background:rgba(14,14,14,.92); padding:14px; margin-inline:-14px; gap:12px; border-top:1px solid var(--gold-soft)}
+  .build .panel h2,.build .panel .lede{display:none}
+  .build .panel .kicker{margin:0}
+  .steps li:not(.cur){display:none}
+  .steps li.cur small{max-height:120px}
+  .panel{max-width:none}
+  .freepill span{display:none}
+  .hud{display:none}
+  .claim .wrap{min-height:auto; padding-block:38vh 72px}
+  .faq{grid-template-columns:1fr}
+  .form .row2{grid-template-columns:1fr}
+  .mbar{display:flex; position:fixed; left:0; right:0; bottom:0; z-index:55; gap:12px; align-items:center; justify-content:space-between;
+    padding:10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gutter-l); background:rgba(22,22,20,.97); border-top:1px solid var(--gold-soft);
+    transform:translateY(110%); transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  .mbar.show{transform:none}
+  .mbar p{font:500 10px/1.35 var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--paper-dim)}
+  .mbar p b{display:block; color:var(--gold-hi); font:400 22px/1 var(--f-serif); font-style:italic; letter-spacing:0; text-transform:none}
+  .mbar .btn{min-height:46px}
+  .foot{padding-bottom:calc(96px + env(safe-area-inset-bottom, 0px))}
+}
+@media (max-width: 520px){
+  .promise{grid-template-columns:1fr}
+  .calc{grid-template-columns:1fr 1fr}
+  .addr{flex-direction:column}
+  .addr .btn{width:100%}
+  .clients span{border-left:0; padding-left:0; width:50%}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="https://formadesigns.io" aria-label="Forma Designs home"><i>F</i><b>FORMA</b></a>
+    <p class="freepill"><b>Free</b><span>Layout plan + concept plan + 3D rendering of your land listing</span></p>
+    <a class="btn" href="#claim" data-cta="top">Get my free plan</a>
+  </div>
+</header>
+
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="scrim" aria-hidden="true"></div>
+<div class="hud" aria-hidden="true"><span class="dot"></span><span id="hud-text">Model: <b>80 Elm St, Peterborough NH</b> · simplified</span><span class="draghint" id="draghint">· Drag to look around</span></div>
+
+<main>
+<div class="story">
+
+  <!-- HERO -->
+  <section class="chapter hero" id="hero" data-scene="hero">
+    <div class="wrap" style="width:100%">
+      <div class="panel">
+        <p class="kicker">For agents listing land</p>
+        <h1>Your land listing, built out. <em class="serif" style="text-transform:none; font-weight:400">Free.</em></h1>
+        <p class="lede">Send me the address. The same day, I'll send back a site layout, a concept plan and a photoreal 3D rendering of what a buyer could build there. <b>No cost, no card, nothing to sign.</b></p>
+
+        <div class="offer" aria-label="Your free marketing package">
+          <div class="offer-head"><p>Your free marketing package</p><strong>$0</strong></div>
+          <ul>
+            <li><i>✓</i><div><b>Layout plan</b><small>Parcel lines, setbacks and the buildable area on an aerial.</small></div><s>$0</s></li>
+            <li><i>✓</i><div><b>Concept plan</b><small>Buildings, parking and access at real dimensions, for uses your zoning allows.</small></div><s>$0</s></li>
+            <li><i>✓</i><div><b>3D rendering</b><small>Photoreal, ready for the MLS, your flyer and your social posts.</small></div><s>$0</s></li>
+          </ul>
+        </div>
+
+        <form class="addr" id="hero-form" novalidate>
+          <label for="hero-address" class="hp">Listing address</label>
+          <input id="hero-address" type="text" autocomplete="street-address" placeholder="Paste your listing address">
+          <button class="btn btn-lg" type="submit">Start my free plan <span>→</span></button>
+        </form>
+
+        <div class="trust"><span class="stars-inline">★★★★★ 5-star reviews</span><span>55 land listings served</span><span>50 sold or under contract in 6 months</span><span>Free plan same day</span></div>
+
+        <button class="hold" id="hold-build" type="button" aria-label="Press and hold to see this lot built out"><span class="ring"></span>Press and hold to build it</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN 1: the clock -->
+  <section class="chapter" id="sits" data-scene="sits">
+    <div class="wrap" style="width:100%">
+      <div class="panel">
+        <p class="kicker">Here's what's happening</p>
+        <h2>Land doesn't <em>show</em> well.</h2>
+        <p class="lede">A house gets staged. A lot gets a photo of grass and a sign. Buyers scroll past it, the few who call ask questions you can't answer yet, and your seller wants to know why nothing is happening.</p>
+
+        <div class="clock">
+          <div class="clock-top"><p>Days on market</p><strong id="days-out" class="tnum">120<small>days</small></strong></div>
+          <input class="range" id="days" type="range" min="0" max="360" step="1" value="120" aria-label="Days on market" style="--p:33%">
+          <div class="ticks" aria-hidden="true"><span>Listed</span><span>3 mo</span><span>6 mo</span><span>9 mo</span><span>1 yr</span></div>
+          <div class="status" aria-live="polite"><b id="status-k">Month four</b><p id="status-t">Your seller asks about a price drop. You start dreading the weekly check-in call.</p></div>
+        </div>
+
+        <div class="clock" aria-label="What a price cut costs">
+          <div class="calc">
+            <label for="price">List price<input id="price" type="text" inputmode="numeric" value="$850,000"></label>
+            <label for="comm">Your commission<input id="comm" type="text" inputmode="decimal" value="6%"></label>
+            <label class="full" for="cut">Price cut: <span id="cut-out" class="tnum">10%</span><input class="range" id="cut" type="range" min="0" max="30" step="1" value="10" style="--p:33%"></label>
+          </div>
+          <div class="loss">
+            <div><span>Your seller loses</span><strong id="loss-seller" class="tnum">$85,000</strong></div>
+            <div><span>Your commission drops</span><strong id="loss-you" class="tnum">$5,100</strong></div>
+          </div>
+          <p class="small">Your numbers, your math. Drag the lot clock above and watch the listing age.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN 2: the questions -->
+  <section class="chapter" id="questions" data-scene="questions">
+    <div class="wrap" style="width:100%">
+      <div class="panel">
+        <p class="kicker">Sound familiar?</p>
+        <h2>Tap every one you've <em>heard.</em></h2>
+        <div class="qs" id="qs">
+          <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>What can I actually build here?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>Is it even buildable?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>How many units fit?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>Where would the entrance go?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>I just can't picture it.</button>
+          <button class="chip" type="button" aria-pressed="false"><small>Seller</small>Any offers yet?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>Seller</small>Should we drop the price?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>Seller</small>Why isn't anyone biting?</button>
+        </div>
+        <div class="meter"><div class="meter-bar"><i id="meter"></i></div><b id="meter-t" class="tnum">0 of 8</b></div>
+        <p class="answer" id="answer">Each one floats over your lot. <b>Every one of them has the same answer: show them the plan.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TURN: build it -->
+  <section class="chapter build" id="build" data-scene="build" style="position:relative">
+    <div class="wrap" style="width:100%">
+      <div class="panel">
+        <p class="kicker">What I do</p>
+        <h2>Now show them what <em>goes there.</em></h2>
+        <p class="lede">Keep scrolling. This is the same process every free plan goes through, on real parcel data.</p>
+        <div class="buildbar" aria-hidden="true"><i id="buildbar"></i></div>
+        <ol class="steps" id="steps">
+          <li><button type="button" data-stage="0"><span class="n">01</span><span><b>Read the ground</b><small>County parcel record and public LiDAR elevation data. Slope, high ground and low spots before anyone walks the site.</small></span></button></li>
+          <li><button type="button" data-stage="1"><span class="n">02</span><span><b>Draw the lines</b><small>Property lines from the parcel record, setbacks from your town's zoning code.</small></span></button></li>
+          <li><button type="button" data-stage="2"><span class="n">03</span><span><b>Find the buildable area</b><small>What's left inside the setbacks, and the uses the zoning district allows there.</small></span></button></li>
+          <li><button type="button" data-stage="3"><span class="n">04</span><span><b>Lay it out</b><small>Access from the road, drive aisles, parking at real stall sizes, stormwater.</small></span></button></li>
+          <li><button type="button" data-stage="4"><span class="n">05</span><span><b>Put buildings on it</b><small>Footprints sized to the program and the lot, with landscaping.</small></span></button></li>
+          <li><button type="button" data-stage="5"><span class="n">06</span><span><b>Render it</b><small>A photoreal 3D rendering and the plan sheets, sent to your inbox.</small></span></button></li>
+        </ol>
+      </div>
+    </div>
+    <span id="build-end" aria-hidden="true"></span>
+  </section>
+
+  <!-- AFTER -->
+  <section class="chapter" id="after" data-scene="after">
+    <div class="wrap" style="width:100%">
+      <div class="panel">
+        <p class="kicker">After</p>
+        <h2>Never wonder <em>if it'll sell</em> again.</h2>
+        <p class="lede">Your listing stops being a patch of grass. Buyers see a project. Developers get answers before they call. Your seller sees you working.</p>
+        <div class="seg" role="group" aria-label="Compare the seller conversation">
+          <button type="button" id="seg-without" aria-pressed="false">Without a plan</button>
+          <button type="button" id="seg-with" aria-pressed="true">With a plan</button>
+        </div>
+        <div class="after-row">
+          <div class="phone" aria-live="polite">
+            <div class="phone-top"><b>Seller</b><span id="phone-day">Thursday</span></div>
+            <div class="thread" id="thread"></div>
+          </div>
+        </div>
+        <p class="tag-illus">Illustrative conversation</p>
+        <button class="hold" id="hold-empty" type="button" aria-label="Press and hold to see the empty lot again"><span class="ring"></span>Hold to see the empty lot</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PROMISE -->
+<section class="band" id="promise">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="kicker">The deal</p>
+      <h2>Fast. Safe. <em>Free to try.</em></h2>
+      <p class="lede">You take no risk to see your listing built out. If you like it and want everything behind it, the full package is there. If you don't, keep the plan and use it.</p>
+    </div>
+    <div class="promise">
+      <article><span class="big">Same day</span><h3>Fast</h3><p>Your free layout plan, concept plan and rendering land in your inbox the same day you send the address. The full package is delivered within 7 days.</p></article>
+      <article><span class="big">$0</span><h3>Free</h3><p>No card, no contract, no call required. The plan is yours to post on the MLS, your flyer and social.</p></article>
+      <article><span class="big">6 mo</span><h3>Guaranteed</h3><p>Upgrade to the full package and if the listing isn't under contract within 6 months of delivery, I do your next property free.</p></article>
+      <article><span class="big">Real</span><h3>Built on data</h3><p>County parcel lines, public LiDAR topography and your town's actual setbacks and permitted uses. Not a sketch.</p></article>
+    </div>
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th></th><th class="us">Forma free plan</th><th>Hire an engineer for a concept study</th><th>Keep waiting</th></tr></thead>
+        <tbody>
+          <tr><th>Cost to you</th><td class="us">$0</td><td>Quoted per project, paid up front</td><td>$0 today, a price cut later</td></tr>
+          <tr><th>Time</th><td class="us">Same day</td><td>Scheduled around their project load</td><td>Open-ended</td></tr>
+          <tr><th>What buyers see</th><td class="us">A site plan and a photoreal rendering</td><td>Engineering sheets, if the seller pays for them</td><td>A photo of grass</td></tr>
+          <tr><th>Risk</th><td class="us">None</td><td>The fee, win or lose</td><td>Days on market, and the listing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:14px">Want more than the free plan? The full package adds the due diligence report: zoning, permitting roadmap and a pro forma. $949, delivered within 7 days and charged only when it's delivered.</p>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="band alt" id="proof">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="kicker">Proof</p>
+      <h2>Agents use it. <em>Listings move.</em></h2>
+      <p class="rating"><span class="stars">★★★★★</span> 5-star reviews from the agents I've worked with</p>
+    </div>
+    <div class="stats">
+      <div><strong data-count="55" class="tnum">55</strong><span>Land listings I've produced plans for</span></div>
+      <div><strong data-count="50" class="tnum">50</strong><span>Sold or under contract within 6 months of delivery</span></div>
+      <div><strong data-count="91" data-suffix="%" class="tnum gold">91%</strong><span>Of those listings, under contract or sold inside 6 months</span></div>
+      <div><strong class="tnum">6&nbsp;mo</strong><span>Guarantee on the full package, or your next property is free</span></div>
+    </div>
+
+    <!-- Case 1: Peterborough -->
+    <div class="case">
+      <div class="viewer">
+        <div class="viewer-tabs" role="tablist" aria-label="80 Elm St deliverables">
+          <button role="tab" aria-selected="false" data-show="pb-aerial">The listing today</button>
+          <button role="tab" aria-selected="false" data-show="pb-existing">Layout plan</button>
+          <button role="tab" aria-selected="false" data-show="pb-plan">Concept plan</button>
+          <button role="tab" aria-selected="true" data-show="pb-render">3D rendering</button>
+        </div>
+        <div class="frame" id="pb-frame">
+          <img id="pb-aerial" alt="Aerial photo of the 80 Elm St lot as listed" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/aerial.jpg">
+          <img id="pb-existing" class="contain" alt="Layout plan: parcel lines, setbacks and topography at 80 Elm St" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/existing-conditions.jpg">
+          <img id="pb-plan" class="contain" alt="Concept plan for 80 Elm St with three buildings and parking" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/concept-plan.jpg">
+          <img id="pb-render" alt="3D rendering of the proposed retail and dining project at 80 Elm St" src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg">
+          <span class="badge" id="pb-badge">3D rendering</span>
+        </div>
+        <div class="viewer-foot">
+          <button class="hold" id="hold-pb" type="button"><span class="ring"></span>Hold for before</button>
+          <span class="small">Concept prepared for the listing broker. Preliminary, not engineered.</span>
+        </div>
+      </div>
+      <aside class="spec">
+        <div class="spec-head">
+          <p class="kicker" style="margin:0">Case study</p>
+          <h3>80 Elm St, Peterborough NH</h3>
+          <p class="small">5.58 acres in the Village Commercial District on Elm St (NH 101/202), under a mile from downtown. Listed at $2,250,000.</p>
+        </div>
+        <dl>
+          <dt>Concept</dt><dd>Retail + sit-down dining</dd>
+          <dt>Buildings</dt><dd><b>35,000 SF</b> in 3</dd>
+          <dt>Parking</dt><dd>170 stalls, 6 accessible</dd>
+          <dt>Developed area</dt><dd>2.81 ac · 14.8% coverage</dd>
+          <dt>Terrain</dt><dd>84% under 5% slope</dd>
+          <dt>Elevation</dt><dd>795.7 – 807.2 ft (USGS LiDAR)</dd>
+          <dt>Setbacks</dt><dd>30 ft front · 15 ft side, rear</dd>
+          <dt>Stormwater</dt><dd>8,490 SF basin</dd>
+          <dt>Plan set</dt><dd>9 sheets</dd>
+        </dl>
+        <div class="speed"><strong>1 h 27 m</strong><p>From address in to finished plan set on this one: 2:47 pm to 4:14 pm the same afternoon.</p></div>
+      </aside>
+    </div>
+
+    <!-- Case 2: Voorhees -->
+    <div class="case">
+      <div class="viewer">
+        <div class="viewer-tabs" role="tablist" aria-label="336 Route 73 deliverables">
+          <button role="tab" aria-selected="false" data-show="vh-plan">Concept plan</button>
+          <button role="tab" aria-selected="true" data-show="vh-render">3D rendering</button>
+        </div>
+        <div class="frame" style="aspect-ratio:1527 / 704">
+          <img id="vh-plan" alt="Concept plan for a bank with drive-thru on Route 73 in Voorhees NJ" loading="lazy" hidden src="img/voorhees-plan.jpg">
+          <img id="vh-render" alt="3D rendering of the proposed bank on Route 73 in Voorhees NJ" loading="lazy" src="img/voorhees-render.jpg">
+          <span class="badge" id="vh-badge">3D rendering</span>
+        </div>
+      </div>
+      <aside class="spec">
+        <div class="spec-head">
+          <p class="kicker" style="margin:0">Client listing</p>
+          <h3>336 Route 73, Voorhees NJ</h3>
+          <p class="small">1.32 acres of highway frontage. I planned a 5,900 SF bank with a drive-thru, rendered it, then built an interactive property website on top. The listing has seen noticeably better traction since.</p>
+        </div>
+        <dl>
+          <dt>Concept</dt><dd>Bank with drive-thru</dd>
+          <dt>Building</dt><dd><b>5,900 SF</b></dd>
+          <dt>Delivered</dt><dd>Plan, rendering, due diligence, website</dd>
+        </dl>
+        <div class="speed"><a class="btn btn-ghost" href="https://rchase-sudo.github.io/model/website/" target="_blank" rel="noopener">See its property website <span>↗</span></a></div>
+      </aside>
+    </div>
+
+    <div class="clients" aria-label="Agents I've worked with">
+      <p>Agents I've worked with <span class="stars" style="padding:0;border:0;display:inline">★★★★★</span></p>
+      <span>Patricia W.<small>BayFox Designs</small></span>
+      <span>Jeff L.<small>Rose Commercial</small></span>
+      <span>Joseph M.<small>Weichert Realtors</small></span>
+    </div>
+    <div class="reviews" id="reviews" hidden></div>
+  </div>
+</section>
+</main>
+
+<!-- CLAIM -->
+<section class="claim story" id="claim" data-scene="claim">
+  <div class="wrap">
+    <div class="panel claim-col">
+      <p class="kicker">Claim it</p>
+      <h2>Get your free plan <em>today.</em></h2>
+      <p class="lede">Layout plan, concept plan and a 3D rendering of your listing, the same day. I'll email it to you. If you want the full package after that, it's one click.</p>
+      <div class="assure"><span>No card</span><span>No contract</span><span>No call required</span><span>Yours to keep</span></div>
+      <form class="form" id="claim-form" novalidate>
+        <div id="form-fields" style="display:flex; flex-direction:column; gap:14px">
+          <div class="row2">
+            <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-role">I'm the</label>
+              <select id="f-role" name="role"><option>Listing agent</option><option>Co-listing agent</option><option>Broker</option><option>Property owner</option><option>Other</option></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></div>
+            <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
+          </div>
+          <div class="field"><label for="f-address">Listing address</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>
+          <div class="field"><label for="f-link">Listing link (optional)</label><input id="f-link" name="listing_url" type="url" inputmode="url" placeholder="LoopNet, Zillow, Crexi or MLS link" autocapitalize="off" spellcheck="false"></div>
+          <input class="hp" id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-lg" type="submit" id="f-submit">Send me my free plan <span>→</span></button>
+          <p class="form-err" id="form-err" role="alert"></p>
+          <p class="small">I'll only use your details to send your plan and follow up about this listing.</p>
+        </div>
+        <div class="done" id="form-done" hidden>
+          <p class="kicker" style="margin:0">Request received</p>
+          <h3 style="font-size:1.6rem" id="done-h">You're in.</h3>
+          <ol>
+            <li><span>01</span><div><b>I pull the parcel</b> and the topography for <span id="done-addr">your listing</span>.</div></li>
+            <li><span>02</span><div><b>I lay it out</b> to your town's setbacks and permitted uses.</div></li>
+            <li><span>03</span><div><b>Your plan and rendering arrive</b> by email the same day.</div></li>
+          </ol>
+          <p class="small">Want the due diligence report and plan set too? The full package is $949, charged only when it's delivered.</p>
+          <a class="btn btn-ghost" id="done-pay" href="https://formadesigns.io/payment">See the full package <span>→</span></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="faq">
+  <div class="wrap">
+    <div class="band-head"><p class="kicker">Questions</p><h2>Straight <em>answers.</em></h2></div>
+    <div class="faq">
+      <details><summary>Is it really free?</summary><p>Yes. The layout plan, concept plan and 3D rendering cost nothing. No card, no contract. I do it because a lot of agents who see their listing built out want the full package for it, or for their next one.</p></details>
+      <details><summary>What's the catch?</summary><p>There isn't one. If you never buy anything, you keep the plan and the rendering and use them on your listing.</p></details>
+      <details><summary>Can I put it on the MLS and my flyers?</summary><p>Yes. That's what it's for. Post it, print it, send it to developers.</p></details>
+      <details><summary>How is the plan made?</summary><p>From the county parcel record, public LiDAR elevation data and the setbacks and permitted uses in your town's zoning code. No site visit or survey needed. If you have a survey, send it and I'll use it.</p></details>
+      <details><summary>Is this an engineered plan?</summary><p>No. It's a preliminary, conceptual plan to show buyers what fits. It is not a stamped engineering or permit set.</p></details>
+      <details><summary>What's in the paid package?</summary><p>Everything in the free plan plus a due diligence report: zoning, permitting roadmap and a pro forma. $949, delivered within 7 days and charged only when it's delivered, with a 6-month guarantee. Add-ons include a full civil plan set and an interactive property website.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Forma Preliminary Design · Plans are preliminary and conceptual, not stamped engineering.</span>
+    <div class="links"><span class="mono">support@formadesigns.io</span><span class="mono">(978) 346-5818</span><a href="https://formadesigns.io/tos">Terms</a></div>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar"><p>Free plan for your listing<b>$0</b></p><a class="btn" href="#claim" data-cta="mbar">Get my free plan <span>→</span></a></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+"use strict";
+const INTAKE_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/lander-intake";
+const PAYMENT_URL = "https://formadesigns.io/payment";
+// Paste real reviews here, e.g. { name: "Jane D.", brokerage: "Example Realty", text: "…", stars: 5 }.
+// The quote cards stay hidden while this is empty; the 5-star badges show either way.
+const REVIEWS = [];
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (t) => t * t * (3 - 2 * t);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
+const isMobile = () => innerWidth <= 860;
+
+/* ---------------------------------------------------------------- UI state */
+const ui = { days: 120, questions: 0, holdBuild: 0, holdBuildT: 0, holdEmpty: 0, holdEmptyT: 0, dragAz: 0, dragEl: 0 };
+
+/* days on market */
+const STATUS = [
+  [0, "Just listed", "A few clicks, a couple of “is it buildable?” calls. Everyone is optimistic."],
+  [45, "Week seven", "Showings slow down. The calls you do get want answers you'd need an engineer for."],
+  [100, "Month four", "Your seller asks about a price drop. You start dreading the weekly check-in call."],
+  [180, "Month six", "Price reduced. The listing photo is the same field it was in spring."],
+  [270, "Month nine", "The listing is stale. Expire, relist, or watch someone else pitch your seller."],
+];
+const daysEl = $("#days");
+function setDays(v) {
+  ui.days = +v;
+  daysEl.style.setProperty("--p", (v / 360 * 100) + "%");
+  $("#days-out").innerHTML = v + "<small>days</small>";
+  const s = STATUS.filter((x) => v >= x[0]).pop();
+  $("#status-k").textContent = s[1];
+  $("#status-t").textContent = s[2];
+}
+daysEl.addEventListener("input", (e) => setDays(e.target.value));
+setDays(daysEl.value);
+
+/* price-cut math */
+const parseNum = (s) => parseFloat(String(s).replace(/[^0-9.]/g, "")) || 0;
+function calc() {
+  const price = parseNum($("#price").value), pct = parseNum($("#comm").value) / 100, cut = +$("#cut").value / 100;
+  $("#cut-out").textContent = Math.round(cut * 100) + "%";
+  $("#cut").style.setProperty("--p", (cut / .3 * 100) + "%");
+  $("#loss-seller").textContent = money(price * cut);
+  $("#loss-you").textContent = money(price * cut * pct);
+}
+["#price", "#comm", "#cut"].forEach((s) => $(s).addEventListener("input", calc));
+$("#price").addEventListener("blur", (e) => { e.target.value = money(parseNum(e.target.value)); });
+$("#comm").addEventListener("blur", (e) => { e.target.value = parseNum(e.target.value) + "%"; });
+calc();
+
+/* questions */
+const chips = $$("#qs .chip");
+chips.forEach((c) => c.addEventListener("click", () => {
+  c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") === "true" ? "false" : "true");
+  ui.questions = chips.filter((x) => x.getAttribute("aria-pressed") === "true").length;
+  $("#meter").style.width = (ui.questions / chips.length * 100) + "%";
+  $("#meter-t").textContent = ui.questions + " of " + chips.length;
+  $("#answer").innerHTML = ui.questions >= 3
+    ? "That's " + ui.questions + " questions you're answering alone. <b>Every one of them has the same answer: show them the plan. That's what I make.</b>"
+    : "Each one floats over your lot. <b>Every one of them has the same answer: show them the plan.</b>";
+  if (scene) scene.setQuestions(ui.questions);
+}));
+
+/* hold buttons */
+function holdable(el, key) {
+  const on = (e) => { e.preventDefault(); ui[key + "T"] = 1; el.classList.add("on"); };
+  const off = () => { ui[key + "T"] = 0; el.classList.remove("on"); };
+  el.addEventListener("pointerdown", on);
+  ["pointerup", "pointerleave", "pointercancel"].forEach((t) => el.addEventListener(t, off));
+  el.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") on(e); });
+  el.addEventListener("keyup", off);
+}
+holdable($("#hold-build"), "holdBuild");
+holdable($("#hold-empty"), "holdEmpty");
+
+/* seller thread */
+const THREADS = {
+  without: { day: "Month four", msgs: [["them", "Any calls this week?"], ["me", "A couple. Mostly people asking what could go there."], ["them", "Should we drop the price again?"], ["them", "I don't get why nobody sees it."]] },
+  with: { day: "Week two", msgs: [["me", "Here's the rendering. This is what the lot looks like built out."], ["img", ""], ["them", "Wow. First time I've seen it that way."], ["me", "A developer asked for the concept plan. Setting up a call Thursday."], ["them", "Let's not touch the price."]] },
+};
+function showThread(k) {
+  $("#seg-with").setAttribute("aria-pressed", k === "with");
+  $("#seg-without").setAttribute("aria-pressed", k === "without");
+  $("#phone-day").textContent = THREADS[k].day;
+  const t = $("#thread");
+  t.innerHTML = "";
+  THREADS[k].msgs.forEach(([who, text], i) => {
+    const d = document.createElement("div");
+    d.className = "msg " + (who === "img" ? "them img" : who);
+    if (who === "img") d.innerHTML = '<img src="img/voorhees-render.jpg" alt="Rendering sent to the seller">'; else d.textContent = text;
+    d.style.animationDelay = (i * 0.12) + "s";
+    t.appendChild(d);
+  });
+  ui.thread = k;
+}
+$("#seg-with").addEventListener("click", () => showThread("with"));
+$("#seg-without").addEventListener("click", () => showThread("without"));
+showThread("with");
+
+/* case viewers */
+function viewer(root, badgeId) {
+  const tabs = $$("[data-show]", root);
+  const show = (id) => {
+    tabs.forEach((t) => t.setAttribute("aria-selected", t.dataset.show === id));
+    tabs.forEach((t) => { const img = document.getElementById(t.dataset.show); img.hidden = t.dataset.show !== id; });
+    const t = tabs.find((x) => x.dataset.show === id);
+    if (badgeId) $(badgeId).textContent = t.textContent;
+  };
+  tabs.forEach((t) => t.addEventListener("click", () => show(t.dataset.show)));
+  return show;
+}
+const pbShow = viewer($$(".case")[0], "#pb-badge");
+viewer($$(".case")[1], "#vh-badge");
+function imgFailed(img) {
+  img.style.visibility = "hidden";
+  const f = img.closest(".frame");
+  if (!f.querySelector(".missing")) { const m = document.createElement("div"); m.className = "missing"; m.textContent = "Image loads on the live page."; f.prepend(m); }
+}
+$$(".frame img").forEach((img) => {
+  img.addEventListener("error", () => imgFailed(img));
+  if (img.complete && img.naturalWidth === 0 && img.getAttribute("loading") !== "lazy") imgFailed(img);
+});
+(() => {
+  const el = $("#hold-pb"); let prev = "pb-render";
+  const on = (e) => { e.preventDefault(); prev = ($$(".case")[0].querySelector('[aria-selected="true"]') || {}).dataset?.show || "pb-render"; pbShow("pb-aerial"); el.classList.add("on"); };
+  const off = () => { if (el.classList.contains("on")) { pbShow(prev === "pb-aerial" ? "pb-render" : prev); el.classList.remove("on"); } };
+  el.addEventListener("pointerdown", on);
+  ["pointerup", "pointerleave", "pointercancel"].forEach((t) => el.addEventListener(t, off));
+})();
+
+/* reviews (only real ones) */
+if (REVIEWS.length) {
+  const r = $("#reviews");
+  r.innerHTML = REVIEWS.map((v) => `<figure class="review"><span class="stars">${"★".repeat(v.stars || 5)}</span><blockquote style="margin:0">${v.text}</blockquote><figcaption class="small">${v.name}${v.brokerage ? " · " + v.brokerage : ""}</figcaption></figure>`).join("");
+  r.hidden = false;
+}
+
+/* counters: count up once when they come into view */
+if ("IntersectionObserver" in window && !reduce) {
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    io.unobserve(e.target);
+    const el = e.target, end = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now();
+    const tick = (t) => { const p = clamp((t - t0) / 1100); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf; if (p < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }), { threshold: .6 });
+  $$("[data-count]").forEach((el) => io.observe(el));
+}
+
+/* hero address -> claim form */
+$("#hero-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const v = $("#hero-address").value.trim();
+  if (v) $("#f-address").value = v;
+  $("#claim").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  setTimeout(() => $("#f-name").focus({ preventScroll: true }), reduce ? 0 : 700);
+});
+
+/* claim form */
+const params = new URLSearchParams(location.search);
+if (params.get("address")) { $("#f-address").value = params.get("address"); $("#hero-address").value = params.get("address"); }
+$("#claim-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = e.target, err = $("#form-err");
+  const need = ["#f-name", "#f-email", "#f-address"].map((s) => $(s));
+  need.forEach((i) => i.setAttribute("aria-invalid", !i.value.trim()));
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#f-email").value.trim());
+  if (need.some((i) => !i.value.trim())) { err.textContent = "Add your name, email and the listing address."; need.find((i) => !i.value.trim()).focus(); return; }
+  if (!emailOk) { $("#f-email").setAttribute("aria-invalid", "true"); err.textContent = "That email address doesn't look right."; $("#f-email").focus(); return; }
+  err.textContent = "";
+  const btn = $("#f-submit"); btn.disabled = true; btn.textContent = "Sending…";
+  const body = Object.fromEntries(new FormData(f).entries());
+  ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach((k) => { if (params.get(k)) body[k] = params.get(k); });
+  body.page = location.href.split("#")[0];
+  try {
+    const r = await fetch(INTAKE_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || "Something went wrong.");
+    const first = body.name.trim().split(/\s+/)[0];
+    $("#done-h").textContent = "You're in, " + first + ".";
+    $("#done-addr").textContent = body.address;
+    $("#done-pay").href = PAYMENT_URL + "?" + new URLSearchParams({ name: body.name, email: body.email, phone: body.phone || "", address: body.address });
+    $("#form-fields").hidden = true; $("#form-done").hidden = false;
+    try { (window.dataLayer = window.dataLayer || []).push({ event: "free_plan_request" }); } catch (_) {}
+    try { window.fbq && window.fbq("track", "Lead"); } catch (_) {}
+  } catch (x) {
+    err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "I couldn't send that just now. Email support@formadesigns.io with the address and I'll start it.";
+    btn.disabled = false; btn.innerHTML = "Send me my free plan <span>→</span>";
+  }
+});
+
+/* mobile CTA bar */
+const mbar = $("#mbar");
+function updateBar() {
+  const past = scrollY > innerHeight * 0.7;
+  const r = $("#claim").getBoundingClientRect();
+  const atForm = r.top < innerHeight * 0.9 && r.bottom > 0;
+  mbar.classList.toggle("show", past && !atForm);
+}
+
+/* ---------------------------------------------------------------- 3D scene */
+let scene = null;
+try { if (window.THREE) scene = makeScene($("#stage")); } catch (e) { console.warn(e); scene = null; }
+if (!scene) { $("#stage").remove(); const fb = document.createElement("div"); fb.className = "stage-fallback"; document.body.prepend(fb); $("#draghint").remove(); }
+
+function makeScene(canvas) {
+  const T = THREE;
+  const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+  if (!gl) return null;
+  const renderer = new T.WebGLRenderer({ canvas, context: gl, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, isMobile() ? 1.5 : 2));
+  renderer.shadowMap.enabled = !isMobile();
+  renderer.shadowMap.type = T.PCFSoftShadowMap;
+
+  const INK = new T.Color("#0E0E0E"), FOGPAIN = new T.Color("#2a2926");
+  const s = new T.Scene();
+  s.background = INK.clone();
+  s.fog = new T.Fog(INK.clone(), 140, 360);
+  const cam = new T.PerspectiveCamera(38, 1, 0.5, 900);
+
+  const hemi = new T.HemisphereLight(0xdfe6ee, 0x1a1712, 0.75); s.add(hemi);
+  const sun = new T.DirectionalLight(0xffffff, 1.0); sun.position.set(40, 70, 30); s.add(sun);
+  sun.castShadow = renderer.shadowMap.enabled;
+  Object.assign(sun.shadow.camera, { left: -45, right: 45, top: 45, bottom: -45, near: 10, far: 200 });
+  sun.shadow.mapSize.set(1024, 1024); sun.shadow.bias = -0.0008;
+
+  const GOLD = 0xB8924F;
+  const mat = (c, o = {}) => new T.MeshStandardMaterial(Object.assign({ color: c, roughness: .95, metalness: 0 }, o));
+  const flat = (w, d, m, y = 0) => { const g = new T.PlaneGeometry(w, d); g.rotateX(-Math.PI / 2); const me = new T.Mesh(g, m); me.position.y = y; return me; };
+
+  // ground + grid
+  const ground = flat(600, 600, mat(0x121211)); ground.receiveShadow = true; s.add(ground);
+  const grid = new T.GridHelper(400, 80, GOLD, GOLD); grid.material.transparent = true; grid.material.opacity = .06; grid.position.y = .01; s.add(grid);
+
+  // road (Elm St) + moving cars
+  const road = flat(600, 7, mat(0x1c1c1b), .02); road.position.z = 31; s.add(road);
+  for (let x = -290; x < 290; x += 6) { const d = flat(3, .25, mat(0x6d6a63), .03); d.position.set(x, .03, 31); s.add(d); }
+  const cars = [];
+  for (let i = 0; i < 6; i++) {
+    const c = new T.Mesh(new T.BoxGeometry(1.8, .9, .9), mat([0xd8d4cb, 0x7b2e25, 0x2f3b4a, 0x9a9a9a][i % 4], { roughness: .4 }));
+    const lane = i % 2; c.position.set(-80 + i * 32, .55, lane ? 32.6 : 29.4); c.userData.v = (lane ? -1 : 1) * (5 + (i % 3) * 1.5);
+    c.castShadow = true; s.add(c); cars.push(c);
+  }
+
+  // parcel (world units are ~10 ft)
+  const P = [[-24, -23], [25, -25], [24, 24], [-23, 24]];
+  const Q = [[-22.5, -21.5], [23.5, -23.5], [22.5, 21], [-21.5, 21]];
+  const shapeOf = (pts) => { const sh = new T.Shape(); pts.forEach(([x, z], i) => i ? sh.lineTo(x, -z) : sh.moveTo(x, -z)); sh.closePath(); return sh; };
+  const parcelGeo = new T.ShapeGeometry(shapeOf(P)); parcelGeo.rotateX(-Math.PI / 2);
+  const lotMat = mat(0x2d3a25);
+  const lot = new T.Mesh(parcelGeo, lotMat); lot.position.y = .04; lot.receiveShadow = true; s.add(lot);
+
+  // contour lines (LiDAR)
+  const contours = new T.Group(); s.add(contours);
+  const cMat = new T.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0 });
+  for (let i = 0; i < 11; i++) {
+    const pts = []; const z0 = -21 + i * 4.2;
+    for (let x = -22; x <= 23; x += 1) pts.push(new T.Vector3(x, .09, z0 + Math.sin(x / 7 + i * .8) * 1.4 + Math.cos(x / 3.2 + i) * .35));
+    contours.add(new T.Line(new T.BufferGeometry().setFromPoints(pts), cMat));
+  }
+
+  // boundary + setback lines (drawn progressively)
+  const resample = (pts, n) => { const out = []; const loop = [...pts, pts[0]]; for (let i = 0; i < loop.length - 1; i++) { const [a, b] = [loop[i], loop[i + 1]]; for (let k = 0; k < n; k++) { const t = k / n; out.push(new T.Vector3(lerp(a[0], b[0], t), .12, lerp(a[1], b[1], t))); } } out.push(new T.Vector3(loop[0][0], .12, loop[0][1])); return out; };
+  const bGeo = new T.BufferGeometry().setFromPoints(resample(P, 60));
+  const boundary = new T.Line(bGeo, new T.LineBasicMaterial({ color: GOLD })); s.add(boundary);
+  const sGeo = new T.BufferGeometry().setFromPoints(resample(Q, 60));
+  const setback = new T.Line(sGeo, new T.LineDashedMaterial({ color: 0xF2EFE8, dashSize: .9, gapSize: .6, transparent: true, opacity: .7 })); setback.computeLineDistances(); s.add(setback);
+  const bCount = bGeo.attributes.position.count, sCount = sGeo.attributes.position.count;
+
+  // buildable tint
+  const tintGeo = new T.ShapeGeometry(shapeOf(Q)); tintGeo.rotateX(-Math.PI / 2);
+  const tintMat = new T.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0, depthWrite: false });
+  const tint = new T.Mesh(tintGeo, tintMat); tint.position.y = .1; s.add(tint);
+
+  // layout: drive, parking, pond
+  const layout = new T.Group(); s.add(layout);
+  const asphalt = mat(0x232322, { roughness: .9 });
+  const drive = flat(3, 18, asphalt, .13); drive.position.set(3, .13, 22); layout.add(drive);
+  const loop = flat(36, 3, asphalt, .13); loop.position.set(0, .13, -6.5); layout.add(loop);
+  const pcv = document.createElement("canvas"); pcv.width = 1024; pcv.height = 512; const pc = pcv.getContext("2d");
+  pc.fillStyle = "#232322"; pc.fillRect(0, 0, 1024, 512); pc.strokeStyle = "#d9d5cc"; pc.lineWidth = 3;
+  [[20, 120], [140, 240], [272, 372], [392, 492]].forEach(([a, b]) => { for (let x = 16; x < 1010; x += 28) { pc.beginPath(); pc.moveTo(x, a); pc.lineTo(x, b); pc.stroke(); } pc.beginPath(); pc.moveTo(16, a); pc.lineTo(1008, a); pc.stroke(); });
+  const parkTex = new T.CanvasTexture(pcv); parkTex.anisotropy = 4;
+  const parking = flat(32, 16, mat(0xffffff, { map: parkTex, roughness: .9 }), .14); parking.position.set(0, .14, 3); layout.add(parking);
+  const pond = new T.Mesh(new T.CircleGeometry(3.4, 40), mat(0x4f6f7c, { roughness: .2, metalness: .1 })); pond.rotation.x = -Math.PI / 2; pond.position.set(-18.5, .15, 2); layout.add(pond);
+  layout.children.forEach((m) => { m.material = m.material.clone(); m.material.transparent = true; m.material.opacity = 0; m.receiveShadow = true; });
+
+  // buildings (Building A 240x100 ft, B 71x70, C 100x60)
+  const bldgs = [];
+  const bMat = mat(0x2b2721, { roughness: .8 }), roofMat = mat(0x8c8a84, { roughness: .6, metalness: .2 });
+  [[0, -15, 24, 10, 2.4], [15, 14.5, 7.1, 7, 2.1], [-12, 14.5, 10, 6, 2.1]].forEach(([x, z, w, d, h]) => {
+    const g = new T.Group(); g.position.set(x, .15, z);
+    const geo = new T.BoxGeometry(w, h, d); geo.translate(0, h / 2, 0);
+    const body = new T.Mesh(geo, bMat); body.castShadow = true; body.receiveShadow = true; g.add(body);
+    const roof = new T.Mesh(new T.BoxGeometry(w + .2, .18, d + .2), roofMat); roof.position.y = h + .09; g.add(roof);
+    const edges = new T.LineSegments(new T.EdgesGeometry(geo), new T.LineBasicMaterial({ color: GOLD })); g.add(edges);
+    const glass = new T.Mesh(new T.PlaneGeometry(w * .8, h * .45), mat(0x9fb6c0, { roughness: .1, metalness: .3, emissive: 0x2a2416 }));
+    glass.position.set(0, h * .42, d / 2 + .01); g.add(glass);
+    g.scale.y = .001; s.add(g); bldgs.push(g);
+  });
+
+  // trees
+  const treePts = [];
+  const ring = resample([[-21, -20], [22, -22], [21, 19.5], [-20, 19.5]], 7);
+  ring.forEach((p, i) => { if (i % 2 === 0 && !(Math.abs(p.x - 3) < 3 && p.z > 15)) treePts.push([p.x, p.z]); });
+  [[-6, 11], [6, 11], [-12, -4], [12, -4], [-17, 9]].forEach((p) => treePts.push(p));
+  const crown = new T.InstancedMesh(new T.ConeGeometry(1.1, 2.8, 7), mat(0x3f5a34), treePts.length);
+  const trunk = new T.InstancedMesh(new T.CylinderGeometry(.14, .18, 1, 5), mat(0x4a3b2c), treePts.length);
+  crown.castShadow = true; s.add(crown); s.add(trunk);
+  const dummy = new T.Object3D();
+  function setTrees(k) {
+    treePts.forEach(([x, z], i) => {
+      const sc = Math.max(.001, k * (.8 + ((i * 37) % 10) / 25));
+      dummy.position.set(x, .15 + sc * 1, z); dummy.scale.set(sc, sc, sc); dummy.rotation.set(0, i, 0); dummy.updateMatrix(); trunk.setMatrixAt(i, dummy.matrix);
+      dummy.position.set(x, .15 + sc * 2.4, z); dummy.updateMatrix(); crown.setMatrixAt(i, dummy.matrix);
+    });
+    crown.instanceMatrix.needsUpdate = trunk.instanceMatrix.needsUpdate = true;
+  }
+
+  // grass
+  const inPoly = (x, z, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, zi] = poly[i], [xj, zj] = poly[j]; if (((zi > z) !== (zj > z)) && (x < (xj - xi) * (z - zi) / (zj - zi) + xi)) c = !c; } return c; };
+  const GN = isMobile() ? 900 : 1700;
+  const bladeGeo = new T.ConeGeometry(.16, 1, 3); bladeGeo.translate(0, .5, 0);
+  const grassMat = mat(0x6d8a4a, { roughness: 1 });
+  const grass = new T.InstancedMesh(bladeGeo, grassMat, GN); s.add(grass);
+  const blades = [];
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  while (blades.length < GN) { const x = -24 + rnd() * 49, z = -25 + rnd() * 49; if (!inPoly(x, z, P)) continue; blades.push({ x, z, r: rnd() * 6.28, k: .6 + rnd() * .8, dev: (x > -22 && x < 22 && z > -21 && z < 19) }); }
+  const col = new T.Color();
+  blades.forEach((b, i) => { col.setHSL(.24 + rnd() * .05, .35, .32 + rnd() * .14); grass.setColorAt(i, col); });
+  grass.instanceColor.needsUpdate = true;
+  let gKey = "";
+  function setGrass(h, clear) {
+    const key = h.toFixed(2) + "|" + clear.toFixed(2); if (key === gKey) return; gKey = key;
+    blades.forEach((b, i) => {
+      const k = b.dev ? h * (1 - clear) : h;
+      const sy = Math.max(.001, k * b.k); dummy.position.set(b.x, .04, b.z); dummy.rotation.set((b.k - 1) * .5, b.r, 0); dummy.scale.set(1, sy, 1); dummy.updateMatrix(); grass.setMatrixAt(i, dummy.matrix);
+    });
+    grass.instanceMatrix.needsUpdate = true;
+  }
+
+  // canvas sprites + sign
+  const tex = (w, h, draw) => { const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d"); draw(g, w, h); const t = new T.CanvasTexture(c); t.anisotropy = 4; return t; };
+  const font = (wt, px, fam) => `${wt} ${px}px ${fam === "mono" ? '"IBM Plex Mono", ui-monospace, monospace' : '"Archivo", "Helvetica Neue", Arial, sans-serif'}`;
+  function labelTex(text, sub) {
+    return tex(1024, 256, (g, w, h) => {
+      g.fillStyle = "rgba(14,14,14,.86)"; g.fillRect(0, 40, w, 176); g.strokeStyle = "#B8924F"; g.lineWidth = 4; g.strokeRect(2, 42, w - 4, 172);
+      g.fillStyle = "#DCBB7A"; g.font = font(800, 76); g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(text, w / 2, sub ? 112 : 128);
+      if (sub) { g.fillStyle = "#A7A296"; g.font = font(500, 34, "mono"); g.fillText(sub, w / 2, 178); }
+    });
+  }
+  const labels = [];
+  const addLabel = (text, sub, pos, sc, stageAt) => { const m = new T.SpriteMaterial({ map: labelTex(text, sub), transparent: true, opacity: 0, depthTest: false }); const sp = new T.Sprite(m); sp.position.set(...pos); sp.scale.set(sc * 4, sc, 1); sp.renderOrder = 10; s.add(sp); labels.push({ sp, text, sub, at: stageAt }); };
+  addLabel("5.58 AC", "PARCEL · LIDAR TOPO", [0, 6, -2], 3.2, 0.25);
+  addLabel("30 FT SETBACK", "FRONT · 15 FT SIDES + REAR", [12, 4.5, 21], 2.6, 1.3);
+  addLabel("170 STALLS", "6 ACCESSIBLE", [0, 4.5, 3], 2.6, 3.2);
+  addLabel("35,000 SF", "RETAIL + DINING · 3 BUILDINGS", [0, 8, -15], 3, 4.3);
+
+  const sign = new T.Group(); sign.position.set(10, 0, 26.2); s.add(sign);
+  const post = new T.Mesh(new T.BoxGeometry(.18, 4.4, .18), mat(0xd9d5cc)); post.position.y = 2.2; post.castShadow = true; sign.add(post);
+  const arm = new T.Mesh(new T.BoxGeometry(3.6, .14, .14), mat(0xd9d5cc)); arm.position.set(1.7, 4.3, 0); sign.add(arm);
+  const boardTex = tex(512, 320, (g, w, h) => { g.fillStyle = "#F2EFE8"; g.fillRect(0, 0, w, h); g.fillStyle = "#0E0E0E"; g.fillRect(0, 0, w, 18); g.fillRect(0, h - 18, w, 18); g.textAlign = "center"; g.textBaseline = "middle"; g.font = font(900, 96); g.fillText("FOR SALE", w / 2, 118); g.fillStyle = "#B8924F"; g.font = font(800, 54); g.fillText("LAND · 5.58 AC", w / 2, 210); g.fillStyle = "#555"; g.font = font(500, 26, "mono"); g.fillText("COMMERCIAL ZONED", w / 2, 268); });
+  const board = new T.Mesh(new T.PlaneGeometry(3.2, 2), new T.MeshStandardMaterial({ map: boardTex, side: T.DoubleSide, roughness: .7 })); board.position.set(1.8, 3.1, .02); sign.add(board);
+  const riderTex = (txt, bg) => tex(512, 112, (g, w, h) => { g.fillStyle = bg; g.fillRect(0, 0, w, h); g.fillStyle = bg === "#B8924F" ? "#0E0E0E" : "#fff"; let px = 66; do { g.font = font(900, px); px -= 2; } while (g.measureText(txt).width > w - 40 && px > 20); g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(txt, w / 2, h / 2 + 3); });
+  const rReduced = riderTex("PRICE REDUCED", "#C2552F"), rSold = riderTex("UNDER CONTRACT", "#B8924F");
+  const rider = new T.Mesh(new T.PlaneGeometry(3.2, .7), new T.MeshStandardMaterial({ map: rReduced, side: T.DoubleSide, roughness: .7 })); rider.position.set(1.8, 1.6, .02); rider.visible = false; sign.add(rider);
+
+  // question marks
+  const qTex = tex(256, 256, (g, w, h) => { g.fillStyle = "rgba(14,14,14,.9)"; g.beginPath(); g.arc(128, 128, 112, 0, 7); g.fill(); g.strokeStyle = "#D2774F"; g.lineWidth = 8; g.stroke(); g.fillStyle = "#F2EFE8"; g.font = font(900, 150); g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("?", 128, 138); });
+  const QPOS = [[-12, 7, -10], [8, 9, -14], [16, 6.5, 2], [-4, 10, 4], [-17, 8, 10], [4, 7, 14], [14, 11, -4], [-8, 6, -2]];
+  const qs = QPOS.map((p, i) => { const sp = new T.Sprite(new T.SpriteMaterial({ map: qTex, transparent: true, opacity: 0, depthTest: false })); sp.position.set(...p); sp.scale.set(.001, .001, 1); sp.userData = { base: p[1], ph: i * .9, k: 0 }; sp.renderOrder = 11; s.add(sp); return sp; });
+  let qCount = 0;
+
+  /* keyframes */
+  const kf = [
+    { id: "hero", anchor: 0.5, cam: [64, 44, 74], look: [2, 0, 0], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .15, q: 0 },
+    { id: "sits", cam: [22, 6.5, 48], look: [6, 2.4, 14], build: 0, grass: () => .45 + ui.days / 360 * 1.35, decay: () => ui.days / 360, fog: () => .2 + ui.days / 360 * .8, sold: 0, warm: 0, q: 0 },
+    { id: "questions", cam: [-30, 58, 58], look: [0, 3, 0], build: 0, grass: () => .45 + ui.days / 360 * 1.1, decay: () => ui.days / 360 * .8, fog: () => .25 + ui.days / 360 * .5, sold: 0, warm: 0, q: 1 },
+    { id: "build", cam: [2, 96, 10], look: [0, 0, 0], build: .25, grass: .4, decay: 0, fog: 0, sold: 0, warm: 0, q: 0 },
+    { id: "build-end", el: "#build-end", anchor: 0.75, cam: [-58, 40, 56], look: [0, 3, 0], build: 6, grass: .4, decay: 0, fog: 0, sold: 0, warm: .35, q: 0 },
+    { id: "after", cam: [34, 12, 58], look: [2, 3.5, 6], build: 6, grass: .4, decay: 0, fog: 0, sold: 1, warm: 1, q: 0 },
+    { id: "claim", anchor: 0.2, cam: [52, 40, 66], look: [0, 2, 0], build: 6, grass: .4, decay: 0, fog: 0, sold: 1, warm: .6, q: 0, orbit: 1 },
+  ];
+  const val = (v) => (typeof v === "function" ? v() : v);
+  let anchors = [];
+  function measure() {
+    anchors = kf.map((k) => { const el = k.el ? $(k.el) : document.getElementById(k.id); const top = el.getBoundingClientRect().top + scrollY; return top + innerHeight * (k.anchor ?? 0.3) - innerHeight * 0.5; });
+  }
+
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false); cam.aspect = w / h;
+    if (isMobile()) cam.setViewOffset(w, h, 0, h * 0.2, w, h); else cam.setViewOffset(w, h, -w * 0.21, 0, w, h);
+    cam.updateProjectionMatrix(); measure();
+  }
+  addEventListener("resize", resize); resize();
+  addEventListener("load", measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+
+  /* drag to look around (mouse) */
+  let drag = null;
+  canvas.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; drag = { x: e.clientX, y: e.clientY, az: ui.dragAz, el: ui.dragEl }; canvas.classList.add("dragging"); canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener("pointermove", (e) => { if (!drag) return; ui.dragAz = clamp(drag.az - (e.clientX - drag.x) / 260, -1.4, 1.4); ui.dragEl = clamp(drag.el + (e.clientY - drag.y) / 400, -.35, .5); });
+  const endDrag = () => { drag = null; canvas.classList.remove("dragging"); };
+  canvas.addEventListener("pointerup", endDrag); canvas.addEventListener("pointercancel", endDrag);
+
+  const st = { build: 0, sold: 0 };
+  const tmp = { cam: new T.Vector3(), look: new T.Vector3() };
+  const sunWarm = new T.Color("#ffc48a"), sunCool = new T.Color("#ffffff"), skyWarm = new T.Color("#ffe2bf"), skyCool = new T.Color("#dfe6ee");
+  let last = performance.now(), orbitT = 0, curId = "hero";
+
+  function pose() {
+    const y = scrollY;
+    let i = 0; while (i < anchors.length - 1 && y >= anchors[i + 1]) i++;
+    const a = kf[i], b = kf[Math.min(i + 1, kf.length - 1)];
+    const span = (anchors[i + 1] ?? anchors[i] + 1) - anchors[i];
+    const t = i >= anchors.length - 1 ? 0 : smooth(clamp((y - anchors[i]) / span));
+    curId = t < .5 ? a.id : b.id;
+    const mix = (k) => lerp(val(a[k]), val(b[k]), t);
+    tmp.cam.set(lerp(a.cam[0], b.cam[0], t), lerp(a.cam[1], b.cam[1], t), lerp(a.cam[2], b.cam[2], t));
+    tmp.look.set(lerp(a.look[0], b.look[0], t), lerp(a.look[1], b.look[1], t), lerp(a.look[2], b.look[2], t));
+    return { build: mix("build"), grass: mix("grass"), decay: mix("decay"), fog: mix("fog"), sold: mix("sold"), warm: mix("warm"), q: mix("q"), orbit: lerp(a.orbit || 0, b.orbit || 0, t) };
+  }
+
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    const p = pose();
+
+    ui.holdBuild += (ui.holdBuildT - ui.holdBuild) * Math.min(1, dt * 2.2);
+    ui.holdEmpty += (ui.holdEmptyT - ui.holdEmpty) * Math.min(1, dt * 2.6);
+    let build = lerp(p.build, 6, ui.holdBuild);
+    build = lerp(build, 0, ui.holdEmpty);
+    st.build += (build - st.build) * Math.min(1, dt * 6);
+    const B = st.build, stage = (a, w = 1) => clamp((B - a) / w);
+    const decay = p.decay * (1 - stage(1.5, 2)), sold = p.sold * stage(5);
+
+    // camera with drag + idle drift + orbit
+    if (!drag) { ui.dragAz *= Math.pow(.25, dt); ui.dragEl *= Math.pow(.25, dt); }
+    if (!reduce) orbitT += dt * (p.orbit ? .08 : .02);
+    const drift = reduce ? 0 : Math.sin(orbitT) * .06 + p.orbit * orbitT;
+    const off = tmp.cam.clone().sub(tmp.look); const r = off.length();
+    let az = Math.atan2(off.x, off.z) + ui.dragAz + drift, el = Math.asin(clamp(off.y / r, -1, 1)) + ui.dragEl;
+    el = clamp(el, .06, 1.48);
+    cam.position.set(tmp.look.x + r * Math.cos(el) * Math.sin(az), tmp.look.y + r * Math.sin(el), tmp.look.z + r * Math.cos(el) * Math.cos(az));
+    cam.lookAt(tmp.look);
+
+    // atmosphere
+    const fog = p.fog * (1 - stage(1.5, 2));
+    s.fog.color.copy(INK).lerp(FOGPAIN, fog); s.background.copy(s.fog.color);
+    s.fog.near = lerp(140, 30, fog); s.fog.far = lerp(360, 150, fog);
+    sun.color.copy(sunCool).lerp(sunWarm, p.warm); hemi.color.copy(skyCool).lerp(skyWarm, p.warm * .6);
+    sun.intensity = lerp(1.0, 1.25, p.warm) * (1 - fog * .35); hemi.intensity = .75 - fog * .2;
+
+    // lot surface + grass
+    lotMat.color.setHex(0x2d3a25).lerp(new T.Color(0x4a4130), decay);
+    grassMat.color.setHex(0x6d8a4a).lerp(new T.Color(0xb9a46a), decay);
+    setGrass(p.grass, stage(3, .9));
+
+    // plan layers
+    cMat.opacity = .55 * stage(0, .8);
+    bGeo.setDrawRange(0, Math.floor(bCount * stage(.6, .8)));
+    sGeo.setDrawRange(0, Math.floor(sCount * stage(1.2, .8)));
+    tintMat.opacity = .14 * stage(2, .8) * (1 - stage(3.5, 1) * .6);
+    layout.children.forEach((m) => { m.material.opacity = stage(3, .8); m.visible = m.material.opacity > .01; });
+    bldgs.forEach((g, i) => { const k = smooth(stage(4 + i * .25, .8)); g.scale.y = Math.max(.001, k); g.visible = k > .005; });
+    setTrees(smooth(stage(4.6, 1)));
+    labels.forEach((l) => { const k = stage(l.at, .5) * (1 - stage(l.at + 1.6, .5)) * (B < 5.6 ? 1 : 0); l.sp.material.opacity = k; l.sp.visible = k > .01; });
+
+    // sign
+    sign.rotation.z = decay > .45 ? -(decay - .45) * .22 : 0;
+    rider.visible = sold > .5 || decay > .32;
+    rider.material.map = sold > .5 ? rSold : rReduced;
+
+    // questions
+    qs.forEach((sp, i) => {
+      const want = (i < qCount ? 1 : 0) * p.q * (1 - stage(.5, 1));
+      sp.userData.k += (want - sp.userData.k) * Math.min(1, dt * 5);
+      const k = sp.userData.k, bob = reduce ? 0 : Math.sin(now / 700 + sp.userData.ph) * .5;
+      sp.scale.set(2.6 * k + .001, 2.6 * k + .001, 1); sp.material.opacity = k; sp.position.y = sp.userData.base + bob; sp.visible = k > .01;
+    });
+
+    // cars
+    if (!reduce) cars.forEach((c) => { c.position.x += c.userData.v * dt; if (c.position.x > 110) c.position.x = -110; if (c.position.x < -110) c.position.x = 110; });
+
+    renderer.render(s, cam);
+    updateUI(B);
+    if (!document.hidden) requestAnimationFrame(frame);
+  }
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) { last = performance.now(); requestAnimationFrame(frame); } });
+  requestAnimationFrame(frame);
+
+  return {
+    setQuestions(n) { qCount = n; },
+    stageScrollY(stageIdx) { const a = anchors[3], b = anchors[4]; const target = stageIdx + .7; return a + (b - a) * clamp((target - .25) / (6 - .25)); },
+  };
+}
+
+/* build steps <-> scroll */
+const stepEls = $$("#steps li");
+let lastStage = -1;
+function updateUI(B) {
+  const cur = Math.min(5, Math.floor(B));
+  if (cur !== lastStage) {
+    stepEls.forEach((li, i) => { li.classList.toggle("done", i < cur || B >= 5.9); li.classList.toggle("cur", i === cur && B > .2 && B < 5.95); });
+    lastStage = cur;
+  }
+  const bar = $("#buildbar"); if (bar) bar.style.width = clamp(B / 6) * 100 + "%";
+}
+$$("#steps button").forEach((b) => b.addEventListener("click", () => {
+  if (!scene) return;
+  scrollTo({ top: scene.stageScrollY(+b.dataset.stage), behavior: reduce ? "auto" : "smooth" });
+}));
+if (!scene) { stepEls.forEach((li) => li.classList.add("done")); }
+
+addEventListener("scroll", updateBar, { passive: true });
+updateBar();
+})();
+</script>
