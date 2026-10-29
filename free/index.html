@@ -76,6 +76,15 @@ p{margin:0}
 .freepill b{background:var(--gold); color:var(--ink); padding:4px 8px; font-weight:500; letter-spacing:.16em; flex-shrink:0}
 .freepill span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .topbar .btn{min-height:40px; padding:0 16px; font-size:11px}
+.topbar-ctas{display:flex; align-items:center; gap:18px; flex-shrink:0}
+.buylink{font:500 11px var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--gold-hi); text-decoration:none; border-bottom:1px solid var(--gold-soft); padding-block:6px; white-space:nowrap}
+.buylink:hover{color:var(--paper); border-color:var(--paper)}
+.skip{font-size:14px; color:var(--paper-dim); margin-top:-6px}
+.skip a{color:var(--gold-hi); text-underline-offset:3px}
+.skip a:hover{color:var(--paper)}
+.buyrow{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px}
+.btn-wrap{white-space:normal; text-align:center; line-height:1.3; padding-block:10px}
+.buyrow .btn{white-space:normal; text-align:center}
 
 /* 3D stage */
 #stage{position:fixed; inset:0; z-index:0; width:100%; height:100%; display:block; cursor:grab; touch-action:pan-y}
@@ -333,6 +342,7 @@ p{margin:0}
   .steps li.cur small{max-height:120px}
   .panel{max-width:none}
   .freepill span{display:none}
+  .buylink{display:none}
   .hud{display:none}
   .claim .wrap{min-height:auto; padding-block:38vh 72px}
   .faq{grid-template-columns:1fr}
@@ -363,7 +373,7 @@ p{margin:0}
   <div class="wrap">
     <a class="brand" href="https://formadesigns.io" target="_top" aria-label="Forma Designs home"><i>F</i><b>FORMA</b></a>
     <p class="freepill"><b>Free</b><span>Layout plan + concept plan + 3D rendering of your land listing</span></p>
-    <a class="btn" href="#claim" data-cta="top">Get my free plan</a>
+    <div class="topbar-ctas"><a class="buylink" href="https://formadesigns.io/payment" target="_top" data-buy>Buy now · $949</a><a class="btn" href="#claim" data-cta="top">Get my free plan</a></div>
   </div>
 </header>
 
@@ -396,6 +406,7 @@ p{margin:0}
           <input id="hero-address" type="text" autocomplete="street-address" placeholder="Paste your listing address">
           <button class="btn btn-lg" type="submit">Start my free plan <span>→</span></button>
         </form>
+        <p class="skip">Already sold on it? <a href="https://formadesigns.io/payment" target="_top" data-buy>Skip the free plan and order the full package →</a></p>
 
         <div class="trust"><span class="stars-inline">★★★★★ 5-star reviews</span><span>55 land listings served</span><span>50 sold or under contract in 6 months</span><span>Free plan same day</span></div>
 
@@ -528,6 +539,10 @@ p{margin:0}
       </table>
     </div>
     <p class="small" style="margin-top:14px">Want more than the free plan? The full package adds the due diligence report: zoning, permitting roadmap and a pro forma. $949, delivered within 7 days and charged only when it's delivered.</p>
+    <div class="buyrow">
+      <a class="btn" href="#claim">Get my free plan <span>→</span></a>
+      <a class="btn btn-ghost" href="https://formadesigns.io/payment" target="_top" data-buy>Order the full package · $949 <span>→</span></a>
+    </div>
   </div>
 </section>
 
@@ -650,6 +665,7 @@ p{margin:0}
           <div class="field"><label for="f-link">Listing link (optional)</label><input id="f-link" name="listing_url" type="url" inputmode="url" placeholder="LoopNet, Zillow, Crexi or MLS link" autocapitalize="off" spellcheck="false"></div>
           <input class="hp" id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="btn btn-lg" type="submit" id="f-submit">Send me my free plan <span>→</span></button>
+          <a class="btn btn-ghost btn-lg btn-wrap" href="https://formadesigns.io/payment" target="_top" data-buy>Or order the full package · $949 <span>→</span></a>
           <p class="form-err" id="form-err" role="alert"></p>
           <p class="small">I'll only use your details to send your plan and follow up about this listing.</p>
         </div>
@@ -906,6 +922,19 @@ $("#claim-form").addEventListener("submit", async (e) => {
     btn.disabled = false; btn.innerHTML = "Send me my free plan <span>→</span>";
   }
 });
+
+/* buy-now links carry whatever they've typed into the payment page */
+$$("[data-buy]").forEach((a) => a.addEventListener("click", () => {
+  const q = new URLSearchParams();
+  const addr = ($("#f-address").value || $("#hero-address").value).trim();
+  if ($("#f-name").value.trim()) q.set("name", $("#f-name").value.trim());
+  if ($("#f-email").value.trim()) q.set("email", $("#f-email").value.trim());
+  if ($("#f-phone").value.trim()) q.set("phone", $("#f-phone").value.trim());
+  if (addr) q.set("address", addr);
+  const qs = q.toString();
+  a.href = "https://formadesigns.io/payment" + (qs ? "?" + qs : "") + "#order";
+  try { (window.dataLayer = window.dataLayer || []).push({ event: "buy_click" }); } catch (_) {}
+}));
 
 /* mobile CTA bar */
 const mbar = $("#mbar");
