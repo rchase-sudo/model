@@ -52,6 +52,21 @@ def build(cfg_path):
         f'<div><strong class="{"g" if n.get("gold") else ""}">{esc(n["value"])}</strong><span>{emph(n["label"]).replace("&lt;b&gt;", "<b>").replace("&lt;/b&gt;", "</b>")}</span></div>'
         for n in c["numbers"]
     )
+    rows = ""
+    r = c.get("rlv")
+    if r:
+        value, steps = r["value"], [("Hard costs", r["hard"]), ("Soft costs + financing", r["soft"]), ("Developer profit", r["profit"])]
+        residual = value - sum(v for _, v in steps)
+        money = lambda n: ("−" if n < 0 else "") + "$" + f"{abs(round(n)):,}"
+        pct = lambda n: max(0.0, n / value * 100)
+        rows += f'<div class="wf-row"><span>Completed project value</span><i class="bar up" style="--w:100%"></i><b>{money(value)}</b></div>'
+        left = value
+        for label, v in steps:
+            left -= v
+            rows += f'<div class="wf-row"><span>{label}</span><i class="bar dn" style="--w:{pct(v):.1f}%; --o:{pct(left):.1f}%"></i><b>{money(-v)}</b></div>'
+        rows += f'<div class="wf-row total"><span>Residual land value</span><i class="bar rl" style="--w:{pct(residual):.1f}%"></i><b>{money(residual)}</b></div>'
+        if r.get("asking"):
+            rows += f'<div class="wf-row"><span>Asking price</span><i class="bar" style="--w:{pct(r["asking"]):.1f}%"></i><b>{money(r["asking"])}</b></div>'
     vals = {
         "title": esc(c["title"]),
         "address_short": esc(c["address_short"]),
@@ -65,6 +80,8 @@ def build(cfg_path):
         "plan_heading_html": emph(c["plan_heading"]),
         "plan_text": esc(c["plan_text"]),
         "payment_url": esc(payment_url),
+        "rlv_rows_html": rows,
+        "rlv_footnote": esc(c.get("rlv", {}).get("note", "Preliminary estimate. The full package shows every input behind it.")),
         "og_image": esc(PAGES + slug + "/img/render.jpg"),
         "render_w": str(rw), "render_h": str(rh), "plan_w": str(pw), "plan_h": str(ph),
     }

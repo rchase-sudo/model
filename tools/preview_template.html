@@ -92,12 +92,10 @@ p{margin:0}
 .wf-row b{font:500 13px var(--f-mono); text-align:right; color:var(--paper)}
 .wf-row.total{border-top:1px solid var(--line); padding-top:12px; color:var(--paper); font-weight:600}
 .wf-row.total b{color:var(--gold-hi)}
-.blur{filter:blur(5px); user-select:none; -webkit-user-select:none}
 .rlv-eq{font:500 12px/1.6 var(--f-mono); color:var(--paper-dim); letter-spacing:.04em}
 .rlv-eq span{color:var(--paper)}
 .rlv-eq strong{color:var(--gold-hi); font-weight:500}
 .rlv-lock{display:flex; align-items:center; gap:8px; font:500 10px var(--f-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--gold)}
-.rlv-lock::before{content:""; width:10px; height:8px; border:1.5px solid var(--gold); border-top-width:3px; border-radius:1px}
 .cta{margin-block:clamp(48px,7vw,80px); border:1px solid var(--gold-soft); background:var(--ink-2); display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:0}
 .cta-l{padding:clamp(22px,3.4vw,36px); display:flex; flex-direction:column; gap:16px}
 .cta-l ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px}
@@ -175,16 +173,10 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
         <p class="lede">Before a developer makes an offer, they run the residual land value: what the finished project is worth, minus the cost to build it and the profit they need. Whatever is left is the most they can pay for the land. When that number is positive and near the asking price, the listing pencils out and buyers move.</p>
         <p class="rlv-note">Every full package includes this analysis for your listing, built from local rents, sale comps and construction costs, so you can answer the question before the buyer asks it.</p>
       </div>
-      <div class="rlv-r" aria-label="Residual land value example, figures included in the full package">
-        <div class="wf">
-          <div class="wf-row"><span>Completed project value</span><i class="bar up" style="--w:100%"></i><b class="blur">$0,000,000</b></div>
-          <div class="wf-row"><span>Hard costs</span><i class="bar dn" style="--w:52%; --o:48%"></i><b class="blur">−$0,000,000</b></div>
-          <div class="wf-row"><span>Soft costs + financing</span><i class="bar dn" style="--w:14%; --o:34%"></i><b class="blur">−$000,000</b></div>
-          <div class="wf-row"><span>Developer profit</span><i class="bar dn" style="--w:15%; --o:19%"></i><b class="blur">−$000,000</b></div>
-          <div class="wf-row total"><span>Residual land value</span><i class="bar rl" style="--w:19%"></i><b class="blur">$000,000</b></div>
-        </div>
+      <div class="rlv-r" aria-label="Residual land value for {{address_short}}">
+        <div class="wf">{{rlv_rows_html}}</div>
         <p class="rlv-eq"><span>Value</span> − <span>Cost</span> − <span>Profit</span> = <strong>What the land is worth to a developer</strong></p>
-        <p class="rlv-lock">Your listing's numbers are in the full package</p>
+        <p class="rlv-lock">{{rlv_footnote}}</p>
       </div>
     </section>
 
