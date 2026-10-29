@@ -78,6 +78,26 @@ p{margin:0}
 .plan{background:var(--paper); padding:clamp(8px,1.4vw,14px)}
 .section{display:flex; flex-direction:column; gap:16px}
 
+.rlv{margin-top:clamp(48px,7vw,80px); display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(20px,4vw,48px); align-items:center}
+.rlv-l{display:flex; flex-direction:column; gap:16px}
+.rlv-note{font-size:14px; line-height:1.55; color:var(--paper); border-left:2px solid var(--gold); padding-left:14px; max-width:56ch}
+.rlv-r{border:1px solid var(--line); background:var(--ink-2); padding:clamp(18px,3vw,28px); display:flex; flex-direction:column; gap:16px}
+.wf{display:flex; flex-direction:column; gap:12px}
+.wf-row{display:grid; grid-template-columns:minmax(0,9.5em) minmax(0,1fr) 7.5em; gap:12px; align-items:center; font-size:13px; color:var(--paper-dim)}
+.wf-row .bar{display:block; height:16px; position:relative; background:transparent}
+.wf-row .bar::before{content:""; position:absolute; top:0; bottom:0; left:var(--o,0); width:var(--w); background:var(--paper-dim); opacity:.55}
+.wf-row .bar.up::before{background:var(--paper); opacity:.8}
+.wf-row .bar.dn::before{background:#8c6c5a; opacity:.85}
+.wf-row .bar.rl::before{background:var(--gold)}
+.wf-row b{font:500 13px var(--f-mono); text-align:right; color:var(--paper)}
+.wf-row.total{border-top:1px solid var(--line); padding-top:12px; color:var(--paper); font-weight:600}
+.wf-row.total b{color:var(--gold-hi)}
+.blur{filter:blur(5px); user-select:none; -webkit-user-select:none}
+.rlv-eq{font:500 12px/1.6 var(--f-mono); color:var(--paper-dim); letter-spacing:.04em}
+.rlv-eq span{color:var(--paper)}
+.rlv-eq strong{color:var(--gold-hi); font-weight:500}
+.rlv-lock{display:flex; align-items:center; gap:8px; font:500 10px var(--f-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--gold)}
+.rlv-lock::before{content:""; width:10px; height:8px; border:1.5px solid var(--gold); border-top-width:3px; border-radius:1px}
 .cta{margin-block:clamp(48px,7vw,80px); border:1px solid var(--gold-soft); background:var(--ink-2); display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:0}
 .cta-l{padding:clamp(22px,3.4vw,36px); display:flex; flex-direction:column; gap:16px}
 .cta-l ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px}
@@ -106,6 +126,9 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
   .nums div{border-right:0; border-bottom:1px solid var(--line)}
   .nums div:last-child{border-bottom:0}
   .cta{grid-template-columns:1fr}
+  .rlv{grid-template-columns:1fr}
+  .wf-row{grid-template-columns:minmax(0,1fr) 6.5em}
+  .wf-row .bar{grid-column:1 / -1; order:3}
   .cta-r{border-left:0; border-top:1px solid var(--line)}
   .brand small{display:none}
   .toplink{display:none}
@@ -143,6 +166,26 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
       <figure class="shot plan" oncontextmenu="return false">
         <img src="img/plan.jpg" alt="Preliminary concept plan for Lot 6 Pocahontas Trail" width="2000" height="1731" draggable="false" loading="lazy">
       </figure>
+    </section>
+
+    <section class="rlv" aria-labelledby="rlv-h">
+      <div class="rlv-l">
+        <p class="kicker">The investor math</p>
+        <h2 id="rlv-h">Will a developer <em>pay for it?</em></h2>
+        <p class="lede">Before a developer makes an offer, they run the residual land value: what the finished project is worth, minus the cost to build it and the profit they need. Whatever is left is the most they can pay for the land. When that number is positive and near the asking price, the listing pencils out and buyers move.</p>
+        <p class="rlv-note">Every full package includes this analysis for your listing, built from local rents, sale comps and construction costs, so you can answer the question before the buyer asks it.</p>
+      </div>
+      <div class="rlv-r" aria-label="Residual land value example, figures included in the full package">
+        <div class="wf">
+          <div class="wf-row"><span>Completed project value</span><i class="bar up" style="--w:100%"></i><b class="blur">$0,000,000</b></div>
+          <div class="wf-row"><span>Hard costs</span><i class="bar dn" style="--w:52%; --o:48%"></i><b class="blur">−$0,000,000</b></div>
+          <div class="wf-row"><span>Soft costs + financing</span><i class="bar dn" style="--w:14%; --o:34%"></i><b class="blur">−$000,000</b></div>
+          <div class="wf-row"><span>Developer profit</span><i class="bar dn" style="--w:15%; --o:19%"></i><b class="blur">−$000,000</b></div>
+          <div class="wf-row total"><span>Residual land value</span><i class="bar rl" style="--w:19%"></i><b class="blur">$000,000</b></div>
+        </div>
+        <p class="rlv-eq"><span>Value</span> − <span>Cost</span> − <span>Profit</span> = <strong>What the land is worth to a developer</strong></p>
+        <p class="rlv-lock">Your listing's numbers are in the full package</p>
+      </div>
     </section>
 
     <section class="cta" id="order">
