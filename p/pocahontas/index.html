@@ -90,6 +90,11 @@ p{margin:0}
 .fine b{color:var(--paper); font-weight:600}
 .contact{font:500 12px var(--f-mono); letter-spacing:.06em; color:var(--paper-dim)}
 .contact a{color:var(--gold-hi); text-decoration:none}
+.choices{display:flex; flex-direction:column; gap:10px}
+.btn-call .ico{font-size:15px; letter-spacing:0}
+.top-ctas{display:flex; align-items:center; gap:18px}
+.toplink{font:500 11px var(--f-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--gold-hi); text-decoration:none; border-bottom:1px solid var(--gold-soft); padding-block:6px; white-space:nowrap}
+.toplink:hover{color:var(--paper)}
 
 .upsell{border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding-block:18px; display:flex; justify-content:space-between; align-items:center; gap:12px 24px; flex-wrap:wrap; font-size:15px; color:var(--paper-dim)}
 .upsell a{color:var(--gold-hi); font-weight:600; text-underline-offset:3px; white-space:nowrap}
@@ -103,6 +108,7 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
   .cta{grid-template-columns:1fr}
   .cta-r{border-left:0; border-top:1px solid var(--line)}
   .brand small{display:none}
+  .toplink{display:none}
 }
 </style>
 </head>
@@ -110,7 +116,7 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
 <header class="top">
   <div class="wrap">
     <a class="brand" href="https://formadesigns.io" target="_top"><i>F</i><b>FORMA</b><small>Preliminary preview</small></a>
-    <a class="btn" href="https://formadesigns.io/payment?address=Lot+6+Pocahontas+Trail%2C+Quinton%2C+VA&amp;name=Patricia+Worth&amp;email=patricia.worth%40bayfoxdesigns.com&amp;phone=%28804%29+980-6942#order" target="_top">Get the full package</a>
+    <div class="top-ctas"><a class="toplink" href="tel:9783465818">Call (978) 346-5818</a><a class="btn" href="https://formadesigns.io/payment?address=Lot+6+Pocahontas+Trail%2C+Quinton%2C+VA&amp;name=Patricia+Worth&amp;email=patricia.worth%40bayfoxdesigns.com&amp;phone=%28804%29+980-6942#order" target="_top">Order the package</a></div>
   </div>
 </header>
 
@@ -152,10 +158,14 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
       </div>
       <div class="cta-r">
         <p class="price">$949<small>per listing</small></p>
-        <a class="btn" href="https://formadesigns.io/payment?address=Lot+6+Pocahontas+Trail%2C+Quinton%2C+VA&amp;name=Patricia+Worth&amp;email=patricia.worth%40bayfoxdesigns.com&amp;phone=%28804%29+980-6942#order" target="_top">Get the full package <span>→</span></a>
+        <div class="choices">
+          <a class="btn" href="https://formadesigns.io/payment?address=Lot+6+Pocahontas+Trail%2C+Quinton%2C+VA&amp;name=Patricia+Worth&amp;email=patricia.worth%40bayfoxdesigns.com&amp;phone=%28804%29+980-6942#order" target="_top">Order the full package <span>→</span></a>
+          <a class="btn btn-ghost btn-call" href="tel:9783465818"><span class="ico" aria-hidden="true">☎</span>Call me · (978) 346-5818</a>
+        </div>
+        <p class="fine">Rather talk it through first? Call or text me and I'll walk you through the plan.</p>
         <p class="fine"><b>Nothing is charged today.</b> Your card is charged when the package is delivered. Or $159/month until it sells.</p>
         <p class="fine"><b>6-month guarantee:</b> not under contract within 6 months of delivery, I'll do your next property free.</p>
-        <p class="contact">Questions? Call or text <a href="tel:9783465818">(978) 346-5818</a> · <a href="mailto:support@formadesigns.io">support@formadesigns.io</a></p>
+        <p class="contact">Or email <a href="mailto:support@formadesigns.io">support@formadesigns.io</a></p>
       </div>
     </section>
 
