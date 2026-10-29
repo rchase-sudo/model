@@ -146,3 +146,13 @@ width Fill, height 100vh.
 - Don't commit `tools/leads/*.json` (agent contact info; the repo is public).
 - Don't use the full scrollytelling property website here or add more sections; keep pages identical.
 - Don't remove the watermark or ship clean images on a preview page.
+
+## Automatic pages from Drafted (lite jobs)
+
+Every lite Drafted job ends by building its own preview page with this same template (fetched from `main` at build time, so template edits apply to
+all future pages). The worker uploads `p/<slug>/` to the public Supabase bucket `previews`; `.github/workflows/sync_previews.yml` runs every 5 minutes
+(`tools/sync_previews.py`), copies new or changed pages into `p/` and pushes. Hand-built pages are never touched.
+
+- Page goes live at `https://rchase-sudo.github.io/model/p/<slug>/`; Drafted stores it in the job `summary.preview` (`url`, `display`, `email_html`).
+- In email, show the clean address and link to GitHub: `<a href="https://rchase-sudo.github.io/model/p/<slug>/">formadesigns.io/p/<slug></a>`.
+- Pages are only built when the residual land value is positive and at least the asking price (otherwise `summary.preview.status = "held"`).

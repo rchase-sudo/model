@@ -1,0 +1,23 @@
+name: Sync preview pages
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: sync-previews
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests
+      - id: sync
+        run: python3 tools/sync_previews.py
+      - name: Commit new pages
+        run: |
+          git config user.name "forma-ci"; git config user.email "forma-ci@users.noreply.github.com"
+          git add p
+          git diff --cached --quiet && exit 0
+          git commit -m "Preview pages: $(git diff --cached --name-only | cut -d/ -f2 | sort -u | tr '\n' ' ')"
+          git pull --rebase origin main && git push origin HEAD:main
