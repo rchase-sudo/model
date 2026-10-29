@@ -87,6 +87,8 @@ def build(cfg_path):
     }
     page = (ROOT / "tools" / "preview_template.html").read_text()
     page = re.sub(r"\{\{(\w+)\}\}", lambda m: vals[m.group(1)], page)
+    if not rows:   # no residual figures (or none that support the listing): leave the investor-math section out, keep everything else identical
+        page = re.sub(r'\s*<section class="rlv".*?</section>', "", page, count=1, flags=re.S)
     (out / "index.html").write_text(page)
     print(PAGES + slug + "/")
 
