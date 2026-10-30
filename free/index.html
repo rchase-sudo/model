@@ -299,6 +299,22 @@ p{margin:0}
 .assure{display:flex; flex-wrap:wrap; gap:6px 16px; font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
 .assure span::before{content:"✓ "; color:var(--gold)}
 .done{display:flex; flex-direction:column; gap:16px}
+.book{display:flex; flex-direction:column; gap:14px}
+.book b{color:var(--paper)}
+.days{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:thin}
+.day{flex:0 0 auto; appearance:none; border:1px solid var(--line); background:var(--ink); color:var(--paper); min-width:68px; min-height:58px; padding:6px 10px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px}
+.day small{font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
+.day b{font-size:14px; font-weight:700}
+.day[aria-selected="true"]{border-color:var(--gold); background:var(--gold-fill)}
+.day[aria-selected="true"] small{color:var(--gold)}
+.times{display:grid; grid-template-columns:repeat(auto-fill, minmax(92px, 1fr)); gap:8px; max-height:216px; overflow-y:auto}
+.slot{appearance:none; border:1px solid var(--line); background:var(--ink); color:var(--paper); min-height:44px; cursor:pointer; font:500 13px var(--f-mono); letter-spacing:.04em}
+.slot:hover{border-color:var(--gold-soft)}
+.slot[aria-pressed="true"]{background:var(--gold); border-color:var(--gold); color:var(--ink)}
+.btn:disabled{opacity:.4; cursor:not-allowed}
+.linkbtn{appearance:none; background:none; border:0; padding:6px 0; color:var(--paper-dim); text-decoration:underline; text-underline-offset:3px; cursor:pointer; font-size:13px; align-self:center}
+.linkbtn:hover{color:var(--paper)}
+.when{font:400 clamp(1.3rem,2.4vw,1.6rem)/1.25 var(--f-serif); font-style:italic; color:var(--gold-hi)}
 .done ol{margin:0; padding:0; list-style:none; border-top:1px solid var(--line)}
 .done li{display:grid; grid-template-columns:28px 1fr; gap:10px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14px; color:var(--paper-dim)}
 .done li b{color:var(--paper)}
@@ -669,13 +685,25 @@ p{margin:0}
           <p class="form-err" id="form-err" role="alert"></p>
           <p class="small">I'll only use your details to send your plan and follow up about this listing.</p>
         </div>
+        <div class="book" id="form-book" hidden>
+          <p class="kicker" style="margin:0">Last step · 1 of 1</p>
+          <h3 style="font-size:1.6rem">Pick a time for a <em>quick call.</em></h3>
+          <p class="small">30 minutes. I'll walk you through your plan and rendering for <b id="book-addr">your listing</b>.</p>
+          <div class="days" id="book-days" role="tablist" aria-label="Choose a day"></div>
+          <div class="times" id="book-times" aria-label="Choose a time"></div>
+          <p class="small" id="book-tz"></p>
+          <button class="btn btn-lg" type="button" id="book-go" disabled>Pick a time above</button>
+          <p class="form-err" id="book-err" role="alert"></p>
+          <button class="linkbtn" type="button" id="book-skip">I'll book later. Just call me.</button>
+        </div>
         <div class="done" id="form-done" hidden>
-          <p class="kicker" style="margin:0">Request received</p>
+          <p class="kicker" style="margin:0" id="done-k">You're booked</p>
           <h3 style="font-size:1.6rem" id="done-h">You're in.</h3>
+          <p class="when" id="done-when" hidden></p>
           <ol>
             <li><span>01</span><div><b>I pull the parcel</b> and the topography for <span id="done-addr">your listing</span>.</div></li>
             <li><span>02</span><div><b>I lay it out</b> to your town's setbacks and permitted uses.</div></li>
-            <li><span>03</span><div><b>I reach out the same day</b> to walk you through your plan and rendering.</div></li>
+            <li><span>03</span><div id="done-3"><b>We talk at your call time</b> and I walk you through your plan and rendering.</div></li>
           </ol>
           <p class="small">Want the due diligence report and plan set too? The full package is $949, charged only when it's delivered.</p>
           <a class="btn btn-ghost" id="done-pay" href="https://formadesigns.io/model" target="_top">See the full package <span>→</span></a>
@@ -911,10 +939,11 @@ $("#claim-form").addEventListener("submit", async (e) => {
     const r = await fetch(INTAKE_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     const d = await r.json().catch(() => ({}));
     if (!r.ok || !d.ok) throw new Error(d.error || "Something went wrong.");
-    const first = body.name.trim().split(/\s+/)[0];
-    $("#done-h").textContent = "You're in, " + first + ".";
+    lead = body;
     $("#done-addr").textContent = body.address;
-    $("#form-fields").hidden = true; $("#form-done").hidden = false;
+    $("#book-addr").textContent = body.address;
+    $("#form-fields").hidden = true; $("#form-book").hidden = false;
+    loadSlots();
     try { (window.dataLayer = window.dataLayer || []).push({ event: "free_plan_request" }); } catch (_) {}
     try { window.fbq && window.fbq("track", "Lead"); } catch (_) {}
   } catch (x) {
@@ -935,6 +964,62 @@ $$("[data-buy]").forEach((a) => a.addEventListener("click", () => {
   a.href = "https://formadesigns.io/payment" + (qs ? "?" + qs : "") + "#order";
   try { (window.dataLayer = window.dataLayer || []).push({ event: "buy_click" }); } catch (_) {}
 }));
+
+/* booking step */
+const BOOK_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/book-call";
+let lead = null, slots = [], pickDay = null, pickSlot = null;
+const dayKey = (d) => d.toLocaleDateString("en-CA");
+const fmtDay = (d) => d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+const fmtTime = (d) => d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+const fmtFull = (d) => d.toLocaleString("en-US", { weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" });
+async function loadSlots() {
+  $("#book-days").innerHTML = '<p class="small">Loading open times…</p>'; $("#book-times").innerHTML = "";
+  try {
+    const d = await (await fetch(BOOK_URL)).json();
+    slots = (d.slots || []).map((x) => new Date(x.start));
+  } catch (_) { slots = []; }
+  try { $("#book-tz").textContent = "Times in your time zone (" + Intl.DateTimeFormat().resolvedOptions().timeZone.replace(/_/g, " ") + ")."; } catch (_) {}
+  if (!slots.length) { $("#book-days").innerHTML = '<p class="small">I couldn\'t load my calendar. Skip this step and I\'ll call you.</p>'; return; }
+  const days = [...new Set(slots.map(dayKey))];
+  if (!days.includes(pickDay)) pickDay = days[0];
+  pickSlot = null; renderBook();
+}
+function renderBook() {
+  const days = [...new Map(slots.map((d) => [dayKey(d), d])).values()];
+  $("#book-days").innerHTML = days.map((d) => `<button type="button" role="tab" class="day" aria-selected="${dayKey(d) === pickDay}" data-day="${dayKey(d)}"><small>${d.toLocaleDateString("en-US", { weekday: "short" })}</small><b>${d.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</b></button>`).join("");
+  const list = slots.filter((d) => dayKey(d) === pickDay);
+  $("#book-times").innerHTML = list.map((d) => `<button type="button" class="slot" aria-pressed="${pickSlot && +pickSlot === +d}" data-t="${d.toISOString()}">${fmtTime(d)}</button>`).join("");
+  const go = $("#book-go");
+  go.disabled = !pickSlot;
+  go.innerHTML = pickSlot ? `Book ${fmtDay(pickSlot)} at ${fmtTime(pickSlot)} <span>→</span>` : "Pick a time above";
+}
+$("#book-days").addEventListener("click", (e) => { const b = e.target.closest("[data-day]"); if (!b) return; pickDay = b.dataset.day; pickSlot = null; renderBook(); });
+$("#book-times").addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (!b) return; pickSlot = new Date(b.dataset.t); renderBook(); });
+function showDone(booked) {
+  const first = (lead?.name || "").trim().split(/\s+/)[0];
+  $("#done-h").textContent = "You're in" + (first ? ", " + first : "") + ".";
+  $("#done-k").textContent = booked ? "You're booked" : "Request received";
+  if (booked) { $("#done-when").hidden = false; $("#done-when").textContent = fmtFull(booked); }
+  else { $("#done-3").innerHTML = "<b>I call you the same day</b> to walk you through your plan and rendering."; }
+  $("#form-book").hidden = true; $("#form-done").hidden = false;
+}
+$("#book-go").addEventListener("click", async () => {
+  if (!pickSlot || !lead) return;
+  const go = $("#book-go"), err = $("#book-err"); err.textContent = ""; go.disabled = true; go.textContent = "Booking…";
+  try {
+    const r = await fetch(BOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: lead.name, email: lead.email, phone: lead.phone || "", address: lead.address, start: pickSlot.toISOString(), source: "lander" }) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) { if (d.taken) { err.textContent = d.error; await loadSlots(); return; } throw new Error(d.error || "Something went wrong."); }
+    try { (window.dataLayer = window.dataLayer || []).push({ event: "call_booked" }); } catch (_) {}
+    try { window.fbq && window.fbq("track", "Schedule"); } catch (_) {}
+    showDone(pickSlot);
+  } catch (x) {
+    err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "I couldn't book that just now. Call or text (978) 346-5818.";
+    renderBook();
+  }
+});
+$("#book-skip").addEventListener("click", () => showDone(null));
 
 /* mobile CTA bar */
 const mbar = $("#mbar");
