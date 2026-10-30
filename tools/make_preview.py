@@ -70,6 +70,8 @@ def build(cfg_path):
     vals = {
         "title": esc(c["title"]),
         "address_short": esc(c["address_short"]),
+        "address_full": esc(c["address_full"]),
+        "slug": esc(slug),
         "agent_name": esc(a.get("name", "you")),
         "agent_company_sep": esc(" · " + a["company"]) if a.get("company") else "",
         "headline_html": emph(c["headline"]),

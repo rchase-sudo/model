@@ -114,6 +114,26 @@ p{margin:0}
 .toplink{font:500 11px var(--f-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--gold-hi); text-decoration:none; border-bottom:1px solid var(--gold-soft); padding-block:6px; white-space:nowrap}
 .toplink:hover{color:var(--paper)}
 
+.bk{display:flex; flex-direction:column; gap:12px; border-top:1px solid var(--line); padding-top:14px}
+.bk[hidden]{display:none}
+.bk h3{margin:0; font:800 15px/1.2 var(--f-display); letter-spacing:.12em; text-transform:uppercase}
+.bk .days{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:thin}
+.bk .day{flex:0 0 auto; appearance:none; border:1px solid var(--line); background:var(--ink); color:var(--paper); min-width:64px; min-height:54px; padding:6px 10px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-family:var(--f-display)}
+.bk .day small{font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
+.bk .day b{font-size:14px; font-weight:700}
+.bk .day[aria-selected="true"]{border-color:var(--gold); background:var(--gold-fill)}
+.bk .day[aria-selected="true"] small{color:var(--gold)}
+.bk .times{display:grid; grid-template-columns:repeat(auto-fill,minmax(88px,1fr)); gap:8px; max-height:200px; overflow-y:auto}
+.bk .slot{appearance:none; border:1px solid var(--line); background:var(--ink); color:var(--paper); min-height:44px; cursor:pointer; font:500 13px var(--f-mono)}
+.bk .slot:hover{border-color:var(--gold-soft)}
+.bk .slot[aria-pressed="true"]{background:var(--gold); border-color:var(--gold); color:var(--ink)}
+.bk input{width:100%; min-height:46px; padding:0 12px; background:var(--ink); color:var(--paper); border:1px solid var(--line); font:400 16px var(--f-display); border-radius:0}
+.bk input:focus{border-color:var(--gold); outline:none}
+.bk .hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0}
+.bk .err{color:#e8a08a; font-size:13px; min-height:0}
+.bk .done{font:400 clamp(1.2rem,2.4vw,1.5rem)/1.3 var(--f-serif); font-style:italic; color:var(--gold-hi)}
+.btn:disabled{opacity:.4; cursor:not-allowed}
+
 .upsell{border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding-block:18px; display:flex; justify-content:space-between; align-items:center; gap:12px 24px; flex-wrap:wrap; font-size:15px; color:var(--paper-dim)}
 .upsell a{color:var(--gold-hi); font-weight:600; text-underline-offset:3px; white-space:nowrap}
 
@@ -195,7 +215,22 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
         <div class="choices">
           <a class="btn" href="{{payment_url}}" target="_top">Order the full package <span>→</span></a>
           <a class="btn btn-ghost btn-call" href="tel:9783465818"><span class="ico" aria-hidden="true">☎</span>Call me · (978) 346-5818</a>
+          <button class="btn btn-ghost" type="button" id="bk-open">Book a 30-minute call <span>→</span></button>
         </div>
+        <div class="bk" id="bk" hidden data-addr="{{address_full}}" data-slug="{{slug}}" data-name="{{agent_name}}">
+          <h3>Pick a time</h3>
+          <p class="fine">30 minutes. I'll walk you through the plan and rendering for <b>{{address_short}}</b>.</p>
+          <div class="days" id="bk-days" role="tablist" aria-label="Choose a day"></div>
+          <div class="times" id="bk-times" aria-label="Choose a time"></div>
+          <p class="fine" id="bk-tz"></p>
+          <input id="bk-name" type="text" placeholder="Your name" autocomplete="name">
+          <input id="bk-email" type="email" placeholder="Email" autocomplete="email">
+          <input id="bk-phone" type="tel" placeholder="Phone (optional)" autocomplete="tel">
+          <input class="hp" id="bk-hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="button" id="bk-go" disabled>Pick a time above</button>
+          <p class="err" id="bk-err" role="alert"></p>
+        </div>
+        <div class="bk done" id="bk-done" hidden></div>
         <p class="fine">Rather talk it through first? Call or text me and I'll walk you through the plan.</p>
         <p class="fine"><b>Nothing is charged today.</b> Your card is charged when the package is delivered. Or $159/month until it sells.</p>
         <p class="fine"><b>6-month guarantee:</b> not under contract within 6 months of delivery, I'll do your next property free.</p>
@@ -211,5 +246,48 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
     </footer>
   </div>
 </main>
+<script>
+(function(){
+  var URL_="https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/book-call";
+  var $=function(i){return document.getElementById(i)};
+  var box=$("bk"); if(!box) return;
+  var slots=[],pickDay=null,pick=null,loaded=false;
+  var dk=function(d){return d.toLocaleDateString("en-CA")};
+  var ft=function(d){return d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})};
+  var fd=function(d){return d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})};
+  var ff=function(d){return d.toLocaleString("en-US",{weekday:"long",month:"long",day:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short"})};
+  var nm=box.getAttribute("data-name"); if(nm&&nm!=="you") $("bk-name").value=nm;
+  function render(){
+    var days=[],seen={};slots.forEach(function(d){var k=dk(d);if(!seen[k]){seen[k]=1;days.push(d)}});
+    $("bk-days").innerHTML=days.map(function(d){return '<button type="button" role="tab" class="day" aria-selected="'+(dk(d)===pickDay)+'" data-day="'+dk(d)+'"><small>'+d.toLocaleDateString("en-US",{weekday:"short"})+'</small><b>'+d.toLocaleDateString("en-US",{month:"short",day:"numeric"})+'</b></button>'}).join("");
+    $("bk-times").innerHTML=slots.filter(function(d){return dk(d)===pickDay}).map(function(d){return '<button type="button" class="slot" aria-pressed="'+(!!pick&&+pick===+d)+'" data-t="'+d.toISOString()+'">'+ft(d)+'</button>'}).join("");
+    var g=$("bk-go");g.disabled=!pick;g.innerHTML=pick?"Book "+fd(pick)+" at "+ft(pick)+" <span>→</span>":"Pick a time above";
+  }
+  function load(){
+    $("bk-days").innerHTML='<p class="fine">Loading open times…</p>';$("bk-times").innerHTML="";
+    fetch(URL_).then(function(r){return r.json()}).then(function(d){slots=(d.slots||[]).map(function(x){return new Date(x.start)})}).catch(function(){slots=[]}).then(function(){
+      try{$("bk-tz").textContent="Times in your time zone ("+Intl.DateTimeFormat().resolvedOptions().timeZone.replace(/_/g," ")+")."}catch(e){}
+      if(!slots.length){$("bk-days").innerHTML='<p class="fine">Couldn\'t load my calendar. Call or text (978) 346-5818.</p>';return}
+      var ds=slots.map(dk);if(ds.indexOf(pickDay)<0)pickDay=ds[0];pick=null;render();
+    });
+  }
+  $("bk-open").addEventListener("click",function(){box.hidden=!box.hidden;if(!box.hidden&&!loaded){loaded=true;load()}if(!box.hidden)box.scrollIntoView({behavior:"smooth",block:"nearest"})});
+  $("bk-days").addEventListener("click",function(e){var b=e.target.closest("[data-day]");if(!b)return;pickDay=b.getAttribute("data-day");pick=null;render()});
+  $("bk-times").addEventListener("click",function(e){var b=e.target.closest("[data-t]");if(!b)return;pick=new Date(b.getAttribute("data-t"));render()});
+  $("bk-go").addEventListener("click",function(){
+    var err=$("bk-err");err.textContent="";
+    var name=$("bk-name").value.trim(),email=$("bk-email").value.trim();
+    if(!pick)return;
+    if(!name||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent="Add your name and a valid email.";return}
+    var g=$("bk-go");g.disabled=true;g.textContent="Booking…";
+    fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:name,email:email,phone:$("bk-phone").value.trim(),address:box.getAttribute("data-addr"),start:pick.toISOString(),source:"preview",notes:"Booked from preview page "+box.getAttribute("data-slug"),website:$("bk-hp").value})})
+    .then(function(r){return r.json().catch(function(){return{}}).then(function(d){return{ok:r.ok,d:d}})})
+    .then(function(x){
+      if(!x.ok||!x.d.ok){if(x.d.taken){err.textContent=x.d.error;load();return}throw new Error(x.d.error||"fail")}
+      box.hidden=true;$("bk-open").hidden=true;var dn=$("bk-done");dn.hidden=false;dn.textContent="You're booked: "+ff(pick)+". I'll call you then.";
+    }).catch(function(){err.textContent="Couldn't book that just now. Call or text (978) 346-5818.";render()});
+  });
+})();
+</script>
 </body>
 </html>
