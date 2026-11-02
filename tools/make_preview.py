@@ -4,7 +4,7 @@
 
 Reads the lead config, watermarks the render and plan, and writes
 p/<slug>/index.html + p/<slug>/img/. Live at
-https://rchase-sudo.github.io/model/p/<slug>/ once pushed.
+https://go.formadesigns.io/p/<slug>/ once pushed.
 """
 import html
 import json
@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from watermark import watermark  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = "https://rchase-sudo.github.io/model/p/"
+PAGES = "https://go.formadesigns.io/p/"
 PAYMENT = "https://formadesigns.io/payment"
 
 esc = html.escape

@@ -5,7 +5,7 @@ Every page is identical in layout and copy structure; only the property content 
 The page is a teaser for the $949 package. It is **not** the scrollytelling property
 website (that's the $1,000 add-on at /model).
 
-Live example: https://rchase-sudo.github.io/model/p/pocahontas/
+Live example: https://go.formadesigns.io/p/pocahontas/
 
 ## What's in the repo (rchase-sudo/model, GitHub Pages from `main`)
 
@@ -15,7 +15,7 @@ Live example: https://rchase-sudo.github.io/model/p/pocahontas/
 | `tools/make_preview.py` | Generator: config JSON + two images -> `p/<slug>/index.html` + `p/<slug>/img/`. |
 | `tools/watermark.py` | Bakes the FORMA · PREVIEW · NOT FOR MARKETING watermark + corner badge into images. |
 | `tools/leads/<slug>.json` | Per-lead config. **Git-ignored** (contains agent contact info). Keep locally. |
-| `p/<slug>/` | Generated, committed output. Live at `https://rchase-sudo.github.io/model/p/<slug>/`. |
+| `p/<slug>/` | Generated, committed output. Live at `https://go.formadesigns.io/p/<slug>/`. |
 
 Requirements: Python 3 + Pillow, and the Inter fonts at `/usr/share/fonts/opentype/inter/`
 (used by `watermark.py`; change `FONT_BOLD` / `FONT_MED` if your machine has them elsewhere).
@@ -135,10 +135,10 @@ Optional CRM step: store the page URL on the agent's contact (`contacts.website_
 
 ## Sending it
 
-Email the agent the link (https://rchase-sudo.github.io/model/p/<slug>/). Pasting it into most email
-clients shows the rendering as the preview image. To put a page on formadesigns.io instead, add a Framer
-page with an iframe code component (must `export default` the component) pointing at the GitHub URL,
-width Fill, height 100vh.
+Email the agent the link (https://go.formadesigns.io/p/<slug>/). Pasting it into most email
+clients shows the rendering as the preview image. The repo is served on the custom domain go.formadesigns.io
+(`CNAME` file + a GoDaddy CNAME record `go` → `rchase-sudo.github.io`); old github.io links redirect. Don't frame
+these pages inside Framer: framed pages can't be recorded by Clarity/PostHog.
 
 ## Don't
 
@@ -153,14 +153,12 @@ Every lite Drafted job ends by building its own preview page with this same temp
 all future pages). The worker uploads `p/<slug>/` to the public Supabase bucket `previews`; `.github/workflows/sync_previews.yml` runs every 5 minutes
 (`tools/sync_previews.py`), copies new or changed pages into `p/` and pushes. Hand-built pages are never touched.
 
-- Page goes live at `https://rchase-sudo.github.io/model/p/<slug>/`; Drafted stores it in the job `summary.preview` (`url`, `display`, `email_html`).
-- In email, show the clean address and link to GitHub: `<a href="https://rchase-sudo.github.io/model/p/<slug>/">formadesigns.io/p/<slug></a>`.
+- Page goes live at `https://go.formadesigns.io/p/<slug>/`; Drafted stores it in the job `summary.preview` (`url`, `display`, `email_html`).
+- In email, link `https://go.formadesigns.io/p/<slug>/` (it can be shown as is).
 - Pages are only built when the residual land value is positive and at least the asking price (otherwise `summary.preview.status = "held"`).
 
 ## Analytics (Clarity + PostHog)
 
 Every page carries Microsoft Clarity and PostHog (`tools/posthog_head.html`, included in the template; `sync_previews.py`
 adds both to bucket pages that lack them). PostHog names each preview visit with the agent's email (read from the page's
-order link) and tags it `preview_slug`, so in PostHog → Replay you can filter by person or slug. Recordings of pages framed
-on formadesigns.io join the parent recording (`recordCrossOriginIframes`), which needs the PostHog snippet in Framer's
-site-wide custom code too.
+order link) and tags it `preview_slug`, so in PostHog → Replay you can filter by person or slug.

@@ -41,7 +41,8 @@ def with_clarity(page: bytes) -> bytes:
         page = page.replace(b"</head>", CLARITY + b"</head>", 1)
     if b"posthog-js@" not in page:
         page = page.replace(b"</head>", POSTHOG + b"</head>", 1)
-    return page
+    # pages live on the custom domain now
+    return page.replace(b"rchase-sudo.github.io/model/", b"go.formadesigns.io/")
 
 
 def main():
