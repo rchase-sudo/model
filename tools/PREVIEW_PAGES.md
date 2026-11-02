@@ -156,3 +156,11 @@ all future pages). The worker uploads `p/<slug>/` to the public Supabase bucket 
 - Page goes live at `https://rchase-sudo.github.io/model/p/<slug>/`; Drafted stores it in the job `summary.preview` (`url`, `display`, `email_html`).
 - In email, show the clean address and link to GitHub: `<a href="https://rchase-sudo.github.io/model/p/<slug>/">formadesigns.io/p/<slug></a>`.
 - Pages are only built when the residual land value is positive and at least the asking price (otherwise `summary.preview.status = "held"`).
+
+## Analytics (Clarity + PostHog)
+
+Every page carries Microsoft Clarity and PostHog (`tools/posthog_head.html`, included in the template; `sync_previews.py`
+adds both to bucket pages that lack them). PostHog names each preview visit with the agent's email (read from the page's
+order link) and tags it `preview_slug`, so in PostHog → Replay you can filter by person or slug. Recordings of pages framed
+on formadesigns.io join the parent recording (`recordCrossOriginIframes`), which needs the PostHog snippet in Framer's
+site-wide custom code too.

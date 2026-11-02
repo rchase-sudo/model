@@ -383,6 +383,41 @@ p{margin:0}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
+<!-- PostHog (session replay + analytics). Same block on /free, /p/ pages and the template. -->
+<script>window.fph=function(){(window.fph.q=window.fph.q||[]).push([].slice.call(arguments))};</script>
+<script type="module">
+import posthog from "https://cdn.jsdelivr.net/npm/posthog-js@1.438.10/+esm";
+posthog.init("phc_BNcBQV6MAvZryefMoAcK4K3UyVQjZAuRnXtbWDKYSZZB", {
+  api_host: "https://us.i.posthog.com",
+  person_profiles: "identified_only",
+  session_recording: {
+    recordCrossOriginIframes: true,
+    captureCanvas: { recordCanvas: true, canvasFps: 4, canvasQuality: "0.4" },
+  },
+});
+window.posthog = posthog;
+const q = (window.fph && window.fph.q) || [];
+window.fph = (m, ...a) => { try { posthog[m](...a); } catch (e) {} };
+q.forEach((a) => window.fph(...a));
+// Name the visitor: forms call fphWho(); on formadesigns.io the Framer parent page gets it too.
+window.fphWho = (email, props) => {
+  if (!email) return;
+  window.fph("identify", email, props);
+  if (window.parent !== window) {
+    for (const o of ["https://formadesigns.io", "https://www.formadesigns.io"]) {
+      try { window.parent.postMessage({ type: "forma-identify", email, props }, o); } catch (e) {}
+    }
+  }
+};
+// Agent preview pages: the page is made for one agent, so tag the visit with them.
+const pay = document.querySelector('a[href*="/payment?"]');
+if (location.pathname.includes("/p/") && pay) {
+  const u = new URL(pay.href, location.href).searchParams;
+  const slug = location.pathname.split("/p/")[1].split("/")[0];
+  window.fph("register", { preview_slug: slug, preview_address: u.get("address") || "" });
+  window.fphWho(u.get("email"), { name: u.get("name") || undefined, email: u.get("email"), preview_slug: slug });
+}
+</script>
 </head>
 <body>
 
@@ -948,6 +983,8 @@ $("#claim-form").addEventListener("submit", async (e) => {
     loadSlots();
     try { (window.dataLayer = window.dataLayer || []).push({ event: "free_plan_request" }); } catch (_) {}
     try { window.fbq && window.fbq("track", "Lead"); } catch (_) {}
+    try { window.fphWho && window.fphWho(body.email, { name: body.name, email: body.email, phone: body.phone || undefined, listing_address: body.address });
+          window.fph && window.fph("capture", "free_plan_request", { address: body.address }); } catch (_) {}
   } catch (x) {
     err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "I couldn't send that just now. Email support@formadesigns.io with the address and I'll start it.";
     btn.disabled = false; btn.innerHTML = "Send me my free plan <span>→</span>";
@@ -1015,6 +1052,7 @@ $("#book-go").addEventListener("click", async () => {
     if (!r.ok || !d.ok) { if (d.taken) { err.textContent = d.error; await loadSlots(); return; } throw new Error(d.error || "Something went wrong."); }
     try { (window.dataLayer = window.dataLayer || []).push({ event: "call_booked" }); } catch (_) {}
     try { window.fbq && window.fbq("track", "Schedule"); } catch (_) {}
+    try { window.fph && window.fph("capture", "call_booked", { start: pickSlot.toISOString(), address: lead.address }); } catch (_) {}
     showDone(pickSlot);
   } catch (x) {
     err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "I couldn't book that just now. Call or text (978) 346-5818.";
@@ -1039,7 +1077,9 @@ if (!scene) { $("#stage").remove(); const fb = document.createElement("div"); fb
 
 function makeScene(canvas) {
   const T = THREE;
-  const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+  // preserveDrawingBuffer lets session replay snapshot the 3D scene
+  const glOpts = { antialias: true, preserveDrawingBuffer: true };
+  const gl = canvas.getContext("webgl2", glOpts) || canvas.getContext("webgl", glOpts);
   if (!gl) return null;
   const renderer = new T.WebGLRenderer({ canvas, context: gl, antialias: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, isMobile() ? 1.5 : 2));

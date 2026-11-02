@@ -154,6 +154,41 @@ footer{padding-block:28px calc(36px + env(safe-area-inset-bottom, 0px)); font-si
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
+<!-- PostHog (session replay + analytics). Same block on /free, /p/ pages and the template. -->
+<script>window.fph=function(){(window.fph.q=window.fph.q||[]).push([].slice.call(arguments))};</script>
+<script type="module">
+import posthog from "https://cdn.jsdelivr.net/npm/posthog-js@1.438.10/+esm";
+posthog.init("phc_BNcBQV6MAvZryefMoAcK4K3UyVQjZAuRnXtbWDKYSZZB", {
+  api_host: "https://us.i.posthog.com",
+  person_profiles: "identified_only",
+  session_recording: {
+    recordCrossOriginIframes: true,
+    captureCanvas: { recordCanvas: true, canvasFps: 4, canvasQuality: "0.4" },
+  },
+});
+window.posthog = posthog;
+const q = (window.fph && window.fph.q) || [];
+window.fph = (m, ...a) => { try { posthog[m](...a); } catch (e) {} };
+q.forEach((a) => window.fph(...a));
+// Name the visitor: forms call fphWho(); on formadesigns.io the Framer parent page gets it too.
+window.fphWho = (email, props) => {
+  if (!email) return;
+  window.fph("identify", email, props);
+  if (window.parent !== window) {
+    for (const o of ["https://formadesigns.io", "https://www.formadesigns.io"]) {
+      try { window.parent.postMessage({ type: "forma-identify", email, props }, o); } catch (e) {}
+    }
+  }
+};
+// Agent preview pages: the page is made for one agent, so tag the visit with them.
+const pay = document.querySelector('a[href*="/payment?"]');
+if (location.pathname.includes("/p/") && pay) {
+  const u = new URL(pay.href, location.href).searchParams;
+  const slug = location.pathname.split("/p/")[1].split("/")[0];
+  window.fph("register", { preview_slug: slug, preview_address: u.get("address") || "" });
+  window.fphWho(u.get("email"), { name: u.get("name") || undefined, email: u.get("email"), preview_slug: slug });
+}
+</script>
 </head>
 <body>
 <header class="top">
