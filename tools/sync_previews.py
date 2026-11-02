@@ -27,13 +27,23 @@ def get(key):
     return r.content
 
 
+CLARITY = b'<!-- Microsoft Clarity -->\n<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>\n'
+
+
+def with_clarity(page: bytes) -> bytes:
+    """Bucket pages built before the template had Clarity get the tag added here."""
+    if b"clarity.ms/tag" in page or b"</head>" not in page:
+        return page
+    return page.replace(b"</head>", CLARITY + b"</head>", 1)
+
+
 def main():
     changed = []
     for ent in ls(""):
         if ent.get("id"):          # a file at the top level, not a slug folder
             continue
         slug = ent["name"]
-        page = get(f"{slug}/index.html")
+        page = with_clarity(get(f"{slug}/index.html"))
         dest = ROOT / "p" / slug
         if (dest / "index.html").exists() and (dest / "index.html").read_bytes() == page:
             continue
