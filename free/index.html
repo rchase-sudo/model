@@ -380,6 +380,31 @@ p{margin:0}
   .clients span{border-left:0; padding-left:0; width:50%}
 }
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
+
+/* ---- Agents just like you (chapter 2 + closing band). Filled from AGENTS / PROOF in the script ---- */
+.ag-stats{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border:1px solid var(--line); background:rgba(14,14,14,.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
+.ag-stats div{padding:16px 16px 14px; border-right:1px solid var(--line); min-width:0}
+.ag-stats div:last-child{border-right:0}
+.ag-stats strong{display:block; font:900 clamp(1.9rem,3.4vw,2.6rem)/1 var(--f-display); font-stretch:78%; color:var(--paper); font-variant-numeric:tabular-nums}
+.ag-stats strong.gold{color:var(--gold-hi)}
+.ag-stats strong.ag-stars{font:400 clamp(.95rem,1.9vw,1.45rem)/1.6 var(--f-display); letter-spacing:.04em; white-space:nowrap}
+.ag-stats span{display:block; margin-top:8px; font-size:12px; line-height:1.4; color:var(--paper-dim)}
+.ag-list{list-style:none; margin:0; padding:0; display:grid; border-top:1px solid var(--line); background:rgba(14,14,14,.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
+.ag-list li{display:grid; grid-template-columns:36px minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line)}
+.ag-av{width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:var(--gold-fill); border:1px solid var(--gold-soft); color:var(--gold-hi); font:700 12px/1 var(--f-mono); letter-spacing:.04em}
+.ag-who{min-width:0}
+.ag-who b{display:block; font-weight:700; font-size:15px; line-height:1.3}
+.ag-who small{display:block; font-size:13px; line-height:1.35; color:var(--paper-dim); overflow-wrap:anywhere}
+.ag-tag{font:500 10px/1 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim); white-space:nowrap; padding:7px 9px; border:1px solid var(--line)}
+.ag-tag.pkg{color:var(--gold-hi); border-color:var(--gold-soft); background:var(--gold-fill)}
+.ag-more{font-size:13px; color:var(--paper-dim); margin:0}
+.ag-grid{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-left:1px solid var(--line); border-top:1px solid var(--line)}
+.ag-grid li{display:grid; grid-template-columns:36px minmax(0,1fr); gap:12px; align-items:center; padding:16px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); min-width:0}
+.ag-grid li .ag-tag{grid-column:2; justify-self:start; margin-top:2px}
+.ag-band .stats{margin-bottom:clamp(36px,5vw,56px)}
+.ag-cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:clamp(36px,5vw,56px)}
+@media (max-width:1000px){ .ag-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:560px){ .ag-grid{grid-template-columns:1fr} .ag-stats strong{font-size:1.75rem} .ag-stats div{padding:12px 10px} }
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
@@ -468,6 +493,25 @@ if (location.pathname.includes("/p/") && pay) {
     </div>
   </section>
 
+
+  <!-- AGENTS JUST LIKE YOU (chapter 2) -->
+  <section class="chapter" id="agents" data-scene="agents">
+    <div class="wrap" style="width:100%">
+      <div class="panel">
+        <p class="kicker">Agents just like you</p>
+        <h2>They listed land. <em>It moved.</em></h2>
+        <p class="lede">Agents at firms like yours send me their land listings. Most of them are under contract within six months of getting the plan.</p>
+        <div class="ag-stats">
+          <div><strong class="tnum">55</strong><span>Land listings served</span></div>
+          <div><strong class="tnum">50</strong><span>Sold or under contract in 6 months</span></div>
+          <div><strong class="gold ag-stars">★★★★★</strong><span>5-star rated by agents</span></div>
+        </div>
+        <ul class="ag-list" id="ag-short"></ul>
+        <p class="ag-more" id="ag-more"></p>
+        <a class="btn" href="#claim" data-cta="agents">Get my free plan <span>→</span></a>
+      </div>
+    </div>
+  </section>
   <!-- PAIN 1: the clock -->
   <section class="chapter" id="sits" data-scene="sits">
     <div class="wrap" style="width:100%">
@@ -764,6 +808,29 @@ if (location.pathname.includes("/p/") && pay) {
   </div>
 </section>
 
+<!-- AGENTS JUST LIKE YOU (closing) -->
+<section class="band alt ag-band" id="agents-all">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="kicker">Agents just like you</p>
+      <h2>You're in <em>good company.</em></h2>
+      <p class="rating"><span class="stars">★★★★★</span> 5-star rated by the agents I've worked with</p>
+    </div>
+    <div class="stats">
+      <div><strong class="tnum">55</strong><span>Land listings I've produced plans for</span></div>
+      <div><strong class="tnum">50</strong><span>Sold or under contract within 6 months of delivery</span></div>
+      <div><strong class="tnum gold">91%</strong><span>Of those listings, under contract or sold inside 6 months</span></div>
+      <div><strong class="tnum">5.0</strong><span>Star rating from agents</span></div>
+    </div>
+    <ul class="ag-grid" id="ag-all"></ul>
+    <div class="reviews" id="ag-reviews" hidden></div>
+    <div class="ag-cta">
+      <a class="btn btn-lg" href="#claim" data-cta="agents-bottom">Get my free plan <span>→</span></a>
+      <a class="btn btn-ghost" href="https://formadesigns.io/payment" target="_top" data-buy>Order the full package · $949</a>
+    </div>
+  </div>
+</section>
+
 <footer class="foot">
   <div class="wrap">
     <span>© 2026 Forma Preliminary Design · Plans are preliminary and conceptual, not stamped engineering.</span>
@@ -781,7 +848,50 @@ if (location.pathname.includes("/p/") && pay) {
 const INTAKE_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/lander-intake";
 // Paste real reviews here, e.g. { name: "Jane D.", brokerage: "Example Realty", text: "…", stars: 5 }.
 // The quote cards stay hidden while this is empty; the 5-star badges show either way.
-const REVIEWS = [];
+const REVIEWS = [
+  { name: "Jessica Morales", brokerage: "Senior Agent, Compass Real Estate", stars: 5, text: "Forma delivered our site plan in 5 days. The listing received four offers within a week of going live — two above asking. Our previous record was one offer in three weeks." },
+  { name: "David Richfield", brokerage: "Principal, Vertex Capital Group", stars: 5, text: "We used to wait 4–6 weeks for preliminary design before making acquisition decisions. Forma cut that to one week. We've moved on three more properties this quarter because of that speed." },
+  { name: "Amanda Torres", brokerage: "Commercial Land Specialist", stars: 5, text: "Our commercial land listings were sitting. Forma's renderings changed the conversation entirely — buyers stopped asking 'what can I do with this?' and started asking 'how do I make an offer?'" },
+];
+
+// Agents just like you: same list as /model (first name + last initial, firm). kind "order" = full package, "concept" = concept plan.
+const AGENTS = [
+  { name: "Patricia W.", firm: "BayFox Designs", kind: "order" },
+  { name: "Jeff L.", firm: "Rose Commercial", kind: "order" },
+  { name: "Joseph K.", firm: "Krumpfer Real Estate", kind: "order" },
+  { name: "Joseph M.", firm: "Weichert Realtors", kind: "order" },
+  { name: "Delana R.", firm: "Right Space Commercial", kind: "concept" },
+  { name: "Daryus B.", firm: "Bosshardt Realty Services", kind: "concept" },
+  { name: "Mike M.", firm: "Liz Moore & Associates", kind: "concept" },
+  { name: "Jason S.", firm: "NAI Piedmont Triad", kind: "concept" },
+  { name: "Samuel H.", firm: "The SRH Group", kind: "concept" },
+  { name: "Scott W.", firm: "Rob Phillips Real Estate", kind: "concept" },
+  { name: "Allison R.", firm: "Nantahala", kind: "concept" },
+  { name: "Clark B.", firm: "Harvey Lindsay", kind: "concept" },
+  { name: "Brian C.", firm: "Coldwell Banker", kind: "concept" },
+  { name: "Yanay S.", firm: "Crossroads Realty", kind: "concept" },
+  { name: "Chris B.", firm: "Berkshire Hathaway", kind: "concept" },
+  { name: "George S.", firm: "RE/MAX", kind: "concept" },
+  { name: "Dennis G.", firm: "Newmark Associates", kind: "concept" },
+  { name: "Michael E.", firm: "Resource Realty", kind: "concept" },
+  { name: "Derek B.", firm: "Cushman & Wakefield", kind: "concept" },
+  { name: "Ali M.", firm: "Honest Look Up LLC", kind: "concept" },
+];
+(() => {
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const ini = (n) => n.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  const tag = (a) => `<span class="ag-tag${a.kind === "order" ? " pkg" : ""}">${a.kind === "order" ? "Full package" : "Concept plan"}</span>`;
+  const row = (a) => `<li><span class="ag-av">${esc(ini(a.name))}</span><span class="ag-who"><b>${esc(a.name)}</b><small>${esc(a.firm)}</small></span>${tag(a)}</li>`;
+  const short = AGENTS.slice(0, 5);
+  const s = document.getElementById("ag-short"); if (s) s.innerHTML = short.map(row).join("");
+  const m = document.getElementById("ag-more"); if (m) m.textContent = AGENTS.length > short.length ? `+ ${AGENTS.length - short.length} more agents at firms like Coldwell Banker, RE/MAX, Berkshire Hathaway and Cushman & Wakefield.` : "";
+  const all = document.getElementById("ag-all"); if (all) all.innerHTML = AGENTS.map(row).join("");
+  const rv = document.getElementById("ag-reviews");
+  if (rv && REVIEWS.length) {
+    rv.innerHTML = REVIEWS.map((v) => `<figure class="review"><span class="stars">${"★".repeat(v.stars || 5)}</span><blockquote style="margin:0">${esc(v.text)}</blockquote><figcaption class="small">${esc(v.name)}${v.brokerage ? " · " + esc(v.brokerage) : ""}</figcaption></figure>`).join("");
+    rv.hidden = false;
+  }
+})();
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -1248,6 +1358,7 @@ function makeScene(canvas) {
   /* keyframes */
   const kf = [
     { id: "hero", anchor: 0.5, cam: [64, 44, 74], look: [2, 0, 0], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .15, q: 0 },
+    { id: "agents", cam: [72, 34, 58], look: [2, 0, 2], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .25, q: 0 },
     { id: "sits", cam: [22, 6.5, 48], look: [6, 2.4, 14], build: 0, grass: () => .45 + ui.days / 360 * 1.35, decay: () => ui.days / 360, fog: () => .2 + ui.days / 360 * .8, sold: 0, warm: 0, q: 0 },
     { id: "questions", cam: [-30, 58, 58], look: [0, 3, 0], build: 0, grass: () => .45 + ui.days / 360 * 1.1, decay: () => ui.days / 360 * .8, fog: () => .25 + ui.days / 360 * .5, sold: 0, warm: 0, q: 1 },
     { id: "build", cam: [2, 96, 10], look: [0, 0, 0], build: .25, grass: .4, decay: 0, fog: 0, sold: 0, warm: 0, q: 0 },
