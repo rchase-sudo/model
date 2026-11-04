@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Order confirmed · Forma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--ink:#0E0E0E;--ink-2:#171716;--paper:#F2EFE8;--paper-dim:#9C988F;--gold:#B8924F;--gold-soft:rgba(184,146,79,.34);--line:rgba(242,239,232,.1);
+  --f-sans:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--paper)}
+body{font-family:var(--f-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+.nav{display:flex;align-items:center;gap:12px;height:64px;padding:0 clamp(16px,5vw,72px);border-bottom:1px solid var(--line)}
+.mono{width:30px;height:30px;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:13px}
+.nav strong{letter-spacing:.3em;font-size:13px}
+main{flex:1;display:grid;place-items:center;padding:clamp(48px,10vw,120px) clamp(16px,5vw,72px)}
+.card{max-width:38rem;width:100%;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);background:var(--ink-2);padding:clamp(24px,5vw,44px)}
+.kicker{font:600 11px/1.4 var(--f-sans);letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin:0 0 18px}
+h1{font-weight:800;text-transform:uppercase;font-size:clamp(2.2rem,6vw,3.6rem);line-height:.98;margin:0;text-wrap:balance}
+h1 em{font-style:normal;color:var(--gold)}
+.lede{color:var(--paper-dim);font-size:1.08rem;margin:20px 0 0}
+ol{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line)}
+li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+li span{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:.2em;padding-top:2px}
+li b{display:block}
+li p{margin:4px 0 0;font-size:14px;color:var(--paper-dim)}
+.contact{margin-top:24px;font-size:14px;color:var(--paper-dim)}
+.contact a{color:var(--gold)}
+footer{padding:20px clamp(16px,5vw,72px);border-top:1px solid var(--line);font-size:12px;color:var(--paper-dim)}
+</style>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");clarity("set","price_variant","50");</script>
+<!-- PostHog (session replay + analytics). Same block on /free, /p/ pages and the template. -->
+<script>window.fph=function(){(window.fph.q=window.fph.q||[]).push([].slice.call(arguments))};</script>
+<script type="module">
+import posthog from "https://cdn.jsdelivr.net/npm/posthog-js@1.438.10/+esm";
+posthog.init("phc_BNcBQV6MAvZryefMoAcK4K3UyVQjZAuRnXtbWDKYSZZB", {
+  api_host: "https://us.i.posthog.com",
+  person_profiles: "identified_only",
+  session_recording: {
+    recordCrossOriginIframes: true,
+    captureCanvas: { recordCanvas: true, canvasFps: 4, canvasQuality: "0.4" },
+  },
+});
+window.posthog = posthog;
+const q = (window.fph && window.fph.q) || [];
+window.fph = (m, ...a) => { try { posthog[m](...a); } catch (e) {} };
+q.forEach((a) => window.fph(...a));
+// Name the visitor: forms call fphWho(); on formadesigns.io the Framer parent page gets it too.
+window.fphWho = (email, props) => {
+  if (!email) return;
+  window.fph("identify", email, props);
+  if (window.parent !== window) {
+    for (const o of ["https://formadesigns.io", "https://www.formadesigns.io"]) {
+      try { window.parent.postMessage({ type: "forma-identify", email, props }, o); } catch (e) {}
+    }
+  }
+};
+// Agent preview pages: the page is made for one agent, so tag the visit with them.
+const pay = document.querySelector('a[href*="/payment?"]');
+if (location.pathname.includes("/p/") && pay) {
+  const u = new URL(pay.href, location.href).searchParams;
+  const slug = location.pathname.split("/p/")[1].split("/")[0];
+  window.fph("register", { preview_slug: slug, preview_address: u.get("address") || "" });
+  window.fphWho(u.get("email"), { name: u.get("name") || undefined, email: u.get("email"), preview_slug: slug });
+}
+</script>
+<script>window.fph("register",{price_variant:"50"});window.fph("capture","card_saved",{price_variant:"50"});</script>
+</head>
+<body>
+<header class="nav"><span class="mono">F</span><strong>FORMA</strong></header>
+<main>
+  <div class="card">
+    <p class="kicker">Order confirmed</p>
+    <h1>You're set. <em>I'm on it.</em></h1>
+    <p class="lede">Your card is saved on Stripe. Nothing has been charged. You'll be charged only when your package is delivered.</p>
+    <ol>
+      <li><span>01</span><div><b>I start on your listing</b><p>I pull the parcel record, LiDAR topography and your town's zoning.</p></div></li>
+      <li><span>02</span><div><b>Your package arrives within 7 days</b><p>Site plan, 3D rendering and due diligence package, plus any add-ons you picked, sent to your email.</p></div></li>
+      <li><span>03</span><div><b>Then your card is charged</b><p>The amount you saw at checkout, on delivery. One revision round is included.</p></div></li>
+    </ol>
+    <p class="contact">Questions or anything I should know about the property? <a href="mailto:support@formadesigns.io">support@formadesigns.io</a> · <a href="tel:9783465818">(978) 346-5818</a></p>
+  </div>
+</main>
+<footer>© 2026 Forma Preliminary Design · Preliminary design, not for construction</footer>
+</body>
+</html>
