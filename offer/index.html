@@ -428,6 +428,7 @@ p{margin:0}
 .agree{display:grid; grid-template-columns:22px minmax(0,1fr); gap:12px; font-size:13px; line-height:1.55; color:var(--paper-dim); cursor:pointer}
 .agree b{color:var(--paper)}
 #f-submit:disabled{opacity:.4; cursor:not-allowed}
+.gal-link{color:var(--gold-hi); text-underline-offset:3px}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
@@ -508,7 +509,7 @@ if (location.pathname.includes("/p/") && pay) {
           <input id="hero-address" type="text" autocomplete="street-address" placeholder="Paste your listing address">
           <button class="btn btn-lg" type="submit">Order my package <span>→</span></button>
         </form>
-        <p class="skip">Want the full plan set or a property website too? <a href="#claim">Add them at checkout →</a></p>
+        <p class="skip">Want the full plan set or a property website too? <a href="#claim">Add them at checkout →</a><br>Want to see real examples first? <a href="/work/" target="_blank" rel="noopener">Browse past projects →</a></p>
 
         <div class="trust"><span class="stars-inline">★★★★★ 5-star reviews</span><span>55 land listings served</span><span>50 sold or under contract in 6 months</span><span>Charged only on delivery</span></div>
 
@@ -673,6 +674,7 @@ if (location.pathname.includes("/p/") && pay) {
       <p class="kicker">Proof</p>
       <h2>Agents use it. <em>Listings move.</em></h2>
       <p class="rating"><span class="stars">★★★★★</span> 5-star reviews from the agents I've worked with</p>
+      <p class="small"><a class="gal-link" href="/work/" target="_blank" rel="noopener">See the full project gallery: 11 listings, plans and renderings ↗</a></p>
     </div>
     <div class="stats">
       <div><strong data-count="55" class="tnum">55</strong><span>Land listings I've produced plans for</span></div>
@@ -840,6 +842,7 @@ if (location.pathname.includes("/p/") && pay) {
     <div class="reviews" id="ag-reviews" hidden></div>
     <div class="ag-cta">
       <a class="btn btn-lg" href="#claim" data-cta="agents-bottom">Order my package · $50 <span>→</span></a>
+      <a class="btn btn-ghost" href="/work/" target="_blank" rel="noopener">Browse past projects ↗</a>
     </div>
   </div>
 </section>
