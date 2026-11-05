@@ -429,6 +429,17 @@ p{margin:0}
 .agree b{color:var(--paper)}
 #f-submit:disabled{opacity:.4; cursor:not-allowed}
 .gal-link{color:var(--gold-hi); text-underline-offset:3px}
+
+/* past-projects band + hero link */
+.gal-hero{align-self:flex-start; margin-top:-4px}
+.gal-cards{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px}
+.gal-card{display:block; text-decoration:none; border:1px solid var(--line); background:var(--ink); transition:border-color .2s, transform .3s}
+.gal-card:hover{border-color:var(--gold-soft); transform:translateY(-3px)}
+.gal-card img{width:100%; aspect-ratio:3/2; object-fit:cover; background:var(--ink-2)}
+.gal-card span{display:block; padding:12px 14px 14px}
+.gal-card b{display:block; font-weight:700; font-size:15px; line-height:1.3}
+.gal-card small{display:block; margin-top:2px; font-size:13px; color:var(--paper-dim)}
+@media (max-width:900px){ .gal-cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
@@ -476,7 +487,7 @@ if (location.pathname.includes("/p/") && pay) {
   <div class="wrap">
     <a class="brand" href="#hero" aria-label="Forma Designs"><i>F</i><b>FORMA</b></a>
     <p class="freepill"><b>$50</b><span>Concept plan + 3D rendering + due diligence package for your land listing</span></p>
-    <div class="topbar-ctas"><a class="btn" href="#claim" data-cta="top">Order · $50</a></div>
+    <div class="topbar-ctas"><a class="buylink" href="/work/" target="_blank" rel="noopener">Past projects ↗</a><a class="btn" href="#claim" data-cta="top">Order · $50</a></div>
   </div>
 </header>
 
@@ -513,6 +524,8 @@ if (location.pathname.includes("/p/") && pay) {
 
         <div class="trust"><span class="stars-inline">★★★★★ 5-star reviews</span><span>55 land listings served</span><span>50 sold or under contract in 6 months</span><span>Charged only on delivery</span></div>
 
+        <a class="btn btn-ghost gal-hero" href="/work/" target="_blank" rel="noopener">See 7 past projects ↗</a>
+
         <button class="hold" id="hold-build" type="button" aria-label="Press and hold to see this lot built out"><span class="ring"></span>Press and hold to build it</button>
       </div>
     </div>
@@ -533,7 +546,7 @@ if (location.pathname.includes("/p/") && pay) {
         </div>
         <ul class="ag-list" id="ag-short"></ul>
         <p class="ag-more" id="ag-more"></p>
-        <a class="btn" href="#claim" data-cta="agents">Order my package <span>→</span></a>
+        <div class="buyrow" style="margin-top:0"><a class="btn" href="#claim" data-cta="agents">Order my package <span>→</span></a><a class="btn btn-ghost" href="/work/" target="_blank" rel="noopener">See their projects ↗</a></div>
       </div>
     </div>
   </section>
@@ -634,6 +647,19 @@ if (location.pathname.includes("/p/") && pay) {
     </div>
   </section>
 </div>
+
+<!-- PAST PROJECTS -->
+<section class="band alt gal-band" id="examples">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="kicker">Past projects</p>
+      <h2>See the work <em>before you order.</em></h2>
+      <p class="lede">Real listings I've built out: the concept plan, the 3D rendering, the site as it sits today and the listing it was made for.</p>
+    </div>
+    <div class="gal-cards"><a class="gal-card" href="/work/#peterborough" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg" alt="Rendering for 80 Elm St, Peterborough, NH" loading="lazy"><span><b>80 Elm St</b><small>Peterborough, NH</small></span></a><a class="gal-card" href="/work/#voorhees" target="_blank" rel="noopener"><img src="img/voorhees-render.jpg" alt="Rendering for 336 Route 73, Voorhees, NJ" loading="lazy"><span><b>336 Route 73</b><small>Voorhees, NJ</small></span></a><a class="gal-card" href="/work/#durham-us70" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/portfolio/durham-us70/render.jpg" alt="Rendering for 2839 E US 70 Hwy, Durham, NC" loading="lazy"><span><b>2839 E US 70 Hwy</b><small>Durham, NC</small></span></a><a class="gal-card" href="/work/#clearwater" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/portfolio/clearwater/render.jpg" alt="Rendering for 3141 N McMullen Booth Rd, Clearwater, FL" loading="lazy"><span><b>3141 N McMullen Booth Rd</b><small>Clearwater, FL</small></span></a></div>
+    <div class="buyrow"><a class="btn btn-lg" href="/work/" target="_blank" rel="noopener">Browse all 7 projects ↗</a></div>
+  </div>
+</section>
 
 <!-- PROMISE -->
 <section class="band" id="promise">
