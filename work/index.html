@@ -94,6 +94,19 @@ h1 em,h2 em{font-style:normal;color:var(--gold)}
 .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .35s}
 .stage img.on{opacity:1}
 .stage img.cover{object-fit:cover}
+.stage img.page{object-fit:contain; background:#e9e6df}
+.stage .loading{position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:24px; background:rgba(11,11,10,.88); font:500 11px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--gold-hi)}
+.stage .loading a{color:var(--gold-hi)}
+.stage .loading[hidden]{display:none}
+.tab-dd{color:var(--gold-hi)!important}
+.tab-dd[aria-selected="true"]{color:var(--ink)!important}
+.strip button.pg{aspect-ratio:17/22; width:62px; background:#e9e6df}
+.strip button.pg img{object-fit:contain}
+.dd-note{margin:14px 0 0; font-size:14px; color:var(--paper-dim)}
+.viewer.is-dd .stage{background:#e9e6df}
+@media (max-width:560px){ .viewer.is-dd .stage{aspect-ratio:3/4} .stage .zoom{display:none} }
+.dd-note b{color:var(--paper)}
+.dd-note a{color:var(--gold-hi)}
 .stage .cap{position:absolute;left:12px;bottom:12px;font:500 10px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;background:rgba(14,14,14,.8);padding:7px 10px;border:1px solid var(--line);pointer-events:none}
 .stage .zoom{position:absolute;right:12px;bottom:12px;font:500 10px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;background:rgba(14,14,14,.8);padding:7px 10px;border:1px solid var(--line);pointer-events:none}
 .strip{display:flex;gap:8px;padding:8px;overflow-x:auto;border-top:1px solid var(--line);scrollbar-width:thin}
@@ -200,7 +213,7 @@ if (location.pathname.includes("/p/") && pay) {
     <div class="wrap">
       <p class="kicker">Selected work</p>
       <h1>Land listings, <em>built out.</em></h1>
-      <p class="lede">Every project below started as a vacant land listing and an address. Each one got a concept plan drawn to the parcel, its setbacks and its zoning, a photoreal 3D rendering, and a study of the site as it sits today. Scroll through the work, open any sheet full size, and see the listing it was made for.</p>
+      <p class="lede">Every project below started as a vacant land listing and an address. Each one got a concept plan drawn to the parcel, its setbacks and its zoning, a photoreal 3D rendering, a study of the site as it sits today, and on most of them a full due diligence package. Scroll through the work, open any sheet full size, and see the listing it was made for.</p>
       <div class="stats" id="stats"></div>
     </div>
   </section>
@@ -252,7 +265,7 @@ const std = (slug) => [
 ];
 // Listing details from each property's public listing. No prices on this page.
 const P = [
-  { slug: "peterborough", cat: "retail", type: "Retail + dining",
+  { slug: "peterborough", dd: SB + "portfolio/peterborough/package.pdf", cat: "retail", type: "Retail + dining",
     title: "80 Elm St", loc: "Peterborough, NH · Hillsborough County",
     concept: "Retail and sit-down dining, three buildings",
     desc: "A recently cleared 5.58-acre greenfield commercial lot in the Village Commercial District, on the Elm Street (NH 101/202) corridor less than a mile from downtown Peterborough.",
@@ -275,11 +288,8 @@ const P = [
     imgs: [
       { k: "Rendering", src: "../assets/render.jpg", cover: true },
       { k: "Concept plan", src: "../assets/plan.jpg" },
-      { k: "Package cover", src: "../assets/pages/p01.jpg" },
-      { k: "Zoning", src: "../assets/pages/p03.jpg" },
-      { k: "Program", src: "../assets/pages/p04.jpg" },
-    ] },
-  { slug: "durham-us70", cat: "retail", type: "Retail + drive-thru QSR",
+    ], ddPages: Array.from({ length: 11 }, (_, n) => "../assets/pages/p" + String(n + 1).padStart(2, "0") + ".jpg") },
+  { slug: "durham-us70", dd: SB + "portfolio/durham-us70/package.pdf", cat: "retail", type: "Retail + drive-thru QSR",
     title: "2839 E US 70 Hwy", loc: "Durham, NC · Durham County",
     concept: "Retail and drive-thru QSR",
     desc: "A 4.04-acre parcel with about 240 feet of frontage on US 70 in eastern Durham, zoned Commercial Heavy, near I-40 and next to the planned 350+ unit Bourdon Woods development.",
@@ -293,7 +303,7 @@ const P = [
     plan: "A 17,000 SF professional and medical office building with 68 parking stalls, on a nearly flat pad.",
     listing: [["Acreage", "2.14 ac"], ["Zoning", "OI · Office/Institutional"], ["Access", "Paved, off Yorktown Ave"], ["Listed by", "TRU Triangle"]],
     program: [["Building area", "17,000 SF"], ["Parking", "68 stalls"], ["Terrain", "13.8 ft relief · 3% average slope"]] },
-  { slug: "clearwater", cat: "office", type: "Medical office campus",
+  { slug: "clearwater", dd: SB + "portfolio/clearwater/package.pdf", cat: "office", type: "Medical office campus",
     title: "3141 N McMullen Booth Rd", loc: "Clearwater, FL · Pinellas County",
     concept: "Medical office campus",
     desc: "About 5 acres of vacant land within a larger 12.89-acre parcel in Clearwater's Countryside area, next to an assisted living community, with an Institutional future land use designation.",
@@ -307,7 +317,7 @@ const P = [
     plan: "Five garden-style buildings with 90 units and about 90,000 SF, 360 parking stalls and a stormwater pond, fit to a site with nearly 100 feet of relief.",
     listing: [["Acreage", "15.9 ac"], ["Zoning", "PDR 6.185"], ["Approved", "Up to 90 multifamily units"], ["Listed by", "CityPlat"]],
     program: [["Units", "90 in 5 buildings"], ["Building area", "≈90,000 SF"], ["Parking", "360 stalls"], ["Stormwater", "10,280 SF pond"], ["Terrain", "97.1 ft relief · 8.2% average slope"]] },
-  { slug: "yorktown", cat: "retail", type: "Neighborhood retail",
+  { slug: "yorktown", dd: SB + "portfolio/yorktown/package.pdf", cat: "retail", type: "Neighborhood retail",
     title: "8900 & 8910 George Washington Memorial Hwy", loc: "Yorktown, VA · York County",
     concept: "Neighborhood retail",
     desc: "A 1.11-acre commercial parcel spanning two addresses, with about 225 feet of frontage on heavily traveled George Washington Memorial Highway (US 17).",
@@ -315,7 +325,11 @@ const P = [
     listing: [["Acreage", "1.11 ac"], ["Zoning", "LB · Limited Business"], ["Frontage", "±225 ft on US 17"], ["Listed by", "Harvey Lindsay Commercial Real Estate"]],
     program: [["Building area", "4,500 SF"], ["Parking", "18 stalls"], ["Terrain", "8.5 ft relief · 7.2% average slope"]] },
 ];
-P.forEach((p) => { if (!p.imgs) p.imgs = std(p.slug); });
+P.forEach((p) => {
+  if (!p.imgs) p.imgs = std(p.slug);
+  p.base = p.imgs.length;                       // sheets before the due diligence pages
+  if (p.ddPages) { p.ddPages.forEach((src, n) => p.imgs.push({ k: `Due diligence · page ${n + 1} of ${p.ddPages.length}`, src, dd: true })); p.ddReady = true; }
+});
 
 const CATS = [["all", "All projects"], ["retail", "Retail & commercial"], ["office", "Office & medical"], ["residential", "Residential"]];
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -342,6 +356,7 @@ $("#filters").addEventListener("click", (e) => {
 
 // project sections
 const rows = (arr) => arr.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+const hasDD = (p) => !!(p.dd || p.ddPages);
 $("#projects").innerHTML = P.map((p, i) => `
 <section class="proj" id="${p.slug}" data-cat="${p.cat}" aria-labelledby="h-${p.slug}">
   <div class="wrap">
@@ -349,11 +364,8 @@ $("#projects").innerHTML = P.map((p, i) => `
       <div><p class="num">${String(i + 1).padStart(2, "0")} · ${esc(p.type)}</p><h2 id="h-${p.slug}">${esc(p.title)}</h2><p class="loc">${esc(p.loc)}</p></div>
       <p class="concept">${esc(p.concept)}</p>
     </div>
-    <div class="viewer" data-i="${i}">
-      <div class="tabs" role="tablist" aria-label="${esc(p.title)} sheets">${p.imgs.map((m, j) => `<button class="tab" role="tab" type="button" data-j="${j}" aria-selected="${j === 0}">${esc(m.k)}</button>`).join("")}</div>
-      <div class="stage" role="button" tabindex="0" aria-label="Open full size">${p.imgs.map((m, j) => `<img class="${m.cover ? "cover " : ""}${j === 0 ? "on" : ""}" data-src="${m.src}" ${j === 0 ? `src="${m.src}"` : ""} alt="${esc(m.k)}: ${esc(p.title)}, ${esc(p.loc.split(" · ")[0])}" loading="lazy">`).join("")}<span class="cap">${esc(p.imgs[0].k)}</span><span class="zoom">Tap to enlarge ⤢</span></div>
-      <div class="strip">${p.imgs.map((m, j) => `<button type="button" data-j="${j}" aria-current="${j === 0}" aria-label="Show ${esc(m.k)}"><img src="${m.src}" alt="" loading="lazy"></button>`).join("")}</div>
-    </div>
+    <div class="viewer" data-i="${i}"></div>
+    ${hasDD(p) ? `<p class="dd-note"><b>Due diligence package included.</b> Open the Due diligence tab to page through it${p.dd ? `, or <a href="${p.dd}" target="_blank" rel="noopener">download the PDF ↓</a>` : ""}.</p>` : ""}
     <div class="info">
       <div class="box"><h3>The listing</h3><p>${esc(p.desc)}</p><dl>${rows(p.listing)}</dl></div>
       <div class="box"><h3>The plan</h3><p>${esc(p.plan)}</p><dl>${rows(p.program)}</dl></div>
@@ -361,23 +373,82 @@ $("#projects").innerHTML = P.map((p, i) => `
   </div>
 </section>`).join("");
 
-// viewer behaviour
+// viewer: one tab per sheet, plus one "Due diligence" tab that covers every package page
 const cur = new Map();
+function buildViewer(v) {
+  const p = P[+v.dataset.i], j0 = cur.get(v) || 0;
+  const tabs = p.imgs.slice(0, p.base).map((m, j) => `<button class="tab" role="tab" type="button" data-j="${j}">${esc(m.k)}</button>`).join("")
+    + (hasDD(p) ? `<button class="tab tab-dd" role="tab" type="button" data-dd="1">Due diligence${p.ddReady ? ` · ${p.imgs.length - p.base} pages` : ""}</button>` : "");
+  v.innerHTML = `<div class="tabs" role="tablist" aria-label="${esc(p.title)} sheets">${tabs}</div>
+    <div class="stage" role="button" tabindex="0" aria-label="Open full size">${p.imgs.map((m, j) => `<img class="${m.cover ? "cover " : ""}${m.dd ? "page " : ""}" data-src="${m.src}" alt="${esc(m.k)}: ${esc(p.title)}">`).join("")}<span class="cap"></span><span class="zoom">Tap to enlarge ⤢</span><span class="loading" hidden></span></div>
+    <div class="strip">${p.imgs.map((m, j) => `<button type="button" data-j="${j}" aria-label="Show ${esc(m.k)}" class="${m.dd ? "pg" : ""}"><img src="${m.src}" alt="" loading="lazy"></button>`).join("")}</div>`;
+  show(v, Math.min(j0, p.imgs.length - 1));
+}
 function show(v, j) {
   const p = P[+v.dataset.i]; cur.set(v, j);
-  v.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", +t.dataset.j === j));
+  const isDD = j >= p.base;
+  v.classList.toggle("is-dd", isDD);
+  v.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", t.dataset.dd ? isDD : +t.dataset.j === j));
   v.querySelectorAll(".strip button").forEach((t) => t.setAttribute("aria-current", +t.dataset.j === j));
   v.querySelectorAll(".stage img").forEach((im, k) => { if (k === j && !im.getAttribute("src")) im.src = im.dataset.src; im.classList.toggle("on", k === j); });
   v.querySelector(".cap").textContent = p.imgs[j].k;
+  const cur3 = v.querySelector(".strip [aria-current='true']");
+  if (cur3 && isDD) cur3.scrollIntoView({ block: "nearest", inline: "nearest" });
 }
+
+// due diligence PDFs: rendered page by page in the browser with pdf.js
+let pdfjsP = null;
+function pdfjs() {
+  if (!pdfjsP) pdfjsP = new Promise((res, rej) => {
+    const sc = document.createElement("script");
+    sc.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+    sc.onload = () => { window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; res(window.pdfjsLib); };
+    sc.onerror = rej; document.head.append(sc);
+  });
+  return pdfjsP;
+}
+const ddLoads = new Map();
+function loadDD(p, v) {
+  if (p.ddReady) return Promise.resolve();
+  if (ddLoads.has(p)) return ddLoads.get(p);
+  const status = (t) => { const l = v.querySelector(".loading"); if (l) { l.hidden = !t; l.textContent = t || ""; } };
+  const job = (async () => {
+    status("Opening the due diligence package…");
+    const lib = await pdfjs();
+    const doc = await lib.getDocument(p.dd).promise;
+    const target = Math.min(1600, Math.max(1000, Math.round((innerWidth || 1200) * (devicePixelRatio || 1))));
+    for (let n = 1; n <= doc.numPages; n++) {
+      status(`Loading page ${n} of ${doc.numPages}…`);
+      const page = await doc.getPage(n);
+      const vp1 = page.getViewport({ scale: 1 });
+      const vp = page.getViewport({ scale: target / vp1.width });
+      const c = document.createElement("canvas"); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+      await page.render({ canvasContext: c.getContext("2d"), viewport: vp }).promise;
+      const blob = await new Promise((r) => c.toBlob(r, "image/jpeg", 0.86));
+      p.imgs.push({ k: `Due diligence · page ${n} of ${doc.numPages}`, src: URL.createObjectURL(blob), dd: true });
+    }
+    p.ddReady = true; status("");
+  })().catch((e) => { console.warn(e); status(""); ddLoads.delete(p); throw e; });
+  ddLoads.set(p, job);
+  return job;
+}
+
 document.querySelectorAll(".viewer").forEach((v) => {
-  cur.set(v, 0);
-  v.addEventListener("click", (e) => {
+  cur.set(v, 0); buildViewer(v);
+  v.addEventListener("click", async (e) => {
+    const p = P[+v.dataset.i];
+    if (e.target.closest("[data-dd]")) {
+      if (p.ddReady) { show(v, p.base); return; }
+      try { await loadDD(p, v); cur.set(v, p.base); buildViewer(v); }
+      catch (_) { const l = v.querySelector(".loading"); if (l) { l.hidden = false; l.innerHTML = p.dd ? `Couldn't open it here. <a href="${p.dd}" target="_blank" rel="noopener">Download the PDF ↓</a>` : "Couldn't open it here."; } }
+      return;
+    }
+    if (e.target.closest(".loading a")) return;
     const b = e.target.closest("[data-j]");
     if (b) { show(v, +b.dataset.j); return; }
     if (e.target.closest(".stage")) openLb(+v.dataset.i, cur.get(v));
   });
-  v.querySelector(".stage").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLb(+v.dataset.i, cur.get(v)); } });
+  v.addEventListener("keydown", (e) => { if (e.target.closest(".stage") && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openLb(+v.dataset.i, cur.get(v)); } });
 });
 
 // lightbox
