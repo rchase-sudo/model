@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forma · Project Gallery</title>
-<meta name="description" content="Concept plans, 3D renderings and site studies Forma has produced for land listings across seven states.">
+<meta name="description" content="Concept plans, 3D renderings and site studies Forma has produced for land listings across five states.">
 <meta name="theme-color" content="#0E0E0E">
 <meta property="og:title" content="Forma · Project Gallery">
 <meta property="og:description" content="Land listings, built out. Concept plans, 3D renderings and site studies.">
@@ -286,13 +286,6 @@ const P = [
     plan: "Two buildings totaling 9,600 SF for retail and a drive-thru restaurant, with 53 parking stalls, laid out across a site with about 46 feet of relief.",
     listing: [["Acreage", "4.04 ac"], ["Zoning", "HC · Commercial Heavy"], ["Frontage", "±240 ft on US 70"], ["Listed by", "Pickett Sprouse Commercial Real Estate"]],
     program: [["Building area", "9,600 SF in 2 buildings"], ["Parking", "53 stalls"], ["Terrain", "46.4 ft relief · 8.6% average slope"]] },
-  { slug: "garland", cat: "retail", type: "Retail, QSR + office",
-    title: "5026 Rosehill Rd", loc: "Garland, TX · Dallas County",
-    concept: "Retail, QSR and office",
-    desc: "4.35 acres of commercial land on Rosehill Road in Garland, in Dallas County.",
-    plan: "Three buildings totaling 21,800 SF for retail, quick-service restaurant and office users, with 123 parking stalls.",
-    listing: [["Acreage", "4.35 ac"], ["Zoning", "Commercial"], ["County", "Dallas"]],
-    program: [["Building area", "21,800 SF in 3 buildings"], ["Parking", "123 stalls"]] },
   { slug: "durham-cornwallis", cat: "office", type: "Medical office",
     title: "1908 E Cornwallis Rd", loc: "Durham, NC · Durham County",
     concept: "Professional and medical office",
@@ -321,27 +314,6 @@ const P = [
     plan: "A 4,500 SF one-story retail building with 18 parking stalls, placed to fit the frontage-buildable area of the lot.",
     listing: [["Acreage", "1.11 ac"], ["Zoning", "LB · Limited Business"], ["Frontage", "±225 ft on US 17"], ["Listed by", "Harvey Lindsay Commercial Real Estate"]],
     program: [["Building area", "4,500 SF"], ["Parking", "18 stalls"], ["Terrain", "8.5 ft relief · 7.2% average slope"]] },
-  { slug: "chico", cat: "residential", type: "Condominiums",
-    title: "6038 Anita Rd", loc: "Chico, CA · Butte County",
-    concept: "Multi-level condominiums",
-    desc: "A 9-acre site on Anita Road in Chico, today an industrial property with a 30,000 SF steel warehouse and an open yard, offered together with private rail track in Chico's Barber Yard.",
-    plan: "A residential reuse concept: five three-story condominium buildings with ground-floor garages, about 90,000 SF in all, with 112 parking stalls and a stormwater basin.",
-    listing: [["Acreage", "9 ac"], ["Zoning", "A-40"], ["Today", "30,000 SF warehouse + yard"], ["Listed by", "1st Choice Realty & Associates"]],
-    program: [["Building area", "≈90,000 SF in 5 buildings"], ["Parking", "112 stalls + garages"], ["Stormwater", "13,210 SF basin"], ["Terrain", "17.1 ft relief · 3.6% average slope"]] },
-  { slug: "durham-ellis", cat: "residential", type: "Duplex infill",
-    title: "1202 & 1206 Ellis Rd", loc: "Durham, NC · Durham County",
-    concept: "Duplex residential infill",
-    desc: "A ±1.25-acre corner infill assemblage at Ellis Road and Riddle Road, rezoned in 2025 for up to 20 single-family or duplex units.",
-    plan: "Three duplex buildings totaling 5,400 SF of footprint with 30 parking spaces, laid out on the corner assemblage.",
-    listing: [["Acreage", "±1.25 ac"], ["Zoning", "RS-M(D)"], ["Approved", "Up to 20 SF/duplex units"], ["Listed by", "KW Commercial"]],
-    program: [["Buildings", "3 duplex buildings"], ["Footprint", "5,400 SF"], ["Parking", "30 spaces"], ["Terrain", "15.9 ft relief · 5% average slope"]] },
-  { slug: "durham-alston", cat: "retail", type: "Neighborhood retail",
-    title: "S Alston Ave & Mint St", loc: "Durham, NC · Durham County",
-    concept: "Neighborhood retail",
-    desc: "An assemblage of five contiguous commercial parcels at the corner of S Alston Avenue and Mint Street, zoned Neighborhood Commercial, with visibility from the Durham Freeway.",
-    plan: "A 4,900 SF neighborhood retail building with 20 parking stalls and a stormwater area, designed around the seller's use restrictions.",
-    listing: [["Acreage", "±1.36 ac"], ["Zoning", "CN · Neighborhood Commercial"], ["Visibility", "Durham Freeway"], ["Listed by", "Lee & Associates"]],
-    program: [["Building area", "4,900 SF"], ["Parking", "20 stalls"], ["Stormwater", "3,240 SF"], ["Terrain", "25.6 ft relief · 8.3% average slope"]] },
 ];
 P.forEach((p) => { if (!p.imgs) p.imgs = std(p.slug); });
 
@@ -350,10 +322,10 @@ const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 const $ = (s, r = document) => r.querySelector(s);
 
 // stats
-const acres = 5.58 + 1.32 + 4.04 + 4.35 + 2.14 + 5 + 15.9 + 1.11 + 9 + 1.25 + 1.36;
+const acres = 5.58 + 1.32 + 4.04 + 2.14 + 5 + 15.9 + 1.11;
 const states = new Set(P.map((p) => p.loc.split(",")[1].trim().slice(0, 2))).size;
 $("#stats").innerHTML = [
-  [P.length, "Listings built out"], [states, "States"], ["±" + Math.round(acres), "Acres planned"], ["≈300K", "SF of buildings laid out"],
+  [P.length, "Listings built out"], [states, "States"], ["±" + Math.round(acres), "Acres planned"], ["≈177K", "SF of buildings laid out"],
 ].map(([n, l]) => `<div><strong>${n}</strong><span>${l}</span></div>`).join("");
 $("#hero-bg").style.backgroundImage = `url("${P[0].imgs[0].src}")`;
 
