@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Forma · Project Gallery</title>
+<meta name="description" content="Concept plans, 3D renderings and site studies Forma has produced for land listings across seven states.">
+<meta name="theme-color" content="#0E0E0E">
+<meta property="og:title" content="Forma · Project Gallery">
+<meta property="og:description" content="Land listings, built out. Concept plans, 3D renderings and site studies.">
+<meta property="og:image" content="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://mmaqwemqbxwngqxtnsug.supabase.co">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ink:#0E0E0E; --ink-2:#161614; --ink-3:#1E1D1A; --paper:#F2EFE8; --paper-dim:#A7A296;
+  --gold:#B8924F; --gold-hi:#DCBB7A; --gold-soft:rgba(184,146,79,.34); --gold-fill:rgba(184,146,79,.09); --line:rgba(242,239,232,.1);
+  --f-sans:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif; --f-serif:"Bodoni Moda","Didot",Georgia,serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace; --pad:clamp(16px,4.5vw,64px); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--f-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:var(--pad)}
+.kicker{font:500 11px/1.4 var(--f-mono);letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin:0 0 18px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:22px;height:1px;background:var(--gold)}
+h1,h2,h3{font-family:var(--f-sans);font-weight:800;text-transform:uppercase;letter-spacing:.005em;margin:0;line-height:.98;text-wrap:balance}
+h1{font-size:clamp(2.8rem,7.4vw,6.4rem);font-stretch:82%}
+h2{font-size:clamp(1.9rem,4vw,3rem)}
+h1 em,h2 em{font-style:normal;color:var(--gold)}
+.serif{font-family:var(--f-serif);font-style:italic;font-weight:400;text-transform:none;color:var(--gold-hi)}
+.lede{color:var(--paper-dim);font-size:clamp(1rem,1.3vw,1.14rem);max-width:56ch;margin:22px 0 0}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:30;background:rgba(14,14,14,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand i{width:28px;height:28px;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font:800 13px var(--f-sans);font-style:normal}
+.brand b{letter-spacing:.3em;font-size:13px}
+.brand span{font:500 10px var(--f-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--paper-dim);margin-left:8px;padding-left:12px;border-left:1px solid var(--line)}
+.top .contact{font:500 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi);text-decoration:none;white-space:nowrap}
+
+/* hero */
+.hero{padding-block:clamp(56px,10vw,128px) clamp(40px,6vw,72px);position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:-1;opacity:.22;background:center/cover no-repeat;filter:saturate(.8)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 0%,rgba(14,14,14,.85) 45%,rgba(14,14,14,.4) 100%),linear-gradient(0deg,var(--ink) 0%,transparent 40%)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(36px,5vw,56px);border:1px solid var(--line);background:rgba(14,14,14,.6);max-width:900px}
+.stats div{padding:18px 18px 16px;border-right:1px solid var(--line);min-width:0}
+.stats div:last-child{border-right:0}
+.stats strong{display:block;font:900 clamp(1.9rem,3.6vw,2.8rem)/1 var(--f-sans);font-stretch:80%;font-variant-numeric:tabular-nums}
+.stats span{display:block;margin-top:8px;font-size:12.5px;line-height:1.4;color:var(--paper-dim)}
+
+/* filters + index */
+.index{padding-bottom:clamp(48px,7vw,88px)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{appearance:none;border:1px solid var(--line);background:transparent;padding:10px 14px;min-height:42px;font:500 11px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--paper-dim);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--gold);color:var(--ink);background:var(--gold)}
+.chip:not([aria-pressed="true"]):hover{border-color:var(--gold-soft);color:var(--paper)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{display:block;text-decoration:none;border:1px solid var(--line);background:var(--ink-2);transition:border-color .2s,transform .3s}
+.card:hover{border-color:var(--gold-soft);transform:translateY(-3px)}
+.card .ph{aspect-ratio:3/2;overflow:hidden;background:var(--ink-3)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.card:hover .ph img{transform:scale(1.04)}
+.card .tx{padding:14px 16px 16px}
+.card .ty{font:500 10px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.card b{display:block;margin-top:6px;font-weight:700;font-size:16px;line-height:1.3}
+.card small{display:block;margin-top:3px;font-size:13px;color:var(--paper-dim)}
+.card[hidden]{display:none}
+
+/* project sections */
+.proj{border-top:1px solid var(--line);padding-block:clamp(56px,8vw,104px)}
+.proj:nth-of-type(even){background:var(--ink-2)}
+.p-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px;margin-bottom:clamp(22px,3vw,32px)}
+.p-head .num{font:500 11px var(--f-mono);letter-spacing:.24em;color:var(--gold);margin:0 0 12px}
+.p-head h2{font-size:clamp(1.7rem,3.6vw,2.7rem)}
+.p-head .loc{margin:10px 0 0;color:var(--paper-dim);font-size:15px}
+.p-head .concept{font:400 clamp(1.25rem,2.2vw,1.7rem)/1.2 var(--f-serif);font-style:italic;color:var(--gold-hi);text-align:right;max-width:24ch}
+
+.viewer{border:1px solid var(--line);background:#0b0b0a}
+.tabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{appearance:none;background:none;border:0;border-right:1px solid var(--line);padding:0 18px;min-height:48px;font:500 11px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--paper-dim);cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);background:var(--gold)}
+.tab:not([aria-selected="true"]):hover{color:var(--paper)}
+.stage{position:relative;aspect-ratio:3/2;background:#0b0b0a;cursor:zoom-in}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .35s}
+.stage img.on{opacity:1}
+.stage img.cover{object-fit:cover}
+.stage .cap{position:absolute;left:12px;bottom:12px;font:500 10px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;background:rgba(14,14,14,.8);padding:7px 10px;border:1px solid var(--line);pointer-events:none}
+.stage .zoom{position:absolute;right:12px;bottom:12px;font:500 10px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;background:rgba(14,14,14,.8);padding:7px 10px;border:1px solid var(--line);pointer-events:none}
+.strip{display:flex;gap:8px;padding:8px;overflow-x:auto;border-top:1px solid var(--line);scrollbar-width:thin}
+.strip button{flex:0 0 auto;width:96px;aspect-ratio:3/2;border:1px solid var(--line);padding:0;background:#000;cursor:pointer;opacity:.6;transition:opacity .2s,border-color .2s}
+.strip button img{width:100%;height:100%;object-fit:cover}
+.strip button[aria-current="true"]{opacity:1;border-color:var(--gold)}
+
+.info{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);margin-top:clamp(24px,3vw,36px)}
+.box h3{font:600 10.5px/1.4 var(--f-mono);letter-spacing:.26em;color:var(--gold);margin:0 0 12px}
+.box p{margin:0 0 14px;color:var(--paper-dim);font-size:15px;max-width:62ch}
+dl{display:grid;grid-template-columns:minmax(120px,auto) 1fr;margin:0;border-top:1px solid var(--line)}
+dt,dd{padding:11px 0;border-bottom:1px solid var(--line);margin:0;font-size:14.5px}
+dt{color:var(--paper-dim);padding-right:16px}
+dd{font-weight:600;overflow-wrap:anywhere}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(8,8,8,.97);display:flex;flex-direction:column}
+.lb[hidden]{display:none}
+.lb-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px var(--pad);border-bottom:1px solid var(--line);min-height:56px}
+.lb-top p{margin:0;font:500 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--paper-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-top p b{color:var(--paper)}
+.lb-btn{appearance:none;border:1px solid var(--line);background:transparent;min-height:44px;min-width:44px;padding:0 14px;font:500 11px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.lb-btn:hover{border-color:var(--gold);color:var(--gold-hi)}
+.lb-stage{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:12px;touch-action:pinch-zoom}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain}
+.lb-stage.full{display:block}
+.lb-stage.full img{max-width:none;max-height:none;width:auto;margin:auto}
+.lb-nav{display:flex;justify-content:space-between;gap:12px;padding:10px var(--pad);border-top:1px solid var(--line)}
+
+/* close */
+.close{border-top:1px solid var(--gold-soft);padding-block:clamp(64px,9vw,120px);text-align:left}
+.close .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border:1px solid var(--gold);background:var(--gold);color:var(--ink);font:800 12px/1 var(--f-sans);letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+.btn:hover{background:var(--gold-hi);border-color:var(--gold-hi)}
+.btn.ghost{background:transparent;color:var(--gold-hi)}
+.btn.ghost:hover{background:var(--gold);color:var(--ink)}
+.foot{border-top:1px solid var(--line);padding-block:22px;font-size:12px;color:var(--paper-dim)}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+
+@media (max-width:900px){
+  .info{grid-template-columns:1fr}
+  .p-head .concept{text-align:left}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats div:nth-child(2){border-right:0}
+  .stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+@media (max-width:560px){
+  .brand span{display:none}
+  .stage{aspect-ratio:4/3}
+  dl{grid-template-columns:minmax(104px,auto) 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
+<!-- PostHog (session replay + analytics). Same block on /free, /p/ pages and the template. -->
+<script>window.fph=function(){(window.fph.q=window.fph.q||[]).push([].slice.call(arguments))};</script>
+<script type="module">
+import posthog from "https://cdn.jsdelivr.net/npm/posthog-js@1.438.10/+esm";
+posthog.init("phc_BNcBQV6MAvZryefMoAcK4K3UyVQjZAuRnXtbWDKYSZZB", {
+  api_host: "https://us.i.posthog.com",
+  person_profiles: "identified_only",
+  session_recording: {
+    recordCrossOriginIframes: true,
+    captureCanvas: { recordCanvas: true, canvasFps: 4, canvasQuality: "0.4" },
+  },
+});
+window.posthog = posthog;
+const q = (window.fph && window.fph.q) || [];
+window.fph = (m, ...a) => { try { posthog[m](...a); } catch (e) {} };
+q.forEach((a) => window.fph(...a));
+// Name the visitor: forms call fphWho(); on formadesigns.io the Framer parent page gets it too.
+window.fphWho = (email, props) => {
+  if (!email) return;
+  window.fph("identify", email, props);
+  if (window.parent !== window) {
+    for (const o of ["https://formadesigns.io", "https://www.formadesigns.io"]) {
+      try { window.parent.postMessage({ type: "forma-identify", email, props }, o); } catch (e) {}
+    }
+  }
+};
+// Agent preview pages: the page is made for one agent, so tag the visit with them.
+const pay = document.querySelector('a[href*="/payment?"]');
+if (location.pathname.includes("/p/") && pay) {
+  const u = new URL(pay.href, location.href).searchParams;
+  const slug = location.pathname.split("/p/")[1].split("/")[0];
+  window.fph("register", { preview_slug: slug, preview_address: u.get("address") || "" });
+  window.fphWho(u.get("email"), { name: u.get("name") || undefined, email: u.get("email"), preview_slug: slug });
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Forma project gallery"><i>F</i><b>FORMA</b><span>Project gallery</span></a>
+    <a class="contact" href="mailto:support@formadesigns.io">support@formadesigns.io</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-bg" id="hero-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="kicker">Selected work</p>
+      <h1>Land listings, <em>built out.</em></h1>
+      <p class="lede">Every project below started as a vacant land listing and an address. Each one got a concept plan drawn to the parcel, its setbacks and its zoning, a photoreal 3D rendering, and a study of the site as it sits today. Scroll through the work, open any sheet full size, and see the listing it was made for.</p>
+      <div class="stats" id="stats"></div>
+    </div>
+  </section>
+
+  <section class="index">
+    <div class="wrap">
+      <div class="filters" role="group" aria-label="Filter projects by type" id="filters"></div>
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+
+  <div id="projects"></div>
+
+  <section class="close">
+    <div class="wrap">
+      <p class="kicker">Your listing next</p>
+      <h2>Want your land <em>built out?</em></h2>
+      <p class="lede">Send me the address. I'll take it from the parcel record and the zoning code to a concept plan and a rendering buyers can picture themselves in.</p>
+      <div class="row">
+        <a class="btn" href="mailto:support@formadesigns.io?subject=My%20land%20listing">Email me your listing <span>→</span></a>
+        <a class="btn ghost" href="tel:9783465818">Call (978) 346-5818</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Forma Preliminary Design · Plans are preliminary and conceptual, not stamped engineering or permit documents.</span>
+    <span>Listing details are from the public listing for each property.</span>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Full-size sheet" hidden>
+  <div class="lb-top"><p id="lb-title"></p><div style="display:flex;gap:8px"><button class="lb-btn" id="lb-fit" type="button">Actual size</button><button class="lb-btn" id="lb-close" type="button" aria-label="Close">Close ✕</button></div></div>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""></div>
+  <div class="lb-nav"><button class="lb-btn" id="lb-prev" type="button">← Previous</button><button class="lb-btn" id="lb-next" type="button">Next →</button></div>
+</div>
+
+<script>
+(() => {
+"use strict";
+const SB = "https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/";
+const std = (slug) => [
+  { k: "Rendering", src: SB + "portfolio/" + slug + "/render.jpg", cover: true },
+  { k: "Concept plan", src: SB + "portfolio/" + slug + "/plan.jpg" },
+  { k: "Existing conditions", src: SB + "portfolio/" + slug + "/existing.jpg" },
+  { k: "Aerial", src: SB + "portfolio/" + slug + "/aerial.jpg", cover: true },
+];
+// Listing details from each property's public listing. No prices on this page.
+const P = [
+  { slug: "peterborough", cat: "retail", type: "Retail + dining",
+    title: "80 Elm St", loc: "Peterborough, NH · Hillsborough County",
+    concept: "Retail and sit-down dining, three buildings",
+    desc: "A recently cleared 5.58-acre greenfield commercial lot in the Village Commercial District, on the Elm Street (NH 101/202) corridor less than a mile from downtown Peterborough.",
+    plan: "Three buildings totaling 35,000 SF for retail and sit-down dining, with 170 parking stalls including 6 accessible, a stormwater basin and a nine-sheet plan set.",
+    listing: [["Acreage", "5.58 ac"], ["Zoning", "Village Commercial District"], ["Corridor", "Elm St · NH 101/202"], ["Listed by", "UNICOM Global"]],
+    program: [["Building area", "35,000 SF in 3 buildings"], ["Parking", "170 stalls · 6 accessible"], ["Stormwater", "8,490 SF basin"], ["Terrain", "795.7–807.2 ft · 84% under 5% slope"], ["Setbacks", "30 ft front · 15 ft side and rear"]],
+    imgs: [
+      { k: "Rendering", src: SB + "peterborough/render.jpg", cover: true },
+      { k: "Concept plan", src: SB + "peterborough/concept-plan.jpg" },
+      { k: "Existing conditions", src: SB + "peterborough/existing-conditions.jpg" },
+      { k: "Aerial", src: SB + "peterborough/aerial.jpg", cover: true },
+    ] },
+  { slug: "voorhees", cat: "retail", type: "Bank pad",
+    title: "336 Route 73", loc: "Voorhees Township, NJ · Camden County",
+    concept: "Single-tenant bank with drive-thru",
+    desc: "A ±1.32-acre vacant parcel with about 250 feet of frontage on NJ Route 73, a state highway corridor near Virtua Voorhees Hospital and a cluster of national retailers.",
+    plan: "A 5,900 SF bank with a drive-thru loop, 25 parking spaces and a single Route 73 driveway, plus a due diligence package covering zoning, the development program and an interactive property website.",
+    listing: [["Acreage", "±1.32 ac"], ["Zoning", "MB · Major Business"], ["Frontage", "±250 ft on Route 73"], ["Listed by", "Rose Commercial"]],
+    program: [["Building area", "5,900 SF bank"], ["Drive-thru", "Loop drive with stacking"], ["Parking", "25 spaces"], ["Access", "One Route 73 driveway"]],
+    imgs: [
+      { k: "Rendering", src: "../assets/render.jpg", cover: true },
+      { k: "Concept plan", src: "../assets/plan.jpg" },
+      { k: "Package cover", src: "../assets/pages/p01.jpg" },
+      { k: "Zoning", src: "../assets/pages/p03.jpg" },
+      { k: "Program", src: "../assets/pages/p04.jpg" },
+    ] },
+  { slug: "durham-us70", cat: "retail", type: "Retail + drive-thru QSR",
+    title: "2839 E US 70 Hwy", loc: "Durham, NC · Durham County",
+    concept: "Retail and drive-thru QSR",
+    desc: "A 4.04-acre parcel with about 240 feet of frontage on US 70 in eastern Durham, zoned Commercial Heavy, near I-40 and next to the planned 350+ unit Bourdon Woods development.",
+    plan: "Two buildings totaling 9,600 SF for retail and a drive-thru restaurant, with 53 parking stalls, laid out across a site with about 46 feet of relief.",
+    listing: [["Acreage", "4.04 ac"], ["Zoning", "HC · Commercial Heavy"], ["Frontage", "±240 ft on US 70"], ["Listed by", "Pickett Sprouse Commercial Real Estate"]],
+    program: [["Building area", "9,600 SF in 2 buildings"], ["Parking", "53 stalls"], ["Terrain", "46.4 ft relief · 8.6% average slope"]] },
+  { slug: "garland", cat: "retail", type: "Retail, QSR + office",
+    title: "5026 Rosehill Rd", loc: "Garland, TX · Dallas County",
+    concept: "Retail, QSR and office",
+    desc: "4.35 acres of commercial land on Rosehill Road in Garland, in Dallas County.",
+    plan: "Three buildings totaling 21,800 SF for retail, quick-service restaurant and office users, with 123 parking stalls.",
+    listing: [["Acreage", "4.35 ac"], ["Zoning", "Commercial"], ["County", "Dallas"]],
+    program: [["Building area", "21,800 SF in 3 buildings"], ["Parking", "123 stalls"]] },
+  { slug: "durham-cornwallis", cat: "office", type: "Medical office",
+    title: "1908 E Cornwallis Rd", loc: "Durham, NC · Durham County",
+    concept: "Professional and medical office",
+    desc: "A 2.14-acre graded and cleared commercial parcel on E Cornwallis Road in Durham, with paved access off Yorktown Avenue.",
+    plan: "A 17,000 SF professional and medical office building with 68 parking stalls, on a nearly flat pad.",
+    listing: [["Acreage", "2.14 ac"], ["Zoning", "OI · Office/Institutional"], ["Access", "Paved, off Yorktown Ave"], ["Listed by", "TRU Triangle"]],
+    program: [["Building area", "17,000 SF"], ["Parking", "68 stalls"], ["Terrain", "13.8 ft relief · 3% average slope"]] },
+  { slug: "clearwater", cat: "office", type: "Medical office campus",
+    title: "3141 N McMullen Booth Rd", loc: "Clearwater, FL · Pinellas County",
+    concept: "Medical office campus",
+    desc: "About 5 acres of vacant land within a larger 12.89-acre parcel in Clearwater's Countryside area, next to an assisted living community, with an Institutional future land use designation.",
+    plan: "A 15,000 SF medical office building with 75 parking stalls and a stormwater pond, set into a site with more than 40 feet of relief.",
+    listing: [["Acreage", "±5 ac (of 12.89)"], ["Zoning", "HF"], ["Land use", "Institutional"], ["Listed by", "Luis Alexander Kortright, P.A."]],
+    program: [["Building area", "15,000 SF"], ["Parking", "75 stalls"], ["Stormwater", "7,910 SF pond"], ["Terrain", "42.4 ft relief · 10.1% average slope"]] },
+  { slug: "durham-infinity", cat: "residential", type: "Multifamily",
+    title: "301 Infinity Rd", loc: "Durham, NC · Durham County",
+    concept: "Garden multifamily, 90 units",
+    desc: "A 15.9-acre residential site rezoned by the City of Durham in 2026 for up to 90 multifamily units at up to 50 feet, with public sewer and water mains running the length of the site.",
+    plan: "Five garden-style buildings with 90 units and about 90,000 SF, 360 parking stalls and a stormwater pond, fit to a site with nearly 100 feet of relief.",
+    listing: [["Acreage", "15.9 ac"], ["Zoning", "PDR 6.185"], ["Approved", "Up to 90 multifamily units"], ["Listed by", "CityPlat"]],
+    program: [["Units", "90 in 5 buildings"], ["Building area", "≈90,000 SF"], ["Parking", "360 stalls"], ["Stormwater", "10,280 SF pond"], ["Terrain", "97.1 ft relief · 8.2% average slope"]] },
+  { slug: "yorktown", cat: "retail", type: "Neighborhood retail",
+    title: "8900 & 8910 George Washington Memorial Hwy", loc: "Yorktown, VA · York County",
+    concept: "Neighborhood retail",
+    desc: "A 1.11-acre commercial parcel spanning two addresses, with about 225 feet of frontage on heavily traveled George Washington Memorial Highway (US 17).",
+    plan: "A 4,500 SF one-story retail building with 18 parking stalls, placed to fit the frontage-buildable area of the lot.",
+    listing: [["Acreage", "1.11 ac"], ["Zoning", "LB · Limited Business"], ["Frontage", "±225 ft on US 17"], ["Listed by", "Harvey Lindsay Commercial Real Estate"]],
+    program: [["Building area", "4,500 SF"], ["Parking", "18 stalls"], ["Terrain", "8.5 ft relief · 7.2% average slope"]] },
+  { slug: "chico", cat: "residential", type: "Condominiums",
+    title: "6038 Anita Rd", loc: "Chico, CA · Butte County",
+    concept: "Multi-level condominiums",
+    desc: "A 9-acre site on Anita Road in Chico, today an industrial property with a 30,000 SF steel warehouse and an open yard, offered together with private rail track in Chico's Barber Yard.",
+    plan: "A residential reuse concept: five three-story condominium buildings with ground-floor garages, about 90,000 SF in all, with 112 parking stalls and a stormwater basin.",
+    listing: [["Acreage", "9 ac"], ["Zoning", "A-40"], ["Today", "30,000 SF warehouse + yard"], ["Listed by", "1st Choice Realty & Associates"]],
+    program: [["Building area", "≈90,000 SF in 5 buildings"], ["Parking", "112 stalls + garages"], ["Stormwater", "13,210 SF basin"], ["Terrain", "17.1 ft relief · 3.6% average slope"]] },
+  { slug: "durham-ellis", cat: "residential", type: "Duplex infill",
+    title: "1202 & 1206 Ellis Rd", loc: "Durham, NC · Durham County",
+    concept: "Duplex residential infill",
+    desc: "A ±1.25-acre corner infill assemblage at Ellis Road and Riddle Road, rezoned in 2025 for up to 20 single-family or duplex units.",
+    plan: "Three duplex buildings totaling 5,400 SF of footprint with 30 parking spaces, laid out on the corner assemblage.",
+    listing: [["Acreage", "±1.25 ac"], ["Zoning", "RS-M(D)"], ["Approved", "Up to 20 SF/duplex units"], ["Listed by", "KW Commercial"]],
+    program: [["Buildings", "3 duplex buildings"], ["Footprint", "5,400 SF"], ["Parking", "30 spaces"], ["Terrain", "15.9 ft relief · 5% average slope"]] },
+  { slug: "durham-alston", cat: "retail", type: "Neighborhood retail",
+    title: "S Alston Ave & Mint St", loc: "Durham, NC · Durham County",
+    concept: "Neighborhood retail",
+    desc: "An assemblage of five contiguous commercial parcels at the corner of S Alston Avenue and Mint Street, zoned Neighborhood Commercial, with visibility from the Durham Freeway.",
+    plan: "A 4,900 SF neighborhood retail building with 20 parking stalls and a stormwater area, designed around the seller's use restrictions.",
+    listing: [["Acreage", "±1.36 ac"], ["Zoning", "CN · Neighborhood Commercial"], ["Visibility", "Durham Freeway"], ["Listed by", "Lee & Associates"]],
+    program: [["Building area", "4,900 SF"], ["Parking", "20 stalls"], ["Stormwater", "3,240 SF"], ["Terrain", "25.6 ft relief · 8.3% average slope"]] },
+];
+P.forEach((p) => { if (!p.imgs) p.imgs = std(p.slug); });
+
+const CATS = [["all", "All projects"], ["retail", "Retail & commercial"], ["office", "Office & medical"], ["residential", "Residential"]];
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const $ = (s, r = document) => r.querySelector(s);
+
+// stats
+const acres = 5.58 + 1.32 + 4.04 + 4.35 + 2.14 + 5 + 15.9 + 1.11 + 9 + 1.25 + 1.36;
+const states = new Set(P.map((p) => p.loc.split(",")[1].trim().slice(0, 2))).size;
+$("#stats").innerHTML = [
+  [P.length, "Listings built out"], [states, "States"], ["±" + Math.round(acres), "Acres planned"], ["≈300K", "SF of buildings laid out"],
+].map(([n, l]) => `<div><strong>${n}</strong><span>${l}</span></div>`).join("");
+$("#hero-bg").style.backgroundImage = `url("${P[0].imgs[0].src}")`;
+
+// filters + cards
+$("#filters").innerHTML = CATS.map(([k, l], i) => `<button class="chip" type="button" data-cat="${k}" aria-pressed="${i === 0}">${l}</button>`).join("");
+$("#cards").innerHTML = P.map((p) => `<a class="card" href="#${p.slug}" data-cat="${p.cat}"><div class="ph"><img src="${p.imgs[0].src}" alt="Rendering of ${esc(p.title)}" loading="lazy"></div><div class="tx"><span class="ty">${esc(p.type)}</span><b>${esc(p.title)}</b><small>${esc(p.loc.split(" · ")[0])} · ${esc(p.listing[0][1])}</small></div></a>`).join("");
+$("#filters").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-cat]"); if (!b) return;
+  document.querySelectorAll("#filters .chip").forEach((c) => c.setAttribute("aria-pressed", c === b));
+  const k = b.dataset.cat;
+  document.querySelectorAll(".card").forEach((c) => (c.hidden = k !== "all" && c.dataset.cat !== k));
+  document.querySelectorAll(".proj").forEach((s) => (s.hidden = k !== "all" && s.dataset.cat !== k));
+});
+
+// project sections
+const rows = (arr) => arr.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+$("#projects").innerHTML = P.map((p, i) => `
+<section class="proj" id="${p.slug}" data-cat="${p.cat}" aria-labelledby="h-${p.slug}">
+  <div class="wrap">
+    <div class="p-head">
+      <div><p class="num">${String(i + 1).padStart(2, "0")} · ${esc(p.type)}</p><h2 id="h-${p.slug}">${esc(p.title)}</h2><p class="loc">${esc(p.loc)}</p></div>
+      <p class="concept">${esc(p.concept)}</p>
+    </div>
+    <div class="viewer" data-i="${i}">
+      <div class="tabs" role="tablist" aria-label="${esc(p.title)} sheets">${p.imgs.map((m, j) => `<button class="tab" role="tab" type="button" data-j="${j}" aria-selected="${j === 0}">${esc(m.k)}</button>`).join("")}</div>
+      <div class="stage" role="button" tabindex="0" aria-label="Open full size">${p.imgs.map((m, j) => `<img class="${m.cover ? "cover " : ""}${j === 0 ? "on" : ""}" data-src="${m.src}" ${j === 0 ? `src="${m.src}"` : ""} alt="${esc(m.k)}: ${esc(p.title)}, ${esc(p.loc.split(" · ")[0])}" loading="lazy">`).join("")}<span class="cap">${esc(p.imgs[0].k)}</span><span class="zoom">Tap to enlarge ⤢</span></div>
+      <div class="strip">${p.imgs.map((m, j) => `<button type="button" data-j="${j}" aria-current="${j === 0}" aria-label="Show ${esc(m.k)}"><img src="${m.src}" alt="" loading="lazy"></button>`).join("")}</div>
+    </div>
+    <div class="info">
+      <div class="box"><h3>The listing</h3><p>${esc(p.desc)}</p><dl>${rows(p.listing)}</dl></div>
+      <div class="box"><h3>The plan</h3><p>${esc(p.plan)}</p><dl>${rows(p.program)}</dl></div>
+    </div>
+  </div>
+</section>`).join("");
+
+// viewer behaviour
+const cur = new Map();
+function show(v, j) {
+  const p = P[+v.dataset.i]; cur.set(v, j);
+  v.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", +t.dataset.j === j));
+  v.querySelectorAll(".strip button").forEach((t) => t.setAttribute("aria-current", +t.dataset.j === j));
+  v.querySelectorAll(".stage img").forEach((im, k) => { if (k === j && !im.getAttribute("src")) im.src = im.dataset.src; im.classList.toggle("on", k === j); });
+  v.querySelector(".cap").textContent = p.imgs[j].k;
+}
+document.querySelectorAll(".viewer").forEach((v) => {
+  cur.set(v, 0);
+  v.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-j]");
+    if (b) { show(v, +b.dataset.j); return; }
+    if (e.target.closest(".stage")) openLb(+v.dataset.i, cur.get(v));
+  });
+  v.querySelector(".stage").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLb(+v.dataset.i, cur.get(v)); } });
+});
+
+// lightbox
+const lb = $("#lb"), lbImg = $("#lb-img"), lbStage = $("#lb-stage");
+let lbP = 0, lbJ = 0, lastFocus = null;
+function lbRender() {
+  const p = P[lbP], m = p.imgs[lbJ];
+  lbImg.src = m.src; lbImg.alt = m.k + ": " + p.title;
+  $("#lb-title").innerHTML = `<b>${esc(p.title)}</b> · ${esc(m.k)} · ${lbJ + 1} of ${p.imgs.length}`;
+  lbStage.classList.remove("full"); $("#lb-fit").textContent = "Actual size";
+}
+function openLb(i, j) { lbP = i; lbJ = j; lastFocus = document.activeElement; lbRender(); lb.hidden = false; document.body.style.overflow = "hidden"; $("#lb-close").focus(); }
+function closeLb() { lb.hidden = true; document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+function step(d) { const n = P[lbP].imgs.length; lbJ = (lbJ + d + n) % n; lbRender(); }
+$("#lb-close").addEventListener("click", closeLb);
+$("#lb-prev").addEventListener("click", () => step(-1));
+$("#lb-next").addEventListener("click", () => step(1));
+$("#lb-fit").addEventListener("click", () => { const f = lbStage.classList.toggle("full"); $("#lb-fit").textContent = f ? "Fit to screen" : "Actual size"; });
+lbStage.addEventListener("click", (e) => { if (e.target === lbStage) closeLb(); });
+addEventListener("keydown", (e) => { if (lb.hidden) return; if (e.key === "Escape") closeLb(); if (e.key === "ArrowLeft") step(-1); if (e.key === "ArrowRight") step(1); });
+let tx = null;
+lbStage.addEventListener("touchstart", (e) => { if (e.touches.length === 1 && !lbStage.classList.contains("full")) tx = e.touches[0].clientX; }, { passive: true });
+lbStage.addEventListener("touchend", (e) => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1); });
+})();
+</script>
+</body>
+</html>
