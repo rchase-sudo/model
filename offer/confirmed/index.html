@@ -60,14 +60,6 @@ window.fphWho = (email, props) => {
     }
   }
 };
-// Agent preview pages: the page is made for one agent, so tag the visit with them.
-const pay = document.querySelector('a[href*="/payment?"]');
-if (location.pathname.includes("/p/") && pay) {
-  const u = new URL(pay.href, location.href).searchParams;
-  const slug = location.pathname.split("/p/")[1].split("/")[0];
-  window.fph("register", { preview_slug: slug, preview_address: u.get("address") || "" });
-  window.fphWho(u.get("email"), { name: u.get("name") || undefined, email: u.get("email"), preview_slug: slug });
-}
 </script>
 <script>window.fph("register",{price_variant:"50"});window.fph("capture","card_saved",{price_variant:"50"});</script>
 </head>

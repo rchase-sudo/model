@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forma · Project Gallery</title>
-<meta name="description" content="Concept plans, 3D renderings and site studies Forma has produced for land listings across five states.">
+<meta name="description" content="Concept plans, 3D renderings and due diligence packages Forma has produced for vacant land across five states.">
 <meta name="theme-color" content="#0E0E0E">
 <meta property="og:title" content="Forma · Project Gallery">
-<meta property="og:description" content="Land listings, built out. Concept plans, 3D renderings and site studies.">
+<meta property="og:description" content="Vacant land, built out. Concept plans, 3D renderings and due diligence packages.">
 <meta property="og:image" content="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -188,14 +188,6 @@ window.fphWho = (email, props) => {
     }
   }
 };
-// Agent preview pages: the page is made for one agent, so tag the visit with them.
-const pay = document.querySelector('a[href*="/payment?"]');
-if (location.pathname.includes("/p/") && pay) {
-  const u = new URL(pay.href, location.href).searchParams;
-  const slug = location.pathname.split("/p/")[1].split("/")[0];
-  window.fph("register", { preview_slug: slug, preview_address: u.get("address") || "" });
-  window.fphWho(u.get("email"), { name: u.get("name") || undefined, email: u.get("email"), preview_slug: slug });
-}
 </script>
 </head>
 <body>
@@ -212,8 +204,8 @@ if (location.pathname.includes("/p/") && pay) {
     <div class="hero-bg" id="hero-bg" aria-hidden="true"></div>
     <div class="wrap">
       <p class="kicker">Selected work</p>
-      <h1>Land listings, <em>built out.</em></h1>
-      <p class="lede">Every project below started as a vacant land listing and an address. Each one got a concept plan drawn to the parcel, its setbacks and its zoning, a photoreal 3D rendering, a study of the site as it sits today, and on most of them a full due diligence package. Scroll through the work, open any sheet full size, and see the listing it was made for.</p>
+      <h1>Vacant land, <em>built out.</em></h1>
+      <p class="lede">Every project below started as a piece of vacant land and an address. Each one got a concept plan drawn to the parcel, its setbacks and its zoning, a photoreal 3D rendering, a study of the site as it sits today, and on most of them a full due diligence package. Scroll through the work, open any sheet full size, and see the property it was made for.</p>
       <div class="stats" id="stats"></div>
     </div>
   </section>
@@ -229,11 +221,11 @@ if (location.pathname.includes("/p/") && pay) {
 
   <section class="close">
     <div class="wrap">
-      <p class="kicker">Your listing next</p>
+      <p class="kicker">Your land next</p>
       <h2>Want your land <em>built out?</em></h2>
       <p class="lede">Send me the address. I'll take it from the parcel record and the zoning code to a concept plan and a rendering buyers can picture themselves in.</p>
       <div class="row">
-        <a class="btn" href="mailto:support@formadesigns.io?subject=My%20land%20listing">Email me your listing <span>→</span></a>
+        <a class="btn" href="mailto:support@formadesigns.io?subject=My%20land">Email me your property <span>→</span></a>
         <a class="btn ghost" href="tel:9783465818">Call (978) 346-5818</a>
       </div>
     </div>
@@ -243,7 +235,7 @@ if (location.pathname.includes("/p/") && pay) {
 <footer class="foot">
   <div class="wrap">
     <span>© 2026 Forma Preliminary Design · Plans are preliminary and conceptual, not stamped engineering or permit documents.</span>
-    <span>Listing details are from the public listing for each property.</span>
+    <span>Property details are from public records and the property's public listing.</span>
   </div>
 </footer>
 
@@ -270,7 +262,7 @@ const P = [
     concept: "Retail and sit-down dining, three buildings",
     desc: "A recently cleared 5.58-acre greenfield commercial lot in the Village Commercial District, on the Elm Street (NH 101/202) corridor less than a mile from downtown Peterborough.",
     plan: "Three buildings totaling 35,000 SF for retail and sit-down dining, with 170 parking stalls including 6 accessible, a stormwater basin and a nine-sheet plan set.",
-    listing: [["Acreage", "5.58 ac"], ["Zoning", "Village Commercial District"], ["Corridor", "Elm St · NH 101/202"], ["Listed by", "UNICOM Global"]],
+    listing: [["Acreage", "5.58 ac"], ["Zoning", "Village Commercial District"], ["Corridor", "Elm St · NH 101/202"]],
     program: [["Building area", "35,000 SF in 3 buildings"], ["Parking", "170 stalls · 6 accessible"], ["Stormwater", "8,490 SF basin"], ["Terrain", "795.7–807.2 ft · 84% under 5% slope"], ["Setbacks", "30 ft front · 15 ft side and rear"]],
     imgs: [
       { k: "Rendering", src: SB + "peterborough/render.jpg", cover: true },
@@ -283,7 +275,7 @@ const P = [
     concept: "Single-tenant bank with drive-thru",
     desc: "A ±1.32-acre vacant parcel with about 250 feet of frontage on NJ Route 73, a state highway corridor near Virtua Voorhees Hospital and a cluster of national retailers.",
     plan: "A 5,900 SF bank with a drive-thru loop, 25 parking spaces and a single Route 73 driveway, plus a due diligence package covering zoning, the development program and an interactive property website.",
-    listing: [["Acreage", "±1.32 ac"], ["Zoning", "MB · Major Business"], ["Frontage", "±250 ft on Route 73"], ["Listed by", "Rose Commercial"]],
+    listing: [["Acreage", "±1.32 ac"], ["Zoning", "MB · Major Business"], ["Frontage", "±250 ft on Route 73"]],
     program: [["Building area", "5,900 SF bank"], ["Drive-thru", "Loop drive with stacking"], ["Parking", "25 spaces"], ["Access", "One Route 73 driveway"]],
     imgs: [
       { k: "Rendering", src: "../assets/render.jpg", cover: true },
@@ -294,35 +286,35 @@ const P = [
     concept: "Retail and drive-thru QSR",
     desc: "A 4.04-acre parcel with about 240 feet of frontage on US 70 in eastern Durham, zoned Commercial Heavy, near I-40 and next to the planned 350+ unit Bourdon Woods development.",
     plan: "Two buildings totaling 9,600 SF for retail and a drive-thru restaurant, with 53 parking stalls, laid out across a site with about 46 feet of relief.",
-    listing: [["Acreage", "4.04 ac"], ["Zoning", "HC · Commercial Heavy"], ["Frontage", "±240 ft on US 70"], ["Listed by", "Pickett Sprouse Commercial Real Estate"]],
+    listing: [["Acreage", "4.04 ac"], ["Zoning", "HC · Commercial Heavy"], ["Frontage", "±240 ft on US 70"]],
     program: [["Building area", "9,600 SF in 2 buildings"], ["Parking", "53 stalls"], ["Terrain", "46.4 ft relief · 8.6% average slope"]] },
   { slug: "durham-cornwallis", cat: "office", type: "Medical office",
     title: "1908 E Cornwallis Rd", loc: "Durham, NC · Durham County",
     concept: "Professional and medical office",
     desc: "A 2.14-acre graded and cleared commercial parcel on E Cornwallis Road in Durham, with paved access off Yorktown Avenue.",
     plan: "A 17,000 SF professional and medical office building with 68 parking stalls, on a nearly flat pad.",
-    listing: [["Acreage", "2.14 ac"], ["Zoning", "OI · Office/Institutional"], ["Access", "Paved, off Yorktown Ave"], ["Listed by", "TRU Triangle"]],
+    listing: [["Acreage", "2.14 ac"], ["Zoning", "OI · Office/Institutional"], ["Access", "Paved, off Yorktown Ave"]],
     program: [["Building area", "17,000 SF"], ["Parking", "68 stalls"], ["Terrain", "13.8 ft relief · 3% average slope"]] },
   { slug: "clearwater", dd: SB + "portfolio/clearwater/package.pdf", cat: "office", type: "Medical office campus",
     title: "3141 N McMullen Booth Rd", loc: "Clearwater, FL · Pinellas County",
     concept: "Medical office campus",
     desc: "About 5 acres of vacant land within a larger 12.89-acre parcel in Clearwater's Countryside area, next to an assisted living community, with an Institutional future land use designation.",
     plan: "A 15,000 SF medical office building with 75 parking stalls and a stormwater pond, set into a site with more than 40 feet of relief.",
-    listing: [["Acreage", "±5 ac (of 12.89)"], ["Zoning", "HF"], ["Land use", "Institutional"], ["Listed by", "Luis Alexander Kortright, P.A."]],
+    listing: [["Acreage", "±5 ac (of 12.89)"], ["Zoning", "HF"], ["Land use", "Institutional"]],
     program: [["Building area", "15,000 SF"], ["Parking", "75 stalls"], ["Stormwater", "7,910 SF pond"], ["Terrain", "42.4 ft relief · 10.1% average slope"]] },
   { slug: "durham-infinity", cat: "residential", type: "Multifamily",
     title: "301 Infinity Rd", loc: "Durham, NC · Durham County",
     concept: "Garden multifamily, 90 units",
     desc: "A 15.9-acre residential site rezoned by the City of Durham in 2026 for up to 90 multifamily units at up to 50 feet, with public sewer and water mains running the length of the site.",
     plan: "Five garden-style buildings with 90 units and about 90,000 SF, 360 parking stalls and a stormwater pond, fit to a site with nearly 100 feet of relief.",
-    listing: [["Acreage", "15.9 ac"], ["Zoning", "PDR 6.185"], ["Approved", "Up to 90 multifamily units"], ["Listed by", "CityPlat"]],
+    listing: [["Acreage", "15.9 ac"], ["Zoning", "PDR 6.185"], ["Approved", "Up to 90 multifamily units"]],
     program: [["Units", "90 in 5 buildings"], ["Building area", "≈90,000 SF"], ["Parking", "360 stalls"], ["Stormwater", "10,280 SF pond"], ["Terrain", "97.1 ft relief · 8.2% average slope"]] },
   { slug: "yorktown", dd: SB + "portfolio/yorktown/package.pdf", cat: "retail", type: "Neighborhood retail",
     title: "8900 & 8910 George Washington Memorial Hwy", loc: "Yorktown, VA · York County",
     concept: "Neighborhood retail",
     desc: "A 1.11-acre commercial parcel spanning two addresses, with about 225 feet of frontage on heavily traveled George Washington Memorial Highway (US 17).",
     plan: "A 4,500 SF one-story retail building with 18 parking stalls, placed to fit the frontage-buildable area of the lot.",
-    listing: [["Acreage", "1.11 ac"], ["Zoning", "LB · Limited Business"], ["Frontage", "±225 ft on US 17"], ["Listed by", "Harvey Lindsay Commercial Real Estate"]],
+    listing: [["Acreage", "1.11 ac"], ["Zoning", "LB · Limited Business"], ["Frontage", "±225 ft on US 17"]],
     program: [["Building area", "4,500 SF"], ["Parking", "18 stalls"], ["Terrain", "8.5 ft relief · 7.2% average slope"]] },
 ];
 P.forEach((p) => {
@@ -339,7 +331,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const acres = 5.58 + 1.32 + 4.04 + 2.14 + 5 + 15.9 + 1.11;
 const states = new Set(P.map((p) => p.loc.split(",")[1].trim().slice(0, 2))).size;
 $("#stats").innerHTML = [
-  [P.length, "Listings built out"], [states, "States"], ["±" + Math.round(acres), "Acres planned"], ["≈177K", "SF of buildings laid out"],
+  [P.length, "Properties built out"], [states, "States"], ["±" + Math.round(acres), "Acres planned"], ["≈177K", "SF of buildings laid out"],
 ].map(([n, l]) => `<div><strong>${n}</strong><span>${l}</span></div>`).join("");
 $("#hero-bg").style.backgroundImage = `url("${P[0].imgs[0].src}")`;
 
@@ -367,7 +359,7 @@ $("#projects").innerHTML = P.map((p, i) => `
     <div class="viewer" data-i="${i}"></div>
     ${hasDD(p) ? `<p class="dd-note"><b>Due diligence package included.</b> Open the Due diligence tab to page through it${p.dd ? `, or <a href="${p.dd}" target="_blank" rel="noopener">download the PDF ↓</a>` : ""}.</p>` : ""}
     <div class="info">
-      <div class="box"><h3>The listing</h3><p>${esc(p.desc)}</p><dl>${rows(p.listing)}</dl></div>
+      <div class="box"><h3>The property</h3><p>${esc(p.desc)}</p><dl>${rows(p.listing)}</dl></div>
       <div class="box"><h3>The plan</h3><p>${esc(p.plan)}</p><dl>${rows(p.program)}</dl></div>
     </div>
   </div>

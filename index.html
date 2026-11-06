@@ -261,6 +261,8 @@ main .panel,main a,main button{pointer-events:auto}
   .cue i{animation:none}
   .rail button span,.rail button i,.btn{transition:none}
 }
+.proof-card .owner-uses{margin-top:18px}
+.proof-card .owner-uses li{padding:12px 0}
 </style>
 
 </head>
@@ -317,13 +319,9 @@ main .panel,main a,main button{pointer-events:auto}
     <div class="panel">
       <p class="kicker">Preliminary Site Design</p>
       <h1>Sell the land <em>by showing what it can become.</em></h1>
-      <p class="lede">Forma turns a vacant land listing into a preliminary site plan, a 3D rendering and a due diligence package. Agents use it to market the parcel and answer a buyer's first questions.</p>
+      <p class="lede">Forma turns your vacant land into a preliminary site plan, a 3D rendering and a due diligence package. You see what your property can support, and buyers see a finished project instead of an empty lot.</p>
       <div class="hero-actions">
         <a class="btn" href="https://formadesigns.io/payment" target="_top">Order your package</a>
-      </div>
-      <div class="proof-strip" data-proof="totals" hidden>
-        <div><b data-k="served"></b><span>Listings served</span></div>
-        <div><b data-k="sold6"></b><span>Sold within 6 months</span></div>
       </div>
       <div class="cue"><i></i>Scroll to build the site</div>
     </div>
@@ -336,7 +334,7 @@ main .panel,main a,main button{pointer-events:auto}
       <p>This is a real Forma job: 1.32 acres on NJ Route 73 in Voorhees Township. Every package starts from public LiDAR elevation data and the county parcel record. The point cloud becomes contours, so slope, high ground and low spots show up before anyone walks the site.</p>
       <dl class="facts">
         <dt>Source</dt><dd>Public LiDAR and parcel data</dd>
-        <dt>Survey</dt><dd>Not required. If the seller has one, we use it.</dd>
+        <dt>Survey</dt><dd>Not required. If you have one, I use it.</dd>
       </dl>
     </div>
   </section>
@@ -377,7 +375,7 @@ main .panel,main a,main button{pointer-events:auto}
   <section class="sheet">
     <div class="panel">
       <p class="bar"><b>05</b> Same layout, in 3D</p>
-      <h2>Then we <em>render it.</em></h2>
+      <h2>Then I <em>render it.</em></h2>
       <p>The rendering is built from the plan, so the building, the drive loop and every parking stall sit where the plan puts them. Buyers see a finished project in its real setting, from the road to the tree line.</p>
     </div>
   </section>
@@ -385,10 +383,10 @@ main .panel,main a,main button{pointer-events:auto}
   <section class="sheet r">
     <div class="panel">
       <p class="bar"><b>06</b> The package</p>
-      <h2>Three parts, <em>one listing.</em></h2>
+      <h2>Three parts, <em>one property.</em></h2>
       <ul class="deliver">
         <li><span class="code">F1</span><div><strong>Preliminary development plan</strong><span>The site layout on the aerial with property line, setbacks and program.</span></div></li>
-        <li><span class="code">3D</span><div><strong>Rendering</strong><span>The plan built out in its real surroundings, ready for the listing.</span></div></li>
+        <li><span class="code">3D</span><div><strong>Rendering</strong><span>The plan built out in its real surroundings, ready to show buyers.</span></div></li>
         <li><span class="code">DD</span><div><strong>Due diligence package</strong><span>Opportunity summary, zoning, development program, permitting roadmap, pro forma and disposition scenarios. The Route 73 package runs 11 pages.</span></div></li>
       </ul>
     </div>
@@ -417,13 +415,12 @@ main .panel,main a,main button{pointer-events:auto}
   <section class="sheet" id="order">
     <div class="panel">
       <p class="bar"><b>08</b> Order</p>
-      <h2>Put a project on <em>your listing.</em></h2>
-      <div class="price"><b>$949</b><span>Flat, per listing</span></div>
+      <h2>Put a project on <em>your land.</em></h2>
+      <div class="price"><b>$949</b><span>Flat, per property</span></div>
       <ul class="terms">
         <li>No deposit. Save a card when you order.</li>
         <li>Your card is charged when the package is delivered.</li>
         <li>Or $159/month until it sells, then the balance is due at closing (6 payments max).</li>
-        <li>6-month guarantee: not under contract in 6 months, I&#39;ll do your next property for free.</li>
         <li>Add a property website: +$1,000 with either option ($1,949 upfront, or $326/month on the plan). <a href="https://go.formadesigns.io/website/" target="_blank" rel="noopener" style="color:var(--gold)">See an example</a></li>
         <li>Add the full plan set: +$5,000. The complete civil design behind the proposed development: grading, drainage and stormwater, water, sewer and utilities ($5,949 upfront, or $993/month on the plan).</li>
         <li>Package + website + plan set: $6,949 upfront, or $1,160/month on the plan.</li>
@@ -434,25 +431,15 @@ main .panel,main a,main button{pointer-events:auto}
       <p class="note fine">Forma · Preliminary design — not for construction</p>
     </div>
 
-    <aside class="panel proof-card" id="proofCard" aria-label="Forma results" hidden>
-      <p class="bar"><b>✓</b> Agents like you<span class="pv-tag" id="pvTag" hidden>Preview · sample data</span></p>
-      <p class="pc-h">Their land went under contract. <em>Yours can too.</em></p>
-      <div class="stats" data-proof="totals" hidden>
-        <div><b data-k="served"></b><span>Listings served</span></div>
-        <div><b data-k="sold6"></b><span>Sold within 6 months</span></div>
-        <div><b data-k="week"></b><span>Projects, last 30 days</span></div>
-      </div>
-      <div class="pc-cols">
-        <div class="proof" data-proof="leaders" hidden>
-          <p class="proof-h">Top Forma agents <small>Listings</small></p>
-          <ol class="board" id="board"></ol>
-        </div>
-        <div class="proof" data-proof="recent" hidden>
-          <p class="proof-h"><span class="live">Recent clients</span></p>
-          <ul class="recent" id="recent"></ul>
-        </div>
-      </div>
-      <div class="pc-quote" id="pcQuote" data-proof="reviews" hidden></div>
+    <aside class="panel proof-card in" id="proofCard" aria-label="What owners use the package for">
+      <p class="bar"><b>✓</b> For property owners</p>
+      <p class="pc-h">Know what your land <em>can become.</em></p>
+      <ul class="deliver owner-uses">
+        <li><span class="code">01</span><div><strong>Price it with confidence</strong><span>See what the zoning allows and what fits before you set an asking price.</span></div></li>
+        <li><span class="code">02</span><div><strong>Show buyers a finished project</strong><span>A site plan and a rendering turn an empty lot into something a buyer can picture.</span></div></li>
+        <li><span class="code">03</span><div><strong>Talk to developers directly</strong><span>Hand a builder the plan and the numbers they'd otherwise pay to work out.</span></div></li>
+        <li><span class="code">04</span><div><strong>Decide: sell, hold or build</strong><span>The pro forma shows what a project could be worth, so you can weigh your options.</span></div></li>
+      </ul>
     </aside>
   </section>
 </main>
@@ -471,181 +458,12 @@ main .panel,main a,main button{pointer-events:auto}
   </g></svg>
 </div>
 
-<div class="buy-toast" id="buyToast" role="status" aria-live="polite">
-  <span class="dot" aria-hidden="true"></span>
-  <div><strong id="btName"></strong><span class="co" id="btCo"></span><span class="meta" id="btMeta"></span></div>
-  <button id="btClose" aria-label="Dismiss">×</button>
-</div>
-
 <div class="tblock" aria-hidden="true">
   <div>Project</div><div id="tb-proj">336 Route 73, Voorhees NJ</div>
   <div>Sheet</div><div class="hi" id="tb-sheet">C-0 LiDAR point cloud</div>
   <div>Status</div><div class="nfc">Not for construction</div>
 </div>
 
-<script>
-/* ================================================================
-   SOCIAL PROOF — edit these values. Real numbers and real clients only.
-   - Any block still holding a placeholder (XX, Agent Name, Brokerage,
-     Town, ST, YYYY-MM-DD) stays HIDDEN on the live page.
-   - Preview with placeholders: add ?preview to the URL
-     (https://go.formadesigns.io/?preview)
-   - "Recent projects" (card + bottom-right toast) only shows entries
-     dated in the last 90 days, so it can't go stale. Clients first,
-     then prospects. town is optional.
-   - ?preview fills any placeholder with clearly-marked sample data so
-     you can see the layout. Sample data never shows on the live page.
-   ================================================================ */
-const PROOF={
-  served:'55',          // total listings Forma has served
-  sold6:'50',           // listings sold (or under contract) within 6 months of delivery
-  leaders:[             // top 3 agents by listings served
-    {name:'Agent Name', brokerage:'Brokerage', listings:'XX'},
-    {name:'Agent Name', brokerage:'Brokerage', listings:'XX'},
-    {name:'Agent Name', brokerage:'Brokerage', listings:'XX'}
-  ],
-  recent:[              // most recent orders, newest first
-    // kind:'order' = paid client (CRM status client); kind:'concept' = project on their listing (CRM prospect)
-    {name:'Patricia W.', brokerage:'BayFox Designs', date:'2026-10-05', kind:'order'},
-    {name:'Jeff L.', brokerage:'Rose Commercial', date:'2026-09-23', kind:'order'},
-    {name:'Joseph K.', brokerage:'Krumpfer Real Estate', date:'2026-09-22', kind:'order'},
-    {name:'Joseph M.', brokerage:'Weichert Realtors', date:'2026-09-22', kind:'order'},
-    {name:'Delana R.', brokerage:'Right Space Commercial', date:'2026-10-15', kind:'concept'},
-    {name:'Daryus B.', brokerage:'Bosshardt Realty Services', date:'2026-10-14', kind:'concept'},
-    {name:'Mike M.', brokerage:'Liz Moore & Associates', date:'2026-10-12', kind:'concept'},
-    {name:'Jason S.', brokerage:'NAI Piedmont Triad', date:'2026-10-10', kind:'concept'},
-    {name:'Samuel H.', brokerage:'The SRH Group', date:'2026-10-09', kind:'concept'},
-    {name:'Scott W.', brokerage:'Rob Phillips Real Estate', date:'2026-10-08', kind:'concept'},
-    {name:'Allison R.', brokerage:'Nantahala', date:'2026-10-08', kind:'concept'},
-    {name:'Clark B.', brokerage:'Harvey Lindsay', date:'2026-10-07', kind:'concept'},
-    {name:'Brian C.', brokerage:'Coldwell Banker', date:'2026-10-05', kind:'concept'},
-    {name:'Yanay S.', brokerage:'Crossroads Realty', date:'2026-09-22', kind:'concept'},
-    {name:'Chris B.', brokerage:'Berkshire Hathaway', date:'2026-09-22', kind:'concept'},
-    {name:'George S.', brokerage:'RE/MAX', date:'2026-09-22', kind:'concept'},
-    {name:'Dennis G.', brokerage:'Newmark Associates', date:'2026-09-22', kind:'concept'},
-    {name:'Michael E.', brokerage:'Resource Realty', date:'2026-09-22', kind:'concept'},
-    {name:'Derek B.', brokerage:'Cushman & Wakefield', date:'2026-09-22', kind:'concept'},
-    {name:'Ali M.', brokerage:'Honest Look Up LLC', date:'2026-09-22', kind:'concept'}
-  ],
-  reviews:[             // client quotes, shown in the order-section card
-    {quote:'Forma delivered our site plan in 5 days. The listing received four offers within a week of going live — two above asking. Our previous record was one offer in three weeks.', name:'Jessica Morales', role:'Senior Agent, Compass Real Estate'},
-    {quote:'We used to wait 4–6 weeks for preliminary design before making acquisition decisions. Forma cut that to one week. We\'ve moved on three more properties this quarter because of that speed.', name:'David Richfield', role:'Principal, Vertex Capital Group'},
-    {quote:'Our commercial land listings were sitting. Forma\'s renderings changed the conversation entirely — buyers stopped asking "what can I do with this?" and started asking "how do I make an offer?"', name:'Amanda Torres', role:'Commercial Land Specialist'}
-  ]
-};
-/* Preview-only stand-ins (used only with ?preview, never on the live page) */
-const SAMPLE=(()=>{const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10);};return{
-  served:'128',sold6:'94',
-  leaders:[{name:'Dana M.',brokerage:'Sample Realty · NJ',listings:'14'},{name:'Chris T.',brokerage:'Sample Realty · PA',listings:'9'},{name:'Lauren B.',brokerage:'Sample Realty · NH',listings:'6'}],
-  recent:[{name:'Mike R.',brokerage:'Shoreline Realty Group',town:'Toms River, NJ',date:ago(1)},{name:'Erin K.',brokerage:'Hill Country Land Co.',town:'Austin, TX',date:ago(3)},{name:'Sam P.',brokerage:'Granite State Properties',town:'Bedford, NH',date:ago(5)}]
-};})();
-(()=>{
-  const preview=/[?&]preview\b/.test(location.search);
-  const PH=/\bXX\b|Agent Name|Brokerage|Town, ST|YYYY-MM-DD/;
-  const real=v=>!PH.test(JSON.stringify(v));
-  // live: keep real values only. preview: swap each placeholder for its sample stand-in.
-  const pick=(v,s)=>real(v)?v:(preview?s:null);
-  const pickList=(list,samples)=>list.map((v,i)=>pick(v,samples[i])).filter(Boolean);
-  const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
-  const who=(name,sub)=>{const w=el('div','who');w.append(el('strong',null,name),el('span',null,sub));return w;};
-  const reveal=k=>document.querySelectorAll('[data-proof="'+k+'"]').forEach(n=>n.hidden=false);
-  let any=false,usedSample=false;
-  const note=(v,orig)=>{if(v&&v!==orig)usedSample=true;return v;};
-
-  const DAY=864e5,today=new Date();today.setHours(0,0,0,0);
-  const ageOf=r=>{const d=new Date(r.date+'T00:00:00');return isNaN(d)?NaN:Math.round((today-d)/DAY);};
-  const recent=PROOF.recent.map((r,i)=>note(pick(r,SAMPLE.recent[i]),r)).filter(r=>{
-    if(!r)return false;const a=ageOf(r);return a>=0&&a<90;
-  });
-  const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const whenOf=r=>{const a=ageOf(r);if(a===0)return 'Today';if(a===1)return '1 day ago';if(a<7)return a+' days ago';if(a<14)return 'Last week';
-    return MONTHS[new Date(r.date+'T00:00:00').getMonth()];};
-  const sub=r=>r.brokerage+(r.town?' · '+r.town:'');
-  const cardList=recent.slice(0,3);
-
-  const served=note(pick(PROOF.served,SAMPLE.served),PROOF.served);
-  const sold6=note(pick(PROOF.sold6,SAMPLE.sold6),PROOF.sold6);
-  if(served){
-    document.querySelectorAll('[data-k="served"]').forEach(n=>n.textContent=served);
-    document.querySelectorAll('[data-k="sold6"]').forEach(n=>{n.textContent=sold6||'';n.parentElement.hidden=!sold6;});
-    document.querySelectorAll('[data-k="week"]').forEach(n=>{const c=recent.filter(r=>ageOf(r)<30).length;n.textContent=c;n.parentElement.hidden=!c||String(c)===String(served);});
-    reveal('totals');any=true;
-  }
-
-  const leaders=PROOF.leaders.map((a,i)=>note(pick(a,SAMPLE.leaders[i]),a)).filter(Boolean).slice(0,3);
-  if(leaders.length){
-    const ol=document.getElementById('board');
-    leaders.forEach((a,i)=>{
-      const li=el('li');const n=el('div','n',a.listings);
-      li.append(el('span','rk',String(i+1).padStart(2,'0')),who(a.name,a.brokerage),n);ol.append(li);
-    });
-    reveal('leaders');any=true;
-  }
-
-  if(cardList.length){
-    const ul=document.getElementById('recent');
-    cardList.forEach(r=>{
-      const li=el('li');li.append(who(r.name,sub(r)),el('span','when',whenOf(r)));ul.append(li);
-    });
-    reveal('recent');any=true;
-  }
-
-  // rotating client quote in the card
-  const reviews=(PROOF.reviews||[]).filter(r=>r&&r.quote);
-  if(reviews.length){
-    const box=document.getElementById('pcQuote');
-    const figs=reviews.map((r,i)=>{
-      const f=el('figure',i?null:'on');const q=el('blockquote',null,r.quote);
-      const c=el('figcaption');const b=el('b',null,r.name);c.append(b,document.createTextNode(r.role?' · '+r.role:''));
-      f.append(q,c);box.append(f);return f;
-    });
-    let qi=0;
-    if(figs.length>1)setInterval(()=>{figs[qi].classList.remove('on');qi=(qi+1)%figs.length;figs[qi].classList.add('on');},7000);
-    reveal('reviews');any=true;
-  }
-
-  const card=document.getElementById('proofCard');
-  const order=document.getElementById('order');
-  if(any){
-    card.hidden=false;
-    document.getElementById('pvTag').hidden=!usedSample;
-  }
-
-  // ---- "just ordered" toast, bottom-right; hands off to the card at #order ----
-  const toast=document.getElementById('buyToast');
-  let atOrder=false,dismissed=false,started=false,ti=0,timer=0;
-  try{dismissed=sessionStorage.getItem('forma-toast-off')==='1';}catch(e){}
-  const hideToast=()=>toast.classList.remove('on');
-  const showNext=()=>{
-    clearTimeout(timer);
-    if(dismissed||!recent.length)return;
-    if(atOrder||document.getElementById('viewer').hidden===false){timer=setTimeout(showNext,1500);return;}
-    const r=recent[ti%recent.length];ti++;
-    document.getElementById('btName').textContent=r.name;
-    document.getElementById('btCo').textContent=r.brokerage;
-    document.getElementById('btMeta').textContent=(r.kind==='concept'?'Concept plan delivered':'Ordered a Forma package')+(r.town?' · '+r.town:'')+' · '+whenOf(r);
-    toast.classList.add('on');
-    timer=setTimeout(()=>{hideToast();timer=setTimeout(showNext,6500);},5500);
-  };
-  const start=()=>{if(started)return;started=true;timer=setTimeout(showNext,2200);};
-  document.getElementById('btClose').addEventListener('click',()=>{
-    dismissed=true;hideToast();clearTimeout(timer);try{sessionStorage.setItem('forma-toast-off','1');}catch(e){}
-  });
-  // inside the Framer splash the page sits behind the curtain: start when the
-  // parent says it lifted (or on first scroll); standalone, start after a beat
-  if(window.self!==window.top){
-    addEventListener('message',e=>{if(e.data&&e.data.type==='forma:revealed')start();});
-    addEventListener('scroll',start,{once:true,passive:true});
-  }else start();
-
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(([en])=>{
-      atOrder=en.isIntersecting;
-      if(atOrder){hideToast();card.classList.add('in');}
-    },{threshold:.2}).observe(card.hidden?order:card);
-  }else card.classList.add('in');
-})();
-</script>
 <script src="assets/three.min.js"></script>
 <script>
 (function(){

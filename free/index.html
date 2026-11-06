@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Forma Free Plan</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Listing land? Get a free concept plan and 3D rendering of your listing from Forma, the same day. No cost, no card.">
+<meta name="description" content="Own vacant land? Get a free concept plan and 3D rendering of what could be built on your property from Forma, the same day. No cost, no card.">
 <meta name="theme-color" content="#0E0E0E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -405,6 +405,18 @@ p{margin:0}
 .ag-cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:clamp(36px,5vw,56px)}
 @media (max-width:1000px){ .ag-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (max-width:560px){ .ag-grid{grid-template-columns:1fr} .ag-stats strong{font-size:1.75rem} .ag-stats div{padding:12px 10px} }
+
+/* owner list + past-projects band */
+.owner-list li{grid-template-columns:36px minmax(0,1fr)}
+.owner-list .ag-av{font-size:11px}
+.gal-cards{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px}
+.gal-card{display:block; text-decoration:none; border:1px solid var(--line); background:var(--ink); transition:border-color .2s, transform .3s}
+.gal-card:hover{border-color:var(--gold-soft); transform:translateY(-3px)}
+.gal-card img{width:100%; aspect-ratio:3/2; object-fit:cover; background:var(--ink-2)}
+.gal-card span{display:block; padding:12px 14px 14px}
+.gal-card b{display:block; font-weight:700; font-size:15px; line-height:1.3}
+.gal-card small{display:block; margin-top:2px; font-size:13px; color:var(--paper-dim)}
+@media (max-width:900px){ .gal-cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
@@ -434,14 +446,6 @@ window.fphWho = (email, props) => {
     }
   }
 };
-// Agent preview pages: the page is made for one agent, so tag the visit with them.
-const pay = document.querySelector('a[href*="/payment?"]');
-if (location.pathname.includes("/p/") && pay) {
-  const u = new URL(pay.href, location.href).searchParams;
-  const slug = location.pathname.split("/p/")[1].split("/")[0];
-  window.fph("register", { preview_slug: slug, preview_address: u.get("address") || "" });
-  window.fphWho(u.get("email"), { name: u.get("name") || undefined, email: u.get("email"), preview_slug: slug });
-}
 </script>
 </head>
 <body>
@@ -450,7 +454,7 @@ if (location.pathname.includes("/p/") && pay) {
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="https://formadesigns.io" target="_top" aria-label="Forma Designs home"><i>F</i><b>FORMA</b></a>
-    <p class="freepill"><b>Free</b><span>Concept plan + 3D rendering of your land listing</span></p>
+    <p class="freepill"><b>Free</b><span>Concept plan + 3D rendering of your land</span></p>
     <div class="topbar-ctas"><a class="buylink" href="https://formadesigns.io/payment" target="_top" data-buy>Buy now · $949</a><a class="btn" href="#claim" data-cta="top">Get my free plan</a></div>
   </div>
 </header>
@@ -466,26 +470,26 @@ if (location.pathname.includes("/p/") && pay) {
   <section class="chapter hero" id="hero" data-scene="hero">
     <div class="wrap" style="width:100%">
       <div class="panel">
-        <p class="kicker">For agents listing land</p>
-        <h1>Your land listing, built out. <em class="serif" style="text-transform:none; font-weight:400">Free.</em></h1>
-        <p class="lede">Send me the address. The same day, I'll send back a concept plan and a photoreal 3D rendering of what a buyer could build there. <b>No cost, no card, nothing to sign.</b></p>
+        <p class="kicker">For landowners</p>
+        <h1>Your land, built out. <em class="serif" style="text-transform:none; font-weight:400">Free.</em></h1>
+        <p class="lede">Send me the address. The same day, I'll send back a concept plan and a photoreal 3D rendering of what a buyer could build on your property. <b>No cost, no card, nothing to sign.</b></p>
 
-        <div class="offer" aria-label="Your free marketing package">
-          <div class="offer-head"><p>Your free marketing package</p><strong>$0</strong></div>
+        <div class="offer" aria-label="Your free concept">
+          <div class="offer-head"><p>Your free concept</p><strong>$0</strong></div>
           <ul>
             <li><i>✓</i><div><b>Concept plan</b><small>Parcel lines, setbacks, buildings, parking and access at real dimensions, for uses your zoning allows.</small></div><s>$0</s></li>
-            <li><i>✓</i><div><b>3D rendering</b><small>Photoreal, ready for the MLS, your flyer and your social posts.</small></div><s>$0</s></li>
+            <li><i>✓</i><div><b>3D rendering</b><small>Photoreal, ready for your listing, your sign and every buyer you talk to.</small></div><s>$0</s></li>
           </ul>
         </div>
 
         <form class="addr" id="hero-form" novalidate>
-          <label for="hero-address" class="hp">Listing address</label>
-          <input id="hero-address" type="text" autocomplete="street-address" placeholder="Paste your listing address">
+          <label for="hero-address" class="hp">Property address</label>
+          <input id="hero-address" type="text" autocomplete="street-address" placeholder="Your property address">
           <button class="btn btn-lg" type="submit">Start my free plan <span>→</span></button>
         </form>
         <p class="skip">Already sold on it? <a href="https://formadesigns.io/payment" target="_top" data-buy>Skip the free plan and order the full package →</a></p>
 
-        <div class="trust"><span class="stars-inline">★★★★★ 5-star reviews</span><span>55 land listings served</span><span>50 sold or under contract in 6 months</span><span>Free plan same day</span></div>
+        <div class="trust"><span class="stars-inline">★★★★★ 5-star reviews</span><span>Free concept the same day</span><span>Built on county parcel + LiDAR data</span><span>No card, nothing to sign</span></div>
 
         <button class="hold" id="hold-build" type="button" aria-label="Press and hold to see this lot built out"><span class="ring"></span>Press and hold to build it</button>
       </div>
@@ -493,50 +497,50 @@ if (location.pathname.includes("/p/") && pay) {
   </section>
 
 
-  <!-- AGENTS JUST LIKE YOU (chapter 2) -->
-  <section class="chapter" id="agents" data-scene="agents">
+  <!-- WHO IT'S FOR (chapter 2) -->
+  <section class="chapter" id="owners" data-scene="owners">
     <div class="wrap" style="width:100%">
       <div class="panel">
-        <p class="kicker">Agents just like you</p>
-        <h2>They listed land. <em>It moved.</em></h2>
-        <p class="lede">Agents at firms like yours send me their land listings. Most of them are under contract within six months of getting the plan.</p>
-        <div class="ag-stats">
-          <div><strong class="tnum">55</strong><span>Land listings served</span></div>
-          <div><strong class="tnum">50</strong><span>Sold or under contract in 6 months</span></div>
-          <div><strong class="gold ag-stars">★★★★★</strong><span>5-star rated by agents</span></div>
-        </div>
-        <ul class="ag-list" id="ag-short"></ul>
-        <p class="ag-more" id="ag-more"></p>
-        <a class="btn" href="#claim" data-cta="agents">Get my free plan <span>→</span></a>
+        <p class="kicker">Who it's for</p>
+        <h2>You own the land. <em>Buyers can't see it.</em></h2>
+        <p class="lede">A vacant lot is hard to sell and harder to value. A plan changes the conversation, whether you're selling, holding or thinking about building.</p>
+        <ul class="ag-list owner-list">
+          <li><span class="ag-av">01</span><span class="ag-who"><b>Selling your land</b><small>Show buyers a finished project instead of an empty field.</small></span></li>
+          <li><span class="ag-av">02</span><span class="ag-who"><b>Getting calls from developers</b><small>Know what fits on your property before you negotiate.</small></span></li>
+          <li><span class="ag-av">03</span><span class="ag-who"><b>Deciding to sell, hold or build</b><small>See what the zoning allows and what a project could look like.</small></span></li>
+          <li><span class="ag-av">04</span><span class="ag-who"><b>Inherited or long-held land</b><small>Find out what you actually own and what it could become.</small></span></li>
+        </ul>
+        <div class="buyrow" style="margin-top:0"><a class="btn" href="#claim" data-cta="owners">Get my free plan <span>→</span></a><a class="btn btn-ghost" href="/work/" target="_blank" rel="noopener">See past projects ↗</a></div>
       </div>
     </div>
   </section>
+
   <!-- PAIN 1: the clock -->
   <section class="chapter" id="sits" data-scene="sits">
     <div class="wrap" style="width:100%">
       <div class="panel">
         <p class="kicker">Here's what's happening</p>
         <h2>Land doesn't <em>show</em> well.</h2>
-        <p class="lede">A house gets staged. A lot gets a photo of grass and a sign. Buyers scroll past it, the few who call ask questions you can't answer yet, and your seller wants to know why nothing is happening.</p>
+        <p class="lede">A house gets staged. A lot gets a photo of grass and a sign. Buyers scroll past it, the few who call ask questions you can't answer, and every month it sits you keep paying taxes on it.</p>
 
         <div class="clock">
           <div class="clock-top"><p>Days on market</p><strong id="days-out" class="tnum">120<small>days</small></strong></div>
           <input class="range" id="days" type="range" min="0" max="360" step="1" value="120" aria-label="Days on market" style="--p:33%">
           <div class="ticks" aria-hidden="true"><span>Listed</span><span>3 mo</span><span>6 mo</span><span>9 mo</span><span>1 yr</span></div>
-          <div class="status" aria-live="polite"><b id="status-k">Month four</b><p id="status-t">Your seller asks about a price drop. You start dreading the weekly check-in call.</p></div>
+          <div class="status" aria-live="polite"><b id="status-k">Month four</b><p id="status-t">Someone suggests dropping the price. You wonder what you're doing wrong.</p></div>
         </div>
 
         <div class="clock" aria-label="What a price cut costs">
           <div class="calc">
             <label for="price">List price<input id="price" type="text" inputmode="numeric" value="$850,000"></label>
-            <label for="comm">Your commission<input id="comm" type="text" inputmode="decimal" value="6%"></label>
+            <label for="comm">Taxes + insurance / yr<input id="comm" type="text" inputmode="numeric" value="$9,000"></label>
             <label class="full" for="cut">Price cut: <span id="cut-out" class="tnum">10%</span><input class="range" id="cut" type="range" min="0" max="30" step="1" value="10" style="--p:33%"></label>
           </div>
           <div class="loss">
-            <div><span>Your seller loses</span><strong id="loss-seller" class="tnum">$85,000</strong></div>
-            <div><span>Your commission drops</span><strong id="loss-you" class="tnum">$5,100</strong></div>
+            <div><span>The price cut costs you</span><strong id="loss-seller" class="tnum">$85,000</strong></div>
+            <div><span>Carrying it so far</span><strong id="loss-you" class="tnum">$2,959</strong></div>
           </div>
-          <p class="small">Your numbers, your math. Drag the lot clock above and watch the listing age.</p>
+          <p class="small">Your numbers, your math. Drag the clock above and watch the months add up.</p>
         </div>
       </div>
     </div>
@@ -554,12 +558,12 @@ if (location.pathname.includes("/p/") && pay) {
           <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>How many units fit?</button>
           <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>Where would the entrance go?</button>
           <button class="chip" type="button" aria-pressed="false"><small>Buyer</small>I just can't picture it.</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Seller</small>Any offers yet?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Seller</small>Should we drop the price?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Seller</small>Why isn't anyone biting?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>You</small>Why isn't anyone calling?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>You</small>Should I drop the price?</button>
+          <button class="chip" type="button" aria-pressed="false"><small>You</small>What is my land actually worth?</button>
         </div>
         <div class="meter"><div class="meter-bar"><i id="meter"></i></div><b id="meter-t" class="tnum">0 of 8</b></div>
-        <p class="answer" id="answer">Each one floats over your lot. <b>Every one of them has the same answer: show them the plan.</b></p>
+        <p class="answer" id="answer">Each one floats over your land. <b>Every one of them has the same answer: show them the plan.</b></p>
       </div>
     </div>
   </section>
@@ -591,14 +595,14 @@ if (location.pathname.includes("/p/") && pay) {
       <div class="panel">
         <p class="kicker">After</p>
         <h2>Never wonder <em>if it'll sell</em> again.</h2>
-        <p class="lede">Your listing stops being a patch of grass. Buyers see a project. Developers get answers before they call. Your seller sees you working.</p>
-        <div class="seg" role="group" aria-label="Compare the seller conversation">
+        <p class="lede">Your land stops being a patch of grass. Buyers see a project. Developers get their first answers before they call you.</p>
+        <div class="seg" role="group" aria-label="Compare the buyer conversation">
           <button type="button" id="seg-without" aria-pressed="false">Without a plan</button>
           <button type="button" id="seg-with" aria-pressed="true">With a plan</button>
         </div>
         <div class="after-row">
           <div class="phone" aria-live="polite">
-            <div class="phone-top"><b>Seller</b><span id="phone-day">Thursday</span></div>
+            <div class="phone-top"><b>Developer</b><span id="phone-day">Thursday</span></div>
             <div class="thread" id="thread"></div>
           </div>
         </div>
@@ -615,12 +619,12 @@ if (location.pathname.includes("/p/") && pay) {
     <div class="band-head">
       <p class="kicker">The deal</p>
       <h2>Fast. Safe. <em>Free to try.</em></h2>
-      <p class="lede">You take no risk to see your listing built out. If you like it and want everything behind it, the full package is there. If you don't, keep the plan and use it.</p>
+      <p class="lede">You take no risk to see your land built out. If you like it and want everything behind it, the full package is there. If you don't, keep the plan and use it.</p>
     </div>
     <div class="promise">
       <article><span class="big">Same day</span><h3>Fast</h3><p>Your free concept plan and 3D rendering are ready the same day you send the address. The full package is delivered within 7 days.</p></article>
-      <article><span class="big">$0</span><h3>Free</h3><p>No card, no contract. The plan is yours to post on the MLS, your flyer and social.</p></article>
-      <article><span class="big">6 mo</span><h3>Guaranteed</h3><p>Upgrade to the full package and if the listing isn't under contract within 6 months of delivery, I do your next property free.</p></article>
+      <article><span class="big">$0</span><h3>Free</h3><p>No card, no contract. The plan is yours to use on your listing, your sign and with every buyer.</p></article>
+      <article><span class="big">7 days</span><h3>Full package</h3><p>Want the due diligence package too? $949, delivered within 7 days and charged only when it's delivered.</p></article>
       <article><span class="big">Real</span><h3>Built on data</h3><p>County parcel lines, public LiDAR topography and your town's actual setbacks and permitted uses. Not a sketch.</p></article>
     </div>
     <div class="compare-wrap">
@@ -629,8 +633,8 @@ if (location.pathname.includes("/p/") && pay) {
         <tbody>
           <tr><th>Cost to you</th><td class="us">$0</td><td>Quoted per project, paid up front</td><td>$0 today, a price cut later</td></tr>
           <tr><th>Time</th><td class="us">Same day</td><td>Scheduled around their project load</td><td>Open-ended</td></tr>
-          <tr><th>What buyers see</th><td class="us">A site plan and a photoreal rendering</td><td>Engineering sheets, if the seller pays for them</td><td>A photo of grass</td></tr>
-          <tr><th>Risk</th><td class="us">None</td><td>The fee, win or lose</td><td>Days on market, and the listing</td></tr>
+          <tr><th>What buyers see</th><td class="us">A site plan and a photoreal rendering</td><td>Engineering sheets, if you pay for them</td><td>A photo of grass</td></tr>
+          <tr><th>Risk</th><td class="us">None</td><td>The fee, win or lose</td><td>Months of taxes, and the price</td></tr>
         </tbody>
       </table>
     </div>
@@ -647,27 +651,27 @@ if (location.pathname.includes("/p/") && pay) {
   <div class="wrap">
     <div class="band-head">
       <p class="kicker">Proof</p>
-      <h2>Agents use it. <em>Listings move.</em></h2>
-      <p class="rating"><span class="stars">★★★★★</span> 5-star reviews from the agents I've worked with</p>
+      <h2>Real land. <em>Real plans.</em></h2>
+      <p class="rating"><span class="stars">★★★★★</span> 5-star reviews from my clients</p>
     </div>
     <div class="stats">
-      <div><strong data-count="55" class="tnum">55</strong><span>Land listings I've produced plans for</span></div>
-      <div><strong data-count="50" class="tnum">50</strong><span>Sold or under contract within 6 months of delivery</span></div>
-      <div><strong data-count="91" data-suffix="%" class="tnum gold">91%</strong><span>Of those listings, under contract or sold inside 6 months</span></div>
-      <div><strong class="tnum">6&nbsp;mo</strong><span>Guarantee on the full package, or your next property is free</span></div>
+      <div><strong class="tnum">Same day</strong><span>Free concept plan and rendering</span></div>
+      <div><strong class="tnum">7 days</strong><span>Full package, charged only on delivery</span></div>
+      <div><strong class="tnum gold">1 h 27 m</strong><span>Fastest address-to-plan-set so far</span></div>
+      <div><strong class="tnum">0</strong><span>Site visits or surveys needed</span></div>
     </div>
 
     <!-- Case 1: Peterborough -->
     <div class="case">
       <div class="viewer">
         <div class="viewer-tabs" role="tablist" aria-label="80 Elm St deliverables">
-          <button role="tab" aria-selected="false" data-show="pb-aerial">The listing today</button>
+          <button role="tab" aria-selected="false" data-show="pb-aerial">The land today</button>
           <button role="tab" aria-selected="false" data-show="pb-existing">Existing conditions</button>
           <button role="tab" aria-selected="false" data-show="pb-plan">Concept plan</button>
           <button role="tab" aria-selected="true" data-show="pb-render">3D rendering</button>
         </div>
         <div class="frame" id="pb-frame">
-          <img id="pb-aerial" alt="Aerial photo of the 80 Elm St lot as listed" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/aerial.jpg">
+          <img id="pb-aerial" alt="Aerial photo of the 80 Elm St lot today" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/aerial.jpg">
           <img id="pb-existing" class="contain" alt="Existing conditions: parcel lines, setbacks and topography at 80 Elm St" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/existing-conditions.jpg">
           <img id="pb-plan" class="contain" alt="Concept plan for 80 Elm St with three buildings and parking" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/concept-plan.jpg">
           <img id="pb-render" alt="3D rendering of the proposed retail and dining project at 80 Elm St" src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg">
@@ -675,7 +679,7 @@ if (location.pathname.includes("/p/") && pay) {
         </div>
         <div class="viewer-foot">
           <button class="hold" id="hold-pb" type="button"><span class="ring"></span>Hold for before</button>
-          <span class="small">Concept prepared for the listing broker. Preliminary, not engineered.</span>
+          <span class="small">Concept prepared for this property. Preliminary, not engineered.</span>
         </div>
       </div>
       <aside class="spec">
@@ -714,9 +718,9 @@ if (location.pathname.includes("/p/") && pay) {
       </div>
       <aside class="spec">
         <div class="spec-head">
-          <p class="kicker" style="margin:0">Client listing</p>
+          <p class="kicker" style="margin:0">Client project</p>
           <h3>336 Route 73, Voorhees NJ</h3>
-          <p class="small">1.32 acres of highway frontage. I planned a 5,900 SF bank with a drive-thru, rendered it, then built an interactive property website on top. The listing has seen noticeably better traction since.</p>
+          <p class="small">1.32 acres of highway frontage. I planned a 5,900 SF bank with a drive-thru, rendered it, then built an interactive property website on top. The property has drawn noticeably more buyer interest since.</p>
         </div>
         <dl>
           <dt>Concept</dt><dd>Bank with drive-thru</dd>
@@ -727,13 +731,7 @@ if (location.pathname.includes("/p/") && pay) {
       </aside>
     </div>
 
-    <div class="clients" aria-label="Agents I've worked with">
-      <p>Agents I've worked with <span class="stars" style="padding:0;border:0;display:inline">★★★★★</span></p>
-      <span>Patricia W.<small>BayFox Designs</small></span>
-      <span>Jeff L.<small>Rose Commercial</small></span>
-      <span>Joseph M.<small>Weichert Realtors</small></span>
-      <span>Vanna S.<small>1st Choice Realty &amp; Associates</small></span>
-    </div>
+    <div class="buyrow"><a class="btn btn-ghost" href="/work/" target="_blank" rel="noopener">See more past projects ↗</a></div>
     <div class="reviews" id="reviews" hidden></div>
   </div>
 </section>
@@ -745,31 +743,31 @@ if (location.pathname.includes("/p/") && pay) {
     <div class="panel claim-col">
       <p class="kicker">Claim it</p>
       <h2>Get your free plan <em>today.</em></h2>
-      <p class="lede">A concept plan and a 3D rendering of your listing, the same day. Send your info and I'll reach out to walk you through it. If you want the full package after that, it's one click.</p>
+      <p class="lede">A concept plan and a 3D rendering of your land, the same day. Send your info and I'll reach out to walk you through it. If you want the full package after that, it's one click.</p>
       <div class="assure"><span>No card</span><span>No contract</span><span>Yours to keep</span></div>
       <form class="form" id="claim-form" novalidate>
         <div id="form-fields" class="form-fields">
           <div class="row2">
             <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
             <div class="field"><label for="f-role">I'm the</label>
-              <select id="f-role" name="role"><option>Listing agent</option><option>Co-listing agent</option><option>Broker</option><option>Property owner</option><option>Other</option></select></div>
+              <select id="f-role" name="role"><option>Property owner</option><option>Co-owner or family member</option><option>Owner's representative</option><option>Other</option></select></div>
           </div>
           <div class="row2">
             <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></div>
             <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
           </div>
-          <div class="field"><label for="f-address">Listing address</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>
-          <div class="field"><label for="f-link">Listing link (optional)</label><input id="f-link" name="listing_url" type="url" inputmode="url" placeholder="LoopNet, Zillow, Crexi or MLS link" autocapitalize="off" spellcheck="false"></div>
+          <div class="field"><label for="f-address">Property address</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>
+          <div class="field"><label for="f-link">Listing or parcel link (optional)</label><input id="f-link" name="listing_url" type="url" inputmode="url" placeholder="Zillow, LandWatch, LoopNet or county parcel link" autocapitalize="off" spellcheck="false"></div>
           <input class="hp" id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="btn btn-lg" type="submit" id="f-submit">Send me my free plan <span>→</span></button>
           <a class="btn btn-ghost btn-lg btn-wrap" href="https://formadesigns.io/payment" target="_top" data-buy>Or order the full package · $949 <span>→</span></a>
           <p class="form-err" id="form-err" role="alert"></p>
-          <p class="small">I'll only use your details to send your plan and follow up about this listing.</p>
+          <p class="small">I'll only use your details to send your plan and follow up about this property.</p>
         </div>
         <div class="book" id="form-book" hidden>
           <p class="kicker" style="margin:0">Last step · 1 of 1</p>
           <h3 style="font-size:1.6rem">Pick a time for a <em>quick call.</em></h3>
-          <p class="small">30 minutes. I'll walk you through your plan and rendering for <b id="book-addr">your listing</b>.</p>
+          <p class="small">30 minutes. I'll walk you through your plan and rendering for <b id="book-addr">your property</b>.</p>
           <div class="days" id="book-days" role="tablist" aria-label="Choose a day"></div>
           <div class="times" id="book-times" aria-label="Choose a time"></div>
           <p class="small" id="book-tz"></p>
@@ -782,9 +780,9 @@ if (location.pathname.includes("/p/") && pay) {
           <h3 style="font-size:1.6rem" id="done-h">You're in.</h3>
           <p class="when" id="done-when" hidden></p>
           <ol>
-            <li><span>01</span><div><b>I pull the parcel</b> and the topography for <span id="done-addr">your listing</span>.</div></li>
+            <li><span>01</span><div><b>I pull the parcel</b> and the topography for <span id="done-addr">your property</span>.</div></li>
             <li><span>02</span><div><b>I lay it out</b> to your town's setbacks and permitted uses.</div></li>
-            <li><span>03</span><div id="done-3"><b>We talk at your call time</b> and I walk you through your plan and rendering.</div></li>
+            <li><span>03</span><div id="done-3"><b>I call you at your time</b> and walk you through your plan and rendering.</div></li>
           </ol>
           <p class="small">Want the due diligence package and plan set too? The full package is $949, charged only when it's delivered.</p>
           <a class="btn btn-ghost" id="done-pay" href="https://formadesigns.io/model" target="_top">See the full package <span>→</span></a>
@@ -798,35 +796,29 @@ if (location.pathname.includes("/p/") && pay) {
   <div class="wrap">
     <div class="band-head"><p class="kicker">Questions</p><h2>Straight <em>answers.</em></h2></div>
     <div class="faq">
-      <details><summary>Is it really free?</summary><p>Yes. The concept plan and 3D rendering cost nothing. No card, no contract. I do it because a lot of agents who see their listing built out want the full package for it, or for their next one.</p></details>
-      <details><summary>What's the catch?</summary><p>There isn't one. If you never buy anything, you keep the plan and the rendering and use them on your listing.</p></details>
-      <details><summary>Can I put it on the MLS and my flyers?</summary><p>Yes. That's what it's for. Post it, print it, send it to developers.</p></details>
+      <details><summary>Is it really free?</summary><p>Yes. The concept plan and 3D rendering cost nothing. No card, no contract. I do it because a lot of owners who see their land built out want the full package behind it.</p></details>
+      <details><summary>What's the catch?</summary><p>There isn't one. If you never buy anything, you keep the plan and the rendering and use them however you like.</p></details>
+      <details><summary>Do I need to be selling?</summary><p>No. Owners use it to sell, to answer developers who call, or just to see what their land could support before deciding what to do with it.</p></details>
+      <details><summary>Can I use it in my listing?</summary><p>Yes. That's what it's for. Put it in your listing, on your sign, or send it straight to buyers and developers.</p></details>
       <details><summary>How is the plan made?</summary><p>From the county parcel record, public LiDAR elevation data and the setbacks and permitted uses in your town's zoning code. No site visit or survey needed. If you have a survey, send it and I'll use it.</p></details>
       <details><summary>Is this an engineered plan?</summary><p>No. It's a preliminary, conceptual plan to show buyers what fits. It is not a stamped engineering or permit set.</p></details>
-      <details><summary>What's in the paid package?</summary><p>Everything in the free plan plus a due diligence package: zoning, permitting roadmap and a pro forma. $949, delivered within 7 days and charged only when it's delivered, with a 6-month guarantee. Add-ons include a full civil plan set and an interactive property website.</p></details>
+      <details><summary>What's in the paid package?</summary><p>Everything in the free plan plus a due diligence package: zoning, permitting roadmap and a pro forma. $949, delivered within 7 days and charged only when it's delivered, or $159/month until the property sells. Add-ons include a full civil plan set and an interactive property website.</p></details>
     </div>
   </div>
 </section>
 
-<!-- AGENTS JUST LIKE YOU (closing) -->
-<section class="band alt ag-band" id="agents-all">
+<!-- PAST PROJECTS -->
+<section class="band alt gal-band" id="examples">
   <div class="wrap">
     <div class="band-head">
-      <p class="kicker">Agents just like you</p>
-      <h2>You're in <em>good company.</em></h2>
-      <p class="rating"><span class="stars">★★★★★</span> 5-star rated by the agents I've worked with</p>
+      <p class="kicker">Past projects</p>
+      <h2>See the work <em>before you send yours.</em></h2>
+      <p class="lede">Real properties I've built out: the concept plan, the 3D rendering, the due diligence package and the site as it sits today.</p>
     </div>
-    <div class="stats">
-      <div><strong class="tnum">55</strong><span>Land listings I've produced plans for</span></div>
-      <div><strong class="tnum">50</strong><span>Sold or under contract within 6 months of delivery</span></div>
-      <div><strong class="tnum gold">91%</strong><span>Of those listings, under contract or sold inside 6 months</span></div>
-      <div><strong class="tnum">5.0</strong><span>Star rating from agents</span></div>
-    </div>
-    <ul class="ag-grid" id="ag-all"></ul>
-    <div class="reviews" id="ag-reviews" hidden></div>
+    <div class="gal-cards"><a class="gal-card" href="/work/#peterborough" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg" alt="Rendering for 80 Elm St, Peterborough, NH" loading="lazy"><span><b>80 Elm St</b><small>Peterborough, NH</small></span></a><a class="gal-card" href="/work/#voorhees" target="_blank" rel="noopener"><img src="img/voorhees-render.jpg" alt="Rendering for 336 Route 73, Voorhees, NJ" loading="lazy"><span><b>336 Route 73</b><small>Voorhees, NJ</small></span></a><a class="gal-card" href="/work/#durham-us70" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/portfolio/durham-us70/render.jpg" alt="Rendering for 2839 E US 70 Hwy, Durham, NC" loading="lazy"><span><b>2839 E US 70 Hwy</b><small>Durham, NC</small></span></a><a class="gal-card" href="/work/#clearwater" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/portfolio/clearwater/render.jpg" alt="Rendering for 3141 N McMullen Booth Rd, Clearwater, FL" loading="lazy"><span><b>3141 N McMullen Booth Rd</b><small>Clearwater, FL</small></span></a></div>
     <div class="ag-cta">
-      <a class="btn btn-lg" href="#claim" data-cta="agents-bottom">Get my free plan <span>→</span></a>
-      <a class="btn btn-ghost" href="https://formadesigns.io/payment" target="_top" data-buy>Order the full package · $949</a>
+      <a class="btn btn-lg" href="#claim" data-cta="bottom">Get my free plan <span>→</span></a>
+      <a class="btn btn-ghost" href="/work/" target="_blank" rel="noopener">Browse all projects ↗</a>
     </div>
   </div>
 </section>
@@ -838,7 +830,7 @@ if (location.pathname.includes("/p/") && pay) {
   </div>
 </footer>
 
-<div class="mbar" id="mbar"><p>Free plan for your listing<b>$0</b></p><a class="btn" href="#claim" data-cta="mbar">Get my free plan <span>→</span></a></div>
+<div class="mbar" id="mbar"><p>Free plan for your land<b>$0</b></p><a class="btn" href="#claim" data-cta="mbar">Get my free plan <span>→</span></a></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
@@ -846,53 +838,9 @@ if (location.pathname.includes("/p/") && pay) {
 (() => {
 "use strict";
 const INTAKE_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/lander-intake";
-// Paste real reviews here, e.g. { name: "Jane D.", brokerage: "Example Realty", text: "…", stars: 5 }.
-// The quote cards stay hidden while this is empty; the 5-star badges show either way.
-const REVIEWS = [
-  { name: "Jessica Morales", brokerage: "Senior Agent, Compass Real Estate", stars: 5, text: "Forma delivered our site plan in 5 days. The listing received four offers within a week of going live — two above asking. Our previous record was one offer in three weeks." },
-  { name: "David Richfield", brokerage: "Principal, Vertex Capital Group", stars: 5, text: "We used to wait 4–6 weeks for preliminary design before making acquisition decisions. Forma cut that to one week. We've moved on three more properties this quarter because of that speed." },
-  { name: "Amanda Torres", brokerage: "Commercial Land Specialist", stars: 5, text: "Our commercial land listings were sitting. Forma's renderings changed the conversation entirely — buyers stopped asking 'what can I do with this?' and started asking 'how do I make an offer?'" },
-];
-
-// Agents just like you: same list as /model (first name + last initial, firm). kind "order" = full package, "concept" = concept plan.
-const AGENTS = [
-  { name: "Patricia W.", firm: "BayFox Designs", kind: "order" },
-  { name: "Jeff L.", firm: "Rose Commercial", kind: "order" },
-  { name: "Joseph K.", firm: "Krumpfer Real Estate", kind: "order" },
-  { name: "Joseph M.", firm: "Weichert Realtors", kind: "order" },
-  { name: "Vanna S.", firm: "1st Choice Realty & Associates", kind: "order" },
-  { name: "Delana R.", firm: "Right Space Commercial", kind: "concept" },
-  { name: "Daryus B.", firm: "Bosshardt Realty Services", kind: "concept" },
-  { name: "Mike M.", firm: "Liz Moore & Associates", kind: "concept" },
-  { name: "Jason S.", firm: "NAI Piedmont Triad", kind: "concept" },
-  { name: "Samuel H.", firm: "The SRH Group", kind: "concept" },
-  { name: "Scott W.", firm: "Rob Phillips Real Estate", kind: "concept" },
-  { name: "Allison R.", firm: "Nantahala", kind: "concept" },
-  { name: "Clark B.", firm: "Harvey Lindsay", kind: "concept" },
-  { name: "Brian C.", firm: "Coldwell Banker", kind: "concept" },
-  { name: "Yanay S.", firm: "Crossroads Realty", kind: "concept" },
-  { name: "Chris B.", firm: "Berkshire Hathaway", kind: "concept" },
-  { name: "George S.", firm: "RE/MAX", kind: "concept" },
-  { name: "Dennis G.", firm: "Newmark Associates", kind: "concept" },
-  { name: "Michael E.", firm: "Resource Realty", kind: "concept" },
-  { name: "Derek B.", firm: "Cushman & Wakefield", kind: "concept" },
-  { name: "Ali M.", firm: "Honest Look Up LLC", kind: "concept" },
-];
-(() => {
-  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const ini = (n) => n.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
-  const tag = (a) => `<span class="ag-tag${a.kind === "order" ? " pkg" : ""}">${a.kind === "order" ? "Full package" : "Concept plan"}</span>`;
-  const row = (a) => `<li><span class="ag-av">${esc(ini(a.name))}</span><span class="ag-who"><b>${esc(a.name)}</b><small>${esc(a.firm)}</small></span>${tag(a)}</li>`;
-  const short = AGENTS.slice(0, 5);
-  const s = document.getElementById("ag-short"); if (s) s.innerHTML = short.map(row).join("");
-  const m = document.getElementById("ag-more"); if (m) m.textContent = AGENTS.length > short.length ? `+ ${AGENTS.length - short.length} more agents at firms like Coldwell Banker, RE/MAX, Berkshire Hathaway and Cushman & Wakefield.` : "";
-  const all = document.getElementById("ag-all"); if (all) all.innerHTML = AGENTS.map(row).join("");
-  const rv = document.getElementById("ag-reviews");
-  if (rv && REVIEWS.length) {
-    rv.innerHTML = REVIEWS.map((v) => `<figure class="review"><span class="stars">${"★".repeat(v.stars || 5)}</span><blockquote style="margin:0">${esc(v.text)}</blockquote><figcaption class="small">${esc(v.name)}${v.brokerage ? " · " + esc(v.brokerage) : ""}</figcaption></figure>`).join("");
-    rv.hidden = false;
-  }
-})();
+// Paste real client reviews here, e.g. { name: "Jane D.", role: "Property owner", text: "…", stars: 5 }.
+// The quote cards stay hidden while this is empty.
+const REVIEWS = [];
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -927,11 +875,11 @@ const ui = { days: 120, questions: 0, holdBuild: 0, holdBuildT: 0, holdEmpty: 0,
 
 /* days on market */
 const STATUS = [
-  [0, "Just listed", "A few clicks, a couple of “is it buildable?” calls. Everyone is optimistic."],
-  [45, "Week seven", "Showings slow down. The calls you do get want answers you'd need an engineer for."],
-  [100, "Month four", "Your seller asks about a price drop. You start dreading the weekly check-in call."],
+  [0, "Just listed", "A few clicks, a couple of “is it buildable?” calls. You're optimistic."],
+  [45, "Week seven", "Calls slow down. The buyers who do call ask what can be built, and you don't have an answer."],
+  [100, "Month four", "Someone suggests dropping the price. You wonder what you're doing wrong."],
   [180, "Month six", "Price reduced. The listing photo is the same field it was in spring."],
-  [270, "Month nine", "The listing is stale. Expire, relist, or watch someone else pitch your seller."],
+  [270, "Month nine", "The listing goes stale. Relist, cut again, or keep paying taxes on land that isn't moving."],
 ];
 const daysEl = $("#days");
 function setDays(v) {
@@ -941,6 +889,7 @@ function setDays(v) {
   const s = STATUS.filter((x) => v >= x[0]).pop();
   $("#status-k").textContent = s[1];
   $("#status-t").textContent = s[2];
+  try { calc(); } catch (_) {} // carrying cost follows the clock (calc is defined just below)
 }
 daysEl.addEventListener("input", (e) => setDays(e.target.value));
 setDays(daysEl.value);
@@ -948,15 +897,15 @@ setDays(daysEl.value);
 /* price-cut math */
 const parseNum = (s) => parseFloat(String(s).replace(/[^0-9.]/g, "")) || 0;
 function calc() {
-  const price = parseNum($("#price").value), pct = parseNum($("#comm").value) / 100, cut = +$("#cut").value / 100;
+  const price = parseNum($("#price").value), carry = parseNum($("#comm").value), cut = +$("#cut").value / 100;
   $("#cut-out").textContent = Math.round(cut * 100) + "%";
   $("#cut").style.setProperty("--p", (cut / .3 * 100) + "%");
   $("#loss-seller").textContent = money(price * cut);
-  $("#loss-you").textContent = money(price * cut * pct);
+  $("#loss-you").textContent = money(carry * (ui.days || 0) / 365);
 }
 ["#price", "#comm", "#cut"].forEach((s) => $(s).addEventListener("input", calc));
 $("#price").addEventListener("blur", (e) => { e.target.value = money(parseNum(e.target.value)); });
-$("#comm").addEventListener("blur", (e) => { e.target.value = parseNum(e.target.value) + "%"; });
+$("#comm").addEventListener("blur", (e) => { e.target.value = money(parseNum(e.target.value)); });
 calc();
 
 /* questions */
@@ -968,7 +917,7 @@ chips.forEach((c) => c.addEventListener("click", () => {
   $("#meter-t").textContent = ui.questions + " of " + chips.length;
   $("#answer").innerHTML = ui.questions >= 3
     ? "That's " + ui.questions + " questions you're answering alone. <b>Every one of them has the same answer: show them the plan. That's what I make.</b>"
-    : "Each one floats over your lot. <b>Every one of them has the same answer: show them the plan.</b>";
+    : "Each one floats over your land. <b>Every one of them has the same answer: show them the plan.</b>";
   if (scene) scene.setQuestions(ui.questions);
 }));
 
@@ -986,8 +935,8 @@ holdable($("#hold-empty"), "holdEmpty");
 
 /* seller thread */
 const THREADS = {
-  without: { day: "Month four", msgs: [["them", "Any calls this week?"], ["me", "A couple. Mostly people asking what could go there."], ["them", "Should we drop the price again?"], ["them", "I don't get why nobody sees it."]] },
-  with: { day: "Week two", msgs: [["me", "Here's the rendering. This is what the lot looks like built out."], ["img", ""], ["them", "Wow. First time I've seen it that way."], ["me", "A developer asked for the concept plan. Setting up a call Thursday."], ["them", "Let's not touch the price."]] },
+  without: { day: "Month four", msgs: [["them", "Saw your lot. What could go on it?"], ["me", "It's zoned commercial, I think. Not sure what fits."], ["them", "I'd have to pay for my own study first."], ["them", "I'll pass for now. Let me know if the price comes down."]] },
+  with: { day: "Week two", msgs: [["me", "Here's what fits on it. This is the lot built out."], ["img", ""], ["them", "That's exactly the kind of site we look for."], ["them", "Can you send the concept plan and the numbers?"], ["me", "Sending the full package now. Free Thursday to walk it?"]] },
 };
 function showThread(k) {
   $("#seg-with").setAttribute("aria-pressed", k === "with");
@@ -998,7 +947,7 @@ function showThread(k) {
   THREADS[k].msgs.forEach(([who, text], i) => {
     const d = document.createElement("div");
     d.className = "msg " + (who === "img" ? "them img" : who);
-    if (who === "img") d.innerHTML = '<img src="img/voorhees-render.jpg" alt="Rendering sent to the seller">'; else d.textContent = text;
+    if (who === "img") d.innerHTML = '<img src="img/voorhees-render.jpg" alt="Rendering sent to the developer">'; else d.textContent = text;
     d.style.animationDelay = (i * 0.12) + "s";
     t.appendChild(d);
   });
@@ -1076,7 +1025,7 @@ $("#claim-form").addEventListener("submit", async (e) => {
   const need = ["#f-name", "#f-email", "#f-address"].map((s) => $(s));
   need.forEach((i) => i.setAttribute("aria-invalid", !i.value.trim()));
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#f-email").value.trim());
-  if (need.some((i) => !i.value.trim())) { err.textContent = "Add your name, email and the listing address."; need.find((i) => !i.value.trim()).focus(); return; }
+  if (need.some((i) => !i.value.trim())) { err.textContent = "Add your name, email and the property address."; need.find((i) => !i.value.trim()).focus(); return; }
   if (!emailOk) { $("#f-email").setAttribute("aria-invalid", "true"); err.textContent = "That email address doesn't look right."; $("#f-email").focus(); return; }
   err.textContent = "";
   const btn = $("#f-submit"); btn.disabled = true; btn.textContent = "Sending…";
@@ -1359,7 +1308,7 @@ function makeScene(canvas) {
   /* keyframes */
   const kf = [
     { id: "hero", anchor: 0.5, cam: [64, 44, 74], look: [2, 0, 0], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .15, q: 0 },
-    { id: "agents", cam: [72, 34, 58], look: [2, 0, 2], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .25, q: 0 },
+    { id: "owners", cam: [72, 34, 58], look: [2, 0, 2], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .25, q: 0 },
     { id: "sits", cam: [22, 6.5, 48], look: [6, 2.4, 14], build: 0, grass: () => .45 + ui.days / 360 * 1.35, decay: () => ui.days / 360, fog: () => .2 + ui.days / 360 * .8, sold: 0, warm: 0, q: 0 },
     { id: "questions", cam: [-30, 58, 58], look: [0, 3, 0], build: 0, grass: () => .45 + ui.days / 360 * 1.1, decay: () => ui.days / 360 * .8, fog: () => .25 + ui.days / 360 * .5, sold: 0, warm: 0, q: 1 },
     { id: "build", cam: [2, 96, 10], look: [0, 0, 0], build: .25, grass: .4, decay: 0, fog: 0, sold: 0, warm: 0, q: 0 },
