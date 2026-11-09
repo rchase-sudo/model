@@ -4,455 +4,287 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Forma for Civil &amp; Survey Firms</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="White-label concept plans, 3D renderings and due diligence packages for civil engineering and land surveying firms. $949 per site, delivered within 7 days, charged on delivery.">
-<meta name="theme-color" content="#0E0E0E">
+<meta name="description" content="Outsource the concept phase. Five site layouts per job with CAD files, a 3D rendering and a due diligence package, white-labeled for civil engineering and land surveying firms. $949 per job, delivered within 7 days.">
+<meta name="theme-color" content="#1C2228">
+<meta property="og:title" content="Forma for Civil & Survey Firms">
+<meta property="og:description" content="Five site layouts per job, with CAD files, under your title block. $949, delivered within 7 days.">
+<meta property="og:image" content="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/concept-plan.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,800;62..125,900&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400;1,6..96,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500;62..125,600;62..125,700;62..125,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 <style>
-/* Layout: one fixed 3D parcel behind the story chapters; text rides a left column over it,
-   then solid bands for promise, proof and the claim form. */
 :root{
-  --ink:#0E0E0E; --ink-2:#161614; --ink-3:#1E1D1A; --paper:#F2EFE8; --paper-dim:#A7A296;
-  --gold:#B8924F; --gold-hi:#DCBB7A; --gold-soft:rgba(184,146,79,.34); --gold-fill:rgba(184,146,79,.09);
-  --line:rgba(242,239,232,.1); --rust:#D2774F; --ok:#93B98C; --water:#7FA6B5;
-  --f-display:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
-  --f-serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
-  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
-  --bar-h:58px;
-  color-scheme:dark;
+  --page:#EDEFEE; --paper:#FFFFFF; --ink:#16191C; --graphite:#58606A; --rule:#D3D8DB; --rule-2:#E4E7E8;
+  --model:#1C2228; --model-2:#242C34; --model-rule:#323C46; --model-text:#C9D1D8;
+  --brass:#94702F; --brass-hi:#C9A15A;
+  --cad-cyan:#5FD3E2; --cad-yellow:#E8CD5A; --cad-green:#78C266; --cad-magenta:#D982DC; --cad-grey:#7D8893;
+  --ok:#2E7D4F; --err:#B23B2E;
+  --f-head:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  --wrap:1180px;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
-[hidden]{display:none!important}
-.form-fields{display:flex; flex-direction:column; gap:14px}
-html{background:var(--ink)}
-html.lenis, html.lenis body{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto!important}
-.lenis.lenis-stopped{overflow:hidden}
-@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
-body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--f-display); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
-body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:60; background:var(--ink)}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+body{margin:0; background:var(--page); color:var(--ink); font:400 17px/1.6 var(--f-body); -webkit-font-smoothing:antialiased}
+img{max-width:100%; display:block}
 a{color:inherit}
-button,input,select,textarea{font:inherit; color:inherit}
-:focus-visible{outline:2px solid var(--gold-hi); outline-offset:3px}
-em{font-style:normal; color:var(--gold)}
-.serif{font-family:var(--f-serif); font-style:italic; font-weight:400; letter-spacing:0}
-.mono{font-family:var(--f-mono)}
-.wrap{max-width:1240px; margin:0 auto; padding-left:var(--gutter-l); padding-right:var(--gutter-r)}
-.kicker{font:500 11px/1.4 var(--f-mono); letter-spacing:.32em; text-transform:uppercase; color:var(--gold); margin:0 0 18px; display:flex; align-items:center; gap:10px}
-.kicker::before{content:""; width:22px; height:1px; background:var(--gold)}
-h1,h2,h3{margin:0; font-family:var(--f-display); font-weight:900; text-transform:uppercase; letter-spacing:-.005em; text-wrap:balance; font-stretch:88%}
-h1{font-size:clamp(2.5rem,5.2vw,4.5rem); line-height:.92}
-h2{font-size:clamp(2rem,4.6vw,3.6rem); line-height:.95}
-h3{font-size:clamp(1.05rem,1.6vw,1.25rem); line-height:1.2; font-weight:800}
+:focus-visible{outline:2px solid var(--brass); outline-offset:3px}
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--f-head); font-stretch:112%; letter-spacing:-.01em; margin:0; text-wrap:balance}
+h1{font-size:clamp(2.1rem,4vw,3.15rem); line-height:1.06; font-weight:800}
+h2{font-size:clamp(1.7rem,3vw,2.4rem); line-height:1.1; font-weight:700}
+h3{font-size:1.1rem; line-height:1.3; font-weight:700; font-stretch:105%}
 p{margin:0}
-.lede{color:var(--paper-dim); font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.65; max-width:52ch}
-.lede b{color:var(--paper); font-weight:600}
-.small{font-size:13px; line-height:1.55; color:var(--paper-dim)}
+.lede{font-size:clamp(1.05rem,1.4vw,1.2rem); color:var(--graphite); max-width:60ch}
+.muted{color:var(--graphite)}
+.small{font-size:.9rem; color:var(--graphite)}
 .tnum{font-variant-numeric:tabular-nums}
+.hp{position:absolute!important; left:-9999px; width:1px; height:1px; overflow:hidden}
 
 /* buttons */
-.btn{appearance:none; border:1px solid var(--gold); background:var(--gold); color:var(--ink); font:800 12px/1 var(--f-display); letter-spacing:.16em; text-transform:uppercase;
-  min-height:52px; padding:0 22px; display:inline-flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; text-decoration:none; white-space:nowrap;
-  transition:background .2s, color .2s, transform .2s}
-.btn span{transition:transform .2s}
-.btn:hover{background:var(--gold-hi); border-color:var(--gold-hi)}
-.btn:hover span{transform:translateX(4px)}
-.btn:active{transform:translateY(1px)}
-.btn-ghost{background:transparent; color:var(--gold)}
-.btn-ghost:hover{background:var(--gold); color:var(--ink)}
-.btn-lg{min-height:58px; font-size:13px; padding:0 26px}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:48px; padding:0 22px; border-radius:3px; border:1px solid var(--ink);
+  background:var(--ink); color:#fff; font:600 15px/1 var(--f-body); text-decoration:none; cursor:pointer; transition:background .15s, color .15s}
+.btn:hover{background:#2B3036}
+.btn-line{background:transparent; color:var(--ink)}
+.btn-line:hover{background:var(--ink); color:#fff}
+.btn-lg{min-height:54px; padding:0 26px; font-size:16px}
+.btn:disabled{opacity:.4; cursor:not-allowed}
+.textlink{color:var(--ink); text-decoration:underline; text-decoration-color:var(--brass); text-underline-offset:4px; text-decoration-thickness:2px; font-weight:600}
 
-/* top bar */
-.topbar{position:sticky; top:env(safe-area-inset-top, 0px); z-index:50; background:rgba(14,14,14,.88); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
-.topbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:var(--bar-h)}
-.brand{display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0}
-.brand i{width:28px; height:28px; border:1px solid var(--gold); color:var(--gold); display:grid; place-items:center; font:800 13px var(--f-display); font-style:normal}
-.brand b{font-weight:800; letter-spacing:.24em; font-size:13px}
-.freepill{display:flex; align-items:center; gap:10px; font:500 11px/1.3 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--paper); min-width:0}
-.freepill b{background:var(--gold); color:var(--ink); padding:4px 8px; font-weight:500; letter-spacing:.16em; flex-shrink:0}
-.freepill span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.topbar .btn{min-height:40px; padding:0 16px; font-size:11px}
-.topbar-ctas{display:flex; align-items:center; gap:18px; flex-shrink:0}
-.buylink{font:500 11px var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--gold-hi); text-decoration:none; border-bottom:1px solid var(--gold-soft); padding-block:6px; white-space:nowrap}
-.buylink:hover{color:var(--paper); border-color:var(--paper)}
-.skip{font-size:14px; color:var(--paper-dim); margin-top:-6px}
-.skip a{color:var(--gold-hi); text-underline-offset:3px}
-.skip a:hover{color:var(--paper)}
-.buyrow{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px}
-.btn-wrap{white-space:normal; text-align:center; line-height:1.3; padding-block:10px}
-.buyrow .btn{white-space:normal; text-align:center}
-
-/* 3D stage */
-#stage{position:fixed; inset:0; z-index:0; width:100%; height:100%; display:block; cursor:grab; touch-action:pan-y}
-#stage.dragging{cursor:grabbing}
-.scrim{position:fixed; inset:0; z-index:1; pointer-events:none;
-  background:linear-gradient(90deg, rgba(14,14,14,.92) 0%, rgba(14,14,14,.78) 30%, rgba(14,14,14,0) 56%)}
-.stage-fallback{position:fixed; inset:0; z-index:0; background:radial-gradient(80% 60% at 70% 50%, #23211c 0%, var(--ink) 70%)}
-.story{position:relative; z-index:2; pointer-events:none}
-.story .panel, .story a, .story button, .story input, .story select, .story label, .story .chip{pointer-events:auto}
-.chapter{min-height:110vh; display:flex; align-items:center; padding-block:96px}
-.panel{max-width:540px; display:flex; flex-direction:column; gap:22px}
-.hud{position:fixed; z-index:3; right:calc(var(--gutter-r) + 4px); bottom:calc(18px + env(safe-area-inset-bottom, 0px)); display:flex; gap:8px; align-items:center; pointer-events:none;
-  font:500 10px/1.3 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
-.hud b{color:var(--gold); font-weight:500}
-.hud .dot{width:6px; height:6px; background:var(--gold); transform:rotate(45deg)}
-.draghint{display:inline-flex; gap:8px; align-items:center}
+/* header */
+.top{position:sticky; top:0; z-index:30; background:rgba(255,255,255,.94); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex; align-items:center; gap:24px; height:64px}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; font:800 17px var(--f-head); font-stretch:118%; letter-spacing:.06em}
+.brand i{width:28px; height:28px; display:grid; place-items:center; border:1.5px solid var(--brass); color:var(--brass); font-style:normal; font-size:13px; letter-spacing:0}
+.brand small{font:500 13px var(--f-body); letter-spacing:0; color:var(--graphite); padding-left:10px; border-left:1px solid var(--rule)}
+.nav{display:flex; gap:22px; margin-left:auto; font-size:15px}
+.nav a{text-decoration:none; color:var(--graphite)}
+.nav a:hover{color:var(--ink)}
+.top .btn{min-height:40px; padding:0 16px; font-size:14px}
+.top .btn-line{margin-left:4px}
+@media (max-width:980px){ .nav{display:none} .top .btn-line{margin-left:auto} }
+@media (max-width:560px){ .brand small{display:none} .top .btn-line{display:none} .top .btn{margin-left:auto} }
 
 /* hero */
-.hero{min-height:calc(100vh - var(--bar-h)); padding-block:40px 64px; align-items:flex-start}
-.hero .panel{gap:18px}
-.hero .panel{max-width:600px}
-.offer{border:1px solid var(--gold-soft); background:rgba(22,22,20,.86); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px)}
-.offer-head{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 18px; border-bottom:1px solid var(--line)}
-.offer-head p{font:500 11px/1.3 var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
-.offer-head strong{font:400 30px/1 var(--f-serif); font-style:italic; color:var(--gold-hi)}
-.offer ul{list-style:none; margin:0; padding:6px 18px}
-.offer li{display:grid; grid-template-columns:22px 1fr auto; gap:12px; align-items:start; padding:8px 0; border-bottom:1px solid var(--line)}
-.offer li:last-child{border-bottom:0}
-.offer li i{width:20px; height:20px; border:1px solid var(--gold); display:grid; place-items:center; color:var(--gold); font-style:normal; font-size:11px; margin-top:2px}
-.offer li b{display:block; font-weight:700; font-size:15px}
-.offer li small{display:block; color:var(--paper-dim); font-size:13px; line-height:1.45; margin-top:2px}
-.offer li s{font:400 12px var(--f-mono); color:var(--paper-dim); text-decoration:none; padding-top:3px}
-.addr{display:flex; gap:0; border:1px solid var(--gold); background:var(--ink)}
-.addr input{flex:1; min-width:0; background:transparent; border:0; padding:0 16px; min-height:58px; font-size:16px; outline:none}
-.addr input::placeholder{color:#77736b}
-.addr .btn{min-height:58px}
-.trust{display:flex; flex-wrap:wrap; gap:8px 18px; font:500 11px/1.4 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--paper-dim)}
-.trust span{display:inline-flex; gap:8px; align-items:center}
-.trust span::before{content:""; width:5px; height:5px; background:var(--gold); transform:rotate(45deg)}
-.hold{display:inline-flex; align-items:center; gap:12px; align-self:flex-start; min-height:48px; padding:0 18px 0 8px; border:1px solid var(--line); background:rgba(22,22,20,.8);
-  cursor:pointer; user-select:none; -webkit-user-select:none; touch-action:none; font:500 11px/1 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper)}
-.hold .ring{position:relative; width:34px; height:34px; border-radius:50%; border:1px solid var(--gold-soft); display:grid; place-items:center}
-.hold .ring::after{content:""; width:10px; height:10px; background:var(--gold); transform:rotate(45deg); transition:transform .3s}
-.hold.on{border-color:var(--gold)}
-.hold.on .ring::after{transform:rotate(225deg) scale(1.3)}
-@media (prefers-reduced-motion: no-preference){ .hold:not(.on) .ring{animation:pulse 2.4s ease-in-out infinite} }
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,146,79,.45)} 50%{box-shadow:0 0 0 9px rgba(184,146,79,0)}}
+.hero{padding:clamp(40px,6vw,80px) 0 clamp(48px,6vw,88px)}
+.hero .wrap{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:clamp(28px,4vw,56px); align-items:center}
+.hero .wrap > *{min-width:0}
+.hero h1{max-width:15ch}
+.hero .lede{margin-top:22px}
+.ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
+.facts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:34px; border-top:1px solid var(--rule)}
+.facts div{padding:14px 14px 0 0}
+.facts b{display:block; font:700 1.5rem/1.1 var(--f-head); font-stretch:110%}
+.facts span{font-size:.88rem; color:var(--graphite)}
+@media (max-width:980px){ .hero .wrap{grid-template-columns:1fr} .hero h1{max-width:18ch} }
 
-/* pain: the clock */
-.clock{border:1px solid var(--line); background:rgba(22,22,20,.86); padding:20px; display:flex; flex-direction:column; gap:16px}
-.clock-top{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
-.clock-top p{font:500 11px var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--paper-dim)}
-.clock-top strong{font:900 clamp(2.4rem,5vw,3.4rem)/1 var(--f-display); font-stretch:80%; color:var(--paper); font-variant-numeric:tabular-nums}
-.clock-top strong small{font:500 12px var(--f-mono); letter-spacing:.14em; color:var(--paper-dim); margin-left:6px}
-.range{width:100%; -webkit-appearance:none; appearance:none; height:30px; background:transparent; cursor:pointer}
-.range::-webkit-slider-runnable-track{height:4px; background:linear-gradient(90deg, var(--rust) var(--p,33%), var(--line) var(--p,33%))}
-.range::-moz-range-track{height:4px; background:var(--line)}
-.range::-moz-range-progress{height:4px; background:var(--rust)}
-.range::-webkit-slider-thumb{-webkit-appearance:none; width:22px; height:22px; margin-top:-9px; background:var(--paper); border:3px solid var(--rust); transform:rotate(45deg)}
-.range::-moz-range-thumb{width:16px; height:16px; background:var(--paper); border:3px solid var(--rust); border-radius:0}
-.range.gold::-webkit-slider-runnable-track{background:linear-gradient(90deg, var(--gold) var(--p,33%), var(--line) var(--p,33%))}
-.range.gold::-webkit-slider-thumb{border-color:var(--gold)}
-.range.gold::-moz-range-progress{background:var(--gold)}
-.range.gold::-moz-range-thumb{border-color:var(--gold)}
-.ticks{display:flex; justify-content:space-between; font:500 10px var(--f-mono); letter-spacing:.12em; color:#77736b; text-transform:uppercase; margin-top:-8px}
-.status{border-left:2px solid var(--rust); padding:10px 14px; background:rgba(210,119,79,.07); min-height:78px}
-.status b{display:block; font:500 10px var(--f-mono); letter-spacing:.22em; text-transform:uppercase; color:var(--rust); margin-bottom:4px}
-.status p{font-size:15px; line-height:1.5}
-.calc{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-.calc label{min-width:0; display:flex; flex-direction:column; gap:6px; font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--paper-dim)}
-.calc input[type=text]{width:100%; min-width:0; background:var(--ink); border:1px solid var(--line); min-height:46px; padding:0 12px; font-size:16px; color:var(--paper); font-variant-numeric:tabular-nums; outline:none}
-.calc input[type=text]:focus{border-color:var(--gold)}
-.calc .full{grid-column:1 / -1}
-.loss{display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line)}
-.loss div{padding:12px 14px}
-.loss div + div{border-left:1px solid var(--line)}
-.loss span{display:block; font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:4px}
-.loss strong{font:900 clamp(1.4rem,2.6vw,1.9rem)/1 var(--f-display); font-stretch:85%; color:var(--rust); font-variant-numeric:tabular-nums}
+/* CAD viewport */
+.vp{background:var(--model); color:var(--model-text); border-radius:6px; overflow:hidden; box-shadow:0 30px 60px -30px rgba(22,25,28,.55); border:1px solid #11161A}
+.vp-bar{display:flex; align-items:center; gap:4px; padding:8px; background:var(--model-2); border-bottom:1px solid var(--model-rule); overflow-x:auto; scrollbar-width:none}
+.vp-bar::-webkit-scrollbar{display:none}
+.vp-bar .lbl{font:600 12px var(--f-head); font-stretch:90%; color:#8C98A4; padding:0 8px 0 4px; white-space:nowrap}
+.opt-tab{appearance:none; border:1px solid transparent; background:none; color:var(--model-text); font:600 13px var(--f-body); padding:7px 12px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.opt-tab:hover{background:#2C353E}
+.opt-tab[aria-selected="true"]{background:#0F1418; border-color:var(--cad-cyan); color:#fff}
+.opt-tab b{color:var(--cad-cyan); margin-right:6px}
+.vp-draw{position:relative; aspect-ratio:820/540}
+.vp-draw svg{position:absolute; inset:0; width:100%; height:100%}
+.vp-foot{display:grid; grid-template-columns:1fr; border-top:1px solid var(--model-rule)}
+.tblock{display:grid; grid-template-columns:repeat(4,minmax(0,1fr))}
+.tblock div{padding:8px 12px; border-right:1px solid var(--model-rule); min-width:0}
+.tblock div:last-child{border-right:0}
+.tblock span{display:block; font:500 11px var(--f-body); color:#8C98A4}
+.tblock b{display:block; font:600 14px var(--f-head); font-stretch:95%; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.layers{display:flex; flex-wrap:wrap; gap:4px; padding:8px; border-top:1px solid var(--model-rule)}
+.layer{appearance:none; display:inline-flex; align-items:center; gap:6px; border:1px solid var(--model-rule); background:none; color:var(--model-text); font:500 12px var(--f-body); padding:5px 8px; border-radius:3px; cursor:pointer}
+.layer i{width:10px; height:10px; border-radius:2px; background:currentColor}
+.layer[aria-pressed="false"]{opacity:.45}
+.layer[aria-pressed="false"] i{background:none; border:1px solid currentColor}
+@media (max-width:640px){ .tblock{grid-template-columns:repeat(2,minmax(0,1fr))} .tblock div:nth-child(2n){border-right:0} .tblock div{border-bottom:1px solid var(--model-rule)} }
+.vp-cap{margin-top:12px; font-size:.85rem; color:var(--graphite)}
+svg .ly{transition:opacity .25s}
+svg .ly.off{opacity:0}
+.draw{stroke-dasharray:1; stroke-dashoffset:1; animation:draw .9s cubic-bezier(.3,.6,.2,1) forwards}
+.fadein{opacity:0; animation:fade .6s ease .35s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){ .draw{animation:none; stroke-dashoffset:0} .fadein{animation:none; opacity:1} }
 
-/* pain: questions */
-.qs{display:flex; flex-wrap:wrap; gap:8px}
-.chip{appearance:none; border:1px solid var(--line); background:rgba(22,22,20,.86); padding:11px 14px; min-height:44px; cursor:pointer; text-align:left; font-size:14px; line-height:1.3;
-  display:inline-flex; gap:10px; align-items:center; transition:border-color .2s, background .2s, transform .2s}
-.chip small{font:500 9px var(--f-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--paper-dim)}
-.chip:hover{border-color:var(--gold-soft)}
-.chip[aria-pressed="true"]{border-color:var(--rust); background:rgba(210,119,79,.13)}
-.chip[aria-pressed="true"] small{color:var(--rust)}
-.meter{display:flex; align-items:center; gap:14px}
-.meter-bar{flex:1; height:6px; background:var(--line); position:relative; overflow:hidden}
-.meter-bar i{position:absolute; inset:0 auto 0 0; width:0; background:var(--rust); transition:width .4s cubic-bezier(.2,.8,.2,1)}
-.meter b{font:500 12px var(--f-mono); letter-spacing:.1em; color:var(--paper-dim); white-space:nowrap}
-.answer{border:1px solid var(--gold-soft); background:var(--gold-fill); padding:16px 18px; font-size:16px; line-height:1.5}
-.answer b{color:var(--gold-hi)}
+/* sections */
+section.s{padding:clamp(56px,8vw,104px) 0; border-top:1px solid var(--rule)}
+section.s.white{background:var(--paper)}
+.s-head{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(20px,4vw,56px); align-items:end; margin-bottom:clamp(28px,4vw,44px)}
+.s-head p{color:var(--graphite)}
+@media (max-width:860px){ .s-head{grid-template-columns:1fr} }
 
-/* build */
-.build{min-height:240vh; align-items:stretch}
-.build > .wrap{display:block}
-.build .panel{position:sticky; top:calc(var(--bar-h) + 40px)}
-.steps{list-style:none; margin:0; padding:0; border-top:1px solid var(--line); background:rgba(22,22,20,.82)}
-.steps li{border-bottom:1px solid var(--line)}
-.steps button{all:unset; box-sizing:border-box; width:100%; display:grid; grid-template-columns:34px 1fr; gap:12px; padding:13px 14px; cursor:pointer; align-items:start}
-.steps button:focus-visible{outline:2px solid var(--gold-hi); outline-offset:-2px}
-.steps .n{font:500 11px var(--f-mono); letter-spacing:.12em; color:#77736b; padding-top:3px}
-.steps b{display:block; font-weight:700; font-size:15px; color:var(--paper-dim); transition:color .3s}
-.steps small{display:block; font-size:13px; line-height:1.45; color:#77736b; max-height:0; overflow:hidden; transition:max-height .4s, color .3s}
-.steps li.done .n{color:var(--gold)}
-.steps li.done b{color:var(--paper)}
-.steps li.cur{background:var(--gold-fill)}
-.steps li.cur b{color:var(--gold-hi)}
-.steps li.cur small{max-height:80px; color:var(--paper-dim)}
-.buildbar{height:3px; background:var(--line); position:relative}
-.buildbar i{position:absolute; inset:0 auto 0 0; background:var(--gold); width:0}
-#build-end{position:absolute; bottom:30vh; left:0; width:1px; height:1px}
-
-/* after */
-.phone{width:min(340px,100%); border:1px solid var(--line); border-radius:28px; background:#121211; padding:14px; box-shadow:0 30px 80px rgba(0,0,0,.45)}
-.phone-top{display:flex; justify-content:space-between; align-items:center; padding:4px 8px 12px; border-bottom:1px solid var(--line); font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
-.phone-top b{color:var(--paper); font-weight:500}
-.thread{display:flex; flex-direction:column; gap:8px; padding:14px 4px 6px; min-height:230px}
-.msg{max-width:84%; padding:9px 12px; font-size:14px; line-height:1.4; border-radius:16px; animation:msgin .35s ease both}
-.msg.them{background:#26251f; align-self:flex-start; border-bottom-left-radius:4px}
-.msg.me{background:var(--gold); color:var(--ink); align-self:flex-end; border-bottom-right-radius:4px}
-.msg.img{padding:4px; background:#26251f}
-.msg.img img{display:block; width:220px; max-width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:12px}
-@keyframes msgin{from{opacity:.2; transform:translateY(6px)} to{opacity:1; transform:none}}
-.seg{display:inline-flex; align-self:flex-start; border:1px solid var(--line); background:rgba(22,22,20,.86)}
-.seg button{appearance:none; border:0; background:transparent; padding:0 16px; min-height:44px; cursor:pointer; font:500 11px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
-.seg button[aria-pressed="true"]{background:var(--gold); color:var(--ink)}
-.after-row{display:flex; flex-wrap:wrap; gap:22px; align-items:flex-start}
-.tag-illus{font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:#77736b}
-
-/* solid bands */
-.band{position:relative; z-index:4; background:var(--ink); border-top:1px solid var(--line); padding-block:clamp(72px,10vw,128px)}
-.band.alt{background:var(--ink-2)}
-.band-head{display:flex; flex-direction:column; gap:16px; max-width:780px; margin-bottom:clamp(36px,5vw,56px)}
-
-/* promise */
-.promise{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
-.promise article{background:var(--ink); padding:26px 22px 24px; display:flex; flex-direction:column; gap:12px; min-width:0}
-.promise .big{font:400 clamp(2.4rem,4vw,3.2rem)/1 var(--f-serif); font-style:italic; color:var(--gold-hi)}
-.promise p{color:var(--paper-dim); font-size:14px; line-height:1.55}
-.compare-wrap{margin-top:40px; overflow-x:auto; border:1px solid var(--line)}
-.compare{width:100%; border-collapse:collapse; min-width:640px; font-size:14px}
-.compare th,.compare td{padding:14px 16px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
-.compare thead th{font:500 10px var(--f-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--paper-dim); background:var(--ink-2)}
-.compare thead th.us{color:var(--ink); background:var(--gold)}
-.compare tbody th{font:500 11px var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--paper-dim); font-weight:500; width:18%}
-.compare td.us{background:var(--gold-fill); color:var(--paper); font-weight:600}
-.compare td{color:var(--paper-dim)}
-.compare tr:last-child th,.compare tr:last-child td{border-bottom:0}
-
-/* proof */
-.stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border:1px solid var(--line); margin-bottom:clamp(48px,7vw,80px)}
-.stats div{padding:22px 20px; border-right:1px solid var(--line); min-width:0}
-.stats div:last-child{border-right:0}
-.stats strong{display:block; font:900 clamp(2.6rem,5.6vw,4.4rem)/1 var(--f-display); font-stretch:78%; color:var(--paper); font-variant-numeric:tabular-nums}
-.stats strong.gold{color:var(--gold-hi)}
-.stats span{display:block; margin-top:10px; font-size:13px; line-height:1.45; color:var(--paper-dim)}
-.case{display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); gap:clamp(20px,3vw,40px); align-items:start}
-.viewer{border:1px solid var(--line); background:var(--ink-3)}
-.viewer-tabs{display:flex; border-bottom:1px solid var(--line); overflow-x:auto}
-.viewer-tabs button{appearance:none; border:0; border-right:1px solid var(--line); background:transparent; padding:0 16px; min-height:46px; cursor:pointer; white-space:nowrap;
-  font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--paper-dim)}
-.viewer-tabs button[aria-selected="true"]{color:var(--ink); background:var(--gold)}
-.frame{position:relative; aspect-ratio:3 / 2; overflow:hidden; background:#1a1917}
-.frame img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .45s ease}
-.frame img.contain{object-fit:contain; background:#f4f3ef}
-.frame img[hidden]{display:block!important; opacity:0}
-.frame .missing{position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:20px; color:var(--paper-dim); font-size:13px}
-.frame .badge{position:absolute; left:12px; top:12px; background:rgba(14,14,14,.82); padding:6px 9px; font:500 10px var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--gold-hi)}
-.viewer-foot{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 12px; flex-wrap:wrap}
-.spec{border:1px solid var(--line)}
-.spec-head{padding:18px 18px 14px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:6px}
-.spec-head h3{font-size:clamp(1.3rem,2vw,1.6rem)}
-.spec dl{margin:0; display:grid; grid-template-columns:auto 1fr}
-.spec dt,.spec dd{margin:0; padding:10px 18px; border-bottom:1px solid var(--line); font-size:14px}
-.spec dt{font:500 10px/1.9 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim); padding-right:8px}
-.spec dd{text-align:right; font-variant-numeric:tabular-nums; color:var(--paper)}
-.spec dd b{color:var(--gold-hi); font-weight:600}
-.spec .speed{padding:16px 18px; display:flex; gap:14px; align-items:center; background:var(--gold-fill)}
-.spec .speed strong{font:400 34px/1 var(--f-serif); font-style:italic; color:var(--gold-hi); white-space:nowrap}
-.spec .speed p{font-size:13px; line-height:1.45; color:var(--paper-dim)}
-.case + .case{margin-top:clamp(48px,6vw,72px)}
-.clients{margin-top:clamp(48px,6vw,72px); display:flex; flex-wrap:wrap; align-items:center; gap:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
-.clients p{font:500 10px var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--paper-dim); padding:18px 24px 18px 0}
-.clients span{padding:18px 24px; border-left:1px solid var(--line); font-weight:700; font-size:15px}
-.clients span small{display:block; font-weight:400; font-size:12px; color:var(--paper-dim)}
-.reviews{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:40px}
-.review{border:1px solid var(--line); padding:20px; display:flex; flex-direction:column; gap:12px}
-.stars{color:var(--gold-hi); letter-spacing:.2em}
-.rating{display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:15px; color:var(--paper-dim)}
-.rating .stars{font-size:22px}
-.trust .stars-inline{color:var(--gold-hi); letter-spacing:.06em}
-.trust .stars-inline::before{display:none}
-
-/* claim */
-.claim{position:relative; z-index:2}
-.claim .wrap{display:flex; align-items:center; min-height:100vh; padding-block:96px}
-.claim-col{max-width:560px; width:100%}
-.story .form{pointer-events:auto}
-.form{border:1px solid var(--gold-soft); background:rgba(22,22,20,.94); padding:clamp(18px,3vw,28px); display:flex; flex-direction:column; gap:14px}
-.form .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-.field{display:flex; flex-direction:column; gap:7px; min-width:0}
-.field label{font:500 10px var(--f-mono); letter-spacing:.2em; text-transform:uppercase; color:var(--paper-dim)}
-.field input,.field select{width:100%; min-height:50px; padding:0 14px; background:var(--ink); border:1px solid var(--line); color:var(--paper); font-size:16px; border-radius:0; outline:none; -webkit-appearance:none; appearance:none}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23B8924F' stroke-width='1.6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:right 14px center; padding-right:36px}
-.field input:focus,.field select:focus{border-color:var(--gold)}
-.field input[aria-invalid="true"]{border-color:var(--rust)}
-.hp{position:absolute!important; left:-9999px; width:1px; height:1px; opacity:0}
-.form-err{color:var(--rust); font-size:13px; min-height:1px}
-.assure{display:flex; flex-wrap:wrap; gap:6px 16px; font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
-.assure span::before{content:"✓ "; color:var(--gold)}
-.done{display:flex; flex-direction:column; gap:16px}
-.book{display:flex; flex-direction:column; gap:14px}
-.book b{color:var(--paper)}
-.days{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:thin}
-.day{flex:0 0 auto; appearance:none; border:1px solid var(--line); background:var(--ink); color:var(--paper); min-width:68px; min-height:58px; padding:6px 10px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px}
-.day small{font:500 10px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
-.day b{font-size:14px; font-weight:700}
-.day[aria-selected="true"]{border-color:var(--gold); background:var(--gold-fill)}
-.day[aria-selected="true"] small{color:var(--gold)}
-.times{display:grid; grid-template-columns:repeat(auto-fill, minmax(92px, 1fr)); gap:8px; max-height:216px; overflow-y:auto}
-.slot{appearance:none; border:1px solid var(--line); background:var(--ink); color:var(--paper); min-height:44px; cursor:pointer; font:500 13px var(--f-mono); letter-spacing:.04em}
-.slot:hover{border-color:var(--gold-soft)}
-.slot[aria-pressed="true"]{background:var(--gold); border-color:var(--gold); color:var(--ink)}
-.btn:disabled{opacity:.4; cursor:not-allowed}
-.linkbtn{appearance:none; background:none; border:0; padding:6px 0; color:var(--paper-dim); text-decoration:underline; text-underline-offset:3px; cursor:pointer; font-size:13px; align-self:center}
-.linkbtn:hover{color:var(--paper)}
-.when{font:400 clamp(1.3rem,2.4vw,1.6rem)/1.25 var(--f-serif); font-style:italic; color:var(--gold-hi)}
-.done ol{margin:0; padding:0; list-style:none; border-top:1px solid var(--line)}
-.done li{display:grid; grid-template-columns:28px 1fr; gap:10px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14px; color:var(--paper-dim)}
-.done li b{color:var(--paper)}
-.done li span{font:500 11px var(--f-mono); color:var(--gold)}
-
-/* faq + foot */
-.faq{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 40px}
-.faq details{border-top:1px solid var(--line); padding:4px 0}
-.faq summary{list-style:none; cursor:pointer; display:flex; justify-content:space-between; gap:16px; padding:16px 0; font-weight:700; font-size:16px; min-height:44px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+"; color:var(--gold); font:400 22px/1 var(--f-mono); transition:transform .25s}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{padding:0 0 18px; color:var(--paper-dim); font-size:15px; line-height:1.6; max-width:60ch}
-.foot{position:relative; z-index:4; background:var(--ink); border-top:1px solid var(--line); padding-block:28px calc(28px + env(safe-area-inset-bottom, 0px))}
-.foot .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 28px; font-size:12px; color:var(--paper-dim)}
-.foot .links{display:flex; flex-wrap:wrap; gap:6px 22px}
-.foot a{text-decoration:none}
-.foot a:hover{color:var(--gold)}
-
-/* mobile sticky CTA */
-.mbar{display:none}
-
-@media (max-width: 980px){
-  .promise{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .stats div:nth-child(2){border-right:0}
-  .stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .case{grid-template-columns:minmax(0,1fr)}
-  .reviews{grid-template-columns:1fr}
+/* sheet index */
+.sheets{width:100%; border-collapse:collapse; background:var(--paper); border:1px solid var(--ink)}
+.sheets th,.sheets td{text-align:left; vertical-align:top; padding:16px 18px; border-bottom:1px solid var(--rule)}
+.sheets thead th{font:600 13px var(--f-body); color:var(--graphite); background:#F6F7F7; border-bottom:1px solid var(--ink)}
+.sheets td.no{font:700 15px var(--f-head); font-stretch:100%; white-space:nowrap; width:1%}
+.sheets td.fmt{white-space:nowrap; color:var(--graphite); font-size:.92rem; width:1%}
+.sheets td b{display:block; font-weight:600}
+.sheets td span{color:var(--graphite); font-size:.95rem}
+.sheets tr.add td{background:#FAFAF8}
+.sheets tr.add td.no{color:var(--brass)}
+.sheets tr:last-child td{border-bottom:0}
+@media (max-width:640px){
+  .sheets thead{display:none}
+  .sheets tr{display:grid; grid-template-columns:auto 1fr; gap:4px 14px; padding:14px 16px; border-bottom:1px solid var(--rule)}
+  .sheets td{border:0; padding:0}
+  .sheets td.fmt{grid-column:2; width:auto}
+  .sheets td.no{grid-row:span 2}
 }
-@media (max-width: 860px){
-  :root{--bar-h:54px}
-  .scrim{background:linear-gradient(180deg, rgba(14,14,14,0) 0%, rgba(14,14,14,0) 34%, rgba(14,14,14,.82) 58%, rgba(14,14,14,.94) 100%)}
-  .chapter{min-height:auto; padding-block:46vh 72px; align-items:flex-start}
-  .hero{min-height:auto; padding-block:40vh 56px}
-  .build{min-height:220vh; padding-top:46vh; align-items:stretch}
-  .build .panel{top:calc(100svh - 236px); background:rgba(14,14,14,.92); padding:14px; margin-inline:-14px; gap:12px; border-top:1px solid var(--gold-soft)}
-  .build .panel h2,.build .panel .lede{display:none}
-  .build .panel .kicker{margin:0}
-  .steps li:not(.cur){display:none}
-  .steps li.cur small{max-height:120px}
-  .panel{max-width:none}
-  .freepill span{display:none}
-  .buylink{display:none}
-  .hud{display:none}
-  .claim .wrap{min-height:auto; padding-block:38vh 72px}
-  .faq{grid-template-columns:1fr}
-  .form .row2{grid-template-columns:1fr}
-  .mbar{display:flex; position:fixed; left:0; right:0; bottom:0; z-index:55; gap:12px; align-items:center; justify-content:space-between;
-    padding:10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gutter-l); background:rgba(22,22,20,.97); border-top:1px solid var(--gold-soft);
-    transform:translateY(110%); transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-  .mbar.show{transform:none}
-  .mbar p{font:500 10px/1.35 var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--paper-dim)}
-  .mbar p b{display:block; color:var(--gold-hi); font:400 22px/1 var(--f-serif); font-style:italic; letter-spacing:0; text-transform:none}
-  .mbar .btn{min-height:46px}
-  .foot{padding-bottom:calc(96px + env(safe-area-inset-bottom, 0px))}
-}
-@media (max-width: 520px){
-  .promise{grid-template-columns:1fr}
-  .calc{grid-template-columns:1fr 1fr}
-  .addr{flex-direction:column}
-  .addr .btn{width:100%}
-  .clients span{border-left:0; padding-left:0; width:50%}
-}
-@media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
 
-/* ---- Agents just like you (chapter 2 + closing band). Filled from AGENTS / PROOF in the script ---- */
-.ag-stats{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border:1px solid var(--line); background:rgba(14,14,14,.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
-.ag-stats div{padding:16px 16px 14px; border-right:1px solid var(--line); min-width:0}
-.ag-stats div:last-child{border-right:0}
-.ag-stats strong{display:block; font:900 clamp(1.9rem,3.4vw,2.6rem)/1 var(--f-display); font-stretch:78%; color:var(--paper); font-variant-numeric:tabular-nums}
-.ag-stats strong.gold{color:var(--gold-hi)}
-.ag-stats strong.ag-stars{font:400 clamp(.95rem,1.9vw,1.45rem)/1.6 var(--f-display); letter-spacing:.04em; white-space:nowrap}
-.ag-stats span{display:block; margin-top:8px; font-size:12px; line-height:1.4; color:var(--paper-dim)}
-.ag-list{list-style:none; margin:0; padding:0; display:grid; border-top:1px solid var(--line); background:rgba(14,14,14,.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
-.ag-list li{display:grid; grid-template-columns:36px minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line)}
-.ag-av{width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:var(--gold-fill); border:1px solid var(--gold-soft); color:var(--gold-hi); font:700 12px/1 var(--f-mono); letter-spacing:.04em}
-.ag-who{min-width:0}
-.ag-who b{display:block; font-weight:700; font-size:15px; line-height:1.3}
-.ag-who small{display:block; font-size:13px; line-height:1.35; color:var(--paper-dim); overflow-wrap:anywhere}
-.ag-tag{font:500 10px/1 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim); white-space:nowrap; padding:7px 9px; border:1px solid var(--line)}
-.ag-tag.pkg{color:var(--gold-hi); border-color:var(--gold-soft); background:var(--gold-fill)}
-.ag-more{font-size:13px; color:var(--paper-dim); margin:0}
-.ag-grid{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-left:1px solid var(--line); border-top:1px solid var(--line)}
-.ag-grid li{display:grid; grid-template-columns:36px minmax(0,1fr); gap:12px; align-items:center; padding:16px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); min-width:0}
-.ag-grid li .ag-tag{grid-column:2; justify-self:start; margin-top:2px}
-.ag-band .stats{margin-bottom:clamp(36px,5vw,56px)}
-.ag-cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:clamp(36px,5vw,56px)}
-@media (max-width:1000px){ .ag-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-@media (max-width:560px){ .ag-grid{grid-template-columns:1fr} .ag-stats strong{font-size:1.75rem} .ag-stats div{padding:12px 10px} }
+/* phases */
+.phases{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); counter-reset:ph}
+.phase{position:relative; padding:22px 20px 24px 0; border-top:3px solid var(--rule)}
+.phase.me{border-top-color:var(--brass)}
+.phase .n{font:700 13px var(--f-head); color:var(--graphite)}
+.phase.me .n{color:var(--brass)}
+.phase h3{margin-top:6px}
+.phase p{margin-top:8px; font-size:.95rem; color:var(--graphite); max-width:30ch}
+.phase .who{display:inline-block; margin-top:12px; font:600 12px var(--f-body); padding:3px 8px; border-radius:2px; background:#E3E6E8; color:var(--graphite)}
+.phase.me .who{background:var(--ink); color:#fff}
+@media (max-width:860px){ .phases{grid-template-columns:1fr 1fr} }
+@media (max-width:520px){ .phases{grid-template-columns:1fr} }
 
-/* owner list + past-projects band */
-.owner-list li{grid-template-columns:36px minmax(0,1fr)}
-.owner-list .ag-av{font-size:11px}
-.gal-cards{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px}
-.gal-card{display:block; text-decoration:none; border:1px solid var(--line); background:var(--ink); transition:border-color .2s, transform .3s}
-.gal-card:hover{border-color:var(--gold-soft); transform:translateY(-3px)}
-.gal-card img{width:100%; aspect-ratio:3/2; object-fit:cover; background:var(--ink-2)}
-.gal-card span{display:block; padding:12px 14px 14px}
-.gal-card b{display:block; font-weight:700; font-size:15px; line-height:1.3}
-.gal-card small{display:block; margin-top:2px; font-size:13px; color:var(--paper-dim)}
-@media (max-width:900px){ .gal-cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
+/* calculator */
+.calc{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); border:1px solid var(--ink); background:var(--paper); margin-top:clamp(32px,5vw,56px)}
+.calc-in{padding:clamp(20px,3vw,32px); border-right:1px solid var(--rule); display:grid; gap:20px}
+.calc-out{padding:clamp(20px,3vw,32px); display:grid; gap:18px; align-content:start}
+.calc label{display:grid; gap:8px; font-weight:600; font-size:.95rem}
+.calc label output{font:700 1.1rem var(--f-head); font-stretch:105%}
+.calc .row{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
+.calc input[type=range]{width:100%; accent-color:var(--ink)}
+.calc input[type=text]{width:100%; min-height:46px; padding:0 12px; border:1px solid var(--rule); border-radius:3px; font:500 16px var(--f-body); background:var(--paper)}
+.calc input[type=text]:focus{border-color:var(--ink); outline:none}
+.vs{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule)}
+.vs div{background:var(--paper); padding:16px}
+.vs span{display:block; font-size:.85rem; color:var(--graphite)}
+.vs b{display:block; font:800 clamp(1.6rem,3vw,2.2rem)/1.1 var(--f-head); font-stretch:108%; margin-top:4px}
+.vs .me b{color:var(--brass)}
+.vs small{display:block; margin-top:4px; color:var(--graphite); font-size:.85rem}
+@media (max-width:760px){ .calc{grid-template-columns:1fr} .calc-in{border-right:0; border-bottom:1px solid var(--rule)} }
 
-/* ---- /engineers: tabs + checkout + contact ---- */
-.tabs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border:1px solid var(--line); margin-bottom:4px}
-.tabs button{appearance:none; background:none; border:0; border-left:1px solid var(--line); color:var(--paper-dim); min-height:48px; padding:0 8px; font:500 11px var(--f-mono); letter-spacing:.14em; text-transform:uppercase; cursor:pointer}
+/* work */
+.work-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px}
+.work-tabs button{appearance:none; border:1px solid var(--rule); background:var(--paper); color:var(--ink); padding:9px 14px; border-radius:3px; font:500 14px var(--f-body); cursor:pointer}
+.work-tabs button[aria-selected="true"]{background:var(--ink); border-color:var(--ink); color:#fff}
+.work{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,.7fr); gap:14px; align-items:stretch}
+.work figure{margin:0; background:var(--paper); border:1px solid var(--rule); display:flex; flex-direction:column}
+.work figure .im{flex:1; min-height:240px; display:grid; place-items:center; overflow:hidden; background:#fff}
+.work figure .im img{width:100%; height:100%; object-fit:contain}
+.work figure.rd .im img{object-fit:cover}
+.work figcaption{padding:10px 12px; font-size:.85rem; color:var(--graphite); border-top:1px solid var(--rule)}
+.spec{background:var(--paper); border:1px solid var(--rule); padding:18px}
+.spec h3{font-size:1.05rem}
+.spec .use{margin-top:4px; color:var(--graphite); font-size:.92rem}
+.spec dl{margin:14px 0 0; display:grid; gap:0}
+.spec dt{font-size:.8rem; color:var(--graphite); padding-top:10px; border-top:1px solid var(--rule-2)}
+.spec dd{margin:2px 0 10px; font-weight:600; font-size:.95rem}
+@media (max-width:980px){ .work{grid-template-columns:1fr 1fr} .spec{grid-column:1 / -1} }
+@media (max-width:620px){ .work{grid-template-columns:1fr} }
+
+/* pricing */
+.price{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); border:1px solid var(--ink); background:var(--paper)}
+.price-l{padding:clamp(24px,4vw,40px); border-right:1px solid var(--rule); display:flex; flex-direction:column; gap:14px}
+.price-l .amt{font:800 clamp(3rem,7vw,4.6rem)/1 var(--f-head); font-stretch:110%}
+.price-l .amt small{font:500 1rem var(--f-body); color:var(--graphite); margin-left:6px; letter-spacing:0}
+.price-r{padding:clamp(24px,4vw,40px)}
+.inc{list-style:none; margin:0; padding:0; display:grid; gap:12px}
+.inc li{display:grid; grid-template-columns:20px 1fr; gap:12px}
+.inc li::before{content:""; width:12px; height:12px; margin-top:6px; border:2px solid var(--ink); border-radius:2px; background:linear-gradient(var(--ink),var(--ink)) center/6px 6px no-repeat}
+.addons{margin-top:22px; padding-top:18px; border-top:1px solid var(--rule); display:grid; gap:10px}
+.addons div{display:flex; justify-content:space-between; gap:16px}
+.addons b{white-space:nowrap}
+@media (max-width:820px){ .price{grid-template-columns:1fr} .price-l{border-right:0; border-bottom:1px solid var(--rule)} }
+
+/* start: order / book / ask */
+.start{display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:clamp(24px,5vw,64px); align-items:start}
+.start-l p{margin-top:16px}
+.start-l ul{margin:22px 0 0; padding:0; list-style:none; display:grid; gap:10px; color:var(--graphite)}
+.start-l li{padding-left:18px; position:relative}
+.start-l li::before{content:""; position:absolute; left:0; top:.72em; width:8px; height:2px; background:var(--brass)}
+.panel{background:var(--paper); border:1px solid var(--ink)}
+.tabs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-bottom:1px solid var(--ink)}
+.tabs button{appearance:none; background:#F6F7F7; border:0; border-left:1px solid var(--rule); min-height:52px; font:600 15px var(--f-body); color:var(--graphite); cursor:pointer}
 .tabs button:first-child{border-left:0}
-.tabs button[aria-selected="true"]{background:var(--gold); color:var(--ink); font-weight:600}
-.tabs button:focus-visible{outline:2px solid var(--gold-hi); outline-offset:-2px}
+.tabs button[aria-selected="true"]{background:var(--paper); color:var(--ink); box-shadow:inset 0 -3px 0 var(--brass)}
+.pane{padding:clamp(18px,3vw,28px); display:flex; flex-direction:column; gap:16px}
 .pane[hidden]{display:none!important}
-.opts{display:flex; flex-direction:column}
-.opt{position:relative; display:grid; grid-template-columns:22px minmax(0,1fr) auto; gap:12px; align-items:start; padding:14px 0; border-top:1px solid var(--line); cursor:pointer}
-.opt:first-child{border-top:0; padding-top:0}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+@media (max-width:520px){ .row2{grid-template-columns:1fr} }
+.field{display:grid; gap:6px; min-width:0}
+.field label{font-weight:600; font-size:.88rem}
+.field input,.field textarea{width:100%; min-height:48px; padding:0 12px; border:1px solid #BFC5CA; border-radius:3px; font:16px var(--f-body); color:var(--ink); background:#fff}
+.field textarea{padding:12px; min-height:120px; resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--ink); outline:2px solid rgba(22,25,28,.12)}
+.field [aria-invalid="true"]{border-color:var(--err)}
+.opts{display:grid; border:1px solid var(--rule); border-radius:3px}
+.opt{position:relative; display:grid; grid-template-columns:22px minmax(0,1fr) auto; gap:12px; padding:14px; border-top:1px solid var(--rule); cursor:pointer}
+.opt:first-child{border-top:0}
 .opt input,.agree input{position:absolute; opacity:0; pointer-events:none}
-.opt .box,.agree .box{width:20px; height:20px; border:1px solid var(--gold-soft); display:grid; place-items:center; color:transparent; font-size:12px; font-weight:800; margin-top:2px; transition:background .15s, border-color .15s}
-.opt input:checked+.box,.agree input:checked+.box{background:var(--gold); border-color:var(--gold); color:var(--ink)}
-.opt input:focus-visible+.box,.agree input:focus-visible+.box{outline:2px solid var(--gold-hi); outline-offset:2px}
-.opt.locked{cursor:default}
-.opt b{display:block; font-weight:700; font-size:15px; color:var(--paper)}
-.opt small{display:block; margin-top:3px; font-size:13px; line-height:1.5; color:var(--paper-dim)}
-.opt small a,.agree a,.claim .small a{color:var(--gold-hi)}
-.opt .pr{font-weight:700; color:var(--gold-hi); white-space:nowrap; font-variant-numeric:tabular-nums}
-.sum{border-top:1px solid var(--gold-soft); border-bottom:1px solid var(--line); padding:12px 0; display:grid; gap:8px}
-.sum div{display:flex; justify-content:space-between; gap:12px; font-size:14px; color:var(--paper-dim)}
-.sum div b{color:var(--paper); font-variant-numeric:tabular-nums}
-.sum .tot{padding-top:8px; border-top:1px solid var(--line); font:500 11px var(--f-mono); letter-spacing:.2em; text-transform:uppercase; align-items:center}
-.sum .tot b{font:400 30px/1 var(--f-serif); font-style:italic; color:var(--gold-hi); letter-spacing:0; text-transform:none}
-.agree{position:relative; display:grid; grid-template-columns:22px minmax(0,1fr); gap:12px; font-size:13px; line-height:1.55; color:var(--paper-dim); cursor:pointer}
-.agree b{color:var(--paper)}
-#f-submit:disabled{opacity:.4; cursor:not-allowed}
-.field textarea{width:100%; min-height:110px; padding:12px 14px; background:var(--ink); border:1px solid var(--line); color:var(--paper); font:16px/1.5 inherit; font-family:inherit; border-radius:0; outline:none; resize:vertical; -webkit-appearance:none; appearance:none}
-.field textarea:focus{border-color:var(--gold)}
-.field textarea[aria-invalid="true"]{border-color:var(--rust)}
-.pane .assure{margin:0}
-@media (max-width:420px){ .tabs button{letter-spacing:.06em; font-size:10px} }
+.box{width:20px; height:20px; border:1.5px solid #8E979F; border-radius:3px; display:grid; place-items:center; color:transparent; font-size:13px; font-weight:800; margin-top:2px}
+.opt input:checked+.box,.agree input:checked+.box{background:var(--ink); border-color:var(--ink); color:#fff}
+.opt input:focus-visible+.box,.agree input:focus-visible+.box{outline:2px solid var(--brass); outline-offset:2px}
+.opt.locked{cursor:default; background:#FAFAF8}
+.opt b{display:block; font-weight:600}
+.opt small{display:block; margin-top:2px; font-size:.88rem; color:var(--graphite); line-height:1.5}
+.opt small a{color:var(--ink)}
+.opt .pr{font-weight:700; white-space:nowrap}
+.sum{display:grid; gap:6px; padding:14px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.sum div{display:flex; justify-content:space-between; font-size:.95rem; color:var(--graphite)}
+.sum b{color:var(--ink)}
+.sum .tot{margin-top:4px; font-size:1rem; color:var(--ink); font-weight:600}
+.sum .tot b{font:800 1.6rem/1 var(--f-head); font-stretch:108%}
+.agree{position:relative; display:grid; grid-template-columns:22px 1fr; gap:12px; font-size:.92rem; color:var(--graphite); cursor:pointer}
+.agree b{color:var(--ink)}
+.form-err{min-height:0; margin:0; color:var(--err); font-weight:600; font-size:.92rem}
+.form-err:empty{display:none}
+.days{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px}
+.day{appearance:none; flex:0 0 auto; display:grid; gap:2px; min-width:72px; padding:8px 10px; border:1px solid var(--rule); border-radius:3px; background:#fff; cursor:pointer; text-align:center; font:inherit}
+.day small{font-size:.75rem; color:var(--graphite)}
+.day b{font-size:.92rem}
+.day[aria-selected="true"]{border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink)}
+.times{display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:8px}
+.slot{appearance:none; min-height:42px; border:1px solid var(--rule); border-radius:3px; background:#fff; font:500 14px var(--f-body); cursor:pointer}
+.slot[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink)}
+.done{display:grid; gap:10px; padding:8px 0}
+.done h3{font-size:1.5rem}
+.when{font-weight:700}
+.ok{display:inline-flex; width:36px; height:36px; border-radius:50%; background:var(--ok); color:#fff; align-items:center; justify-content:center; font-weight:800}
+@media (max-width:900px){ .start{grid-template-columns:1fr} }
+
+/* faq */
+.faq{display:grid; grid-template-columns:1fr 1fr; gap:0 48px}
+.faq details{border-top:1px solid var(--rule); padding:16px 0}
+.faq summary{cursor:pointer; font-weight:600; list-style:none; display:flex; justify-content:space-between; gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+"; font:600 20px/1 var(--f-head); color:var(--brass)}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin-top:10px; color:var(--graphite); max-width:62ch}
+@media (max-width:820px){ .faq{grid-template-columns:1fr} }
+
+footer{background:var(--model); color:#AEB8C1; padding:28px 0; font-size:.9rem}
+footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 28px}
+footer a{color:#fff}
+footer .links{display:flex; flex-wrap:wrap; gap:8px 22px}
+
+.mbar{display:none}
+@media (max-width:760px){
+  .mbar{display:flex; position:fixed; left:0; right:0; bottom:0; z-index:40; gap:12px; align-items:center; justify-content:space-between; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:#fff; border-top:1px solid var(--ink); transform:translateY(110%); transition:transform .3s}
+  .mbar.show{transform:none}
+  .mbar p{font-size:.85rem; color:var(--graphite); line-height:1.3}
+  .mbar p b{display:block; color:var(--ink); font:800 1.2rem var(--f-head)}
+  .mbar .btn{min-height:44px}
+  footer{padding-bottom:96px}
+}
 </style>
 <!-- Microsoft Clarity -->
-<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");</script>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","y0fhpbp8dw");clarity("set","channel","engineers");</script>
 <!-- PostHog (session replay + analytics). Same block on /free, /p/ pages and the template. -->
 <script>window.fph=function(){(window.fph.q=window.fph.q||[]).push([].slice.call(arguments))};</script>
 <script type="module">
@@ -480,353 +312,232 @@ window.fphWho = (email, props) => {
   }
 };
 </script>
-<script>window.fph("register",{channel:"engineers"});try{clarity("set","channel","engineers")}catch(e){}</script>
+<script>window.fph("register",{channel:"engineers"});</script>
 </head>
 <body>
 
-
-<header class="topbar">
+<header class="top">
   <div class="wrap">
-    <a class="brand" href="#hero" aria-label="Forma Designs"><i>F</i><b>FORMA</b></a>
-    <p class="freepill"><b>$949</b><span>White-label concept plans + 3D renderings for your firm</span></p>
-    <div class="topbar-ctas"><a class="buylink" href="#claim" data-tab="book">Book a call</a><a class="btn" href="#claim" data-tab="order" data-cta="top">Order · $949</a></div>
+    <a class="brand" href="#top"><i>F</i>FORMA<small>for civil &amp; survey firms</small></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#included">What's included</a>
+      <a href="#fit">Where it fits</a>
+      <a href="#work">Sample work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-line" href="#start" data-tab="book">Book a call</a>
+    <a class="btn" href="#start" data-tab="order">Order a job</a>
   </div>
 </header>
 
-<canvas id="stage" aria-hidden="true"></canvas>
-<div class="scrim" aria-hidden="true"></div>
-<div class="hud" aria-hidden="true"><span class="dot"></span><span id="hud-text">Model: <b>80 Elm St, Peterborough NH</b> · simplified</span><span class="draghint" id="draghint">· Drag to look around</span></div>
+<main id="top">
 
-<main>
-<div class="story">
-
-  <!-- HERO -->
-  <section class="chapter hero" id="hero" data-scene="hero">
-    <div class="wrap" style="width:100%">
-      <div class="panel">
-        <p class="kicker">For civil &amp; survey firms</p>
-        <h1>Concept plans and renderings, under your name. <em class="serif" style="text-transform:none; font-weight:400">$949.</em></h1>
-        <p class="lede">Your clients want to see what fits before they sign for engineering. Send me the address. Within 7 days you get a concept plan, a photoreal 3D rendering and a due diligence package, white-labeled for your firm. <b>Charged only when it's delivered.</b></p>
-
-        <div class="offer" aria-label="Your white-label package">
-          <div class="offer-head"><p>White-label package · per site</p><strong>$949</strong></div>
-          <ul>
-            <li><i>✓</i><div><b>Concept plan</b><small>Parcel lines, setbacks, buildings, parking and access at real dimensions, for uses the zoning allows.</small></div><s>Included</s></li>
-            <li><i>✓</i><div><b>3D rendering</b><small>Photoreal, for your proposal, your client's lender or their investors.</small></div><s>Included</s></li>
-            <li><i>✓</i><div><b>Due diligence package</b><small>Zoning, a permitting roadmap and a pro forma your client can act on.</small></div><s>Included</s></li>
-          </ul>
-        </div>
-
-        <form class="addr" id="hero-form" novalidate>
-          <label for="hero-address" class="hp">Site address</label>
-          <input id="hero-address" type="text" autocomplete="street-address" placeholder="Paste a site address">
-          <button class="btn btn-lg" type="submit">Order a package <span>→</span></button>
-        </form>
-        <p class="skip">Rather talk first? <a href="#claim" data-tab="book">Book a 15-minute call →</a><br>Want to see real work? <a href="/work/" target="_blank" rel="noopener">Browse past projects →</a></p>
-
-        <div class="trust"><span>White-label, your logo</span><span>Delivered within 7 days</span><span>Built on county parcel + LiDAR data</span><span>Charged on delivery</span></div>
-
-        <button class="hold" id="hold-build" type="button" aria-label="Press and hold to see this lot built out"><span class="ring"></span>Press and hold to build it</button>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Five concept layouts per job, drawn in CAD, under your title block.</h1>
+      <p class="lede">You've signed the job. Before your team engineers anything, the client has to settle on a layout. Send me the site and the use. Within 7 days you get 5 layouts with a DWG for each, a 3D rendering of the one your client picks and a due diligence package, white-labeled for your firm.</p>
+      <div class="ctas">
+        <a class="btn btn-lg" href="#start" data-tab="order">Order a job, $949</a>
+        <a class="btn btn-line btn-lg" href="#start" data-tab="book">Book a 15-minute call</a>
+      </div>
+      <div class="facts">
+        <div><b>5</b><span>layouts per job, each with its CAD file</span></div>
+        <div><b>7 days</b><span>from address to delivery</span></div>
+        <div><b>$949</b><span>flat per job, charged on delivery</span></div>
       </div>
     </div>
-  </section>
 
+    <div>
+      <div class="vp" id="vp">
+        <div class="vp-bar" role="tablist" aria-label="Layout options">
+          <span class="lbl">Layout</span>
+        </div>
+        <div class="vp-draw">
+          <svg id="cad" viewBox="0 0 820 540" role="img" aria-labelledby="cad-title">
+            <title id="cad-title">Sample site with five townhome layout options</title>
+            <defs>
+              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#28313A" stroke-width="1"/></pattern>
+              <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V6" stroke="rgba(255,255,255,.14)" stroke-width="1.2"/></pattern>
+            </defs>
+            <rect width="820" height="540" fill="url(#grid)"/>
+            <g id="base"></g>
+            <g id="opt"></g>
+          </svg>
+        </div>
+        <div class="vp-foot">
+          <div class="tblock" aria-live="polite">
+            <div><span>Use</span><b>Townhomes</b></div>
+            <div><span>Option</span><b id="tb-opt">A, Rows</b></div>
+            <div><span>Units</span><b id="tb-units" class="tnum">46</b></div>
+            <div><span>Parking</span><b id="tb-park" class="tnum">92 spaces</b></div>
+          </div>
+          <div class="layers" aria-label="Layers"></div>
+        </div>
+      </div>
+      <p class="vp-cap">Illustration: one site, one use, five ways to lay it out. Every option comes as its own DWG.</p>
+    </div>
+  </div>
+</section>
 
-  <!-- WHO IT'S FOR (chapter 2) -->
-  <section class="chapter" id="owners" data-scene="owners">
-    <div class="wrap" style="width:100%">
-      <div class="panel">
-        <p class="kicker">Who it's for</p>
-        <h2>Your team does the engineering. <em>I do the concept.</em></h2>
-        <p class="lede">Concept layouts and renderings win work, but they're slow, hard to bill for, and they pull your people off paying projects. Hand them to me and put your name on the result.</p>
-        <ul class="ag-list owner-list">
-          <li><span class="ag-av">01</span><span class="ag-who"><b>Civil engineering firms</b><small>Show a client the project before you scope the site engineering.</small></span></li>
-          <li><span class="ag-av">02</span><span class="ag-who"><b>Land surveyors</b><small>Turn a boundary and topo job into a concept your client can take to a buyer or lender.</small></span></li>
-          <li><span class="ag-av">03</span><span class="ag-who"><b>Site planners and LAs</b><small>Add photoreal renderings without adding rendering staff.</small></span></li>
-          <li><span class="ag-av">04</span><span class="ag-who"><b>Small firms, busy seasons</b><small>Take on feasibility work you'd otherwise turn down.</small></span></li>
+<section class="s white" id="included">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>What's in every job</h2>
+      <p>One site, one requested use, one flat price. Everything arrives white-labeled: your logo and title block, or unbranded so you can drop it into your own sheets.</p>
+    </div>
+    <table class="sheets">
+      <thead><tr><th scope="col">Sheet</th><th scope="col">What it is</th><th scope="col">You get</th></tr></thead>
+      <tbody>
+        <tr><td class="no">C-1 to C-5</td><td><b>Five concept layouts</b><span>Your client's use laid out five different ways on the parcel: buildings, parking, drive aisles, access and open space, inside the setbacks.</span></td><td class="fmt">PDF + DWG each</td></tr>
+        <tr><td class="no">R-1</td><td><b>3D rendering</b><span>A photoreal rendering of the layout your client picks, for the design meeting, the planning board or the client's own presentation.</span></td><td class="fmt">High-res image</td></tr>
+        <tr><td class="no">DD-1</td><td><b>Due diligence package</b><span>Zoning summary, permitting roadmap and a pro forma for the chosen layout.</span></td><td class="fmt">PDF</td></tr>
+        <tr><td class="no">Rev</td><td><b>One revision round</b><span>Your client marks up a layout, I revise it.</span></td><td class="fmt">Included</td></tr>
+        <tr class="add"><td class="no">Add-on</td><td><b>Preliminary plan set, +$5,000</b><span>Preliminary grading, drainage and stormwater, water, sewer and utility layout for the chosen option. A head start for your engineers, not a stamped set.</span></td><td class="fmt">PDF + DWG</td></tr>
+        <tr class="add"><td class="no">Add-on</td><td><b>Project website, +$1,000</b><span>An interactive site that walks through the project, for your client to share. <a class="textlink" href="https://go.formadesigns.io/website/" target="_blank" rel="noopener">See an example</a></span></td><td class="fmt">Hosted link</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="s" id="fit">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>I handle the concept phase. Your team keeps the engineering.</h2>
+      <p>Iterating layouts until a client is happy is the slowest, least billable part of a site job. Hand that part to me and start engineering the layout they've already approved.</p>
+    </div>
+    <ol class="phases" style="list-style:none; margin:0; padding:0">
+      <li class="phase"><span class="n">1</span><h3>You sign the job</h3><p>Send me the address, the use and anything you have: survey, program, client notes.</p><span class="who">Your firm</span></li>
+      <li class="phase me"><span class="n">2</span><h3>Concept and prelim layouts</h3><p>Parcel, LiDAR topography and zoning, then 5 layouts with CAD files, a rendering and due diligence, within 7 days.</p><span class="who">Forma</span></li>
+      <li class="phase"><span class="n">3</span><h3>Client picks a layout</h3><p>You present the options under your name. One revision round is included.</p><span class="who">Your firm and client</span></li>
+      <li class="phase"><span class="n">4</span><h3>You engineer it</h3><p>Open the DWG and carry it into site plans, permitting and construction documents.</p><span class="who">Your firm</span></li>
+    </ol>
+
+    <div class="calc" aria-label="Concept phase cost calculator">
+      <div class="calc-in">
+        <h3>What the concept phase costs you in-house</h3>
+        <label for="c-hrs"><span class="row"><span>Hours to draw one layout</span><output id="o-hrs" for="c-hrs">6 h</output></span>
+          <input id="c-hrs" type="range" min="1" max="24" step="1" value="6"></label>
+        <label for="c-n"><span class="row"><span>Layouts your client sees</span><output id="o-n" for="c-n">5</output></span>
+          <input id="c-n" type="range" min="1" max="8" step="1" value="5"></label>
+        <label for="c-rate">Billable rate per hour<input id="c-rate" type="text" inputmode="numeric" value="$150"></label>
+      </div>
+      <div class="calc-out">
+        <div class="vs">
+          <div><span>In-house</span><b id="o-cost" class="tnum">$4,500</b><small id="o-time">30 staff hours</small></div>
+          <div class="me"><span>With Forma</span><b class="tnum">$949</b><small>0 staff hours, 5 layouts</small></div>
+        </div>
+        <p class="small" id="o-note">That's $3,551 of staff time back on billable engineering, per job.</p>
+        <p class="small">Your numbers. Adjust them to match your team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s white" id="work">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>Sample work</h2>
+      <p>Concept plans and renderings I've produced. Your deliverables carry your title block instead of mine.</p>
+    </div>
+    <div class="work-tabs" role="tablist" aria-label="Projects"></div>
+    <div class="work" id="work-view" role="tabpanel" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="s" id="pricing">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>One price per job</h2>
+      <p>No retainer, no minimum, no contract. Save a card when you order and it's charged only when the package is delivered.</p>
+    </div>
+    <div class="price">
+      <div class="price-l">
+        <div class="amt tnum">$949<small>per job</small></div>
+        <p class="muted">Five layouts for one site and one use, delivered within 7 days, white-labeled for your firm.</p>
+        <div class="ctas" style="margin-top:8px">
+          <a class="btn btn-lg" href="#start" data-tab="order">Order a job</a>
+          <a class="btn btn-line btn-lg" href="#start" data-tab="ask">Ask about volume</a>
+        </div>
+      </div>
+      <div class="price-r">
+        <ul class="inc">
+          <li>5 concept layouts for your client's use</li>
+          <li>A DWG file for every layout</li>
+          <li>A photoreal 3D rendering of the chosen layout</li>
+          <li>Due diligence package: zoning, permitting roadmap, pro forma</li>
+          <li>One revision round</li>
+          <li>Your logo and title block, or unbranded</li>
+          <li>I never contact your client</li>
         </ul>
-        <div class="buyrow" style="margin-top:0"><a class="btn" href="#claim" data-tab="order" data-cta="owners">Order a package <span>→</span></a><a class="btn btn-ghost" href="#claim" data-tab="book">Book a call</a></div>
+        <div class="addons">
+          <div><span>Preliminary plan set for the chosen layout</span><b>+$5,000</b></div>
+          <div><span>Interactive project website</span><b>+$1,000</b></div>
+        </div>
       </div>
-    </div>
-    </div>
-  </section>
-
-  <!-- PAIN 1: the clock -->
-  <section class="chapter" id="sits" data-scene="sits">
-    <div class="wrap" style="width:100%">
-      <div class="panel">
-        <p class="kicker">Here's what's happening</p>
-        <h2>Concepts eat <em>billable hours.</em></h2>
-        <p class="lede">A client calls about a site. Before they'll sign, they want to see what fits and what it could look like. Someone on your team stops what they're doing and starts drawing.</p>
-
-        <div class="clock">
-          <div class="clock-top"><p>Staff hours per concept</p><strong id="days-out" class="tnum">16<small>hours</small></strong></div>
-          <input class="range" id="days" type="range" min="0" max="40" step="1" value="16" aria-label="Staff hours per concept" style="--p:40%">
-          <div class="ticks" aria-hidden="true"><span>0 h</span><span>10 h</span><span>20 h</span><span>30 h</span><span>40 h</span></div>
-          <div class="status" aria-live="polite"><b id="status-k">Two days</b><p id="status-t">Layout, revisions, then someone fights with a rendering program. Paying work waits.</p></div>
-        </div>
-
-        <div class="clock" aria-label="What concepts cost in-house">
-          <div class="calc">
-            <label for="price">Billable rate / hr<input id="price" type="text" inputmode="numeric" value="$150"></label>
-            <label for="comm">Concepts a month<input id="comm" type="text" inputmode="numeric" value="4"></label>
-          </div>
-          <div class="loss">
-            <div><span>Each concept in-house</span><strong id="loss-seller" class="tnum">$2,400</strong></div>
-            <div><span>Hours back each month</span><strong id="loss-you" class="tnum">64 h</strong></div>
-          </div>
-          <p class="small" id="calc-note">Your numbers, your math. Drag the hours above.</p>
-        </div>
-    </div>
-    </div>
-  </section>
-
-  <!-- PAIN 2: the questions -->
-  <section class="chapter" id="questions" data-scene="questions">
-    <div class="wrap" style="width:100%">
-      <div class="panel">
-        <p class="kicker">Sound familiar?</p>
-        <h2>Tap every one you've <em>heard.</em></h2>
-        <div class="qs" id="qs">
-          <button class="chip" type="button" aria-pressed="false"><small>Client</small>What can I fit on this site?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Client</small>Can you show me what it'll look like?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Client</small>How many units fit?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Client</small>My lender wants a rendering.</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Client</small>Is this site worth buying?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Your team</small>Who has time to draw this?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Your team</small>Do we bill for the concept?</button>
-          <button class="chip" type="button" aria-pressed="false"><small>Your team</small>Who knows the rendering software?</button>
-        </div>
-        <div class="meter"><div class="meter-bar"><i id="meter"></i></div><b id="meter-t" class="tnum">0 of 8</b></div>
-        <p class="answer" id="answer">Each one floats over the site. <b>Every one of them has the same answer: show the client the plan.</b></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- TURN: build it -->
-  <section class="chapter build" id="build" data-scene="build" style="position:relative">
-    <div class="wrap" style="width:100%">
-      <div class="panel">
-        <p class="kicker">How I work</p>
-        <h2>Address in. <em>Concept out.</em></h2>
-        <p class="lede">Keep scrolling. This is the same process every package goes through, on real parcel data.</p>
-        <div class="buildbar" aria-hidden="true"><i id="buildbar"></i></div>
-        <ol class="steps" id="steps">
-          <li><button type="button" data-stage="0"><span class="n">01</span><span><b>Read the ground</b><small>County parcel record and public LiDAR elevation data. Slope, high ground and low spots before anyone walks the site.</small></span></button></li>
-          <li><button type="button" data-stage="1"><span class="n">02</span><span><b>Draw the lines</b><small>Property lines from the parcel record, or your survey if you send it. Setbacks from the local zoning code.</small></span></button></li>
-          <li><button type="button" data-stage="2"><span class="n">03</span><span><b>Find the buildable area</b><small>What's left inside the setbacks, and the uses the zoning district allows there.</small></span></button></li>
-          <li><button type="button" data-stage="3"><span class="n">04</span><span><b>Lay it out</b><small>Access from the road, drive aisles, parking at real stall sizes, stormwater.</small></span></button></li>
-          <li><button type="button" data-stage="4"><span class="n">05</span><span><b>Put buildings on it</b><small>Footprints sized to the program and the lot, with landscaping.</small></span></button></li>
-          <li><button type="button" data-stage="5"><span class="n">06</span><span><b>Render it, under your name</b><small>A photoreal 3D rendering and the plan sheets, unbranded or in your title block, ready for your client.</small></span></button></li>
-        </ol>
-      </div>
-    </div>
-    <span id="build-end" aria-hidden="true"></span>
-  </section>
-
-  <!-- AFTER -->
-  <section class="chapter" id="after" data-scene="after">
-    <div class="wrap" style="width:100%">
-      <div class="panel">
-        <p class="kicker">After</p>
-        <h2>Win the job <em>before the engineering.</em></h2>
-        <p class="lede">Clients sign with the firm that shows them the project first. Hand them a concept plan and a rendering with your name on it, then sell them the site work.</p>
-        <div class="seg" role="group" aria-label="Compare the client conversation">
-          <button type="button" id="seg-without" aria-pressed="false">Without a plan</button>
-          <button type="button" id="seg-with" aria-pressed="true">With a plan</button>
-        </div>
-        <div class="after-row">
-          <div class="phone" aria-live="polite">
-            <div class="phone-top"><b>Client</b><span id="phone-day">Thursday</span></div>
-            <div class="thread" id="thread"></div>
-          </div>
-        </div>
-        <p class="tag-illus">Illustrative conversation</p>
-        <button class="hold" id="hold-empty" type="button" aria-label="Press and hold to see the empty site again"><span class="ring"></span>Hold to see the empty site</button>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- PROMISE -->
-<section class="band" id="promise">
-  <div class="wrap">
-    <div class="band-head">
-      <p class="kicker">The deal</p>
-      <h2>Fast. White-label. <em>$949.</em></h2>
-      <p class="lede">One flat price per site, charged only when the package lands in your inbox. Put your logo on it and bill your client however you like.</p>
-    </div>
-    <div class="promise">
-      <article><span class="big">7 days</span><h3>Fast</h3><p>Concept plan, 3D rendering and due diligence package, delivered within 7 days of your order.</p></article>
-      <article><span class="big">$949</span><h3>Flat</h3><p>Per site, charged on delivery. No retainer, no minimum, no contract.</p></article>
-      <article><span class="big">Yours</span><h3>White-label</h3><p>No Forma name on anything. Your logo, your title block, your client. I never contact them.</p></article>
-      <article><span class="big">Real</span><h3>Built on data</h3><p>County parcel lines, public LiDAR topography and the actual setbacks and permitted uses. Not a sketch.</p></article>
-    </div>
-    <div class="compare-wrap">
-      <table class="compare">
-        <thead><tr><th></th><th class="us">Forma, under your name</th><th>Do it in-house</th><th>Skip the concept</th></tr></thead>
-        <tbody>
-          <tr><th>Cost to you</th><td class="us">$949 per site, on delivery</td><td>A day or more of staff time, often unbilled</td><td>$0, and a weaker proposal</td></tr>
-          <tr><th>Time</th><td class="us">Within 7 days</td><td>Whenever someone frees up</td><td>None</td></tr>
-          <tr><th>What the client sees</th><td class="us">A concept plan, a photoreal rendering and due diligence</td><td>Whatever your team had time for</td><td>A scope and a fee</td></tr>
-          <tr><th>Risk</th><td class="us">Charged only on delivery</td><td>Hours lost if they don't sign</td><td>Losing the job to the firm that showed them first</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="small" style="margin-top:14px">Add-ons at checkout: a preliminary plan set (+$5,000) and an interactive project website (+$1,000).</p>
-    <div class="buyrow">
-      <a class="btn" href="#claim" data-tab="order">Order a package · $949 <span>→</span></a>
-      <a class="btn btn-ghost" href="#claim" data-tab="book">Book a call</a>
     </div>
   </div>
 </section>
 
-<!-- PROOF -->
-<section class="band alt" id="proof">
-  <div class="wrap">
-    <div class="band-head">
-      <p class="kicker">Proof</p>
-      <h2>Real sites. <em>Real plans.</em></h2>
-      <p class="rating"><span class="stars">★★★★★</span> 5-star reviews from my clients</p>
-    </div>
-    <div class="stats">
-      <div><strong class="tnum">7 days</strong><span>Full package, charged only on delivery</span></div>
-      <div><strong class="tnum">$949</strong><span>Flat, per site</span></div>
-      <div><strong class="tnum gold">1 h 27 m</strong><span>Fastest address-to-plan-set so far</span></div>
-      <div><strong class="tnum">0</strong><span>Site visits needed. Send a survey if you have one.</span></div>
+<section class="s white" id="start">
+  <div class="wrap start">
+    <div class="start-l">
+      <h2>Start a job</h2>
+      <p class="muted">Order now, book a call first, or ask a question. All three come straight to me.</p>
+      <ul>
+        <li>Nothing is charged until delivery</li>
+        <li>Delivered within 7 days</li>
+        <li>Send your logo, title block, survey or program after you order</li>
+        <li>Questions: <a href="tel:9783465818">(978) 346-5818</a> or <a href="mailto:support@formadesigns.io">support@formadesigns.io</a></li>
+      </ul>
     </div>
 
-    <!-- Case 1: Peterborough -->
-    <div class="case">
-      <div class="viewer">
-        <div class="viewer-tabs" role="tablist" aria-label="80 Elm St deliverables">
-          <button role="tab" aria-selected="false" data-show="pb-aerial">The site today</button>
-          <button role="tab" aria-selected="false" data-show="pb-existing">Existing conditions</button>
-          <button role="tab" aria-selected="false" data-show="pb-plan">Concept plan</button>
-          <button role="tab" aria-selected="true" data-show="pb-render">3D rendering</button>
-        </div>
-        <div class="frame" id="pb-frame">
-          <img id="pb-aerial" alt="Aerial photo of the 80 Elm St lot today" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/aerial.jpg">
-          <img id="pb-existing" class="contain" alt="Existing conditions: parcel lines, setbacks and topography at 80 Elm St" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/existing-conditions.jpg">
-          <img id="pb-plan" class="contain" alt="Concept plan for 80 Elm St with three buildings and parking" loading="lazy" hidden src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/concept-plan.jpg">
-          <img id="pb-render" alt="3D rendering of the proposed retail and dining project at 80 Elm St" src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg">
-          <span class="badge" id="pb-badge">3D rendering</span>
-        </div>
-        <div class="viewer-foot">
-          <button class="hold" id="hold-pb" type="button"><span class="ring"></span>Hold for before</button>
-          <span class="small">Concept prepared for this site. Preliminary, not engineered.</span>
-        </div>
-      </div>
-      <aside class="spec">
-        <div class="spec-head">
-          <p class="kicker" style="margin:0">Case study</p>
-          <h3>80 Elm St, Peterborough NH</h3>
-          <p class="small">5.58 acres in the Village Commercial District on Elm St (NH 101/202), under a mile from downtown. Listed at $2,250,000.</p>
-        </div>
-        <dl>
-          <dt>Concept</dt><dd>Retail + sit-down dining</dd>
-          <dt>Buildings</dt><dd><b>35,000 SF</b> in 3</dd>
-          <dt>Parking</dt><dd>170 stalls, 6 accessible</dd>
-          <dt>Developed area</dt><dd>2.81 ac · 14.8% coverage</dd>
-          <dt>Terrain</dt><dd>84% under 5% slope</dd>
-          <dt>Elevation</dt><dd>795.7 – 807.2 ft (USGS LiDAR)</dd>
-          <dt>Setbacks</dt><dd>30 ft front · 15 ft side, rear</dd>
-          <dt>Stormwater</dt><dd>8,490 SF basin</dd>
-          <dt>Plan set</dt><dd>9 sheets</dd>
-        </dl>
-        <div class="speed"><strong>1 h 27 m</strong><p>From address in to finished plan set on this one: 2:47 pm to 4:14 pm the same afternoon.</p></div>
-      </aside>
-    </div>
-
-    <!-- Case 2: Voorhees -->
-    <div class="case">
-      <div class="viewer">
-        <div class="viewer-tabs" role="tablist" aria-label="336 Route 73 deliverables">
-          <button role="tab" aria-selected="false" data-show="vh-plan">Concept plan</button>
-          <button role="tab" aria-selected="true" data-show="vh-render">3D rendering</button>
-        </div>
-        <div class="frame" style="aspect-ratio:1527 / 704">
-          <img id="vh-plan" alt="Concept plan for a bank with drive-thru on Route 73 in Voorhees NJ" loading="lazy" hidden src="/free/img/voorhees-plan.jpg">
-          <img id="vh-render" alt="3D rendering of the proposed bank on Route 73 in Voorhees NJ" loading="lazy" src="/free/img/voorhees-render.jpg">
-          <span class="badge" id="vh-badge">3D rendering</span>
-        </div>
-      </div>
-      <aside class="spec">
-        <div class="spec-head">
-          <p class="kicker" style="margin:0">Client project</p>
-          <h3>336 Route 73, Voorhees NJ</h3>
-          <p class="small">1.32 acres of highway frontage. I planned a 5,900 SF bank with a drive-thru, rendered it, then built an interactive project website on top. Same deliverables you would hand your client.</p>
-        </div>
-        <dl>
-          <dt>Concept</dt><dd>Bank with drive-thru</dd>
-          <dt>Building</dt><dd><b>5,900 SF</b></dd>
-          <dt>Delivered</dt><dd>Plan, rendering, due diligence, website</dd>
-        </dl>
-        <div class="speed"><a class="btn btn-ghost" href="https://go.formadesigns.io/website/" target="_blank" rel="noopener">See its project website <span>↗</span></a></div>
-      </aside>
-    </div>
-
-    <div class="buyrow"><a class="btn btn-ghost" href="/work/" target="_blank" rel="noopener">See more past projects ↗</a></div>
-    <div class="reviews" id="reviews" hidden></div>
-  </div>
-</section>
-</main>
-
-<!-- CLAIM -->
-<section class="claim story" id="claim" data-scene="claim">
-  <div class="wrap">
-    <div class="panel claim-col">
-      <p class="kicker">Start here</p>
-      <h2>Send me a site <em>today.</em></h2>
-      <p class="lede">Order a package, book a call, or ask me anything. It all happens right here.</p>
+    <div class="panel">
       <div class="tabs" role="tablist" aria-label="How do you want to start?">
-        <button type="button" role="tab" id="tab-order" aria-controls="pane-order" aria-selected="true">Order · $949</button>
+        <button type="button" role="tab" id="tab-order" aria-controls="pane-order" aria-selected="true">Order</button>
         <button type="button" role="tab" id="tab-book" aria-controls="pane-book" aria-selected="false">Book a call</button>
         <button type="button" role="tab" id="tab-ask" aria-controls="pane-ask" aria-selected="false">Ask a question</button>
       </div>
 
-      <!-- ORDER -->
-      <form class="form pane" id="pane-order" role="tabpanel" aria-labelledby="tab-order" action="https://mmaqwemqbxwngqxtnsug.supabase.co/functions/v1/save-card" method="POST" target="_top" novalidate>
+      <form class="pane" id="pane-order" role="tabpanel" aria-labelledby="tab-order" action="https://mmaqwemqbxwngqxtnsug.supabase.co/functions/v1/save-card" method="POST" target="_top" novalidate>
         <input type="hidden" name="package" id="co-package" value="package">
         <input type="hidden" name="billing" value="full">
         <input type="hidden" name="channel" value="engineers">
         <input type="hidden" name="return_to" id="co-return" value="https://go.formadesigns.io/engineers/">
         <input type="hidden" name="confirm_to" value="https://go.formadesigns.io/engineers/confirmed/">
-        <div class="assure"><span>Nothing charged today</span><span>Charged on delivery</span><span>White-label</span></div>
         <div class="opts">
           <label class="opt locked"><input type="checkbox" checked disabled><span class="box" aria-hidden="true">✓</span>
-            <span><b>White-label package</b><small>Concept plan, 3D rendering and due diligence package, with your logo or unbranded. One revision round included.</small></span><span class="pr">$949</span></label>
+            <span><b>Concept package</b><small>5 layouts with DWG files, a 3D rendering and a due diligence package, white-labeled. One revision round.</small></span><span class="pr">$949</span></label>
           <label class="opt"><input type="checkbox" id="opt-plans"><span class="box" aria-hidden="true">✓</span>
-            <span><b>Add a preliminary plan set</b><small>Preliminary grading, drainage and stormwater, water, sewer and utility layout for the proposed development. A head start for your engineers, not a stamped set.</small></span><span class="pr">+$5,000</span></label>
+            <span><b>Preliminary plan set</b><small>Grading, drainage and stormwater, water, sewer and utility layout for the chosen layout. Not a stamped set.</small></span><span class="pr">+$5,000</span></label>
           <label class="opt"><input type="checkbox" id="opt-website"><span class="box" aria-hidden="true">✓</span>
-            <span><b>Add a project website</b><small>An interactive scrollytelling site of the project for your client. <a href="https://go.formadesigns.io/website/" target="_blank" rel="noopener">See an example ↗</a></small></span><span class="pr">+$1,000</span></label>
-        </div>
-        <div class="sum">
-          <div><span>Due today</span><b>$0.00</b></div>
-          <div><span>Charged on delivery</span><b id="co-due">$949</b></div>
-          <div class="tot"><span>Total</span><b id="co-total">$949</b></div>
+            <span><b>Project website</b><small>An interactive walkthrough of the project. <a href="https://go.formadesigns.io/website/" target="_blank" rel="noopener">See an example</a></small></span><span class="pr">+$1,000</span></label>
         </div>
         <div class="row2">
           <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name"></div>
           <div class="field"><label for="f-firm">Firm</label><input id="f-firm" name="company" type="text" autocomplete="organization"></div>
         </div>
         <div class="row2">
-          <div class="field"><label for="f-email">Email · where I send the package</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></div>
+          <div class="field"><label for="f-email">Email for delivery</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></div>
           <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
         </div>
-        <div class="field"><label for="f-address">Site address</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>
+        <div class="field"><label for="f-address">Site address or parcel ID</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>
+        <div class="field"><label for="f-use">Use your client wants (optional)</label><input id="f-use" name="use" type="text" placeholder="40 townhomes, medical office, self-storage…"></div>
+        <div class="sum">
+          <div><span>Due today</span><b>$0.00</b></div>
+          <div class="tot"><span>Charged on delivery</span><b id="co-total" class="tnum">$949</b></div>
+        </div>
         <label class="agree"><input type="checkbox" id="co-agree"><span class="box" aria-hidden="true">✓</span>
           <span>I agree to the <a href="/engineers/terms/" target="_blank" rel="noopener">Terms of Service</a> and authorize Forma to charge my card <b id="co-auth">$949</b> when the package is delivered.</span></label>
-        <button class="btn btn-lg" type="submit" id="f-submit" disabled>Continue to secure checkout <span>→</span></button>
+        <button class="btn btn-lg" type="submit" id="f-submit" disabled>Continue to secure checkout</button>
         <p class="form-err" id="form-err" role="alert"></p>
         <p class="small" id="co-hint">Add your email and the site address to continue.</p>
-        <p class="small">After checkout, email your logo, title block, survey or client program to support@formadesigns.io. All optional.</p>
       </form>
 
-      <!-- BOOK -->
-      <div class="form pane" id="pane-book" role="tabpanel" aria-labelledby="tab-book" hidden>
-        <div id="book-fields" class="form-fields">
-          <p class="small" style="margin:0">15 minutes. We'll go over a site you're working on, turnaround and white-label details.</p>
+      <div class="pane" id="pane-book" role="tabpanel" aria-labelledby="tab-book" hidden>
+        <div id="book-fields" style="display:grid; gap:16px">
+          <p class="small">15 minutes by phone. Bring a job you're working on and we'll go through turnaround, CAD format and branding.</p>
           <div class="row2">
             <div class="field"><label for="b-name">Your name</label><input id="b-name" type="text" autocomplete="name"></div>
             <div class="field"><label for="b-firm">Firm</label><input id="b-firm" type="text" autocomplete="organization"></div>
@@ -835,29 +546,25 @@ window.fphWho = (email, props) => {
             <div class="field"><label for="b-email">Email</label><input id="b-email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"></div>
             <div class="field"><label for="b-phone">Phone</label><input id="b-phone" type="tel" autocomplete="tel" inputmode="tel"></div>
           </div>
-          <div class="field"><label for="b-address">Site address (optional)</label><input id="b-address" type="text" autocomplete="street-address"></div>
           <input class="hp" id="b-website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <div class="book" id="form-book">
-            <p class="kicker" style="margin:0">Pick a time</p>
+          <div class="field"><span style="font-weight:600; font-size:.88rem">Pick a time</span>
             <div class="days" id="book-days" role="tablist" aria-label="Choose a day"></div>
-            <div class="times" id="book-times" aria-label="Choose a time"></div>
-            <p class="small" id="book-tz"></p>
-            <button class="btn btn-lg" type="button" id="book-go" disabled>Pick a time above</button>
-            <p class="form-err" id="book-err" role="alert"></p>
           </div>
+          <div class="times" id="book-times" aria-label="Choose a time"></div>
+          <p class="small" id="book-tz"></p>
+          <button class="btn btn-lg" type="button" id="book-go" disabled>Pick a time above</button>
+          <p class="form-err" id="book-err" role="alert"></p>
         </div>
         <div class="done" id="form-done" hidden>
-          <p class="kicker" style="margin:0">You're booked</p>
-          <h3 style="font-size:1.6rem" id="done-h">Talk soon.</h3>
+          <span class="ok" aria-hidden="true">✓</span>
+          <h3 id="done-h">You're booked.</h3>
           <p class="when" id="done-when"></p>
-          <p class="small">I'll call the number you gave me. Have a site in mind and I'll walk you through what you'd get for it.</p>
-          <a class="btn btn-ghost" href="#claim" data-tab="order">Or order a package now <span>→</span></a>
+          <p class="muted">I'll call the number you gave me. A calendar invite isn't sent automatically, so add it to yours.</p>
         </div>
       </div>
 
-      <!-- ASK -->
-      <form class="form pane" id="pane-ask" role="tabpanel" aria-labelledby="tab-ask" hidden novalidate>
-        <div id="ask-fields" class="form-fields">
+      <form class="pane" id="pane-ask" role="tabpanel" aria-labelledby="tab-ask" hidden novalidate>
+        <div id="ask-fields" style="display:grid; gap:16px">
           <div class="row2">
             <div class="field"><label for="q-name">Your name</label><input id="q-name" name="name" type="text" autocomplete="name"></div>
             <div class="field"><label for="q-firm">Firm</label><input id="q-firm" name="company" type="text" autocomplete="organization"></div>
@@ -866,240 +573,257 @@ window.fphWho = (email, props) => {
             <div class="field"><label for="q-email">Email</label><input id="q-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"></div>
             <div class="field"><label for="q-phone">Phone (optional)</label><input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
           </div>
-          <div class="field"><label for="q-msg">Your question</label><textarea id="q-msg" name="message" rows="4" placeholder="Volume, turnaround, branding, a specific site…"></textarea></div>
+          <div class="field"><label for="q-msg">Your question</label><textarea id="q-msg" name="message" rows="4" placeholder="Volume, turnaround, CAD standards, a specific site…"></textarea></div>
           <input class="hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button class="btn btn-lg" type="submit" id="q-submit">Send <span>→</span></button>
+          <button class="btn btn-lg" type="submit" id="q-submit">Send question</button>
           <p class="form-err" id="q-err" role="alert"></p>
-          <p class="small">Or call or text <a href="tel:9783465818">(978) 346-5818</a>. I usually reply the same business day.</p>
+          <p class="small">I reply by email, usually the same business day.</p>
         </div>
         <div class="done" id="ask-done" hidden>
-          <p class="kicker" style="margin:0">Message sent</p>
-          <h3 style="font-size:1.6rem">Got it.</h3>
-          <p class="small">I'll get back to you by email, usually the same business day.</p>
+          <span class="ok" aria-hidden="true">✓</span>
+          <h3>Question sent.</h3>
+          <p class="muted">I'll reply by email, usually the same business day.</p>
         </div>
       </form>
     </div>
   </div>
 </section>
 
-<section class="band" id="faq">
+<section class="s" id="faq">
   <div class="wrap">
-    <div class="band-head"><p class="kicker">Questions</p><h2>Straight <em>answers.</em></h2></div>
+    <div class="s-head"><h2>Questions firms ask</h2><p></p></div>
     <div class="faq">
-      <details><summary>What do I get for $949?</summary><p>A concept plan, a photoreal 3D rendering and a due diligence package (zoning, permitting roadmap and a pro forma) for one site. One revision round is included.</p></details>
-      <details><summary>Is it really white-label?</summary><p>Yes. Nothing carries the Forma name. Send your logo and title block and I'll use them, or take it unbranded and add your own.</p></details>
-      <details><summary>Will you contact my client?</summary><p>No. I work only with you. I never contact, market to or take work directly from your clients.</p></details>
-      <details><summary>When am I charged?</summary><p>Only when the package is delivered. You save a card on Stripe's secure checkout when you order, and nothing is charged today.</p></details>
-      <details><summary>How fast is it?</summary><p>Within 7 days of your order, by email. Tight deadline? Book a call and ask.</p></details>
-      <details><summary>What do you need from me?</summary><p>Just the address. A survey, the client's program or a target use all help, so send whatever you have.</p></details>
-      <details><summary>Is this engineered?</summary><p>No. It's preliminary and conceptual, to show a client what fits. Your firm does the engineering. Nothing I send is stamped or for permitting.</p></details>
-      <details><summary>Sending several sites a month?</summary><p>Book a call and we'll set up a standing arrangement for your firm.</p></details>
-      <details><summary>What are the add-ons?</summary><p>A preliminary plan set (+$5,000): grading, drainage and stormwater, water, sewer and utility layout for the proposed development. A project website (+$1,000): an interactive site for your client. Pick them at checkout.</p></details>
+      <details><summary>What do I get for $949?</summary><p>For one site and the use your client wants: 5 different concept layouts, a DWG for each, a photoreal 3D rendering of the layout your client picks, a due diligence package (zoning, permitting roadmap and a pro forma) and one revision round.</p></details>
+      <details><summary>Where does this fit in a job?</summary><p>After you've signed. It covers the concept and preliminary layout phase, so your client settles on a design before your team starts engineering it.</p></details>
+      <details><summary>What CAD format do you deliver?</summary><p>DWG, one per layout, drawn to scale on the parcel so your team can open it and keep working. Tell me your layer standards and I'll follow them.</p></details>
+      <details><summary>Is it really white-label?</summary><p>Yes. Nothing carries the Forma name. Send your logo and title block and I'll use them, or take it unbranded and drop it into your own sheets.</p></details>
+      <details><summary>Will you contact my client?</summary><p>No. I work only with you, and I never contact or take work directly from your clients.</p></details>
+      <details><summary>What do you need from me?</summary><p>The address and the use. A survey, the client's program or markups all help, so send whatever you have.</p></details>
+      <details><summary>When am I charged?</summary><p>Only when the package is delivered. You save a card on Stripe's secure checkout when you order, and nothing is charged that day.</p></details>
+      <details><summary>Is anything stamped?</summary><p>No. Everything I deliver is preliminary and conceptual. Your firm does the engineering and seals the work.</p></details>
+      <details><summary>Sending several jobs a month?</summary><p>Ask a question or book a call and we'll set up a standing arrangement for your firm.</p></details>
+      <details><summary>How fast is it?</summary><p>Within 7 days of your order. Tight deadline? Book a call and ask.</p></details>
     </div>
   </div>
 </section>
+</main>
 
-<!-- PAST PROJECTS -->
-<section class="band alt gal-band" id="examples">
+<footer>
   <div class="wrap">
-    <div class="band-head">
-      <p class="kicker">Past projects</p>
-      <h2>See the work <em>before you send a site.</em></h2>
-      <p class="lede">Real sites I've built out: the concept plan, the 3D rendering, the due diligence package and the site as it sits today. Your packages look like this, with your name on them.</p>
-    </div>
-    <div class="gal-cards"><a class="gal-card" href="/work/#peterborough" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/peterborough/render.jpg" alt="Rendering for 80 Elm St, Peterborough, NH" loading="lazy"><span><b>80 Elm St</b><small>Peterborough, NH</small></span></a><a class="gal-card" href="/work/#voorhees" target="_blank" rel="noopener"><img src="/free/img/voorhees-render.jpg" alt="Rendering for 336 Route 73, Voorhees, NJ" loading="lazy"><span><b>336 Route 73</b><small>Voorhees, NJ</small></span></a><a class="gal-card" href="/work/#durham-us70" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/portfolio/durham-us70/render.jpg" alt="Rendering for 2839 E US 70 Hwy, Durham, NC" loading="lazy"><span><b>2839 E US 70 Hwy</b><small>Durham, NC</small></span></a><a class="gal-card" href="/work/#clearwater" target="_blank" rel="noopener"><img src="https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/portfolio/clearwater/render.jpg" alt="Rendering for 3141 N McMullen Booth Rd, Clearwater, FL" loading="lazy"><span><b>3141 N McMullen Booth Rd</b><small>Clearwater, FL</small></span></a></div>
-    <div class="ag-cta">
-      <a class="btn btn-lg" href="#claim" data-tab="order" data-cta="bottom">Order a package · $949 <span>→</span></a>
-      <a class="btn btn-ghost" href="/work/" target="_blank" rel="noopener">Browse all projects ↗</a>
-    </div>
-  </div>
-</section>
-
-<footer class="foot">
-  <div class="wrap">
-    <span>© 2026 Forma Preliminary Design · Plans are preliminary and conceptual, not stamped engineering.</span>
-    <div class="links"><span class="mono">support@formadesigns.io</span><span class="mono">(978) 346-5818</span><a href="/engineers/terms/" target="_blank" rel="noopener">Terms</a></div>
+    <span>© 2026 Forma Preliminary Design. Preliminary and conceptual design, not stamped engineering.</span>
+    <div class="links"><a href="mailto:support@formadesigns.io">support@formadesigns.io</a><a href="tel:9783465818">(978) 346-5818</a><a href="/engineers/terms/" target="_blank" rel="noopener">Terms</a></div>
   </div>
 </footer>
 
-<div class="mbar" id="mbar"><p>White-label package<b>$949</b></p><a class="btn" href="#claim" data-tab="order" data-cta="mbar">Order <span>→</span></a></div>
+<div class="mbar" id="mbar"><p>5 layouts + CAD files<b>$949 per job</b></p><a class="btn" href="#start" data-tab="order">Order a job</a></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 (() => {
 "use strict";
-// Paste real client reviews here, e.g. { name: "Jane D.", role: "Project manager, Acme Civil", text: "…", stars: 5 }.
-// The quote cards stay hidden while this is empty.
-const REVIEWS = [];
-
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-const lerp = (a, b, t) => a + (b - a) * t;
-const smooth = (t) => t * t * (3 - 2 * t);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
-const isMobile = () => innerWidth <= 860;
-
-/* smooth, eased page scrolling (wheel + trackpad); touch stays native */
-let lenis = null;
-if (window.Lenis && !reduce) {
-  try {
-    lenis = new Lenis({ lerp: 0.075, wheelMultiplier: 0.9, smoothWheel: true, anchors: { offset: 0 } });
-    const loop = (t) => { lenis.raf(t); requestAnimationFrame(loop); };
-    requestAnimationFrame(loop);
-  } catch (e) { lenis = null; }
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
 }
-function goTo(target) {
-  if (lenis) lenis.scrollTo(target, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
-  else if (typeof target === "number") scrollTo({ top: target, behavior: reduce ? "auto" : "smooth" });
-  else target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-}
-$$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
-  const el = document.querySelector(a.getAttribute("href"));
-  if (el) { e.preventDefault(); goTo(el); }
-}));
 
-/* ---------------------------------------------------------------- UI state */
-const ui = { days: 120, questions: 0, holdBuild: 0, holdBuildT: 0, holdEmpty: 0, holdEmptyT: 0, dragAz: 0, dragEl: 0 };
-
-/* staff hours per concept (drives the same "decay" in the 3D scene) */
-const STATUS = [
-  [0, "A quick sketch", "A markup over an aerial. Fine for a phone call, not enough to win the job."],
-  [6, "A full day", "A designer lays out the site in CAD. Nobody bills for it unless the client signs."],
-  [14, "Two days", "Layout, revisions, then someone fights with a rendering program. Paying work waits."],
-  [22, "Three days", "Your project engineer is drawing parking stalls for a proposal that might not close."],
-  [30, "Most of a week", "By the time the concept is ready, the client has already called another firm."],
+/* ------------------------------------------------------------------ CAD viewport */
+const C = { cyan: "#5FD3E2", yellow: "#E8CD5A", green: "#78C266", magenta: "#D982DC", grey: "#7D8893", white: "#EEF2F5", asph: "#2A323A" };
+const LAYERS = [
+  { id: "prop", name: "Property line", color: C.cyan },
+  { id: "setb", name: "Setbacks", color: C.yellow },
+  { id: "bldg", name: "Buildings", color: C.white },
+  { id: "pave", name: "Drives + parking", color: C.grey },
+  { id: "land", name: "Landscape", color: C.green },
+  { id: "anno", name: "Dimensions", color: C.magenta },
 ];
-const daysEl = $("#days");
-function setDays(v) {
-  ui.days = +v * 9; // 0–40 h maps onto the scene's 0–360 scale
-  daysEl.style.setProperty("--p", (v / 40 * 100) + "%");
-  $("#days-out").innerHTML = v + "<small>hours</small>";
-  const s = STATUS.filter((x) => v >= x[0]).pop();
-  $("#status-k").textContent = s[1];
-  $("#status-t").textContent = s[2];
-  try { calc(); } catch (_) {}
-}
-daysEl.addEventListener("input", (e) => setDays(e.target.value));
-setDays(daysEl.value);
-
-/* in-house cost math */
-const parseNum = (s) => parseFloat(String(s).replace(/[^0-9.]/g, "")) || 0;
-function calc() {
-  const hrs = +daysEl.value, rate = parseNum($("#price").value), n = parseNum($("#comm").value);
-  const each = hrs * rate;
-  $("#loss-seller").textContent = money(each);
-  $("#loss-you").textContent = Math.round(hrs * n) + " h";
-  $("#calc-note").textContent = each > 949
-    ? "That's " + money(each - 949) + " more than a Forma package, per concept. Your numbers, your math."
-    : "Your numbers, your math. Drag the hours above.";
-}
-["#price", "#comm"].forEach((s) => $(s).addEventListener("input", calc));
-$("#price").addEventListener("blur", (e) => { e.target.value = money(parseNum(e.target.value)); });
-calc();
-
-/* questions */
-const chips = $$("#qs .chip");
-chips.forEach((c) => c.addEventListener("click", () => {
-  c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") === "true" ? "false" : "true");
-  ui.questions = chips.filter((x) => x.getAttribute("aria-pressed") === "true").length;
-  $("#meter").style.width = (ui.questions / chips.length * 100) + "%";
-  $("#meter-t").textContent = ui.questions + " of " + chips.length;
-  $("#answer").innerHTML = ui.questions >= 3
-    ? "That's " + ui.questions + " questions pulling your team off billable work. <b>Every one of them has the same answer: show the client the plan. I make it, you put your name on it.</b>"
-    : "Each one floats over the site. <b>Every one of them has the same answer: show the client the plan.</b>";
-  if (scene) scene.setQuestions(ui.questions);
-}));
-
-/* hold buttons */
-function holdable(el, key) {
-  const on = (e) => { e.preventDefault(); ui[key + "T"] = 1; el.classList.add("on"); };
-  const off = () => { ui[key + "T"] = 0; el.classList.remove("on"); };
-  el.addEventListener("pointerdown", on);
-  ["pointerup", "pointerleave", "pointercancel"].forEach((t) => el.addEventListener(t, off));
-  el.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") on(e); });
-  el.addEventListener("keyup", off);
-}
-holdable($("#hold-build"), "holdBuild");
-holdable($("#hold-empty"), "holdEmpty");
-
-/* seller thread */
-const THREADS = {
-  without: { day: "Week three", msgs: [["them", "Can you show me what we could build on this site?"], ["me", "We can scope a concept study. Earliest start is in three weeks."], ["them", "Another firm sent a layout and a rendering yesterday."], ["them", "We're going to go with them for the engineering."]] },
-  with: { day: "Day five", msgs: [["me", "Here's what fits on your site. Rendering attached."], ["img", ""], ["them", "That's exactly what we had in mind."], ["them", "Send over your proposal for the site engineering."], ["me", "On its way today."]] },
-};
-function showThread(k) {
-  $("#seg-with").setAttribute("aria-pressed", k === "with");
-  $("#seg-without").setAttribute("aria-pressed", k === "without");
-  $("#phone-day").textContent = THREADS[k].day;
-  const t = $("#thread");
-  t.innerHTML = "";
-  THREADS[k].msgs.forEach(([who, text], i) => {
-    const d = document.createElement("div");
-    d.className = "msg " + (who === "img" ? "them img" : who);
-    if (who === "img") d.innerHTML = '<img src="/free/img/voorhees-render.jpg" alt="Rendering sent to the client">'; else d.textContent = text;
-    d.style.animationDelay = (i * 0.12) + "s";
-    t.appendChild(d);
-  });
-  ui.thread = k;
-}
-$("#seg-with").addEventListener("click", () => showThread("with"));
-$("#seg-without").addEventListener("click", () => showThread("without"));
-showThread("with");
-
-/* case viewers */
-function viewer(root, badgeId) {
-  const tabs = $$("[data-show]", root);
-  const show = (id) => {
-    tabs.forEach((t) => t.setAttribute("aria-selected", t.dataset.show === id));
-    tabs.forEach((t) => { const img = document.getElementById(t.dataset.show); img.hidden = t.dataset.show !== id; });
-    const t = tabs.find((x) => x.dataset.show === id);
-    if (badgeId) $(badgeId).textContent = t.textContent;
-  };
-  tabs.forEach((t) => t.addEventListener("click", () => show(t.dataset.show)));
-  return show;
-}
-const pbShow = viewer($$(".case")[0], "#pb-badge");
-viewer($$(".case")[1], "#vh-badge");
-function imgFailed(img) {
-  img.style.visibility = "hidden";
-  const f = img.closest(".frame");
-  if (!f.querySelector(".missing")) { const m = document.createElement("div"); m.className = "missing"; m.textContent = "Image loads on the live page."; f.prepend(m); }
-}
-$$(".frame img").forEach((img) => {
-  img.addEventListener("error", () => imgFailed(img));
-  if (img.complete && img.naturalWidth === 0 && img.getAttribute("loading") !== "lazy") imgFailed(img);
-});
-(() => {
-  const el = $("#hold-pb"); let prev = "pb-render";
-  const on = (e) => { e.preventDefault(); prev = ($$(".case")[0].querySelector('[aria-selected="true"]') || {}).dataset?.show || "pb-render"; pbShow("pb-aerial"); el.classList.add("on"); };
-  const off = () => { if (el.classList.contains("on")) { pbShow(prev === "pb-aerial" ? "pb-render" : prev); el.classList.remove("on"); } };
-  el.addEventListener("pointerdown", on);
-  ["pointerup", "pointerleave", "pointercancel"].forEach((t) => el.addEventListener(t, off));
+const PARCEL = [[60, 60], [740, 42], [760, 420], [80, 440]];
+const SETBACK = [[98, 96], [702, 80], [720, 390], [116, 406]];
+const svg = $("#cad"), base = $("#base"), optG = $("#opt");
+const layerG = {};
+// base drawing: street, parcel, setbacks (drawn once)
+(function drawBase() {
+  el("rect", { x: 0, y: 462, width: 820, height: 56, fill: "#232A31" }, base);
+  el("line", { x1: 0, y1: 490, x2: 820, y2: 490, stroke: "#59636D", "stroke-dasharray": "18 14", "stroke-width": 1.5 }, base);
+  const t = el("text", { x: 410, y: 512, fill: "#8C98A4", "font-size": 12, "text-anchor": "middle", "font-family": "Archivo, sans-serif", "letter-spacing": "3" }, base);
+  t.textContent = "MAIN STREET";
+  ["prop", "setb", "pave", "land", "bldg", "anno"].forEach((id) => { layerG[id] = el("g", { class: "ly", "data-layer": id }, id === "prop" || id === "setb" ? base : optG); });
+  el("polygon", { points: PARCEL.map((p) => p.join(",")).join(" "), fill: "none", stroke: C.cyan, "stroke-width": 2, pathLength: 1, class: "draw" }, layerG.prop);
+  el("polygon", { points: SETBACK.map((p) => p.join(",")).join(" "), fill: "none", stroke: C.yellow, "stroke-width": 1.2, "stroke-dasharray": "8 6", opacity: .9 }, layerG.setb);
+  const a = el("text", { x: 84, y: 54, fill: C.cyan, "font-size": 11, "font-family": "Archivo, sans-serif", "letter-spacing": "1.5" }, layerG.prop); a.textContent = "PROPERTY LINE";
+  const b = el("text", { x: 124, y: 390, fill: C.yellow, "font-size": 10, "font-family": "Archivo, sans-serif", "letter-spacing": "1.5", opacity: .85 }, layerG.setb); b.textContent = "30' FRONT / 15' SIDE + REAR SETBACK";
+  // north arrow + scale bar
+  const n = el("g", { transform: "translate(784 88)" }, base);
+  el("circle", { r: 15, fill: "none", stroke: "#59636D" }, n);
+  el("path", { d: "M0 -12 L6 6 L0 2 L-6 6 Z", fill: C.white }, n);
+  const nt = el("text", { y: -20, fill: "#8C98A4", "font-size": 10, "text-anchor": "middle", "font-family": "Archivo, sans-serif" }, n); nt.textContent = "N";
 })();
 
-/* reviews (only real ones) */
-if (REVIEWS.length) {
-  const r = $("#reviews");
-  r.innerHTML = REVIEWS.map((v) => `<figure class="review"><span class="stars">${"★".repeat(v.stars || 5)}</span><blockquote style="margin:0">${v.text}</blockquote><figcaption class="small">${v.name}${v.brokerage ? " · " + v.brokerage : ""}</figcaption></figure>`).join("");
-  r.hidden = false;
+function strip(x, y, w, h, units) { // townhome building with unit party walls
+  const g = layerG.bldg;
+  el("rect", { x, y, width: w, height: h, fill: "url(#hatch)", stroke: C.white, "stroke-width": 1.4, pathLength: 1, class: "draw" }, g);
+  const vert = h > w, len = vert ? h : w;
+  for (let i = 1; i < units; i++) {
+    const d = (len / units) * i;
+    el("line", vert ? { x1: x, y1: y + d, x2: x + w, y2: y + d } : { x1: x + d, y1: y, x2: x + d, y2: y + h }, g).setAttribute("stroke", "rgba(238,242,245,.55)");
+  }
+}
+function aisle(x, y, w, h) {
+  el("rect", { x, y, width: w, height: h, fill: C.asph, stroke: C.grey, "stroke-width": 1, class: "fadein" }, layerG.pave);
+}
+function stalls(x, y, len, side, count, vert = false) { // parking stall stripes along an aisle edge
+  const g = layerG.pave, step = len / count, d = 18 * side;
+  for (let i = 0; i <= count; i++) {
+    const p = i * step;
+    el("line", vert ? { x1: x, y1: y + p, x2: x + d, y2: y + p } : { x1: x + p, y1: y, x2: x + p, y2: y + d }, g).setAttribute("stroke", C.grey);
+  }
+}
+function green(x, y, w, h) {
+  el("rect", { x, y, width: w, height: h, fill: "rgba(120,194,102,.10)", stroke: C.green, "stroke-width": 1, "stroke-dasharray": "4 4", class: "fadein" }, layerG.land);
+}
+function trees(pts, r = 7) { pts.forEach(([cx, cy]) => el("circle", { cx, cy, r, fill: "none", stroke: C.green, "stroke-width": 1.2, class: "fadein" }, layerG.land)); }
+function dim(x1, y1, x2, y2, label) {
+  const g = layerG.anno, vert = x1 === x2;
+  el("line", { x1, y1, x2, y2, stroke: C.magenta, "stroke-width": 1 }, g);
+  [[x1, y1], [x2, y2]].forEach(([x, y]) => el("line", vert ? { x1: x - 5, y1: y, x2: x + 5, y2: y } : { x1: x, y1: y - 5, x2: x, y2: y + 5 }, g).setAttribute("stroke", C.magenta));
+  const t = el("text", { x: vert ? x1 + 8 : (x1 + x2) / 2, y: vert ? (y1 + y2) / 2 + 4 : y1 - 7, fill: C.magenta, "font-size": 10, "text-anchor": vert ? "start" : "middle", "font-family": "Archivo, sans-serif", "letter-spacing": "1" }, g);
+  t.textContent = label;
+}
+function entry(x, y1) { aisle(x, y1, 40, 462 - y1); }
+
+const OPTIONS = [
+  { k: "A", name: "Rows", units: 46, park: 92, open: "26%", draw() {
+      aisle(150, 165, 520, 44); aisle(150, 275, 520, 44); entry(390, 319);
+      strip(150, 115, 520, 36, 16); strip(150, 225, 520, 36, 16); strip(150, 335, 225, 36, 7); strip(445, 335, 225, 36, 7);
+      trees([[130, 440], [200, 448], [620, 446], [700, 438], [440, 400], [365, 400]]);
+      dim(150, 106, 670, 106, "520' BUILDING ROW"); dim(690, 165, 690, 209, "24' AISLE");
+  } },
+  { k: "B", name: "Courtyard", units: 32, park: 70, open: "41%", draw() {
+      green(230, 170, 360, 120); aisle(150, 308, 520, 44); entry(390, 352);
+      stalls(150, 352, 520, 1, 26);
+      strip(150, 115, 520, 36, 16); strip(150, 165, 40, 130, 4); strip(630, 165, 40, 130, 4); strip(200, 375, 170, 30, 4); strip(450, 375, 170, 30, 4);
+      trees([[300, 210], [360, 250], [430, 205], [500, 250], [550, 200], [260, 265]], 9);
+      dim(230, 160, 590, 160, "COURTYARD 360'"); dim(690, 308, 690, 352, "24' AISLE");
+  } },
+  { k: "C", name: "Clusters", units: 36, park: 74, open: "33%", draw() {
+      entry(395, 100); aisle(160, 162, 500, 28); aisle(160, 268, 500, 28);
+      stalls(160, 190, 230, 1, 12); stalls(440, 190, 220, 1, 11); stalls(160, 296, 230, 1, 12); stalls(440, 296, 220, 1, 11);
+      [108, 214, 320].forEach((y) => { strip(160, y, 200, 34, 6); strip(455, y, 200, 34, 6); });
+      green(160, 364, 200, 24); green(455, 364, 200, 24);
+      trees([[180, 376], [240, 376], [300, 376], [480, 376], [540, 376], [600, 376]]);
+      dim(160, 98, 360, 98, "6-UNIT BLDG 200'"); dim(690, 162, 690, 190, "24' AISLE");
+  } },
+  { k: "D", name: "Loop road", units: 40, park: 80, open: "30%", draw() {
+      aisle(190, 150, 440, 32); aisle(190, 330, 440, 32); aisle(190, 150, 32, 212); aisle(598, 150, 32, 212); entry(395, 362);
+      stalls(222, 182, 376, 1, 20); stalls(222, 330, 376, -1, 20);
+      strip(150, 108, 520, 34, 16); strip(250, 210, 320, 34, 10); strip(250, 270, 320, 34, 10);
+      strip(150, 200, 34, 130, 2); strip(636, 200, 34, 130, 2);
+      trees([[150, 380], [210, 395], [610, 395], [680, 380], [330, 384], [470, 384]]);
+      dim(190, 140, 630, 140, "LOOP 440' x 212'");
+  } },
+  { k: "E", name: "Mews", units: 42, park: 84, open: "35%", draw() {
+      aisle(150, 335, 520, 40); entry(390, 375);
+      stalls(150, 335, 520, -1, 26);
+      [160, 250, 340, 452, 542, 632].forEach((x) => strip(x, 112, 36, 196, 7));
+      green(204, 112, 38, 196); green(384, 112, 60, 196); green(586, 112, 38, 196);
+      trees([[223, 150], [223, 230], [414, 140], [414, 210], [414, 280], [605, 150], [605, 230]]);
+      dim(160, 102, 196, 102, "36'"); dim(700, 112, 700, 308, "196' MEWS");
+  } },
+];
+
+const bar = $(".vp-bar");
+OPTIONS.forEach((o, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "opt-tab"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", i === 0);
+  b.innerHTML = `<b>${o.k}</b>${o.name}`;
+  b.addEventListener("click", () => { stopCycle(); show(i); });
+  bar.appendChild(b);
+});
+const layersBox = $(".layers");
+LAYERS.forEach((l) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "layer"; b.style.color = l.color; b.setAttribute("aria-pressed", "true");
+  b.innerHTML = `<i></i><span style="color:#C9D1D8">${l.name}</span>`;
+  b.addEventListener("click", () => {
+    const on = b.getAttribute("aria-pressed") !== "true";
+    b.setAttribute("aria-pressed", on);
+    $$(`[data-layer="${l.id}"]`, svg).forEach((g) => g.classList.toggle("off", !on));
+  });
+  layersBox.appendChild(b);
+});
+let cur = -1;
+function show(i) {
+  if (i === cur) return; cur = i;
+  ["pave", "land", "bldg", "anno"].forEach((id) => { layerG[id].innerHTML = ""; });
+  OPTIONS[i].draw();
+  $$(".opt-tab", bar).forEach((b, j) => b.setAttribute("aria-selected", j === i));
+  $("#tb-opt").textContent = OPTIONS[i].k + ", " + OPTIONS[i].name;
+  $("#tb-units").textContent = OPTIONS[i].units;
+  $("#tb-park").textContent = OPTIONS[i].park + " spaces";
+}
+show(0);
+let timer = null;
+function stopCycle() { clearInterval(timer); timer = null; }
+if (!reduce && "IntersectionObserver" in window) {
+  let seen = false;
+  new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting && !seen && cur === 0) { seen = true; timer = setInterval(() => show((cur + 1) % OPTIONS.length), 3200); }
+    if (!e.isIntersecting && timer) stopCycle();
+  }), { threshold: .5 }).observe($("#vp"));
 }
 
-/* counters: count up once when they come into view */
-if ("IntersectionObserver" in window && !reduce) {
-  const io = new IntersectionObserver((es) => es.forEach((e) => {
-    if (!e.isIntersecting) return;
-    io.unobserve(e.target);
-    const el = e.target, end = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now();
-    const tick = (t) => { const p = clamp((t - t0) / 1100); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf; if (p < 1) requestAnimationFrame(tick); };
-    requestAnimationFrame(tick);
-  }), { threshold: .6 });
-  $$("[data-count]").forEach((el) => io.observe(el));
+/* ------------------------------------------------------------------ calculator */
+const parseNum = (s) => parseFloat(String(s).replace(/[^0-9.]/g, "")) || 0;
+function calc() {
+  const h = +$("#c-hrs").value, n = +$("#c-n").value, rate = parseNum($("#c-rate").value);
+  $("#o-hrs").textContent = h + " h"; $("#o-n").textContent = n;
+  const cost = h * n * rate;
+  $("#o-cost").textContent = money(cost);
+  $("#o-time").textContent = h * n + " staff hours";
+  $("#o-note").textContent = cost > 949
+    ? "That's " + money(cost - 949) + " of staff time back on billable engineering, per job."
+    : "At these numbers your team is already fast. The value is the 5 options and the hours freed up.";
 }
+["#c-hrs", "#c-n", "#c-rate"].forEach((s) => $(s).addEventListener("input", calc));
+$("#c-rate").addEventListener("blur", (e) => { e.target.value = money(parseNum(e.target.value)); });
+calc();
 
-/* tabs: Order / Book a call / Ask a question */
+/* ------------------------------------------------------------------ sample work */
+const SB = "https://mmaqwemqbxwngqxtnsug.supabase.co/storage/v1/object/public/marketing/";
+const WORK = [
+  { name: "Retail + dining", where: "Peterborough, NH", plan: SB + "peterborough/concept-plan.jpg", render: SB + "peterborough/render.jpg",
+    spec: [["Site", "5.58 ac, Village Commercial District"], ["Program", "35,000 SF in 3 buildings"], ["Parking", "170 stalls, 6 accessible"], ["Stormwater", "8,490 SF basin"], ["Terrain", "84% under 5% slope"]] },
+  { name: "Multifamily", where: "Durham, NC", plan: SB + "portfolio/durham-infinity/plan.jpg", render: SB + "portfolio/durham-infinity/render.jpg",
+    spec: [["Site", "15.9 ac, PDR zoning"], ["Program", "90 units in 5 buildings"], ["Parking", "360 stalls"], ["Stormwater", "10,280 SF pond"], ["Terrain", "97 ft of relief"]] },
+  { name: "Medical office", where: "Clearwater, FL", plan: SB + "portfolio/clearwater/plan.jpg", render: SB + "portfolio/clearwater/render.jpg",
+    spec: [["Site", "±5 ac, Institutional land use"], ["Program", "15,000 SF medical office"], ["Parking", "75 stalls"], ["Stormwater", "7,910 SF pond"], ["Terrain", "42 ft of relief"]] },
+  { name: "Bank with drive-thru", where: "Voorhees, NJ", plan: "/assets/plan.jpg", render: "/assets/render.jpg",
+    spec: [["Site", "±1.32 ac, Major Business zone"], ["Program", "5,900 SF bank"], ["Drive-thru", "Loop with stacking"], ["Parking", "25 spaces"], ["Access", "One highway driveway"]] },
+  { name: "Retail + drive-thru", where: "Durham, NC", plan: SB + "portfolio/durham-us70/plan.jpg", render: SB + "portfolio/durham-us70/render.jpg",
+    spec: [["Site", "4.04 ac, Commercial Heavy"], ["Program", "9,600 SF in 2 buildings"], ["Parking", "53 stalls"], ["Terrain", "46 ft of relief"]] },
+];
+const wt = $(".work-tabs"), wv = $("#work-view");
+function showWork(i) {
+  const w = WORK[i];
+  $$("button", wt).forEach((b, j) => b.setAttribute("aria-selected", j === i));
+  wv.innerHTML = `<figure><div class="im"><img src="${w.plan}" alt="Concept plan, ${w.name}, ${w.where}" loading="lazy"></div><figcaption>Concept plan</figcaption></figure>
+    <figure class="rd"><div class="im"><img src="${w.render}" alt="3D rendering, ${w.name}, ${w.where}" loading="lazy"></div><figcaption>3D rendering</figcaption></figure>
+    <div class="spec"><h3>${w.name}</h3><p class="use">${w.where}</p><dl>${w.spec.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>`;
+}
+WORK.forEach((w, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.setAttribute("role", "tab"); b.textContent = w.name + ", " + w.where;
+  b.addEventListener("click", () => showWork(i));
+  wt.appendChild(b);
+});
+showWork(0);
+
+/* ------------------------------------------------------------------ start: tabs */
 const TABS = ["order", "book", "ask"];
 let slotsLoaded = false;
 function showTab(k) {
@@ -1109,23 +833,12 @@ function showTab(k) {
 TABS.forEach((t) => $("#tab-" + t).addEventListener("click", () => showTab(t)));
 $$("[data-tab]").forEach((a) => a.addEventListener("click", () => showTab(a.dataset.tab)));
 
-/* hero address -> order form */
-$("#hero-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const v = $("#hero-address").value.trim();
-  if (v) $("#f-address").value = v;
-  showTab("order"); coUpdate();
-  goTo($("#claim"));
-  setTimeout(() => $("#f-name").focus({ preventScroll: true }), reduce ? 0 : 700);
-});
-
-/* checkout: options, prices, validation. Posts to save-card like /payment (card saved, charged on delivery). */
+/* order: options, price, validation. Posts to save-card (card saved on Stripe, charged on delivery). */
 const params = new URLSearchParams(location.search);
 const PRICE = { base: 949, plans: 5000, website: 1000 };
 const yes = (v) => v === "1" || v === "true" || v === "yes";
-["name", "email", "phone", "address"].forEach((k) => { if (params.get(k)) $("#f-" + k).value = params.get(k); });
+["name", "email", "phone", "address", "use"].forEach((k) => { if (params.get(k)) $("#f-" + k).value = params.get(k); });
 if (params.get("firm")) $("#f-firm").value = params.get("firm");
-if (params.get("address")) $("#hero-address").value = params.get("address");
 if (yes(params.get("plans"))) $("#opt-plans").checked = true;
 if (yes(params.get("website"))) $("#opt-website").checked = true;
 $("#co-return").value = location.href.split("#")[0];
@@ -1133,7 +846,7 @@ function coUpdate() {
   const w = $("#opt-website").checked, pl = $("#opt-plans").checked;
   const total = PRICE.base + (pl ? PRICE.plans : 0) + (w ? PRICE.website : 0);
   $("#co-package").value = "package" + (w ? "_website" : "") + (pl ? "_plans" : "");
-  $("#co-due").textContent = $("#co-total").textContent = $("#co-auth").textContent = money(total);
+  $("#co-total").textContent = $("#co-auth").textContent = money(total);
   const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#f-email").value.trim());
   const ready = okEmail && $("#f-address").value.trim() && $("#co-agree").checked;
   $("#f-submit").disabled = !ready;
@@ -1153,10 +866,9 @@ $("#pane-order").addEventListener("submit", (e) => {
   try { window.fphWho && window.fphWho($("#f-email").value.trim(), { name: $("#f-name").value.trim() || undefined, email: $("#f-email").value.trim(), company: $("#f-firm").value.trim() || undefined });
         window.fph && window.fph("capture", "checkout_started", { channel: "engineers", package: $("#co-package").value, value: total }); } catch (_) {}
 });
-// back from Stripe without finishing: keep them on the order tab
-addEventListener("pageshow", () => { $("#f-submit").innerHTML = "Continue to secure checkout <span>→</span>"; coUpdate(); });
+addEventListener("pageshow", () => { $("#f-submit").textContent = "Continue to secure checkout"; coUpdate(); });
 
-/* booking */
+/* book a call */
 const BOOK_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/book-call";
 let slots = [], pickDay = null, pickSlot = null;
 const dayKey = (d) => d.toLocaleDateString("en-CA");
@@ -1165,12 +877,9 @@ const fmtTime = (d) => d.toLocaleTimeString("en-US", { hour: "numeric", minute: 
 const fmtFull = (d) => d.toLocaleString("en-US", { weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" });
 async function loadSlots() {
   $("#book-days").innerHTML = '<p class="small">Loading open times…</p>'; $("#book-times").innerHTML = "";
-  try {
-    const d = await (await fetch(BOOK_URL)).json();
-    slots = (d.slots || []).map((x) => new Date(x.start));
-  } catch (_) { slots = []; }
-  try { $("#book-tz").textContent = "Times in your time zone (" + Intl.DateTimeFormat().resolvedOptions().timeZone.replace(/_/g, " ") + ")."; } catch (_) {}
-  if (!slots.length) { $("#book-days").innerHTML = '<p class="small">I couldn\'t load my calendar. Call or text (978) 346-5818, or use Ask a question.</p>'; return; }
+  try { const d = await (await fetch(BOOK_URL)).json(); slots = (d.slots || []).map((x) => new Date(x.start)); } catch (_) { slots = []; }
+  try { $("#book-tz").textContent = "Times are in your time zone (" + Intl.DateTimeFormat().resolvedOptions().timeZone.replace(/_/g, " ") + ")."; } catch (_) {}
+  if (!slots.length) { $("#book-days").innerHTML = '<p class="small">The calendar didn\'t load. Call or text (978) 346-5818, or use Ask a question.</p>'; return; }
   const days = [...new Set(slots.map(dayKey))];
   if (!days.includes(pickDay)) pickDay = days[0];
   pickSlot = null; renderBook();
@@ -1178,11 +887,10 @@ async function loadSlots() {
 function renderBook() {
   const days = [...new Map(slots.map((d) => [dayKey(d), d])).values()];
   $("#book-days").innerHTML = days.map((d) => `<button type="button" role="tab" class="day" aria-selected="${dayKey(d) === pickDay}" data-day="${dayKey(d)}"><small>${d.toLocaleDateString("en-US", { weekday: "short" })}</small><b>${d.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</b></button>`).join("");
-  const list = slots.filter((d) => dayKey(d) === pickDay);
-  $("#book-times").innerHTML = list.map((d) => `<button type="button" class="slot" aria-pressed="${pickSlot && +pickSlot === +d}" data-t="${d.toISOString()}">${fmtTime(d)}</button>`).join("");
+  $("#book-times").innerHTML = slots.filter((d) => dayKey(d) === pickDay).map((d) => `<button type="button" class="slot" aria-pressed="${!!pickSlot && +pickSlot === +d}" data-t="${d.toISOString()}">${fmtTime(d)}</button>`).join("");
   const go = $("#book-go");
   go.disabled = !pickSlot;
-  go.innerHTML = pickSlot ? `Book ${fmtDay(pickSlot)} at ${fmtTime(pickSlot)} <span>→</span>` : "Pick a time above";
+  go.textContent = pickSlot ? `Book ${fmtDay(pickSlot)} at ${fmtTime(pickSlot)}` : "Pick a time above";
 }
 $("#book-days").addEventListener("click", (e) => { const b = e.target.closest("[data-day]"); if (!b) return; pickDay = b.dataset.day; pickSlot = null; renderBook(); });
 $("#book-times").addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (!b) return; pickSlot = new Date(b.dataset.t); renderBook(); });
@@ -1192,25 +900,25 @@ $("#book-go").addEventListener("click", async () => {
   const need = ["#b-name", "#b-email", "#b-phone"].map((s) => $(s));
   need.forEach((i) => i.setAttribute("aria-invalid", !i.value.trim()));
   if (need.some((i) => !i.value.trim())) { err.textContent = "Add your name, email and phone so I can call you."; need.find((i) => !i.value.trim()).focus(); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#b-email").value.trim())) { $("#b-email").setAttribute("aria-invalid", "true"); err.textContent = "That email address doesn't look right."; $("#b-email").focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#b-email").value.trim())) { $("#b-email").setAttribute("aria-invalid", "true"); err.textContent = "Enter a valid email address."; $("#b-email").focus(); return; }
   const go = $("#book-go"); go.disabled = true; go.textContent = "Booking…";
   const firm = $("#b-firm").value.trim();
   try {
     const r = await fetch(BOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: $("#b-name").value.trim(), email: $("#b-email").value.trim(), phone: $("#b-phone").value.trim(), company: firm,
-        address: $("#b-address").value.trim(), start: pickSlot.toISOString(), source: "engineers", website: $("#b-website").value }) });
+        start: pickSlot.toISOString(), source: "engineers", website: $("#b-website").value }) });
     const d = await r.json().catch(() => ({}));
-    if (!r.ok || !d.ok) { if (d.taken) { err.textContent = d.error; await loadSlots(); return; } throw new Error(d.error || "Something went wrong."); }
+    if (!r.ok || !d.ok) { if (d.taken) { err.textContent = d.error; await loadSlots(); return; } throw new Error(d.error || "Booking failed."); }
     try { (window.dataLayer = window.dataLayer || []).push({ event: "call_booked", channel: "engineers" }); } catch (_) {}
     try { window.fbq && window.fbq("track", "Schedule"); } catch (_) {}
     try { window.fphWho && window.fphWho($("#b-email").value.trim(), { name: $("#b-name").value.trim(), email: $("#b-email").value.trim(), company: firm || undefined });
           window.fph && window.fph("capture", "call_booked", { channel: "engineers", start: pickSlot.toISOString() }); } catch (_) {}
     const first = $("#b-name").value.trim().split(/\s+/)[0];
-    $("#done-h").textContent = "Talk soon" + (first ? ", " + first : "") + ".";
+    $("#done-h").textContent = "You're booked" + (first ? ", " + first : "") + ".";
     $("#done-when").textContent = fmtFull(pickSlot);
     $("#book-fields").hidden = true; $("#form-done").hidden = false;
   } catch (x) {
-    err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "I couldn't book that just now. Call or text (978) 346-5818.";
+    err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "The booking didn't go through. Call or text (978) 346-5818.";
     renderBook();
   }
 });
@@ -1223,7 +931,7 @@ $("#pane-ask").addEventListener("submit", async (e) => {
   const need = ["#q-name", "#q-email", "#q-msg"].map((s) => $(s));
   need.forEach((i) => i.setAttribute("aria-invalid", !i.value.trim()));
   if (need.some((i) => !i.value.trim())) { err.textContent = "Add your name, email and your question."; need.find((i) => !i.value.trim()).focus(); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#q-email").value.trim())) { $("#q-email").setAttribute("aria-invalid", "true"); err.textContent = "That email address doesn't look right."; $("#q-email").focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#q-email").value.trim())) { $("#q-email").setAttribute("aria-invalid", "true"); err.textContent = "Enter a valid email address."; $("#q-email").focus(); return; }
   err.textContent = "";
   const btn = $("#q-submit"); btn.disabled = true; btn.textContent = "Sending…";
   const body = Object.fromEntries(new FormData(f).entries());
@@ -1232,352 +940,28 @@ $("#pane-ask").addEventListener("submit", async (e) => {
   try {
     const r = await fetch(ASK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     const d = await r.json().catch(() => ({}));
-    if (!r.ok || !d.ok) throw new Error(d.error || "Something went wrong.");
+    if (!r.ok || !d.ok) throw new Error(d.error || "Sending failed.");
     try { (window.dataLayer = window.dataLayer || []).push({ event: "generate_lead", channel: "engineers" }); } catch (_) {}
     try { window.fbq && window.fbq("track", "Lead"); } catch (_) {}
     try { window.fphWho && window.fphWho(body.email, { name: body.name, email: body.email, company: body.company || undefined });
           window.fph && window.fph("capture", "question_sent", { channel: "engineers" }); } catch (_) {}
     $("#ask-fields").hidden = true; $("#ask-done").hidden = false;
   } catch (x) {
-    err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "I couldn't send that just now. Email support@formadesigns.io.";
-    btn.disabled = false; btn.innerHTML = "Send <span>→</span>";
+    err.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "The question didn't send. Email support@formadesigns.io.";
+    btn.disabled = false; btn.textContent = "Send question";
   }
 });
-if (params.get("tab") && TABS.includes(params.get("tab"))) showTab(params.get("tab"));
+if (TABS.includes(params.get("tab"))) showTab(params.get("tab"));
 
-/* mobile CTA bar */
+/* mobile bar */
 const mbar = $("#mbar");
 function updateBar() {
-  const past = scrollY > innerHeight * 0.7;
-  const r = $("#claim").getBoundingClientRect();
-  const atForm = r.top < innerHeight * 0.9 && r.bottom > 0;
-  mbar.classList.toggle("show", past && !atForm);
+  const r = $("#start").getBoundingClientRect();
+  mbar.classList.toggle("show", scrollY > innerHeight * .8 && !(r.top < innerHeight && r.bottom > 0));
 }
-
-/* ---------------------------------------------------------------- 3D scene */
-let scene = null;
-try { if (window.THREE) scene = makeScene($("#stage")); } catch (e) { console.warn(e); scene = null; }
-if (!scene) { $("#stage").remove(); const fb = document.createElement("div"); fb.className = "stage-fallback"; document.body.prepend(fb); $("#draghint").remove(); }
-
-function makeScene(canvas) {
-  const T = THREE;
-  // preserveDrawingBuffer lets session replay snapshot the 3D scene
-  const glOpts = { antialias: true, preserveDrawingBuffer: true };
-  const gl = canvas.getContext("webgl2", glOpts) || canvas.getContext("webgl", glOpts);
-  if (!gl) return null;
-  const renderer = new T.WebGLRenderer({ canvas, context: gl, antialias: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, isMobile() ? 1.5 : 2));
-  renderer.shadowMap.enabled = !isMobile();
-  renderer.shadowMap.type = T.PCFSoftShadowMap;
-
-  const INK = new T.Color("#0E0E0E"), FOGPAIN = new T.Color("#2a2926");
-  const s = new T.Scene();
-  s.background = INK.clone();
-  s.fog = new T.Fog(INK.clone(), 140, 360);
-  const cam = new T.PerspectiveCamera(38, 1, 0.5, 900);
-
-  const hemi = new T.HemisphereLight(0xdfe6ee, 0x1a1712, 0.75); s.add(hemi);
-  const sun = new T.DirectionalLight(0xffffff, 1.0); sun.position.set(40, 70, 30); s.add(sun);
-  sun.castShadow = renderer.shadowMap.enabled;
-  Object.assign(sun.shadow.camera, { left: -45, right: 45, top: 45, bottom: -45, near: 10, far: 200 });
-  sun.shadow.mapSize.set(1024, 1024); sun.shadow.bias = -0.0008;
-
-  const GOLD = 0xB8924F;
-  const mat = (c, o = {}) => new T.MeshStandardMaterial(Object.assign({ color: c, roughness: .95, metalness: 0 }, o));
-  const flat = (w, d, m, y = 0) => { const g = new T.PlaneGeometry(w, d); g.rotateX(-Math.PI / 2); const me = new T.Mesh(g, m); me.position.y = y; return me; };
-
-  // ground + grid
-  const ground = flat(600, 600, mat(0x121211)); ground.receiveShadow = true; s.add(ground);
-  const grid = new T.GridHelper(400, 80, GOLD, GOLD); grid.material.transparent = true; grid.material.opacity = .06; grid.position.y = .01; s.add(grid);
-
-  // road (Elm St) + moving cars
-  const road = flat(600, 7, mat(0x1c1c1b), .02); road.position.z = 31; s.add(road);
-  for (let x = -290; x < 290; x += 6) { const d = flat(3, .25, mat(0x6d6a63), .03); d.position.set(x, .03, 31); s.add(d); }
-  const cars = [];
-  for (let i = 0; i < 6; i++) {
-    const c = new T.Mesh(new T.BoxGeometry(1.8, .9, .9), mat([0xd8d4cb, 0x7b2e25, 0x2f3b4a, 0x9a9a9a][i % 4], { roughness: .4 }));
-    const lane = i % 2; c.position.set(-80 + i * 32, .55, lane ? 32.6 : 29.4); c.userData.v = (lane ? -1 : 1) * (5 + (i % 3) * 1.5);
-    c.castShadow = true; s.add(c); cars.push(c);
-  }
-
-  // parcel (world units are ~10 ft)
-  const P = [[-24, -23], [25, -25], [24, 24], [-23, 24]];
-  const Q = [[-22.5, -21.5], [23.5, -23.5], [22.5, 21], [-21.5, 21]];
-  const shapeOf = (pts) => { const sh = new T.Shape(); pts.forEach(([x, z], i) => i ? sh.lineTo(x, -z) : sh.moveTo(x, -z)); sh.closePath(); return sh; };
-  const parcelGeo = new T.ShapeGeometry(shapeOf(P)); parcelGeo.rotateX(-Math.PI / 2);
-  const lotMat = mat(0x2d3a25);
-  const lot = new T.Mesh(parcelGeo, lotMat); lot.position.y = .04; lot.receiveShadow = true; s.add(lot);
-
-  // contour lines (LiDAR)
-  const contours = new T.Group(); s.add(contours);
-  const cMat = new T.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0 });
-  for (let i = 0; i < 11; i++) {
-    const pts = []; const z0 = -21 + i * 4.2;
-    for (let x = -22; x <= 23; x += 1) pts.push(new T.Vector3(x, .09, z0 + Math.sin(x / 7 + i * .8) * 1.4 + Math.cos(x / 3.2 + i) * .35));
-    contours.add(new T.Line(new T.BufferGeometry().setFromPoints(pts), cMat));
-  }
-
-  // boundary + setback lines (drawn progressively)
-  const resample = (pts, n) => { const out = []; const loop = [...pts, pts[0]]; for (let i = 0; i < loop.length - 1; i++) { const [a, b] = [loop[i], loop[i + 1]]; for (let k = 0; k < n; k++) { const t = k / n; out.push(new T.Vector3(lerp(a[0], b[0], t), .12, lerp(a[1], b[1], t))); } } out.push(new T.Vector3(loop[0][0], .12, loop[0][1])); return out; };
-  const bGeo = new T.BufferGeometry().setFromPoints(resample(P, 60));
-  const boundary = new T.Line(bGeo, new T.LineBasicMaterial({ color: GOLD })); s.add(boundary);
-  const sGeo = new T.BufferGeometry().setFromPoints(resample(Q, 60));
-  const setback = new T.Line(sGeo, new T.LineDashedMaterial({ color: 0xF2EFE8, dashSize: .9, gapSize: .6, transparent: true, opacity: .7 })); setback.computeLineDistances(); s.add(setback);
-  const bCount = bGeo.attributes.position.count, sCount = sGeo.attributes.position.count;
-
-  // buildable tint
-  const tintGeo = new T.ShapeGeometry(shapeOf(Q)); tintGeo.rotateX(-Math.PI / 2);
-  const tintMat = new T.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0, depthWrite: false });
-  const tint = new T.Mesh(tintGeo, tintMat); tint.position.y = .1; s.add(tint);
-
-  // layout: drive, parking, pond
-  const layout = new T.Group(); s.add(layout);
-  const asphalt = mat(0x232322, { roughness: .9 });
-  const drive = flat(3, 18, asphalt, .13); drive.position.set(3, .13, 22); layout.add(drive);
-  const loop = flat(36, 3, asphalt, .13); loop.position.set(0, .13, -6.5); layout.add(loop);
-  const pcv = document.createElement("canvas"); pcv.width = 1024; pcv.height = 512; const pc = pcv.getContext("2d");
-  pc.fillStyle = "#232322"; pc.fillRect(0, 0, 1024, 512); pc.strokeStyle = "#d9d5cc"; pc.lineWidth = 3;
-  [[20, 120], [140, 240], [272, 372], [392, 492]].forEach(([a, b]) => { for (let x = 16; x < 1010; x += 28) { pc.beginPath(); pc.moveTo(x, a); pc.lineTo(x, b); pc.stroke(); } pc.beginPath(); pc.moveTo(16, a); pc.lineTo(1008, a); pc.stroke(); });
-  const parkTex = new T.CanvasTexture(pcv); parkTex.anisotropy = 4;
-  const parking = flat(32, 16, mat(0xffffff, { map: parkTex, roughness: .9 }), .14); parking.position.set(0, .14, 3); layout.add(parking);
-  const pond = new T.Mesh(new T.CircleGeometry(3.4, 40), mat(0x4f6f7c, { roughness: .2, metalness: .1 })); pond.rotation.x = -Math.PI / 2; pond.position.set(-18.5, .15, 2); layout.add(pond);
-  layout.children.forEach((m) => { m.material = m.material.clone(); m.material.transparent = true; m.material.opacity = 0; m.receiveShadow = true; });
-
-  // buildings (Building A 240x100 ft, B 71x70, C 100x60)
-  const bldgs = [];
-  const bMat = mat(0x2b2721, { roughness: .8 }), roofMat = mat(0x8c8a84, { roughness: .6, metalness: .2 });
-  [[0, -15, 24, 10, 2.4], [15, 14.5, 7.1, 7, 2.1], [-12, 14.5, 10, 6, 2.1]].forEach(([x, z, w, d, h]) => {
-    const g = new T.Group(); g.position.set(x, .15, z);
-    const geo = new T.BoxGeometry(w, h, d); geo.translate(0, h / 2, 0);
-    const body = new T.Mesh(geo, bMat); body.castShadow = true; body.receiveShadow = true; g.add(body);
-    const roof = new T.Mesh(new T.BoxGeometry(w + .2, .18, d + .2), roofMat); roof.position.y = h + .09; g.add(roof);
-    const edges = new T.LineSegments(new T.EdgesGeometry(geo), new T.LineBasicMaterial({ color: GOLD })); g.add(edges);
-    const glass = new T.Mesh(new T.PlaneGeometry(w * .8, h * .45), mat(0x9fb6c0, { roughness: .1, metalness: .3, emissive: 0x2a2416 }));
-    glass.position.set(0, h * .42, d / 2 + .01); g.add(glass);
-    g.scale.y = .001; s.add(g); bldgs.push(g);
-  });
-
-  // trees
-  const treePts = [];
-  const ring = resample([[-21, -20], [22, -22], [21, 19.5], [-20, 19.5]], 7);
-  ring.forEach((p, i) => { if (i % 2 === 0 && !(Math.abs(p.x - 3) < 3 && p.z > 15)) treePts.push([p.x, p.z]); });
-  [[-6, 11], [6, 11], [-12, -4], [12, -4], [-17, 9]].forEach((p) => treePts.push(p));
-  const crown = new T.InstancedMesh(new T.ConeGeometry(1.1, 2.8, 7), mat(0x3f5a34), treePts.length);
-  const trunk = new T.InstancedMesh(new T.CylinderGeometry(.14, .18, 1, 5), mat(0x4a3b2c), treePts.length);
-  crown.castShadow = true; s.add(crown); s.add(trunk);
-  const dummy = new T.Object3D();
-  function setTrees(k) {
-    treePts.forEach(([x, z], i) => {
-      const sc = Math.max(.001, k * (.8 + ((i * 37) % 10) / 25));
-      dummy.position.set(x, .15 + sc * 1, z); dummy.scale.set(sc, sc, sc); dummy.rotation.set(0, i, 0); dummy.updateMatrix(); trunk.setMatrixAt(i, dummy.matrix);
-      dummy.position.set(x, .15 + sc * 2.4, z); dummy.updateMatrix(); crown.setMatrixAt(i, dummy.matrix);
-    });
-    crown.instanceMatrix.needsUpdate = trunk.instanceMatrix.needsUpdate = true;
-  }
-
-  // grass
-  const inPoly = (x, z, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, zi] = poly[i], [xj, zj] = poly[j]; if (((zi > z) !== (zj > z)) && (x < (xj - xi) * (z - zi) / (zj - zi) + xi)) c = !c; } return c; };
-  const GN = isMobile() ? 900 : 1700;
-  const bladeGeo = new T.ConeGeometry(.16, 1, 3); bladeGeo.translate(0, .5, 0);
-  const grassMat = mat(0x6d8a4a, { roughness: 1 });
-  const grass = new T.InstancedMesh(bladeGeo, grassMat, GN); s.add(grass);
-  const blades = [];
-  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  while (blades.length < GN) { const x = -24 + rnd() * 49, z = -25 + rnd() * 49; if (!inPoly(x, z, P)) continue; blades.push({ x, z, r: rnd() * 6.28, k: .6 + rnd() * .8, dev: (x > -22 && x < 22 && z > -21 && z < 19) }); }
-  const col = new T.Color();
-  blades.forEach((b, i) => { col.setHSL(.24 + rnd() * .05, .35, .32 + rnd() * .14); grass.setColorAt(i, col); });
-  grass.instanceColor.needsUpdate = true;
-  let gKey = "";
-  function setGrass(h, clear) {
-    const key = h.toFixed(2) + "|" + clear.toFixed(2); if (key === gKey) return; gKey = key;
-    blades.forEach((b, i) => {
-      const k = b.dev ? h * (1 - clear) : h;
-      const sy = Math.max(.001, k * b.k); dummy.position.set(b.x, .04, b.z); dummy.rotation.set((b.k - 1) * .5, b.r, 0); dummy.scale.set(1, sy, 1); dummy.updateMatrix(); grass.setMatrixAt(i, dummy.matrix);
-    });
-    grass.instanceMatrix.needsUpdate = true;
-  }
-
-  // canvas sprites + sign
-  const tex = (w, h, draw) => { const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d"); draw(g, w, h); const t = new T.CanvasTexture(c); t.anisotropy = 4; return t; };
-  const font = (wt, px, fam) => `${wt} ${px}px ${fam === "mono" ? '"IBM Plex Mono", ui-monospace, monospace' : '"Archivo", "Helvetica Neue", Arial, sans-serif'}`;
-  function labelTex(text, sub) {
-    return tex(1024, 256, (g, w, h) => {
-      g.fillStyle = "rgba(14,14,14,.86)"; g.fillRect(0, 40, w, 176); g.strokeStyle = "#B8924F"; g.lineWidth = 4; g.strokeRect(2, 42, w - 4, 172);
-      g.fillStyle = "#DCBB7A"; g.font = font(800, 76); g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(text, w / 2, sub ? 112 : 128);
-      if (sub) { g.fillStyle = "#A7A296"; g.font = font(500, 34, "mono"); g.fillText(sub, w / 2, 178); }
-    });
-  }
-  const labels = [];
-  const addLabel = (text, sub, pos, sc, stageAt) => { const m = new T.SpriteMaterial({ map: labelTex(text, sub), transparent: true, opacity: 0, depthTest: false }); const sp = new T.Sprite(m); sp.position.set(...pos); sp.scale.set(sc * 4, sc, 1); sp.renderOrder = 10; s.add(sp); labels.push({ sp, text, sub, at: stageAt }); };
-  addLabel("5.58 AC", "PARCEL · LIDAR TOPO", [0, 6, -2], 3.2, 0.25);
-  addLabel("30 FT SETBACK", "FRONT · 15 FT SIDES + REAR", [12, 4.5, 21], 2.6, 1.3);
-  addLabel("170 STALLS", "6 ACCESSIBLE", [0, 4.5, 3], 2.6, 3.2);
-  addLabel("35,000 SF", "RETAIL + DINING · 3 BUILDINGS", [0, 8, -15], 3, 4.3);
-
-  const sign = new T.Group(); sign.position.set(10, 0, 26.2); s.add(sign);
-  const post = new T.Mesh(new T.BoxGeometry(.18, 4.4, .18), mat(0xd9d5cc)); post.position.y = 2.2; post.castShadow = true; sign.add(post);
-  const arm = new T.Mesh(new T.BoxGeometry(3.6, .14, .14), mat(0xd9d5cc)); arm.position.set(1.7, 4.3, 0); sign.add(arm);
-  const boardTex = tex(512, 320, (g, w, h) => { g.fillStyle = "#F2EFE8"; g.fillRect(0, 0, w, h); g.fillStyle = "#0E0E0E"; g.fillRect(0, 0, w, 18); g.fillRect(0, h - 18, w, 18); g.textAlign = "center"; g.textBaseline = "middle"; g.font = font(900, 96); g.fillText("FOR SALE", w / 2, 118); g.fillStyle = "#B8924F"; g.font = font(800, 54); g.fillText("LAND · 5.58 AC", w / 2, 210); g.fillStyle = "#555"; g.font = font(500, 26, "mono"); g.fillText("COMMERCIAL ZONED", w / 2, 268); });
-  const board = new T.Mesh(new T.PlaneGeometry(3.2, 2), new T.MeshStandardMaterial({ map: boardTex, side: T.DoubleSide, roughness: .7 })); board.position.set(1.8, 3.1, .02); sign.add(board);
-  const riderTex = (txt, bg) => tex(512, 112, (g, w, h) => { g.fillStyle = bg; g.fillRect(0, 0, w, h); g.fillStyle = bg === "#B8924F" ? "#0E0E0E" : "#fff"; let px = 66; do { g.font = font(900, px); px -= 2; } while (g.measureText(txt).width > w - 40 && px > 20); g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(txt, w / 2, h / 2 + 3); });
-  const rReduced = riderTex("PRICE REDUCED", "#C2552F"), rSold = riderTex("UNDER CONTRACT", "#B8924F");
-  const rider = new T.Mesh(new T.PlaneGeometry(3.2, .7), new T.MeshStandardMaterial({ map: rReduced, side: T.DoubleSide, roughness: .7 })); rider.position.set(1.8, 1.6, .02); rider.visible = false; sign.add(rider);
-
-  // question marks
-  const qTex = tex(256, 256, (g, w, h) => { g.fillStyle = "rgba(14,14,14,.9)"; g.beginPath(); g.arc(128, 128, 112, 0, 7); g.fill(); g.strokeStyle = "#D2774F"; g.lineWidth = 8; g.stroke(); g.fillStyle = "#F2EFE8"; g.font = font(900, 150); g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("?", 128, 138); });
-  const QPOS = [[-12, 7, -10], [8, 9, -14], [16, 6.5, 2], [-4, 10, 4], [-17, 8, 10], [4, 7, 14], [14, 11, -4], [-8, 6, -2]];
-  const qs = QPOS.map((p, i) => { const sp = new T.Sprite(new T.SpriteMaterial({ map: qTex, transparent: true, opacity: 0, depthTest: false })); sp.position.set(...p); sp.scale.set(.001, .001, 1); sp.userData = { base: p[1], ph: i * .9, k: 0 }; sp.renderOrder = 11; s.add(sp); return sp; });
-  let qCount = 0;
-
-  /* keyframes */
-  const kf = [
-    { id: "hero", anchor: 0.5, cam: [64, 44, 74], look: [2, 0, 0], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .15, q: 0 },
-    { id: "owners", cam: [72, 34, 58], look: [2, 0, 2], build: 0, grass: .45, decay: 0, fog: 0, sold: 0, warm: .25, q: 0 },
-    { id: "sits", cam: [22, 6.5, 48], look: [6, 2.4, 14], build: 0, grass: () => .45 + ui.days / 360 * 1.35, decay: () => ui.days / 360, fog: () => .2 + ui.days / 360 * .8, sold: 0, warm: 0, q: 0 },
-    { id: "questions", cam: [-30, 58, 58], look: [0, 3, 0], build: 0, grass: () => .45 + ui.days / 360 * 1.1, decay: () => ui.days / 360 * .8, fog: () => .25 + ui.days / 360 * .5, sold: 0, warm: 0, q: 1 },
-    { id: "build", cam: [2, 96, 10], look: [0, 0, 0], build: .25, grass: .4, decay: 0, fog: 0, sold: 0, warm: 0, q: 0 },
-    { id: "build-end", el: "#build-end", anchor: 0.75, cam: [-58, 40, 56], look: [0, 3, 0], build: 6, grass: .4, decay: 0, fog: 0, sold: 0, warm: .35, q: 0 },
-    { id: "after", cam: [34, 12, 58], look: [2, 3.5, 6], build: 6, grass: .4, decay: 0, fog: 0, sold: 1, warm: 1, q: 0 },
-    { id: "claim", anchor: 0.2, cam: [52, 40, 66], look: [0, 2, 0], build: 6, grass: .4, decay: 0, fog: 0, sold: 1, warm: .6, q: 0, orbit: 1 },
-  ];
-  const val = (v) => (typeof v === "function" ? v() : v);
-  let anchors = [];
-  function measure() {
-    anchors = kf.map((k) => { const el = k.el ? $(k.el) : document.getElementById(k.id); const top = el.getBoundingClientRect().top + scrollY; return top + innerHeight * (k.anchor ?? 0.3) - innerHeight * 0.5; });
-  }
-
-  function resize() {
-    const w = innerWidth, h = innerHeight;
-    renderer.setSize(w, h, false); cam.aspect = w / h;
-    if (isMobile()) cam.setViewOffset(w, h, 0, h * 0.2, w, h); else cam.setViewOffset(w, h, -w * 0.21, 0, w, h);
-    cam.updateProjectionMatrix(); measure();
-  }
-  addEventListener("resize", resize); resize();
-  addEventListener("load", measure);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-
-  /* drag to look around (mouse) */
-  let drag = null;
-  canvas.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; drag = { x: e.clientX, y: e.clientY, az: ui.dragAz, el: ui.dragEl }; canvas.classList.add("dragging"); canvas.setPointerCapture(e.pointerId); });
-  canvas.addEventListener("pointermove", (e) => { if (!drag) return; ui.dragAz = clamp(drag.az - (e.clientX - drag.x) / 260, -1.4, 1.4); ui.dragEl = clamp(drag.el + (e.clientY - drag.y) / 400, -.35, .5); });
-  const endDrag = () => { drag = null; canvas.classList.remove("dragging"); };
-  canvas.addEventListener("pointerup", endDrag); canvas.addEventListener("pointercancel", endDrag);
-
-  const st = { build: 0, sold: 0 };
-  const tmp = { cam: new T.Vector3(), look: new T.Vector3() };
-  const sunWarm = new T.Color("#ffc48a"), sunCool = new T.Color("#ffffff"), skyWarm = new T.Color("#ffe2bf"), skyCool = new T.Color("#dfe6ee");
-  let last = performance.now(), orbitT = 0, curId = "hero";
-
-  let smoothY = scrollY;
-  function pose(dt) {
-    smoothY += (scrollY - smoothY) * (reduce ? 1 : 1 - Math.exp(-dt * 3.2));
-    if (Math.abs(scrollY - smoothY) < 0.5) smoothY = scrollY;
-    const y = smoothY;
-    let i = 0; while (i < anchors.length - 1 && y >= anchors[i + 1]) i++;
-    const a = kf[i], b = kf[Math.min(i + 1, kf.length - 1)];
-    const span = (anchors[i + 1] ?? anchors[i] + 1) - anchors[i];
-    const t = i >= anchors.length - 1 ? 0 : smooth(clamp((y - anchors[i]) / span));
-    curId = t < .5 ? a.id : b.id;
-    const mix = (k) => lerp(val(a[k]), val(b[k]), t);
-    tmp.cam.set(lerp(a.cam[0], b.cam[0], t), lerp(a.cam[1], b.cam[1], t), lerp(a.cam[2], b.cam[2], t));
-    tmp.look.set(lerp(a.look[0], b.look[0], t), lerp(a.look[1], b.look[1], t), lerp(a.look[2], b.look[2], t));
-    return { build: mix("build"), grass: mix("grass"), decay: mix("decay"), fog: mix("fog"), sold: mix("sold"), warm: mix("warm"), q: mix("q"), orbit: lerp(a.orbit || 0, b.orbit || 0, t) };
-  }
-
-  function frame(now) {
-    const dt = Math.min(.05, (now - last) / 1000); last = now;
-    const p = pose(dt);
-
-    ui.holdBuild += (ui.holdBuildT - ui.holdBuild) * Math.min(1, dt * 2.2);
-    ui.holdEmpty += (ui.holdEmptyT - ui.holdEmpty) * Math.min(1, dt * 2.6);
-    let build = lerp(p.build, 6, ui.holdBuild);
-    build = lerp(build, 0, ui.holdEmpty);
-    st.build += (build - st.build) * (1 - Math.exp(-dt * 4));
-    const B = st.build, stage = (a, w = 1) => clamp((B - a) / w);
-    const decay = p.decay * (1 - stage(1.5, 2)), sold = p.sold * stage(5);
-
-    // camera with drag + idle drift + orbit
-    if (!drag) { ui.dragAz *= Math.pow(.25, dt); ui.dragEl *= Math.pow(.25, dt); }
-    if (!reduce) orbitT += dt * (p.orbit ? .08 : .02);
-    const drift = reduce ? 0 : Math.sin(orbitT) * .06 + p.orbit * orbitT;
-    const off = tmp.cam.clone().sub(tmp.look); const r = off.length();
-    let az = Math.atan2(off.x, off.z) + ui.dragAz + drift, el = Math.asin(clamp(off.y / r, -1, 1)) + ui.dragEl;
-    el = clamp(el, .06, 1.48);
-    cam.position.set(tmp.look.x + r * Math.cos(el) * Math.sin(az), tmp.look.y + r * Math.sin(el), tmp.look.z + r * Math.cos(el) * Math.cos(az));
-    cam.lookAt(tmp.look);
-
-    // atmosphere
-    const fog = p.fog * (1 - stage(1.5, 2));
-    s.fog.color.copy(INK).lerp(FOGPAIN, fog); s.background.copy(s.fog.color);
-    s.fog.near = lerp(140, 30, fog); s.fog.far = lerp(360, 150, fog);
-    sun.color.copy(sunCool).lerp(sunWarm, p.warm); hemi.color.copy(skyCool).lerp(skyWarm, p.warm * .6);
-    sun.intensity = lerp(1.0, 1.25, p.warm) * (1 - fog * .35); hemi.intensity = .75 - fog * .2;
-
-    // lot surface + grass
-    lotMat.color.setHex(0x2d3a25).lerp(new T.Color(0x4a4130), decay);
-    grassMat.color.setHex(0x6d8a4a).lerp(new T.Color(0xb9a46a), decay);
-    setGrass(p.grass, stage(3, .9));
-
-    // plan layers
-    cMat.opacity = .55 * stage(0, .8);
-    bGeo.setDrawRange(0, Math.floor(bCount * stage(.6, .8)));
-    sGeo.setDrawRange(0, Math.floor(sCount * stage(1.2, .8)));
-    tintMat.opacity = .14 * stage(2, .8) * (1 - stage(3.5, 1) * .6);
-    layout.children.forEach((m) => { m.material.opacity = stage(3, .8); m.visible = m.material.opacity > .01; });
-    bldgs.forEach((g, i) => { const k = smooth(stage(4 + i * .25, .8)); g.scale.y = Math.max(.001, k); g.visible = k > .005; });
-    setTrees(smooth(stage(4.6, 1)));
-    labels.forEach((l) => { const k = stage(l.at, .5) * (1 - stage(l.at + 1.6, .5)) * (B < 5.6 ? 1 : 0); l.sp.material.opacity = k; l.sp.visible = k > .01; });
-
-    // sign
-    sign.rotation.z = decay > .45 ? -(decay - .45) * .22 : 0;
-    rider.visible = sold > .5 || decay > .32;
-    rider.material.map = sold > .5 ? rSold : rReduced;
-
-    // questions
-    qs.forEach((sp, i) => {
-      const want = (i < qCount ? 1 : 0) * p.q * (1 - stage(.5, 1));
-      sp.userData.k += (want - sp.userData.k) * Math.min(1, dt * 5);
-      const k = sp.userData.k, bob = reduce ? 0 : Math.sin(now / 700 + sp.userData.ph) * .5;
-      sp.scale.set(2.6 * k + .001, 2.6 * k + .001, 1); sp.material.opacity = k; sp.position.y = sp.userData.base + bob; sp.visible = k > .01;
-    });
-
-    // cars
-    if (!reduce) cars.forEach((c) => { c.position.x += c.userData.v * dt; if (c.position.x > 110) c.position.x = -110; if (c.position.x < -110) c.position.x = 110; });
-
-    renderer.render(s, cam);
-    updateUI(B);
-    if (!document.hidden) requestAnimationFrame(frame);
-  }
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) { last = performance.now(); requestAnimationFrame(frame); } });
-  requestAnimationFrame(frame);
-
-  return {
-    setQuestions(n) { qCount = n; },
-    stageScrollY(stageIdx) { const a = anchors[3], b = anchors[4]; const target = stageIdx + .7; return a + (b - a) * clamp((target - .25) / (6 - .25)); },
-  };
-}
-
-/* build steps <-> scroll */
-const stepEls = $$("#steps li");
-let lastStage = -1;
-function updateUI(B) {
-  const cur = Math.min(5, Math.floor(B));
-  if (cur !== lastStage) {
-    stepEls.forEach((li, i) => { li.classList.toggle("done", i < cur || B >= 5.9); li.classList.toggle("cur", i === cur && B > .2 && B < 5.95); });
-    lastStage = cur;
-  }
-  const bar = $("#buildbar"); if (bar) bar.style.width = clamp(B / 6) * 100 + "%";
-}
-$$("#steps button").forEach((b) => b.addEventListener("click", () => {
-  if (!scene) return;
-  goTo(scene.stageScrollY(+b.dataset.stage));
-}));
-if (!scene) { stepEls.forEach((li) => li.classList.add("done")); }
-
-addEventListener("scroll", updateBar, { passive: true });
-updateBar();
+addEventListener("scroll", updateBar, { passive: true }); updateBar();
 })();
-</script>
 
+</script>
 </body>
 </html>
