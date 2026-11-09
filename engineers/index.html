@@ -25,6 +25,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
 body{margin:0; background:var(--page); color:var(--ink); font:400 17px/1.6 var(--f-body); -webkit-font-smoothing:antialiased}
@@ -221,6 +222,19 @@ section.s.white{background:var(--paper)}
 .field label{font-weight:600; font-size:.88rem}
 .field input,.field textarea{width:100%; min-height:48px; padding:0 12px; border:1px solid #BFC5CA; border-radius:3px; font:16px var(--f-body); color:var(--ink); background:#fff}
 .field textarea{padding:12px; min-height:120px; resize:vertical}
+.flabel{font-weight:600; font-size:.88rem}
+.drop{position:relative; display:grid; gap:2px; place-items:center; text-align:center; padding:18px 14px; border:1.5px dashed #9AA3AB; border-radius:3px; background:#F8F9F9; cursor:pointer; transition:border-color .15s, background .15s}
+.drop:hover,.drop.over{border-color:var(--ink); background:#F1F3F4}
+.drop:focus-within{outline:2px solid var(--brass); outline-offset:2px}
+.drop input{position:absolute; inset:0; opacity:0; cursor:pointer; width:100%}
+.drop b{font-weight:600}
+.drop .drop-s{font-size:.82rem; color:var(--graphite)}
+.upl-file{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--rule); border-radius:3px; background:#fff}
+.upl-file .ic{flex:0 0 auto; width:30px; height:36px; border:1.5px solid var(--ink); border-radius:2px; display:grid; place-items:end center; font:700 9px var(--f-head); padding-bottom:3px}
+.upl-file span{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; font-size:.92rem}
+.upl-file button{appearance:none; border:0; background:none; color:var(--graphite); text-decoration:underline; cursor:pointer; font:inherit; font-size:.88rem}
+.upl-msg:empty{display:none}
+.upl-msg.err{color:var(--err); font-weight:600}
 .field input:focus,.field textarea:focus{border-color:var(--ink); outline:2px solid rgba(22,25,28,.12)}
 .field [aria-invalid="true"]{border-color:var(--err)}
 .opts{display:grid; border:1px solid var(--rule); border-radius:3px}
@@ -488,7 +502,8 @@ window.fphWho = (email, props) => {
       <ul>
         <li>Nothing is charged until delivery</li>
         <li>Delivered within 7 days</li>
-        <li>Send your logo, title block, survey or program after you order</li>
+        <li>Attach your client's proposal or scope as a PDF when you order</li>
+        <li>Send your logo, title block or survey after you order</li>
         <li>Questions: <a href="tel:9783465818">(978) 346-5818</a> or <a href="mailto:support@formadesigns.io">support@formadesigns.io</a></li>
       </ul>
     </div>
@@ -524,6 +539,12 @@ window.fphWho = (email, props) => {
         </div>
         <div class="field"><label for="f-address">Site address or parcel ID</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>
         <div class="field"><label for="f-use">Use your client wants (optional)</label><input id="f-use" name="use" type="text" placeholder="40 townhomes, medical office, self-storage…"></div>
+        <div class="field" data-upl><span class="flabel">Your client's proposal or scope (PDF, optional)</span>
+          <label class="drop"><input type="file" accept="application/pdf,.pdf" aria-label="Upload a PDF"><b>Upload a PDF</b><span class="drop-s">or drag it here. Up to 20 MB. Kept private.</span></label>
+          <div class="upl-file" hidden><span class="ic" aria-hidden="true">PDF</span><span class="nm"></span><button type="button">Remove</button></div>
+          <input type="hidden" name="attachment"><input type="hidden" name="attachment_name">
+          <p class="upl-msg small" role="status"></p>
+        </div>
         <div class="sum">
           <div><span>Due today</span><b>$0.00</b></div>
           <div class="tot"><span>Charged on delivery</span><b id="co-total" class="tnum">$949</b></div>
@@ -574,6 +595,12 @@ window.fphWho = (email, props) => {
             <div class="field"><label for="q-phone">Phone (optional)</label><input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
           </div>
           <div class="field"><label for="q-msg">Your question</label><textarea id="q-msg" name="message" rows="4" placeholder="Volume, turnaround, CAD standards, a specific site…"></textarea></div>
+          <div class="field" data-upl><span class="flabel">Attach a proposal or scope (PDF, optional)</span>
+            <label class="drop"><input type="file" accept="application/pdf,.pdf" aria-label="Upload a PDF"><b>Upload a PDF</b><span class="drop-s">or drag it here. Up to 20 MB. Kept private.</span></label>
+            <div class="upl-file" hidden><span class="ic" aria-hidden="true">PDF</span><span class="nm"></span><button type="button">Remove</button></div>
+            <input type="hidden" name="attachment"><input type="hidden" name="attachment_name">
+            <p class="upl-msg small" role="status"></p>
+          </div>
           <input class="hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="btn btn-lg" type="submit" id="q-submit">Send question</button>
           <p class="form-err" id="q-err" role="alert"></p>
@@ -823,6 +850,40 @@ WORK.forEach((w, i) => {
 });
 showWork(0);
 
+/* ------------------------------------------------------------------ PDF upload (client proposal / scope) */
+const UPLOAD_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/firm-upload";
+let uploading = 0;
+$$("[data-upl]").forEach((box) => {
+  const input = $("input[type=file]", box), drop = $(".drop", box), file = $(".upl-file", box), msg = $(".upl-msg", box);
+  const path = $('input[name="attachment"]', box), nameIn = $('input[name="attachment_name"]', box);
+  const reset = () => { path.value = ""; nameIn.value = ""; input.value = ""; file.hidden = true; drop.hidden = false; };
+  async function send(f) {
+    msg.className = "upl-msg small"; msg.textContent = "";
+    if (!f) return;
+    if (!/pdf$/i.test(f.type) && !/\.pdf$/i.test(f.name)) { msg.className = "upl-msg small err"; msg.textContent = "Choose a PDF file."; return; }
+    if (f.size > 20 * 1024 * 1024) { msg.className = "upl-msg small err"; msg.textContent = "That PDF is over 20 MB. Email it to support@formadesigns.io instead."; return; }
+    uploading++; try { coUpdate(); } catch (_) {}
+    drop.hidden = true; file.hidden = false; $(".nm", file).textContent = f.name; $("button", file).hidden = true; msg.textContent = "Uploading…";
+    try {
+      const fd = new FormData(); fd.append("file", f, f.name);
+      const r = await fetch(UPLOAD_URL, { method: "POST", body: fd });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || "The upload didn't go through.");
+      path.value = d.path; nameIn.value = d.name || f.name;
+      msg.textContent = "Uploaded."; $("button", file).hidden = false;
+      try { window.fph && window.fph("capture", "pdf_uploaded", { channel: "engineers" }); } catch (_) {}
+    } catch (x) {
+      reset(); msg.className = "upl-msg small err";
+      msg.textContent = (x && x.message && !/fetch|network/i.test(x.message)) ? x.message : "The upload didn't go through. Email the PDF to support@formadesigns.io.";
+    } finally { uploading--; try { coUpdate(); } catch (_) {} }
+  }
+  input.addEventListener("change", () => send(input.files[0]));
+  ["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, () => drop.classList.remove("over")));
+  drop.addEventListener("drop", (e) => { e.preventDefault(); send(e.dataTransfer.files[0]); });
+  $("button", file).addEventListener("click", () => { reset(); msg.textContent = ""; });
+});
+
 /* ------------------------------------------------------------------ start: tabs */
 const TABS = ["order", "book", "ask"];
 let slotsLoaded = false;
@@ -848,9 +909,9 @@ function coUpdate() {
   $("#co-package").value = "package" + (w ? "_website" : "") + (pl ? "_plans" : "");
   $("#co-total").textContent = $("#co-auth").textContent = money(total);
   const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#f-email").value.trim());
-  const ready = okEmail && $("#f-address").value.trim() && $("#co-agree").checked;
+  const ready = okEmail && $("#f-address").value.trim() && $("#co-agree").checked && !uploading;
   $("#f-submit").disabled = !ready;
-  $("#co-hint").textContent = !okEmail || !$("#f-address").value.trim() ? "Add your email and the site address to continue." : !$("#co-agree").checked ? "Check the box above to continue." : "Nothing is charged today.";
+  $("#co-hint").textContent = uploading ? "Wait for the PDF to finish uploading." : !okEmail || !$("#f-address").value.trim() ? "Add your email and the site address to continue." : !$("#co-agree").checked ? "Check the box above to continue." : "Nothing is charged today.";
   return total;
 }
 ["#opt-plans", "#opt-website", "#co-agree"].forEach((s) => $(s).addEventListener("change", coUpdate));
@@ -931,6 +992,7 @@ $("#pane-ask").addEventListener("submit", async (e) => {
   const need = ["#q-name", "#q-email", "#q-msg"].map((s) => $(s));
   need.forEach((i) => i.setAttribute("aria-invalid", !i.value.trim()));
   if (need.some((i) => !i.value.trim())) { err.textContent = "Add your name, email and your question."; need.find((i) => !i.value.trim()).focus(); return; }
+  if (uploading) { err.textContent = "Wait for the PDF to finish uploading."; return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#q-email").value.trim())) { $("#q-email").setAttribute("aria-invalid", "true"); err.textContent = "Enter a valid email address."; $("#q-email").focus(); return; }
   err.textContent = "";
   const btn = $("#q-submit"); btn.disabled = true; btn.textContent = "Sending…";
