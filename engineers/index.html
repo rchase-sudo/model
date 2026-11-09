@@ -73,6 +73,14 @@ p{margin:0}
 .hero .wrap{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:clamp(28px,4vw,56px); align-items:center}
 .hero .wrap > *{min-width:0}
 .hero h1{max-width:15ch}
+.firstfree{display:inline-flex; align-items:center; gap:10px; margin-bottom:22px; padding:8px 14px 8px 8px; border:1px solid var(--brass); border-radius:3px; background:#FBF7EF; font-weight:600; font-size:.95rem; text-decoration:none; color:var(--ink)}
+.firstfree b{background:var(--brass); color:#fff; padding:3px 8px; border-radius:2px; font-size:.82rem}
+.firstfree:hover{background:#F6EEDD}
+.callout{border-left:3px solid var(--brass); background:#FBF7EF; padding:12px 14px; font-size:.95rem}
+.callout b{display:block}
+.opt.credit{background:#FBF7EF}
+.opt.credit .pr{color:var(--brass)}
+.sum .credit-line b{color:var(--brass)}
 .hero .lede{margin-top:22px}
 .ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
 .facts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:34px; border-top:1px solid var(--rule)}
@@ -350,16 +358,17 @@ window.fphWho = (email, props) => {
 <section class="hero">
   <div class="wrap">
     <div>
+      <a class="firstfree" href="#start" data-tab="order"><b>New firms</b>Your first job is free</a>
       <h1>Five concept layouts per job, drawn in CAD, under your title block.</h1>
       <p class="lede">You've signed the job. Before your team engineers anything, the client has to settle on a layout. Send me the site and the use. Within 7 days you get 5 layouts with a DWG for each, a 3D rendering of the one your client picks and a due diligence package, white-labeled for your firm.</p>
       <div class="ctas">
-        <a class="btn btn-lg" href="#start" data-tab="order">Order a job, $949</a>
+        <a class="btn btn-lg" href="#start" data-tab="order">Start your free first job</a>
         <a class="btn btn-line btn-lg" href="#start" data-tab="book">Book a 15-minute call</a>
       </div>
       <div class="facts">
         <div><b>5</b><span>layouts per job, each with its CAD file</span></div>
         <div><b>7 days</b><span>from address to delivery</span></div>
-        <div><b>$949</b><span>flat per job, charged on delivery</span></div>
+        <div><b>$0</b><span>for your first job, then $949 per job</span></div>
       </div>
     </div>
 
@@ -464,14 +473,15 @@ window.fphWho = (email, props) => {
   <div class="wrap">
     <div class="s-head">
       <h2>One price per job</h2>
-      <p>No retainer, no minimum, no contract. Save a card when you order and it's charged only when the package is delivered.</p>
+      <p>No retainer, no minimum, no contract. Your firm's first job is free. After that, each job is charged only when the package is delivered.</p>
     </div>
     <div class="price">
       <div class="price-l">
         <div class="amt tnum">$949<small>per job</small></div>
         <p class="muted">Five layouts for one site and one use, delivered within 7 days, white-labeled for your firm.</p>
+        <p class="callout"><b>First job free for new firms.</b>Try the full package on one of your jobs at no charge. No card needed unless you add an add-on.</p>
         <div class="ctas" style="margin-top:8px">
-          <a class="btn btn-lg" href="#start" data-tab="order">Order a job</a>
+          <a class="btn btn-lg" href="#start" data-tab="order">Start your free first job</a>
           <a class="btn btn-line btn-lg" href="#start" data-tab="ask">Ask about volume</a>
         </div>
       </div>
@@ -500,7 +510,8 @@ window.fphWho = (email, props) => {
       <h2>Start a job</h2>
       <p class="muted">Order now, book a call first, or ask a question. All three come straight to me.</p>
       <ul>
-        <li>Nothing is charged until delivery</li>
+        <li>Your firm's first job is free</li>
+        <li>After that, nothing is charged until delivery</li>
         <li>Delivered within 7 days</li>
         <li>Attach your client's proposal or scope as a PDF when you order</li>
         <li>Send your logo, title block or survey after you order</li>
@@ -524,6 +535,8 @@ window.fphWho = (email, props) => {
         <div class="opts">
           <label class="opt locked"><input type="checkbox" checked disabled><span class="box" aria-hidden="true">✓</span>
             <span><b>Concept package</b><small>5 layouts with DWG files, a 3D rendering and a due diligence package, white-labeled. One revision round.</small></span><span class="pr">$949</span></label>
+          <label class="opt credit"><input type="checkbox" id="opt-first" name="first_job" value="1" checked><span class="box" aria-hidden="true">✓</span>
+            <span><b>This is my firm's first job with Forma</b><small>Your first job's package is free. Add-ons are charged at their regular price. One free job per firm.</small></span><span class="pr">−$949</span></label>
           <label class="opt"><input type="checkbox" id="opt-plans"><span class="box" aria-hidden="true">✓</span>
             <span><b>Preliminary plan set</b><small>Grading, drainage and stormwater, water, sewer and utility layout for the chosen layout. Not a stamped set.</small></span><span class="pr">+$5,000</span></label>
           <label class="opt"><input type="checkbox" id="opt-website"><span class="box" aria-hidden="true">✓</span>
@@ -547,10 +560,11 @@ window.fphWho = (email, props) => {
         </div>
         <div class="sum">
           <div><span>Due today</span><b>$0.00</b></div>
+          <div class="credit-line" id="co-credit"><span>First job free</span><b>−$949</b></div>
           <div class="tot"><span>Charged on delivery</span><b id="co-total" class="tnum">$949</b></div>
         </div>
         <label class="agree"><input type="checkbox" id="co-agree"><span class="box" aria-hidden="true">✓</span>
-          <span>I agree to the <a href="/engineers/terms/" target="_blank" rel="noopener">Terms of Service</a> and authorize Forma to charge my card <b id="co-auth">$949</b> when the package is delivered.</span></label>
+          <span>I agree to the <a href="/engineers/terms/" target="_blank" rel="noopener">Terms of Service</a><span id="co-authline"> and authorize Forma to charge my card <b id="co-auth">$949</b> when the package is delivered</span>.</span></label>
         <button class="btn btn-lg" type="submit" id="f-submit" disabled>Continue to secure checkout</button>
         <p class="form-err" id="form-err" role="alert"></p>
         <p class="small" id="co-hint">Add your email and the site address to continue.</p>
@@ -620,6 +634,7 @@ window.fphWho = (email, props) => {
   <div class="wrap">
     <div class="s-head"><h2>Questions firms ask</h2><p></p></div>
     <div class="faq">
+      <details><summary>Is the first job really free?</summary><p>Yes, for firms that haven't ordered before. The whole package for one site is free: 5 layouts, the CAD files, the rendering and the due diligence package. If you don't add an add-on, you don't enter a card. One free job per firm.</p></details>
       <details><summary>What do I get for $949?</summary><p>For one site and the use your client wants: 5 different concept layouts, a DWG for each, a photoreal 3D rendering of the layout your client picks, a due diligence package (zoning, permitting roadmap and a pro forma) and one revision round.</p></details>
       <details><summary>Where does this fit in a job?</summary><p>After you've signed. It covers the concept and preliminary layout phase, so your client settles on a design before your team starts engineering it.</p></details>
       <details><summary>What CAD format do you deliver?</summary><p>DWG, one per layout, drawn to scale on the parcel so your team can open it and keep working. Tell me your layer standards and I'll follow them.</p></details>
@@ -642,7 +657,7 @@ window.fphWho = (email, props) => {
   </div>
 </footer>
 
-<div class="mbar" id="mbar"><p>5 layouts + CAD files<b>$949 per job</b></p><a class="btn" href="#start" data-tab="order">Order a job</a></div>
+<div class="mbar" id="mbar"><p>5 layouts + CAD files<b>First job free</b></p><a class="btn" href="#start" data-tab="order">Start free</a></div>
 
 <script>
 (() => {
@@ -897,6 +912,7 @@ $$("[data-tab]").forEach((a) => a.addEventListener("click", () => showTab(a.data
 /* order: options, price, validation. Posts to save-card (card saved on Stripe, charged on delivery). */
 const params = new URLSearchParams(location.search);
 const PRICE = { base: 949, plans: 5000, website: 1000 };
+let submitting = false;
 const yes = (v) => v === "1" || v === "true" || v === "yes";
 ["name", "email", "phone", "address", "use"].forEach((k) => { if (params.get(k)) $("#f-" + k).value = params.get(k); });
 if (params.get("firm")) $("#f-firm").value = params.get("firm");
@@ -905,29 +921,35 @@ if (yes(params.get("website"))) $("#opt-website").checked = true;
 $("#co-return").value = location.href.split("#")[0];
 function coUpdate() {
   const w = $("#opt-website").checked, pl = $("#opt-plans").checked;
-  const total = PRICE.base + (pl ? PRICE.plans : 0) + (w ? PRICE.website : 0);
+  const first = $("#opt-first").checked;
+  const total = (first ? 0 : PRICE.base) + (pl ? PRICE.plans : 0) + (w ? PRICE.website : 0);
   $("#co-package").value = "package" + (w ? "_website" : "") + (pl ? "_plans" : "");
   $("#co-total").textContent = $("#co-auth").textContent = money(total);
+  $("#co-credit").hidden = !first;
+  $("#co-authline").hidden = total === 0;
   const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#f-email").value.trim());
   const ready = okEmail && $("#f-address").value.trim() && $("#co-agree").checked && !uploading;
   $("#f-submit").disabled = !ready;
+  if (!submitting) $("#f-submit").textContent = total === 0 ? "Start my free first job" : "Continue to secure checkout";
   $("#co-hint").textContent = uploading ? "Wait for the PDF to finish uploading." : !okEmail || !$("#f-address").value.trim() ? "Add your email and the site address to continue." : !$("#co-agree").checked ? "Check the box above to continue." : "Nothing is charged today.";
   return total;
 }
-["#opt-plans", "#opt-website", "#co-agree"].forEach((s) => $(s).addEventListener("change", coUpdate));
+["#opt-first", "#opt-plans", "#opt-website", "#co-agree"].forEach((s) => $(s).addEventListener("change", coUpdate));
 ["#f-email", "#f-address"].forEach((s) => $(s).addEventListener("input", coUpdate));
 coUpdate();
 $("#pane-order").addEventListener("submit", (e) => {
   const total = coUpdate();
   if ($("#f-submit").disabled) { e.preventDefault(); return; }
-  $("#f-submit").textContent = "Opening secure checkout…";
+  submitting = true;
+  $("#f-submit").textContent = total === 0 ? "Placing your order…" : "Opening secure checkout…";
   setTimeout(() => { $("#f-submit").disabled = true; }, 0);
   try { (window.dataLayer = window.dataLayer || []).push({ event: "begin_checkout", value: total, channel: "engineers" }); } catch (_) {}
   try { window.fbq && window.fbq("track", "InitiateCheckout", { value: total, currency: "USD" }); } catch (_) {}
   try { window.fphWho && window.fphWho($("#f-email").value.trim(), { name: $("#f-name").value.trim() || undefined, email: $("#f-email").value.trim(), company: $("#f-firm").value.trim() || undefined });
         window.fph && window.fph("capture", "checkout_started", { channel: "engineers", package: $("#co-package").value, value: total }); } catch (_) {}
 });
-addEventListener("pageshow", () => { $("#f-submit").textContent = "Continue to secure checkout"; coUpdate(); });
+addEventListener("pageshow", () => { submitting = false; coUpdate(); });
+if (params.get("first") === "0") { $("#opt-first").checked = false; coUpdate(); }
 
 /* book a call */
 const BOOK_URL = "https://qrmqmtcxrkexazovtlev.supabase.co/functions/v1/book-call";
